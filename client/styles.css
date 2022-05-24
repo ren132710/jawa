@@ -1,0 +1,312 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto;
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient(to right, rgba(135, 206, 250, 0), rgba(135, 206, 250, 1));
+  color: hsl(200, 100%, 10%);
+  font-family: 'SuisseIntl', 'Helvetica', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+header {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-areas:
+    'city-search'
+    'places';
+  margin: 1rem 2rem 0rem;
+}
+
+.city-search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.city-search {
+  grid-area: city-search;
+  font-size: 1.2rem;
+  outline: none;
+  border: 1px solid #777;
+  /* border-radius: 5px; */
+  border-radius: 0.3rem;
+  padding: 10px 15px;
+  width: 300px;
+}
+
+.places-container {
+  grid-area: places;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.place-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid hsl(200, 100%, 70%);
+  border-radius: 0.25rem;
+  padding: 0.3rem;
+  cursor: pointer;
+  outline: none;
+  margin: 0.5rem;
+}
+
+.place-card:hover {
+  background-color: hsl(200, 100%, 92%);
+}
+
+.place-text {
+  font-size: 0.75rem;
+}
+
+.btn-delete-place {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  border: 1px solid hsl(200, 100%, 70%);
+  border-radius: 25%;
+  padding: 0.16rem 0.25rem;
+  text-align: center;
+  font-size: 0.35rem;
+  background-color: hsl(200, 100%, 30%);
+  color: white;
+  font-weight: bolder;
+}
+
+.btn-delete-place:hover {
+  background-color: hsl(0, 100%, 40%);
+}
+
+.btn-new-place {
+  border: none;
+  padding: 0;
+  font-size: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: transparent;
+  text-decoration-line: underline;
+  cursor: pointer;
+  color: hsl(200, 100%, 30%);
+  font-style: italic;
+}
+
+.btn-new-place:hover {
+  text-decoration-line: none;
+  color: hsl(200, 100%, 40%);
+}
+
+.main {
+  display: grid;
+  grid-gap: 1.25rem;
+  grid-template-areas:
+    'current'
+    'daily'
+    'hourly';
+  margin: 1rem 2rem 0rem;
+}
+
+.current-section {
+  grid-area: current;
+}
+
+.daily-section {
+  grid-area: daily;
+}
+
+.hourly-section {
+  grid-area: hourly;
+}
+
+.section-title {
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  text-align: center;
+}
+
+.current-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 200px 50px;
+  gap: 0.4rem;
+  padding: 1rem;
+  border: 1px solid white;
+  border-radius: 0.25rem;
+}
+
+.current-top-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.current-top-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.current-bottom-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.current-bottom-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.current-location {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.current-dt {
+  font-size: 0.5rem;
+  font-style: oblique;
+  padding-top: 1px;
+}
+
+.current-high-low {
+  font-size: 0.75rem;
+}
+
+.current-temp {
+  font-size: 3rem;
+}
+
+.current-feels-like {
+  font-size: 0.85rem;
+}
+
+.current-description {
+  color: hsl(200, 100%, 40%);
+}
+
+.label {
+  font-size: 0.6rem;
+  padding-top: 0.1rem;
+}
+
+.value {
+  color: hsl(200, 100%, 30%);
+}
+
+.daily-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 120px);
+  gap: 0.55rem;
+  justify-content: center;
+}
+
+.daily-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid hsl(200, 100%, 25%);
+  border-radius: 0.25rem;
+  padding: 0.3rem;
+}
+
+.daily-description {
+  font-size: 0.75rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  font-weight: 500;
+  color: hsl(200, 100%, 40%);
+}
+
+.hour-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hour-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(60px, 1fr));
+  gap: 0.4rem;
+
+  /* defaults */
+  /* justify-items: stretch; */
+  /* align-items: stretch; */
+  /* justify-content: stretch; */
+  /* align-content: center; */
+}
+
+.hour-row:nth-child(2n) {
+  background-image: linear-gradient(to right, rgba(135, 206, 255, 0), rgba(135, 206, 255, 1));
+}
+
+.hour-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hour-label {
+  font-size: 0.75rem;
+}
+
+.hour-value {
+  color: hsl(200, 100%, 30%);
+  font-size: 0.65rem;
+}
+
+.hour-value-margin {
+  line-height: 0;
+  margin-top: 0.33rem;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 2rem;
+  font-size: 0.75rem;
+  height: 30px;
+}
+
+@media screen and (min-width: 800px) {
+  body {
+    grid-template-rows: 120px 1fr 100px 30px;
+  }
+
+  header {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'city-search places';
+  }
+
+  .city-search {
+    width: 450px;
+  }
+
+  .places-container {
+    justify-content: flex-end;
+  }
+
+  .main {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+
+    grid-template-areas:
+      'current daily'
+      'hourly hourly';
+  }
+}

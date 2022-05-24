@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+    <title>JAWA</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="city-search-container">
+        <input type="text" class="city-search" data-city-search placeholder="Weather at your places" />
+      </div>
+      <div class="places-container"></div>
+    </header>
+    <main class="main">
+      <div class="current-section">
+        <div class="section-title">Current Weather</div>
+        <div class="current-container">
+          <div class="current-top-left">
+            <div
+              class="current-location"
+              data-current-location="Montreal"
+              data-current-lat="45.508888"
+              data-current-long="-73.561668"
+            >
+              Montreal
+            </div>
+            <button id="btnNewPlace" class="btn-new-place">New Place</button>
+            <img class="weather-icon large" data-current-icon src="http://openweathermap.org/img/wn/10d@4x.png" />
+          </div>
+          <div class="current-top-right">
+            <div class="current-dt">Last update: May 22 8:02 AM</div>
+            <br />
+            <br />
+            <div class="current-high-low"><span data-current-high>88</span>/<span data-current-low>52</span>&deg;</div>
+            <div class="current-temp"><span data-current-temp>78</span>&deg;&nbsp;F</div>
+            <div class="current-feels-like">Feels Like:&nbsp;<span data-current-fl>76</span>&deg;</div>
+            <div class="current-description" data-current-description>Mostly Cloudy</div>
+            <div class="label">
+              Visibility:&nbsp;<span class="value" data-current-visibility>10</span><span class="value">&nbsp;mi</span>
+            </div>
+          </div>
+          <div class="current-bottom-left">
+            <div class="label">
+              UV Index:&nbsp;<span class="value" data-current-uv>57</span><span class="value">&deg;</span>
+            </div>
+            <div class="label">
+              Humidity:&nbsp;<span class="value" data-current-humidity>50</span><span class="value">&percnt;</span>
+            </div>
+            <div class="label">
+              Wind:&nbsp;<span class="value" data-current-wind-speed>12</span><span class="value">&nbsp;mph</span
+              ><span class="value" data-current-wind-direction>&nbsp;S</span>
+            </div>
+          </div>
+          <div class="current-bottom-right">
+            <div class="label">
+              Dew Point:&nbsp;<span class="value" data-current-dew-point>57</span><span class="value">&deg;</span>
+            </div>
+            <div class="label">Sunrise:&nbsp;<span class="value" data-current-sunrise>05:24 AM</span></div>
+            <div class="label">Sunset:&nbsp;<span class="value" data-current-sunset>08:09 PM</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="daily-section">
+        <div class="section-title">Forecast</div>
+        <div class="daily-container">
+          <div class="daily-card">
+            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/10d.png" />
+            <div class="daily-date" data-date>Monday</div>
+            <div><span data-daily-high>72</span>/<span data-daily-low>52</span>&deg;</div>
+            <div class="daily-description" data-daily-description>Mostly Cloudy</div>
+            <div class="label">
+              Humidity:&nbsp;<span class="value" data-daily-humidity>50</span><span class="value">&percnt;</span>
+            </div>
+            <div class="label">
+              Wind:&nbsp;<span class="value" data-daily-wind-speed>12</span><span class="value">&nbsp;mph</span
+              ><span class="value" data-daily-wind-direction>&nbsp;S</span>
+            </div>
+          </div>
+          <div class="daily-card">
+            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/11d.png" />
+            <div class="daily-date" data-date>Tuesday</div>
+            <div><span data-daily-high>62</span>/<span data-daily-low>52</span>&deg;</div>
+            <div class="daily-description" data-daily-description>Stormy</div>
+            <div class="label">
+              Humidity:&nbsp;<span class="value" data-daily-humidity>95</span><span class="value">&percnt;</span>
+            </div>
+            <div class="label">
+              Wind:&nbsp;<span class="value" data-daily-wind-speed>14</span><span class="value">&nbsp;mph</span
+              ><span class="value" data-daily-wind-direction>&nbsp;NE</span>
+            </div>
+          </div>
+          <div class="daily-card">
+            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/01d.png" />
+            <div class="daily-date" data-daily-date>Wednesday</div>
+            <div><span data-daily-high>82</span>/<span data-daily-low>62</span>&deg;</div>
+            <div class="daily-description" data-daily-description>Clear</div>
+            <div class="label">
+              Humidity:&nbsp;<span class="value" data-daily-humidity>55</span><span class="value">&percnt;</span>
+            </div>
+            <div class="label">
+              Wind:&nbsp;<span class="value" data-daily-wind-speed>10</span><span class="value">&nbsp;mph</span
+              ><span class="value" data-daily-wind-direction>&nbsp;SW</span>
+            </div>
+          </div>
+          <div class="daily-card">
+            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            <div class="daily-date" data-date>Thursday</div>
+            <div><span data-daily-high>72</span>/<span data-daily-low>62</span>&deg;</div>
+            <div class="daily-description" data-daily-description>Mostly Cloudy</div>
+            <div class="label">
+              Humidity:&nbsp;<span class="value" data-daily-humidity>95</span><span class="value">&percnt;</span>
+            </div>
+            <div class="label">
+              Wind:&nbsp;<span class="value" data-daily-wind-speed>14</span><span class="value">&nbsp;mph</span
+              ><span class="value" data-daily-wind-direction>&nbsp;SE</span>
+            </div>
+          </div>
+          <div class="daily-card">
+            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/03d.png" />
+            <div class="daily-date" data-date>Friday</div>
+            <div><span data-daily-high>62</span>/<span data-daily-low>52</span>&deg;</div>
+            <div class="daily-description" data-daily-description>Cloudy</div>
+            <div class="label">
+              Humidity:&nbsp;<span class="value" data-daily-humidity>95</span><span class="value">&percnt;</span>
+            </div>
+            <div class="label">
+              Wind:&nbsp;<span class="value" data-daily-wind-speed>14</span><span class="value">&nbsp;mph</span
+              ><span class="value" data-daily-wind-direction>&nbsp;NE</span>
+            </div>
+          </div>
+          <div class="daily-card">
+            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/01d.png" />
+            <div class="daily-date" data-date>Saturday</div>
+            <div><span data-daily-high>62</span>/<span data-daily-low>52</span>&deg;</div>
+            <div class="daily-description" data-daily-description>Clear</div>
+            <div class="label">
+              Humidity:&nbsp;<span class="value" data-daily-humidity>95</span><span class="value">&percnt;</span>
+            </div>
+            <div class="label">
+              Wind:&nbsp;<span class="value" data-daily-wind-speed>14</span><span class="value">&nbsp;mph</span
+              ><span class="value" data-daily-wind-direction>&nbsp;NE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hourly-section">
+        <div class="section-title">Hourly Weather</div>
+        <div class="hourly-container">
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+          <div class="hour-row">
+            <div class="hour-data">
+              <div class="hour-label" data-date>Sunday</div>
+              <div data-time class="hour-value">6AM</div>
+            </div>
+            <div class="hour-data">
+              <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">FL Temp</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-fl-temp>75</span><span class="hour-value">&deg;</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Wind</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+                ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+              </div>
+            </div>
+            <div class="hour-data">
+              <div class="hour-label">Humidity</div>
+              <div class="hour-value-margin">
+                <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <template id="template-place-card">
+      <div class="place-card">
+        <button id="btnDeletePlace" class="btn-delete-place">X</button>
+        <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+        <div class="place-text" data-location>New York</div>
+        <div class="place-text" data-hl><span data-high>62</span>/<span data-low>52</span>&deg;</div>
+      </div>
+    </template>
+
+    <template id="template-daily-card">
+      <div class="daily-card">
+        <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/01d.png" />
+        <div class="daily-date" data-daily-date>Wednesday</div>
+        <div data-hl><span data-daily-high>82</span>/<span data-daily-low>62</span>&deg;</div>
+        <div class="daily-description" data-daily-description>Clear</div>
+        <div class="label">
+          Humidity:&nbsp;<span class="value" data-daily-humidity>55</span><span class="value">&percnt;</span>
+        </div>
+        <div class="label" data-wind>
+          Wind:&nbsp;<span class="value" data-daily-wind-speed>10</span><span class="value">&nbsp;mph</span
+          ><span class="value" data-daily-wind-direction>&nbsp;SW</span>
+        </div>
+      </div>
+    </template>
+
+    <template id="template-hour-row">
+      <div class="hour-row">
+        <div class="hour-data">
+          <div class="hour-label" data-date>Sunday</div>
+          <div data-time class="hour-value">6AM</div>
+        </div>
+        <div class="hour-data">
+          <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
+        </div>
+        <div class="hour-data">
+          <div class="hour-label">Temp</div>
+          <div class="hour-value-margin">
+            <span class="hour-value" data-hourly-temp>78</span><span class="hour-value">&deg;</span>
+          </div>
+        </div>
+        <div class="hour-data">
+          <div class="hour-label">FL Temp</div>
+          <div class="hour-value-margin">
+            <span class="hour-value" data-hourly-fl-temp>75</span><span class="hour-value">&deg;</span>
+          </div>
+        </div>
+        <div class="hour-data">
+          <div class="hour-label">Wind</div>
+          <div class="hour-value-margin">
+            <span class="hour-value" data-hourly-wind-speed>13</span><span class="hour-value">&nbsp;mph</span
+            ><span class="hour-value" data-hourly-wind-direction>&nbsp;NW</span>
+          </div>
+        </div>
+        <div class="hour-data">
+          <div class="hour-label">Humidity</div>
+          <div class="hour-value-margin">
+            <span class="hour-value" data-hourly-humidity>22</span><span class="hour-value">&percnt;</span>
+          </div>
+        </div>
+      </div>
+    </template>
+    <footer>
+      <a href="https://openweathermap.org/api" class="openweather-logo" target="_blank">Powered By OpenWeather</a>
+    </footer>
+  </body>
+</html>
