@@ -7,10 +7,11 @@ const cors = require('cors')
 const axios = require('axios')
 require('dotenv').config()
 const app = express()
+
 //with no params, allows requests from any url
 app.use(cors())
 
-//enable the ability to parse parameters from req.query
+//enable the ability to parse req.query
 app.use(express.urlencoded({ extended: true }))
 
 app.listen(3001)
@@ -18,7 +19,6 @@ app.listen(3001)
 app.get('/weather', (req, res) => {
   const { lat, long } = req.query
 
-  //TODO: Try API 3.0
   axios
     .get('https://api.openweathermap.org/data/3.0/onecall', {
       params: { lat: lat, lon: long, appid: process.env.API_KEY, units: 'imperial', exclude: 'minutely' },
