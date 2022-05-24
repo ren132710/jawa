@@ -10,7 +10,8 @@ Places Search
  -fetch openWeather data
  -populate: current, daily, hourly
 */
-
+import axios from 'axios'
+import { format } from 'date-fns'
 import { v4 } from 'uuid'
 
 const LOCAL_STORAGE_PREFIX = 'JAWA'
@@ -45,15 +46,14 @@ const templateHourRow = document.querySelector('#template-hour-row')
 
 function renderPage() {
   loadPlaces()
-  //TODO: fetch current weather
 }
 
 const placesContainer = document.querySelector('.places-container')
 const templatePlaceCard = document.querySelector('#template-place-card')
 function loadPlaces() {
-  const places = getPlacesFromLocalStorage()
-  //TODO: fetch weather from openWeather
   placesContainer.innerHTML = ''
+
+  const places = getPlacesFromLocalStorage()
   places.forEach((place) => {
     const element = templatePlaceCard.content.cloneNode(true)
     const card = element.querySelector('.place-card')
@@ -71,9 +71,25 @@ function loadPlaces() {
     })
     placesContainer.append(element)
   })
+
+  const initialPlace = places[0]
+  getWeather(initialPlace.lat, initialPlace.long)
 }
 
 renderPage()
+
+function getWeather(lat, long) {
+  console.log(lat, long)
+  axios
+    .get('http://localhost:3001/weather', { params: { lat, long }, timeout: 5000 })
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch((e) => {
+      console.log(e)
+      alert('An issue was encountered getting weather. Please try again.')
+    })
+}
 
 //event listeners
 function addGlobalEventListener(type, selector, callback) {
