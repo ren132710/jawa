@@ -20,19 +20,14 @@
         <div class="section-title">Current Weather</div>
         <div class="current-container">
           <div class="current-top-left">
-            <div
-              class="current-location"
-              data-current-location="Montreal"
-              data-current-lat="45.508888"
-              data-current-long="-73.561668"
-            >
-              Montreal
-            </div>
+            <div class="current-location" data-current-location>Montreal</div>
             <button id="btnNewPlace" class="btn-new-place">New Place</button>
             <img class="weather-icon large" data-current-icon src="http://openweathermap.org/img/wn/10d@4x.png" />
           </div>
           <div class="current-top-right">
-            <div class="current-dt">Last update: May 22 8:02 AM</div>
+            <div class="current-detail">Last update:&nbsp;<span data-current-dt>May 22 8:02 AM</span></div>
+            <div class="current-detail">lat:&nbsp;<span data-current-lat>45.508888</span></div>
+            <div class="current-detail">long:&nbsp;<span data-current-long>-73.561668</span></div>
             <br />
             <br />
             <div class="current-high-low"><span data-current-high>88</span>/<span data-current-low>52</span>&deg;</div>
@@ -529,7 +524,7 @@
     </main>
 
     <template id="template-place-card">
-      <div class="place-card">
+      <div class="place-card" data-place-card>
         <button id="btnDeletePlace" class="btn-delete-place">X</button>
         <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
         <div class="place-text" data-location>New York</div>
