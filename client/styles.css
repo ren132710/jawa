@@ -149,6 +149,7 @@ header {
   justify-content: flex-start;
   align-items: flex-start;
 }
+
 .current-top-right {
   display: flex;
   flex-direction: column;
@@ -162,6 +163,7 @@ header {
   justify-content: flex-end;
   align-items: flex-start;
 }
+
 .current-bottom-right {
   display: flex;
   flex-direction: column;
