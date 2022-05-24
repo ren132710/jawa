@@ -2,9 +2,11 @@
 
 Practice
 
+- client / server
 - OpenWeather API
 - express
 - axios
-- client / server
 - css grid
-- client cookies / local storage
+- browser localStorage
+- uuid
+- regex
