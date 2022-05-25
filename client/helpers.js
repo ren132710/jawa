@@ -1,4 +1,3 @@
-//if there is a 2nd param, default to large, otherwise default to empty
 export function getIconUrl(iconKey, { size = '' } = {}) {
   let sizeKey = ''
   if (size === 'large') sizeKey = '@4x'
