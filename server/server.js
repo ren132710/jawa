@@ -44,17 +44,21 @@ function parseCurrentWeather({ current, daily }) {
   const { temp } = daily[0]
 
   return {
-    timestamp: current.dt * 1000,
+    timestamp: current.dt * 1000, //convert Unix time to JS time
     description: current.weather[0].description,
     icon: current.weather[0].icon,
     temp: Math.round(current.temp),
     high: Math.round(temp.max),
     low: Math.round(temp.min),
     feelsLike: Math.round(current.feels_like),
-    visibility: Math.round(current.visibility / 1609.344), // convert meters to miles
+
+    // convert meters to miles, round to one decimal place
+    visibility: Math.round((current.visibility / 1609.344) * 10) / 10,
     dewPoint: Math.round(current.dew_point),
+
+    //TODO: How to adjust for DST??
     sunrise: current.sunrise * 1000,
-    sunset: current.sunrise * 1000,
+    sunset: current.sunset * 1000,
     uvIndex: current.uvi,
     uvLevel: getUVIndexLevel(current.uvi),
     humidity: Math.round(current.humidity),
@@ -67,7 +71,7 @@ function parseCurrentWeather({ current, daily }) {
 function parseDailyWeather({ daily }) {
   return daily.slice(1).map((day) => {
     return {
-      timestamp: day.dt * 1000, //convert Unix time to JS time
+      timestamp: day.dt * 1000,
       description: day.weather[0].description,
       icon: day.weather[0].icon,
       high: Math.round(day.temp.max),
