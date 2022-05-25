@@ -6,8 +6,10 @@ Practice
 - OpenWeather API
 - express
 - axios
-- css grid
-- browser localStorage
+- css grid, responsive design
+- localStorage (browser)
 - uuid
 - date-fns
 - regex
+- jest
+- node
