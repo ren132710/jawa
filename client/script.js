@@ -50,10 +50,6 @@ function addUniqueID() {
   return v4()
 }
 
-//handles
-
-const templateHourRow = document.querySelector('#template-hour-row')
-
 function renderPage() {
   loadPlaces()
 }
@@ -135,6 +131,7 @@ const currentBotRight = document.querySelector('.current-bottom-right')
 function renderCurrentWeather({ coordinates, current }) {
   console.log(coordinates)
   console.log(current)
+
   //top left
   //TODO: LOCATION
   currentTopLeft.querySelector('[data-current-location').textContent = 'TODO: LOCATION'
@@ -172,6 +169,7 @@ const dailyContainer = document.querySelector('.daily-container')
 const templateDailyCard = document.querySelector('#template-daily-card')
 function renderDailyWeather(daily) {
   console.log(daily)
+
   dailyContainer.innerHTML = ''
   daily.forEach((day) => {
     const element = templateDailyCard.content.cloneNode(true)
@@ -188,9 +186,18 @@ function renderDailyWeather(daily) {
   })
 }
 
+const hourlyContainer = document.querySelector('.hourly-container')
+const templateHourRow = document.querySelector('#template-hour-row')
 function renderHourlyWeather(hourly) {
-  //TODO
   console.log(hourly)
+
+  hourlyContainer.innerHTML = ''
+  hourly.forEach((hour) => {
+    const element = templateHourRow.content.cloneNode(true)
+    const row = element.querySelector('.hour-row')
+    console.log(row)
+    //TODO
+  })
 }
 
 //helper functions
