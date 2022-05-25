@@ -13,6 +13,7 @@ Places Search
 import axios from 'axios'
 import { format } from 'date-fns'
 import { v4 } from 'uuid'
+import { getIconUrl, parseIconUrl } from './helpers.js'
 
 const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
@@ -74,6 +75,7 @@ function loadPlaces() {
 
   const initialPlace = places[0]
   getWeather(initialPlace.lat, initialPlace.long)
+  //TODO: Populate weather
 }
 
 renderPage()
@@ -141,17 +143,4 @@ function getPlacesFromLocalStorage() {
 
 function savePlacesToLocalStorage(places) {
   localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places))
-}
-
-//if 2nd param, default to false, otherwise default to empty
-function getIconUrl(iconKey, { large = false } = {}) {
-  const size = large ? '@4x' : ''
-  return `http://openweathermap.org/img/wn/${iconKey}${size}.png`
-}
-
-function parseIconUrl(url) {
-  return url
-    .match(/\d\d\w@/)
-    .toString()
-    .slice(0, 3)
 }
