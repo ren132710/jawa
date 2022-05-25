@@ -7,6 +7,7 @@ const cors = require('cors')
 const axios = require('axios')
 require('dotenv').config()
 const app = express()
+const { getCardinalDirection, getUVIndexLevel } = require('./utils.js')
 
 //with no params, allows requests from any url
 app.use(cors())
@@ -26,7 +27,7 @@ app.get('/weather', (req, res) => {
     })
     .then(({ data }) => {
       res.json({
-        // data, parse it server side
+        // data // parse server-side
         coordinates: { lat: data.lat, long: data.lon },
         current: parseCurrentWeather(data),
         daily: parseDailyWeather(data),
@@ -59,6 +60,7 @@ function parseCurrentWeather({ current, daily }) {
     humidity: Math.round(current.humidity),
     windSpeed: Math.round(current.wind_speed),
     windDirection: getCardinalDirection(current.wind_deg),
+    windDeg: Math.round(current.wind_deg),
   }
 }
 
@@ -73,6 +75,7 @@ function parseDailyWeather({ daily }) {
       humidity: Math.round(day.humidity),
       windSpeed: Math.round(day.wind_speed),
       windDirection: getCardinalDirection(day.wind_deg),
+      windDeg: Math.round(day.wind_deg),
     }
   })
 }
@@ -90,30 +93,7 @@ function parseHourlyWeather({ hourly, current }) {
         humidity: Math.round(hour.humidity),
         windSpeed: Math.round(hour.wind_speed),
         windDirection: getCardinalDirection(hour.wind_deg),
+        windDeg: Math.round(hour.wind_deg),
       }
     })
-}
-
-function getCardinalDirection(angle) {
-  // const directions = ['↑ N', '↗ NE', '→ E', '↘ SE', '↓ S', '↙ SW', '← W', '↖ NW'];
-  const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
-  return directions[Math.round(angle / 45) % 8]
-}
-
-function getUVIndexLevel(uvi) {
-  if (Math.floor(uvi) > 11) return 'extremely high'
-  const uvIndexLevels = [
-    'low',
-    'low',
-    'medium',
-    'medium',
-    'medium',
-    'high',
-    'high',
-    'very high',
-    'very high',
-    'very high',
-    'extremely high',
-  ]
-  return uvIndexLevels[Math.floor(uvi) - 1]
 }
