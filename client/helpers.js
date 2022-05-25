@@ -6,6 +6,6 @@ export function getIconUrl(iconKey, { size = '' } = {}) {
 }
 
 export function parseIconUrl(url) {
-  if (!url.match(/\d\d[dn]/)) return null
+  if (!url.match(/\d\d[dn]/)) return
   return url.match(/\d\d[dn]/).toString()
 }
