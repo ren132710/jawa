@@ -28,7 +28,7 @@ describe('#getCardinalDirection', () => {
     expect(getCardinalDirection(337.4)).toBe('NW')
     expect(getCardinalDirection(337.5)).toBe('N')
     expect(getCardinalDirection(349)).toBe('N')
-    expect(getCardinalDirection(350)).toBe('N')
+    expect(getCardinalDirection(360)).toBe('N')
   })
 
   it('should return undefined for invalid wind degrees', () => {
