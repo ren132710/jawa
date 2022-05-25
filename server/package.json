@@ -6,8 +6,7 @@
   "scripts": {
     "devStart": "nodemon server.js",
     "start": "node server.js",
-    "test": "jest --coverage",
-    "test:unit": "jest \\.unit\\. --coverage"
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",
