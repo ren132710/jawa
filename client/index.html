@@ -20,127 +20,51 @@
         <div class="section-title">Current Weather</div>
         <div class="current-container">
           <div class="current-top-left">
-            <div class="current-location" data-current-location>Montreal</div>
+            <div class="current-location" data-current-location></div>
             <button id="btnNewPlace" class="btn-new-place">New Place</button>
             <img class="weather-icon large" data-current-icon src="http://openweathermap.org/img/wn/10d@4x.png" />
           </div>
           <div class="current-top-right">
-            <div class="current-detail">Last update:&nbsp;<span data-current-dt>May 22 8:02 AM</span></div>
-            <div class="current-detail">lat:&nbsp;<span data-current-lat>45.508888</span></div>
-            <div class="current-detail">long:&nbsp;<span data-current-long>-73.561668</span></div>
+            <div class="current-detail">Last updated:&nbsp;<span data-current-dt></span></div>
+            <div class="current-detail">lat:&nbsp;<span data-current-lat></span></div>
+            <div class="current-detail">long:&nbsp;<span data-current-long></span></div>
             <br />
             <br />
-            <div class="current-high-low"><span data-current-high>88</span>/<span data-current-low>52</span>&deg;</div>
-            <div class="current-temp"><span data-current-temp>78</span>&deg;&nbsp;F</div>
-            <div class="current-feels-like">Feels Like:&nbsp;<span data-current-fl>76</span>&deg;</div>
-            <div class="current-description" data-current-description>Mostly Cloudy</div>
+            <div class="current-high-low"><span data-current-high></span>/<span data-current-low></span>&deg;</div>
+            <div class="current-temp"><span data-current-temp></span>&deg;&nbsp;F</div>
+            <div class="current-feels-like">Feels Like:&nbsp;<span data-current-fl></span>&deg;</div>
+            <div class="current-description" data-current-description></div>
             <div class="label">
-              Visibility:&nbsp;<span class="value" data-current-visibility>10</span><span class="value">&nbsp;mi</span>
+              Visibility:&nbsp;<span class="value" data-current-visibility></span><span class="value">&nbsp;mi</span>
             </div>
           </div>
           <div class="current-bottom-left">
             <div class="label">
-              UV Index:&nbsp;<span class="value" data-current-uv>57</span><span class="value">&deg;</span>
+              UV Index:&nbsp;<span class="value" data-current-uv-index></span><span></span>&nbsp;<span
+                class="value"
+                data-current-uv-level
+              ></span>
             </div>
             <div class="label">
-              Humidity:&nbsp;<span class="value" data-current-humidity>50</span><span class="value">&percnt;</span>
+              Humidity:&nbsp;<span class="value" data-current-humidity></span><span class="value">&percnt;</span>
             </div>
             <div class="label">
-              Wind:&nbsp;<span class="value" data-current-wind-speed>12</span><span class="value">&nbsp;mph</span
-              ><span class="value" data-current-wind-direction>&nbsp;S</span>
+              Wind:&nbsp;<span class="value" data-current-wind-speed></span><span class="value">&nbsp;mph&nbsp;</span
+              ><span class="value" data-current-wind-direction></span>
             </div>
           </div>
           <div class="current-bottom-right">
             <div class="label">
-              Dew Point:&nbsp;<span class="value" data-current-dew-point>57</span><span class="value">&deg;</span>
+              Dew Point:&nbsp;<span class="value" data-current-dew-point></span><span class="value">&deg;</span>
             </div>
-            <div class="label">Sunrise:&nbsp;<span class="value" data-current-sunrise>05:24 AM</span></div>
-            <div class="label">Sunset:&nbsp;<span class="value" data-current-sunset>08:09 PM</span></div>
+            <div class="label">Sunrise:&nbsp;<span class="value" data-current-sunrise></span></div>
+            <div class="label">Sunset:&nbsp;<span class="value" data-current-sunset></span></div>
           </div>
         </div>
       </div>
       <div class="daily-section">
         <div class="section-title">Forecast</div>
-        <div class="daily-container">
-          <div class="daily-card">
-            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/10d.png" />
-            <div class="daily-date" data-date>Monday</div>
-            <div><span data-daily-high>72</span>/<span data-daily-low>52</span>&deg;</div>
-            <div class="daily-description" data-daily-description>Mostly Cloudy</div>
-            <div class="label">
-              Humidity:&nbsp;<span class="value" data-daily-humidity>50</span><span class="value">&percnt;</span>
-            </div>
-            <div class="label">
-              Wind:&nbsp;<span class="value" data-daily-wind-speed>12</span><span class="value">&nbsp;mph</span
-              ><span class="value" data-daily-wind-direction>&nbsp;S</span>
-            </div>
-          </div>
-          <div class="daily-card">
-            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/11d.png" />
-            <div class="daily-date" data-date>Tuesday</div>
-            <div><span data-daily-high>62</span>/<span data-daily-low>52</span>&deg;</div>
-            <div class="daily-description" data-daily-description>Stormy</div>
-            <div class="label">
-              Humidity:&nbsp;<span class="value" data-daily-humidity>95</span><span class="value">&percnt;</span>
-            </div>
-            <div class="label">
-              Wind:&nbsp;<span class="value" data-daily-wind-speed>14</span><span class="value">&nbsp;mph</span
-              ><span class="value" data-daily-wind-direction>&nbsp;NE</span>
-            </div>
-          </div>
-          <div class="daily-card">
-            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/01d.png" />
-            <div class="daily-date" data-daily-date>Wednesday</div>
-            <div><span data-daily-high>82</span>/<span data-daily-low>62</span>&deg;</div>
-            <div class="daily-description" data-daily-description>Clear</div>
-            <div class="label">
-              Humidity:&nbsp;<span class="value" data-daily-humidity>55</span><span class="value">&percnt;</span>
-            </div>
-            <div class="label">
-              Wind:&nbsp;<span class="value" data-daily-wind-speed>10</span><span class="value">&nbsp;mph</span
-              ><span class="value" data-daily-wind-direction>&nbsp;SW</span>
-            </div>
-          </div>
-          <div class="daily-card">
-            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
-            <div class="daily-date" data-date>Thursday</div>
-            <div><span data-daily-high>72</span>/<span data-daily-low>62</span>&deg;</div>
-            <div class="daily-description" data-daily-description>Mostly Cloudy</div>
-            <div class="label">
-              Humidity:&nbsp;<span class="value" data-daily-humidity>95</span><span class="value">&percnt;</span>
-            </div>
-            <div class="label">
-              Wind:&nbsp;<span class="value" data-daily-wind-speed>14</span><span class="value">&nbsp;mph</span
-              ><span class="value" data-daily-wind-direction>&nbsp;SE</span>
-            </div>
-          </div>
-          <div class="daily-card">
-            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/03d.png" />
-            <div class="daily-date" data-date>Friday</div>
-            <div><span data-daily-high>62</span>/<span data-daily-low>52</span>&deg;</div>
-            <div class="daily-description" data-daily-description>Cloudy</div>
-            <div class="label">
-              Humidity:&nbsp;<span class="value" data-daily-humidity>95</span><span class="value">&percnt;</span>
-            </div>
-            <div class="label">
-              Wind:&nbsp;<span class="value" data-daily-wind-speed>14</span><span class="value">&nbsp;mph</span
-              ><span class="value" data-daily-wind-direction>&nbsp;NE</span>
-            </div>
-          </div>
-          <div class="daily-card">
-            <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/01d.png" />
-            <div class="daily-date" data-date>Saturday</div>
-            <div><span data-daily-high>62</span>/<span data-daily-low>52</span>&deg;</div>
-            <div class="daily-description" data-daily-description>Clear</div>
-            <div class="label">
-              Humidity:&nbsp;<span class="value" data-daily-humidity>95</span><span class="value">&percnt;</span>
-            </div>
-            <div class="label">
-              Wind:&nbsp;<span class="value" data-daily-wind-speed>14</span><span class="value">&nbsp;mph</span
-              ><span class="value" data-daily-wind-direction>&nbsp;NE</span>
-            </div>
-          </div>
-        </div>
+        <div class="daily-container"></div>
       </div>
       <div class="hourly-section">
         <div class="section-title">Hourly Weather</div>
@@ -526,24 +450,24 @@
     <template id="template-place-card">
       <div class="place-card" data-place-card>
         <button id="btnDeletePlace" class="btn-delete-place">X</button>
-        <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/02d.png" />
-        <div class="place-text" data-location>New York</div>
-        <div class="place-text" data-hl><span data-high>62</span>/<span data-low>52</span>&deg;</div>
+        <img class="weather-icon" data-icon src="" />
+        <div class="place-text" data-location></div>
+        <div class="place-text" data-hl><span data-high></span>/<span data-low></span>&deg;</div>
       </div>
     </template>
 
     <template id="template-daily-card">
       <div class="daily-card">
-        <img class="weather-icon" data-icon src="http://openweathermap.org/img/wn/01d.png" />
-        <div class="daily-date" data-daily-date>Wednesday</div>
-        <div data-hl><span data-daily-high>82</span>/<span data-daily-low>62</span>&deg;</div>
-        <div class="daily-description" data-daily-description>Clear</div>
+        <img class="weather-icon" data-icon src="" />
+        <div class="daily-date" data-daily-date></div>
+        <div data-hl><span data-daily-high></span>/<span data-daily-low></span>&deg;</div>
+        <div class="daily-description" data-daily-description></div>
         <div class="label">
-          Humidity:&nbsp;<span class="value" data-daily-humidity>55</span><span class="value">&percnt;</span>
+          Humidity:&nbsp;<span class="value" data-daily-humidity></span><span class="value">&percnt;</span>
         </div>
         <div class="label" data-wind>
-          Wind:&nbsp;<span class="value" data-daily-wind-speed>10</span><span class="value">&nbsp;mph</span
-          ><span class="value" data-daily-wind-direction>&nbsp;SW</span>
+          Wind:&nbsp;<span class="value" data-daily-wind-speed></span><span class="value">&nbsp;mph&nbsp;</span
+          ><span class="value" data-daily-wind-direction></span>
         </div>
       </div>
     </template>

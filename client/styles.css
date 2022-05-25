@@ -201,6 +201,7 @@ header {
 
 .current-description {
   color: hsl(200, 100%, 40%);
+  text-transform: capitalize;
 }
 
 .label {
@@ -235,6 +236,8 @@ header {
   padding-bottom: 0.1rem;
   font-weight: 500;
   color: hsl(200, 100%, 40%);
+  text-transform: capitalize;
+  text-align: center;
 }
 
 .hour-container {
