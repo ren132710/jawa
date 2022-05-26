@@ -33,7 +33,7 @@ describe('#getIconUrl', () => {
     expect(getIconUrl('04z')).toBeUndefined
   })
 
-  it('when size is specified, should return a valid OpenWeather icon url with size', () => {
+  it('when size is provided, should return a valid OpenWeather icon url per the specified size', () => {
     expect(getIconUrl(iconKeys[0], { size: '' })).toBe(`http://openweathermap.org/img/wn/${iconKeys[0]}.png`)
     expect(getIconUrl(iconKeys[1], { size: 'medium' })).toBe(`http://openweathermap.org/img/wn/${iconKeys[1]}@2x.png`)
     expect(getIconUrl(iconKeys[2], { size: 'large' })).toBe(`http://openweathermap.org/img/wn/${iconKeys[2]}@4x.png`)

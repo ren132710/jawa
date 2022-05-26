@@ -28,7 +28,7 @@ export function formatDayOfWeek(timestamp) {
   return format(new Date(timestamp), 'EEEE')
 }
 
-//Mon, Tues,...
+//Mon, Tue,...
 export function formatDayOfWeekShort(timestamp) {
   return format(new Date(timestamp), 'EEE')
 }

@@ -12,11 +12,31 @@ body {
   color: hsl(200, 100%, 10%);
   font-family: 'SuisseIntl', 'Helvetica', 'Arial', sans-serif;
   -webkit-font-smoothing: antialiased;
+
+  /* default: light mode */
   background-image: linear-gradient(to right, rgba(135, 206, 250, 0), rgba(135, 206, 250, 1));
 
-  /* dark mode
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(135, 206, 250, 1));
-  */
+  /* alternate light mode: https://www.color-hex.com/color-palette/51090 */
+  /* background-image: linear-gradient(to right, rgba(231, 76, 60, 1), rgba(135, 206, 250, 1)); */
+  /* sunrise */
+  /* background-image: linear-gradient(to right, rgba(243, 156, 18, 1), rgba(135, 206, 250, 1));
+  /* desert sunrise */
+  /* background-image: linear-gradient(to right, rgba(245, 176, 65, 1), rgba(135, 206, 250, 1)); 
+  /* background-image: linear-gradient(to right, rgba(247, 220, 111, 1), rgba(135, 206, 250, 1)); */
+  /* winter sunrise */
+  /* background-image: linear-gradient(to right, rgba(91, 44, 111, 1), rgba(135, 206, 250, 1)); */
+
+  /* default: dark mode */
+  /* background-image: linear-gradient(to right, rgba(4, 13, 28, 1), rgba(135, 206, 250, 1)); */
+  /* background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(135, 206, 250, 1)); */
+  /* not bad */
+  /* background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(74, 112, 139, 1)); */
+  /* background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(108, 166, 205, 1)); */
+  /* background-image: linear-gradient(to right, rgba(7, 7, 7, 1), rgba(135, 206, 250, 1)); */
+  /* background-image: linear-gradient(to right, rgba(11, 11, 11, 1), rgba(135, 206, 250, 1)); */
+  /* background-image: linear-gradient(to right, rgba(27, 27, 27, 1), rgba(135, 206, 250, 1)); */
+  /* background-image: linear-gradient(to right, rgba(17, 16, 28, 1), rgba(135, 206, 250, 1)); */
+  /* background-image: linear-gradient(to right, rgba(37, 36, 49, 1), rgba(135, 206, 250, 1)); */
 }
 
 header {
@@ -67,7 +87,12 @@ header {
 }
 
 .place-card:hover {
-  background-color: hsl(200, 100%, 92%);
+  /* background-color: hsl(200, 100%, 92%); */
+  background-color: hsl(203, 92%, 80%);
+}
+
+.place-card-item {
+  pointer-events: none;
 }
 
 .place-text {
@@ -90,7 +115,8 @@ header {
 }
 
 .btn-delete-place:hover {
-  background-color: hsl(0, 100%, 40%);
+  /* background-color: hsl(0, 100%, 40%); */
+  background-color: orangered;
 }
 
 .btn-new-place {
@@ -130,11 +156,12 @@ header {
 
 .hourly-section {
   grid-area: hourly;
+  padding-top: 1.25rem;
 }
 
 .section-title {
   padding-top: 1rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.6rem;
   text-align: center;
 }
 
@@ -288,7 +315,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1rem 2rem;
+  margin: 2rem 2rem;
   font-size: 0.75rem;
   height: 30px;
 }
