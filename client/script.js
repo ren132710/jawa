@@ -93,6 +93,7 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
 function initialize() {
   loadPlaces()
   getWeather(places[0].lat, places[0].long, { scope: 'page' })
+  //TODO: How to make repeated calls to api. Research axios with Promise.all
   places.forEach((place) => {
     getWeatherAsync(place.lat, place.long, { scope: 'places' })
   })
