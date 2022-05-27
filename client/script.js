@@ -1,18 +1,19 @@
 /*
 TODO:
-Initial Weather
--populate weather when clicking on favorite place
-
 City/Places Search
  -fetch lon, lat, placeName from google api
  -fetch openWeather data
  -populate: current, daily, hourly
 
- Prefs
- - and preferences drawer on right side
+ prefs
+ - open preferences drawer on right side of screen
  - themes: default, sunrise, desert, winter
  - night mode
  - Future: Units
+
+ misc
+ - convert to DST (server side)
+ - add place.id to placesWeather?
 
 */
 import axios from 'axios'
