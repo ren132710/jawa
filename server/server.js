@@ -98,6 +98,8 @@ function parseHourlyWeather({ hourly, current }) {
         windSpeed: Math.round(hour.wind_speed),
         windDirection: getCardinalDirection(hour.wind_deg),
         windDeg: Math.round(hour.wind_deg),
+        uvIndex: hour.uvi,
+        uvLevel: getUVIndexLevel(hour.uvi),
       }
     })
 }
