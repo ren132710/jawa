@@ -14,14 +14,14 @@ body {
   -webkit-font-smoothing: antialiased;
 
   /* default: light mode */
-  background-image: linear-gradient(to right, rgba(135, 206, 250, 0), rgba(135, 206, 250, 1));
+  /* background-image: linear-gradient(to right, rgba(135, 206, 250, 0), rgba(135, 206, 250, 1)); */
 
   /* alternate light mode: https://www.color-hex.com/color-palette/51090 */
   /* background-image: linear-gradient(to right, rgba(231, 76, 60, 1), rgba(135, 206, 250, 1)); */
   /* sunrise */
-  /* background-image: linear-gradient(to right, rgba(243, 156, 18, 1), rgba(135, 206, 250, 1));
+  background-image: linear-gradient(to right, rgba(243, 156, 18, 1), rgba(135, 206, 250, 1));
   /* desert sunrise */
-  /* background-image: linear-gradient(to right, rgba(245, 176, 65, 1), rgba(135, 206, 250, 1)); 
+  /* background-image: linear-gradient(to right, rgba(245, 176, 65, 1), rgba(135, 206, 250, 1)); */
   /* background-image: linear-gradient(to right, rgba(247, 220, 111, 1), rgba(135, 206, 250, 1)); */
   /* winter sunrise */
   /* background-image: linear-gradient(to right, rgba(91, 44, 111, 1), rgba(135, 206, 250, 1)); */
@@ -276,7 +276,7 @@ header {
 
 .hour-row {
   display: grid;
-  grid-template-columns: repeat(6, minmax(60px, 1fr));
+  grid-template-columns: repeat(7, minmax(60px, 1fr));
   gap: 0.4rem;
 
   /* defaults */
@@ -298,7 +298,7 @@ header {
 }
 
 .hour-label {
-  font-size: 0.75rem;
+  font-size: 0.65rem;
 }
 
 .hour-value {

@@ -1,16 +1,19 @@
 /*
 TODO:
-
 Initial Weather
--fetch weather for first place in Places array
--populate weather: update places not in focus
-- do not repopulate weather when deleting or adding places
 -populate weather when clicking on favorite place
 
-Places Search
+City/Places Search
  -fetch lon, lat, placeName from google api
  -fetch openWeather data
  -populate: current, daily, hourly
+
+ Prefs
+ - and preferences drawer on right side
+ - themes: default, sunrise, desert, winter
+ - night mode
+ - Future: Units
+
 */
 import axios from 'axios'
 import { v4 } from 'uuid'
@@ -48,33 +51,40 @@ function addUniqueID() {
   return v4()
 }
 
-let places = getPlaces()
+/*
+ * initialize page
+ */
 
-const placesContainer = document.querySelector('.places-container')
-const templatePlaceCard = document.querySelector('#template-place-card')
-function loadPlaces() {
-  placesContainer.innerHTML = ''
+let places = getPlaces()
+console.log('places: ', places)
+let placesWeather = []
+
+getPlacesWeather().then(initialize)
+
+function initialize() {
+  console.log('initialized: ', placesWeather)
+  renderPlacesWeather()
+  renderPageWeather(placesWeather[0], { location: places[0].location })
+}
+
+async function getPlacesWeather() {
+  let promises = []
 
   places.forEach((place) => {
-    const element = templatePlaceCard.content.cloneNode(true)
-    const card = element.querySelector('.place-card')
-    card.dataset.id = place.id
-    card.dataset.placeLocation = place.location
-    card.dataset.placeLat = place.lat
-    card.dataset.placeLong = place.long
-    card.querySelector('[data-location').innerText = place.location
-    card.querySelector('[data-icon]').src = getIconUrl(place.icon)
-    card.querySelector('[data-hl] > [data-high]').innerText = place.high
-    card.querySelector('[data-hl] > [data-low]').innerText = place.low
-    card.addEventListener('click', (e) => {
-      if (e.target.id === 'btnDeletePlace') return
-      console.log(e.target)
-    })
-    placesContainer.append(element)
+    const promise = fetchAxiosPromise(place.lat, place.long)
+    //TODO: Can I somehow add location to the promise data here?
+    promises.push(promise)
+  })
+
+  await Promise.all(promises).then((data) => {
+    placesWeather = data
   })
 }
 
-//event listeners
+/*
+ * event listeners
+ */
+
 function addGlobalEventListener(type, selector, callback) {
   document.addEventListener(type, (e) => {
     if (e.target.matches(selector)) callback(e)
@@ -89,73 +99,78 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
   deletePlace(e.target.closest('[data-place-card]').dataset.id)
 })
 
-//initialize page
-function initialize() {
-  loadPlaces()
-  getWeather(places[0].lat, places[0].long, { scope: 'page' })
-  //TODO: How to make repeated calls to api. Research axios with Promise.all
-  places.forEach((place) => {
-    getWeatherAsync(place.lat, place.long, { scope: 'places' })
-  })
-}
-
-initialize()
-
 /*
  * axios
  */
 
-async function getWeatherAsync(lat, long, { scope = '' } = {}) {
+async function fetchAxiosPromise(lat, long) {
   try {
     const res = await axios.get('http://localhost:3001/weather', { params: { lat, long }, timeout: 5000 })
-    if (scope === 'page') {
-      renderWeatherPage(res.data)
-    } else if (scope === 'places') {
-      renderWeatherPlaces(res.data)
+    return res.data
+  } catch (e) {
+    console.log(`ERROR: ${e}`)
+    alert('Fetching weather encountered an issue. Please try again.')
+  }
+}
+
+async function getWeather(lat, long, { target = '' } = {}) {
+  try {
+    const res = await axios.get('http://localhost:3001/weather', { params: { lat, long }, timeout: 5000 })
+    if (target === 'page') {
+      renderPageWeather(res.data)
+    } else if (target === 'places') {
+      renderPlacesWeather(res.data)
     } else {
-      renderWeatherPage(res.data)
+      renderPageWeather(res.data)
     }
   } catch (e) {
     console.log(`ERROR: ${e}`)
     alert('Fetching weather encountered an issue. Please try again.')
   }
-  return
-}
-
-function getWeather(lat, long, { scope = '' } = {}) {
-  axios
-    .get('http://localhost:3001/weather', { params: { lat, long }, timeout: 5000 })
-    .then((res) => {
-      if (scope === 'page') {
-        renderWeatherPage(res.data)
-      } else if (scope === 'places') {
-        renderWeatherPlaces(res.data)
-      } else {
-        renderWeatherPage(res.data)
-      }
-    })
-    .catch((e) => {
-      console.error(e)
-      alert('Fetching weather encountered an issue. Please try again.')
-    })
-  return
 }
 
 /*
  * render weather
  */
 
-const card = document.querySelector('.place-card')
-function renderWeatherPlaces({ coordinates, current }) {
-  console.log('place: ', current, coordinates)
-  card.querySelector('[data-location]').textContent = 'TODO'
-  card.querySelector('[data-icon]').textContent = getIconUrl(current.icon)
-  card.querySelector('[data-high]').textContent = current.high
-  card.querySelector('[data-low]').textContent = current.low
+const placesContainer = document.querySelector('.places-container')
+const templatePlaceCard = document.querySelector('#template-place-card')
+function renderPlacesWeather() {
+  placesContainer.innerHTML = ''
+
+  places.forEach((place, i) => {
+    const element = templatePlaceCard.content.cloneNode(true)
+    const card = element.querySelector('.place-card')
+    card.dataset.placeId = place.id
+    //TODO: fetch location based on lat & long, reverse geocoding
+    card.dataset.placeLocation = place.location
+    card.dataset.placeLat = placesWeather[i].coordinates.lat
+    card.dataset.placeLong = placesWeather[i].coordinates.long
+    card.dataset.placeHigh = placesWeather[i].current.high
+    card.dataset.placeLow = placesWeather[i].current.low
+    card.dataset.icon = getIconUrl(placesWeather[i].current.icon)
+    card.querySelector('[data-location').innerText = place.location
+    card.querySelector('[data-icon]').src = getIconUrl(placesWeather[i].current.icon)
+    card.querySelector('[data-hl] > [data-high]').innerText = placesWeather[i].current.high
+    card.querySelector('[data-hl] > [data-low]').innerText = placesWeather[i].current.low
+    card.addEventListener('click', (e) => {
+      if (e.target.id === 'btnDeletePlace') return
+      renderWeather(e.target.dataset.placeId, e.target.dataset.placeLocation)
+    })
+    placesContainer.append(element)
+  })
 }
 
-function renderWeatherPage({ coordinates, current, daily, hourly }) {
-  renderCurrentWeather({ coordinates, current })
+function renderWeather(id, location) {
+  const index = places.findIndex((place) => {
+    return place.id === id
+  })
+  renderPageWeather(placesWeather[index], { location: location })
+}
+
+function renderPageWeather({ coordinates, current, daily, hourly }, { location = '' } = {}) {
+  console.log('location from renderPageWeather:', location)
+  renderCurrentWeather({ coordinates, current }, { location: location })
   renderDailyWeather(daily)
   renderHourlyWeather(hourly)
 }
@@ -165,9 +180,8 @@ const currentTopLeft = document.querySelector('.current-top-left')
 const currentTopRight = document.querySelector('.current-top-right')
 const currentBotLeft = document.querySelector('.current-bottom-left')
 const currentBotRight = document.querySelector('.current-bottom-right')
-function renderCurrentWeather({ coordinates, current }) {
-  //TODO: LOCATION
-  currentTopLeft.querySelector('[data-current-location').textContent = 'TODO: LOCATION'
+function renderCurrentWeather({ coordinates, current }, { location = '' } = {}) {
+  currentTopLeft.querySelector('[data-current-location').textContent = location
   currentTopLeft.querySelector('[data-current-icon').src = getIconUrl(current.icon, { size: 'large' })
 
   currentTopRight.querySelector('[data-current-dt').textContent = `${formatDayOfWeekShort(
@@ -233,6 +247,7 @@ function renderHourlyWeather(hourly) {
       row.querySelector('[data-hour-wind-speed]').textContent = hour.windSpeed
       row.querySelector('[data-hour-wind-direction]').textContent = hour.windDirection
       row.querySelector('[data-hour-humidity]').textContent = hour.humidity
+      row.querySelector('[data-hour-uv-level]').textContent = hour.uvLevel
       hourlyContainer.append(row)
     })
 }
@@ -253,8 +268,8 @@ function setDefaultPlaces() {
   localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(DEFAULT_PLACES))
 }
 
-function savePlaces() {
-  localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places))
+async function savePlaces() {
+  await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places))
 }
 
 function newPlace() {
@@ -269,10 +284,10 @@ function newPlace() {
   }
 
   places.push(newPlace)
-  savePlaces()
+  savePlaces().then(getPlacesWeather).then(renderPlacesWeather)
 }
 
 function deletePlace(cardId) {
   places = places.filter((place) => place.id !== cardId)
-  savePlaces()
+  savePlaces().then(getPlacesWeather).then(renderPlacesWeather)
 }
