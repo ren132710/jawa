@@ -17,53 +17,41 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 
-  /* default: light mode */
-  /* background: rgba(135, 206, 255, 1); */
-  /* LightSkyBlue: rgba(rgba(135, 206, 250, 1); hsl(203, 92%, 75%) */
-  /* SkyBlue1: rgba(rgba(135, 206, 255, 1); hsl(204, 100%, 76%) */
-  /* DeepSkyBlue3: rgba(rgba(0, 154, 205, 1); hsl(195, 100%, 40%) */
-  /* background: linear-gradient(to right, rgba(135, 206, 255, 0), rgba(135, 206, 255, 1)); */
-  /* background: linear-gradient(to right, rgba(135, 206, 250, 0), rgba(135, 206, 250, 1)); */
-  /* background: linear-gradient(to right, rgba(0, 154, 205, 0), rgba(0, 154, 205, 1)); */
+  /** LIGHT MODE THEMES **/
 
-  /* alternate light mode: https://www.color-hex.com/color-palette/51090 */
+  /* day white */
+  /* background: white; */
+
+  /* sky blue */
+  background: linear-gradient(to right, rgba(135, 206, 250, 0), rgba(135, 206, 250, 1));
 
   /* sunrise */
-  /* background: linear-gradient(to right, rgba(243, 156, 18, 1), rgba(135, 206, 250, 1)); */
-  background: linear-gradient(to right, rgba(251, 244, 138, 1), rgba(135, 206, 250, 1));
-  /* background: linear-gradient(to right, rgba(255, 239, 122, 1), rgba(135, 206, 250, 1)); */
-
-  /* sunrise dark blue */
-  /* background: linear-gradient(to right, rgba(243, 156, 18, 1), rgba(0, 154, 205, 1)); */
-  /* background: linear-gradient(to right, rgba(255, 239, 122, 1), rgba(0, 154, 205, 1)); */
+  /* background: linear-gradient(to right, rgba(251, 244, 138, 1), rgba(135, 206, 250, 1)); */
 
   /* desert sunrise */
   /* background: linear-gradient(to right, rgba(245, 176, 65, 1), rgba(135, 206, 250, 1)); */
-  /* background: linear-gradient(to right, rgba(247, 220, 111, 1), rgba(135, 206, 250, 1)); */
 
   /* winter sunrise */
   /* background: linear-gradient(to right, rgba(91, 44, 111, 1), rgba(135, 206, 250, 1)); */
 
-  /* stormy sunrise */
+  /* rose sunrise */
   /* background: linear-gradient(to right, rgba(231, 76, 60, 1), rgba(135, 206, 250, 1)); */
 
-  /* default: dark mode */
-  /* background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(135, 206, 250, 1)); */
-  /* background: linear-gradient(to right, rgba(4, 13, 28, 1), rgba(135, 206, 250, 1)); */
+  /** DARK MODE THEMES **/
+  /* new moon */
+  /* background: rgba(0, 0, 0, 1); */
 
-  /* possibilities */
-  /* background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(74, 112, 139, 1)); */
-  /* background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(108, 166, 205, 1)); */
-  /* background: linear-gradient(to right, rgba(7, 7, 7, 1), rgba(135, 206, 250, 1)); */
-  /* background: linear-gradient(to right, rgba(11, 11, 11, 1), rgba(135, 206, 250, 1)); */
-  /* background: linear-gradient(to right, rgba(27, 27, 27, 1), rgba(135, 206, 250, 1)); */
-  /* background: linear-gradient(to right, rgba(17, 16, 28, 1), rgba(135, 206, 250, 1)); */
-  /* background: linear-gradient(to right, rgba(37, 36, 49, 1), rgba(135, 206, 250, 1)); */
+  /* night */
+  /* background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.85)); */
+
+  /* dusk */
+  /* background: linear-gradient(to right, rgba(4, 13, 28, 1), rgba(135, 206, 250, 1)); */
 }
 
 .blurred {
+  background: white;
   /* background: rgba(135, 206, 255, 1); */
-  background: rgba(0, 154, 205, 0.3);
+  /* background: rgba(0, 154, 205, 0.3); */
   /* background: rgba(299, 299, 299, 1); */
   filter: blur(8px);
   /* filter: opacity(30%); */
