@@ -33,17 +33,18 @@ import {
 const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
+//TODO: Is it necessary to store high, low, icon?
 const DEFAULT_PLACES = [
-  { id: addUniqueID(), location: 'boston', lat: 42.361145, long: -71.057083, high: 70, low: 60, icon: '02d' },
-  {
-    id: addUniqueID(),
-    location: 'san francisco',
-    lat: 37.733795,
-    long: -122.446747,
-    high: 71,
-    low: 61,
-    icon: '11d',
-  },
+  // { id: addUniqueID(), location: 'boston', lat: 42.361145, long: -71.057083, high: 70, low: 60, icon: '02d' },
+  // {
+  //   id: addUniqueID(),
+  //   location: 'san francisco',
+  //   lat: 37.733795,
+  //   long: -122.446747,
+  //   high: 71,
+  //   low: 61,
+  //   icon: '11d',
+  // },
   { id: addUniqueID(), location: 'montreal', lat: 45.508888, long: -73.561668, high: 72, low: 62, icon: '01d' },
   { id: addUniqueID(), location: 'new york', lat: 40.73061, long: -73.935242, high: 73, low: 63, icon: '03d' },
 ]
@@ -73,10 +74,10 @@ async function getPlacesWeather() {
 
   places.forEach((place) => {
     const promise = fetchAxiosPromise(place.lat, place.long)
-    //TODO: Can I somehow add location to the promise data here?
     promises.push(promise)
   })
 
+  //TODO: use Promise.allSettled??
   await Promise.all(promises).then((data) => {
     placesWeather = data
   })
@@ -171,6 +172,7 @@ function renderWeather(id, location) {
 
 function renderPageWeather({ coordinates, current, daily, hourly }, { location = '' } = {}) {
   console.log('location from renderPageWeather:', location)
+  document.body.classList.remove('blurred')
   renderCurrentWeather({ coordinates, current }, { location: location })
   renderDailyWeather(daily)
   renderHourlyWeather(hourly)
@@ -236,6 +238,7 @@ function renderHourlyWeather(hourly) {
   hourlyContainer.innerHTML = ''
   hourly
     .slice(0, 24)
+    //get every other hour
     .filter((h, i) => i % 2 === 1)
     .forEach((hour) => {
       const element = templateHourRow.content.cloneNode(true)
@@ -257,11 +260,20 @@ function renderHourlyWeather(hourly) {
  * helper functions
  */
 
+//TODO: Try wrapping localStorage.get/localStorage.set in  promises
+
 function getPlaces() {
   localStorage.clear()
   if (localStorage.getItem(PLACES_STORAGE_KEY) == null) {
     setDefaultPlaces()
   }
+  /*
+    Try
+    If the value after await operator is not a Promise, converts the value to a resolved Promise, and waits for it. 
+    const result = await localStorage.getItem(PLACES_STORAGE_KEY)
+    return JSON.parse(result)
+    
+  */
   return JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
 }
 
@@ -269,6 +281,10 @@ function setDefaultPlaces() {
   localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(DEFAULT_PLACES))
 }
 
+//Test again without async await, localStorage is synchronous so not sure why this works
+//Otherwise, make it asynchronous by hacking delay with an additional code step,
+// if (localStorage.getItem(PLACES_STORAGE_KEY) != null) return true
+//TODO: Delete not working, possibly related to async/await code
 async function savePlaces() {
   await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places))
 }
