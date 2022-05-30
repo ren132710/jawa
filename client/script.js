@@ -4,16 +4,22 @@ City/Places Search
  -fetch lon, lat, placeName from google api
  -fetch openWeather data
  -populate: current, daily, hourly
+ -fetch location based on lat & long, reverse geocoding
 
  prefs
  - open preferences drawer on right side of screen
  - themes: default, sunrise, desert, winter
  - night mode
- - Future: Units
+ - Units (Imperial, Metric)
 
  misc
+ - refactor localStorage, make asynchronous (wrap get in Promise?)
+ - pass id and location to the server, set id server-side, return id and location in coordinates object
+ - add precipitation to Current and hour row (swap for FL)
  - convert to DST (server side)
- - add place.id to placesWeather?
+ - fonts: Open Sans, add bold and medium
+ - fonts: try Hind Madurai (Poppins)
+ - fetch location based on lat & long, reverse geocoding
 
 */
 import axios from 'axios'
@@ -33,22 +39,14 @@ import {
 const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
-//TODO: Is it necessary to store high, low, icon?
 const DEFAULT_PLACES = [
-  // { id: addUniqueID(), location: 'boston', lat: 42.361145, long: -71.057083, high: 70, low: 60, icon: '02d' },
-  // {
-  //   id: addUniqueID(),
-  //   location: 'san francisco',
-  //   lat: 37.733795,
-  //   long: -122.446747,
-  //   high: 71,
-  //   low: 61,
-  //   icon: '11d',
-  // },
-  { id: addUniqueID(), location: 'montreal', lat: 45.508888, long: -73.561668, high: 72, low: 62, icon: '01d' },
-  { id: addUniqueID(), location: 'new york', lat: 40.73061, long: -73.935242, high: 73, low: 63, icon: '03d' },
+  { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
+  { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
+  { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.508888, long: -73.561668 },
+  { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.73061, long: -73.935242 },
 ]
 
+//TODO: Set id server side
 function addUniqueID() {
   return v4()
 }
@@ -72,6 +70,7 @@ function initialize() {
 async function getPlacesWeather() {
   let promises = []
 
+  //TODO: Pass place id and location if known
   places.forEach((place) => {
     const promise = fetchAxiosPromise(place.lat, place.long)
     promises.push(promise)
@@ -98,6 +97,8 @@ addGlobalEventListener('click', '#btnNewPlace', () => {
 })
 
 addGlobalEventListener('click', '#btnDeletePlace', (e) => {
+  console.log('delete button clicked ', e.target)
+  console.log(e.target.closest('[data-place-card]').dataset.id)
   deletePlace(e.target.closest('[data-place-card]').dataset.id)
 })
 
@@ -105,6 +106,7 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
  * axios
  */
 
+//TODO: pass place id and location if known
 async function fetchAxiosPromise(lat, long) {
   try {
     const res = await axios.get('http://localhost:3001/weather', { params: { lat, long }, timeout: 5000 })
@@ -143,13 +145,12 @@ function renderPlacesWeather() {
   places.forEach((place, i) => {
     const element = templatePlaceCard.content.cloneNode(true)
     const card = element.querySelector('.place-card')
-    card.dataset.placeId = place.id
-    //TODO: fetch location based on lat & long, reverse geocoding
-    card.dataset.placeLocation = place.location
-    card.dataset.placeLat = placesWeather[i].coordinates.lat
-    card.dataset.placeLong = placesWeather[i].coordinates.long
-    card.dataset.placeHigh = placesWeather[i].current.high
-    card.dataset.placeLow = placesWeather[i].current.low
+    card.dataset.id = place.id
+    card.dataset.location = place.location
+    card.dataset.lat = placesWeather[i].coordinates.lat
+    card.dataset.long = placesWeather[i].coordinates.long
+    card.dataset.high = placesWeather[i].current.high
+    card.dataset.low = placesWeather[i].current.low
     card.dataset.icon = getIconUrl(placesWeather[i].current.icon)
     card.querySelector('[data-location').innerText = place.location
     card.querySelector('[data-icon]').src = getIconUrl(placesWeather[i].current.icon)
@@ -284,7 +285,6 @@ function setDefaultPlaces() {
 //Test again without async await, localStorage is synchronous so not sure why this works
 //Otherwise, make it asynchronous by hacking delay with an additional code step,
 // if (localStorage.getItem(PLACES_STORAGE_KEY) != null) return true
-//TODO: Delete not working, possibly related to async/await code
 async function savePlaces() {
   await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places))
 }

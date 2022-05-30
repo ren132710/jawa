@@ -2,6 +2,8 @@
 *::after,
 *::before {
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 
 body {
@@ -9,52 +11,54 @@ body {
   grid-template-rows: auto;
   margin: 0;
   padding: 0;
-  /* color: hsl(200, 100%, 10%); */
-  color: #111;
+  position: relative;
+  color: hsl(200, 100%, 10%);
   font-family: sans-serif;
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  min-height: 100vh;
 
   /** LIGHT MODE THEMES **/
 
-  /* day white */
+  /* day */
   /* background: white; */
 
-  /* sky blue */
-  background: linear-gradient(to right, rgba(135, 206, 250, 0), rgba(135, 206, 250, 1));
+  /* morning */
+  background: linear-gradient(to right, rgba(244, 244, 244, 1), rgba(135, 206, 250, 1));
 
-  /* sunrise */
-  /* background: linear-gradient(to right, rgba(251, 244, 138, 1), rgba(135, 206, 250, 1)); */
+  /* sunrise  TODO: Sunrise can be better */
+  /* background: linear-gradient(to right, rgba(251, 244, 138, 0.6), rgba(135, 206, 250, 1)); */
 
-  /* desert sunrise */
+  /* desert */
   /* background: linear-gradient(to right, rgba(245, 176, 65, 1), rgba(135, 206, 250, 1)); */
 
-  /* winter sunrise */
-  /* background: linear-gradient(to right, rgba(91, 44, 111, 1), rgba(135, 206, 250, 1)); */
-
-  /* rose sunrise */
-  /* background: linear-gradient(to right, rgba(231, 76, 60, 1), rgba(135, 206, 250, 1)); */
-
   /** DARK MODE THEMES **/
-  /* new moon */
+  /* dark */
   /* background: rgba(0, 0, 0, 1); */
 
-  /* night */
+  /* new moon */
   /* background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.85)); */
 
   /* dusk */
   /* background: linear-gradient(to right, rgba(4, 13, 28, 1), rgba(135, 206, 250, 1)); */
+
+  /* winter */
+  /* background: linear-gradient(to right, rgba(91, 44, 111, 1), rgba(135, 206, 250, 1)); */
+
+  /* dark mode font color */
+  /* color: rgba(244, 244, 244, 1); */
 }
 
 .blurred {
-  background: white;
-  /* background: rgba(135, 206, 255, 1); */
-  /* background: rgba(0, 154, 205, 0.3); */
-  /* background: rgba(299, 299, 299, 1); */
+  /* background: white; */
+  background: rgba(244, 244, 244, 1);
   filter: blur(8px);
   /* filter: opacity(30%); */
+
+  /* dark mode */
+  /* background: rgba(0, 0, 0, 0.85); */
 }
 
 header {
@@ -97,11 +101,13 @@ header {
   justify-content: center;
   align-items: center;
   border: 1px solid hsl(200, 100%, 70%);
+  border: 1px solid hsl(200, 100%, 25%);
   border-radius: 0.25rem;
   padding: 0.2rem;
   cursor: pointer;
-  outline: none;
+  /* outline: none; */
   margin: 0.3rem;
+  text-align: center;
 }
 
 .place-card:hover {
@@ -127,7 +133,7 @@ header {
   padding: 0.16rem 0.25rem;
   text-align: center;
   font-size: 0.35rem;
-  background-color: hsl(200, 100%, 30%);
+  background-color: hsl(200, 100%, 20%);
   color: white;
   font-weight: bolder;
 }
@@ -246,6 +252,8 @@ header {
 .current-description {
   color: hsl(200, 100%, 40%);
   text-transform: capitalize;
+  /* dark mode */
+  /* color: rgba(244, 244, 244, 1); */
 }
 
 .label {
@@ -255,6 +263,8 @@ header {
 
 .value {
   color: hsl(200, 100%, 30%);
+  /* dark mode */
+  /* color: rgba(244, 244, 244, 1); */
 }
 
 .daily-container {
@@ -282,6 +292,8 @@ header {
   color: hsl(200, 100%, 40%);
   text-transform: capitalize;
   text-align: center;
+  /* dark mode */
+  /* color: rgba(244, 244, 244, 1); */
 }
 
 .hour-container {
@@ -304,7 +316,7 @@ header {
 }
 
 .hour-row:nth-child(2n) {
-  background: linear-gradient(to right, rgba(135, 206, 255, 0), rgba(135, 206, 255, 1));
+  background: linear-gradient(to right, rgba(135, 206, 250, 0), rgba(135, 206, 250, 1));
 }
 
 .hour-data {
@@ -321,6 +333,8 @@ header {
 .hour-value {
   color: hsl(200, 100%, 30%);
   font-size: 0.65rem;
+  /* dark mode */
+  /* color: rgba(244, 244, 244, 1); */
 }
 
 .hour-value-margin {
