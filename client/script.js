@@ -14,19 +14,20 @@ City/Places Search
 
  misc
  - refactor localStorage, make asynchronous (wrap get in Promise?)
- - pass id and location to the server, set id server-side, return id and location in coordinates object
- - add precipitation to Current and hour row (swap for FL)
- - convert to DST (server side)
- - fonts: Open Sans, add bold and medium
- - fonts: try Hind Madurai (Poppins)
- - fetch location based on lat & long, reverse geocoding
+ - convert to DST (server side). Verify why this is not done automatically
+
+ test
+ - migrate to cross-env package? research dotenv vs cross-env
+ - server: write tests for parse functions
+ - client: create Cyrpress test to view, add, delete
+
+ final clean
+  - remove console.logs
 
 */
 import axios from 'axios'
-import { v4 } from 'uuid'
 import {
   getIconUrl,
-  parseIconUrl,
   formatMonth,
   formatDayOfMonth,
   formatDayOfWeek,
@@ -40,16 +41,12 @@ const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
 const DEFAULT_PLACES = [
-  { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
-  { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
-  { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.508888, long: -73.561668 },
-  { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.73061, long: -73.935242 },
+  { id: '', location: '', lat: 44.977753, long: -93.265015 }, //Minneapolis
+  // { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
+  // { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
+  // { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.508888, long: -73.561668 },
+  { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7306, long: -73.9352 },
 ]
-
-//TODO: Set id server side
-function addUniqueID() {
-  return v4()
-}
 
 /*
  * initialize page
@@ -72,7 +69,7 @@ async function getPlacesWeather() {
 
   //TODO: Pass place id and location if known
   places.forEach((place) => {
-    const promise = fetchAxiosPromise(place.lat, place.long)
+    const promise = fetchAxiosPromise(place.lat, place.long, place.id, place.location)
     promises.push(promise)
   })
 
@@ -97,8 +94,6 @@ addGlobalEventListener('click', '#btnNewPlace', () => {
 })
 
 addGlobalEventListener('click', '#btnDeletePlace', (e) => {
-  console.log('delete button clicked ', e.target)
-  console.log(e.target.closest('[data-place-card]').dataset.id)
   deletePlace(e.target.closest('[data-place-card]').dataset.id)
 })
 
@@ -106,10 +101,17 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
  * axios
  */
 
-//TODO: pass place id and location if known
-async function fetchAxiosPromise(lat, long) {
+//if id and location are known, pass to server to include in the response
+//otherwise, the server will set and return the id in the response
+//note: params that are null or undefined are not rendered in the axios.get URL
+//use param name 'reqID' so the server can use 'id' in the response object
+async function fetchAxiosPromise(lat, long, reqId, location) {
+  // console.log(id, location)
   try {
-    const res = await axios.get('http://localhost:3001/weather', { params: { lat, long }, timeout: 5000 })
+    const res = await axios.get('http://localhost:3001/weather', {
+      params: { lat, long, reqId, location },
+      timeout: 5000,
+    })
     return res.data
   } catch (e) {
     console.log(`ERROR: ${e}`)
@@ -136,7 +138,7 @@ async function getWeather(lat, long, { target = '' } = {}) {
 /*
  * render weather
  */
-
+//TODO: Populate from places or placesWeather??
 const placesContainer = document.querySelector('.places-container')
 const templatePlaceCard = document.querySelector('#template-place-card')
 function renderPlacesWeather() {
@@ -158,7 +160,7 @@ function renderPlacesWeather() {
     card.querySelector('[data-hl] > [data-low]').innerText = placesWeather[i].current.low
     card.addEventListener('click', (e) => {
       if (e.target.id === 'btnDeletePlace') return
-      renderWeather(e.target.dataset.placeId, e.target.dataset.placeLocation)
+      renderWeather(e.target.dataset.id, e.target.dataset.location)
     })
     placesContainer.append(element)
   })
@@ -185,6 +187,7 @@ const currentTopRight = document.querySelector('.current-top-right')
 const currentBotLeft = document.querySelector('.current-bottom-left')
 const currentBotRight = document.querySelector('.current-bottom-right')
 function renderCurrentWeather({ coordinates, current }, { location = '' } = {}) {
+  currentTopLeft.querySelector('[data-id]').dataset.id = coordinates.id
   currentTopLeft.querySelector('[data-current-location').textContent = location
   currentTopLeft.querySelector('[data-current-icon').src = getIconUrl(current.icon, { size: 'large' })
 
@@ -198,6 +201,7 @@ function renderCurrentWeather({ coordinates, current }, { location = '' } = {}) 
   currentTopRight.querySelector('[data-current-temp').textContent = current.temp
   currentTopRight.querySelector('[data-current-fl').textContent = current.feelsLike
   currentTopRight.querySelector('[data-current-description').textContent = current.description
+  currentTopRight.querySelector('[data-current-precip').textContent = current.precip
   currentTopRight.querySelector('[data-current-visibility').textContent = current.visibility
 
   currentBotLeft.querySelector('[data-current-uv-index]').textContent = current.uvIndex
@@ -248,7 +252,7 @@ function renderHourlyWeather(hourly) {
       row.querySelector('[data-hour]').textContent = formatHour(hour.timestamp)
       row.querySelector('[data-icon]').src = getIconUrl(hour.icon)
       row.querySelector('[data-hour-temp]').textContent = hour.temp
-      row.querySelector('[data-hour-fl-temp]').textContent = hour.feelsLike
+      row.querySelector('[data-hour-precip]').textContent = hour.precip
       row.querySelector('[data-hour-wind-speed]').textContent = hour.windSpeed
       row.querySelector('[data-hour-wind-direction]').textContent = hour.windDirection
       row.querySelector('[data-hour-humidity]').textContent = hour.humidity
@@ -291,17 +295,15 @@ async function savePlaces() {
 
 function newPlace() {
   const newPlace = {
-    id: addUniqueID(),
+    id: currentTopLeft.querySelector('[data-id').dataset.id,
     location: currentTopLeft.querySelector('[data-current-location').innerText.toLowerCase(),
     lat: currentTopRight.querySelector('[data-current-lat').innerText,
     long: currentTopRight.querySelector('[data-current-long').innerText,
-    high: currentTopRight.querySelector('[data-current-high').innerText,
-    low: currentTopRight.querySelector('[data-current-low').innerText,
-    icon: parseIconUrl(currentTopLeft.querySelector('[data-current-icon').src),
   }
 
   places.push(newPlace)
   savePlaces().then(getPlacesWeather).then(renderPlacesWeather)
+  console.log('places: ', places)
 }
 
 function deletePlace(cardId) {

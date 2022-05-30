@@ -25,7 +25,7 @@
         <div class="section-title">Current Weather</div>
         <div class="current-container">
           <div class="current-top-left">
-            <div class="current-location" data-current-location></div>
+            <div class="current-location" data-id data-current-location></div>
             <button id="btnNewPlace" class="btn-new-place">New Place</button>
             <img class="weather-icon large" data-current-icon src="http://openweathermap.org/img/wn/10d@4x.png" />
             <br />
@@ -39,6 +39,9 @@
             <div class="current-temp"><span data-current-temp></span>&deg;&nbsp;F</div>
             <div class="current-feels-like">Feels Like:&nbsp;<span data-current-fl></span>&deg;</div>
             <div class="current-description" data-current-description></div>
+            <div class="label">
+              Precip:&nbsp;<span class="value" data-current-precip></span><span class="value">&percnt;</span>
+            </div>
             <div class="label">
               Visibility:&nbsp;<span class="value" data-current-visibility></span><span class="value">&nbsp;mi</span>
             </div>
@@ -116,9 +119,9 @@
           </div>
         </div>
         <div class="hour-data">
-          <div class="hour-label">FL Temp</div>
+          <div class="hour-label">Precip</div>
           <div class="hour-value-margin">
-            <span class="hour-value" data-hour-fl-temp></span><span class="hour-value">&deg;</span>
+            <span class="hour-value" data-hour-precip></span><span class="hour-value">&percnt;</span>
           </div>
         </div>
         <div class="hour-data">
