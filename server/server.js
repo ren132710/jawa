@@ -7,6 +7,7 @@ const cors = require('cors')
 const axios = require('axios')
 require('dotenv').config()
 const app = express()
+const { v4 } = require('uuid')
 const { getCardinalDirection, getUVIndexLevel } = require('./utils.js')
 
 //with no params, allows requests from any url
@@ -17,8 +18,12 @@ app.use(express.urlencoded({ extended: true }))
 
 app.listen(3001)
 
+//TODO: if (process.env.TEST === true) { use TEST_DATA and run test code }
 app.get('/weather', (req, res) => {
-  const { lat, long } = req.query
+  const { lat, long, reqId, location } = req.query
+
+  //generate a response id, if id is null
+  let id = reqId === '' ? v4() : reqId
 
   axios
     .get('https://api.openweathermap.org/data/3.0/onecall', {
@@ -27,8 +32,14 @@ app.get('/weather', (req, res) => {
     })
     .then(({ data }) => {
       res.json({
-        // data // parse server-side
-        coordinates: { lat: data.lat, long: data.lon },
+        coordinates: {
+          id,
+          location,
+          lat: data.lat,
+          long: data.lon,
+          timezone: data.timezone,
+          timezone_offset: data.timezone_offset,
+        },
         current: parseCurrentWeather(data),
         daily: parseDailyWeather(data),
         hourly: parseHourlyWeather(data),
@@ -41,10 +52,10 @@ app.get('/weather', (req, res) => {
 })
 
 function parseCurrentWeather({ current, daily }) {
-  const { temp } = daily[0]
+  const { pop, temp } = daily[0]
 
   return {
-    timestamp: current.dt * 1000, //convert Unix time to JS time
+    timestamp: current.dt * 1000, //convert Unix (seconds) to JS (milliseconds)
     description: current.weather[0].description,
     icon: current.weather[0].icon,
     temp: Math.round(current.temp),
@@ -52,10 +63,11 @@ function parseCurrentWeather({ current, daily }) {
     low: Math.round(temp.min),
     feelsLike: Math.round(current.feels_like),
 
-    // convert meters to miles, round to one decimal place
+    //visibility is always provided in meters, so convert to miles, round to one decimal place
+    //TODO: Add switch if units are metric
     visibility: Math.round((current.visibility / 1609.344) * 10) / 10,
+    precip: Math.round(pop * 100),
     dewPoint: Math.round(current.dew_point),
-
     //TODO: How to adjust for DST??
     sunrise: current.sunrise * 1000,
     sunset: current.sunset * 1000,
@@ -76,6 +88,7 @@ function parseDailyWeather({ daily }) {
       icon: day.weather[0].icon,
       high: Math.round(day.temp.max),
       low: Math.round(day.temp.min),
+      precip: Math.round(day.pop * 100),
       humidity: Math.round(day.humidity),
       windSpeed: Math.round(day.wind_speed),
       windDirection: getCardinalDirection(day.wind_deg),
@@ -94,6 +107,7 @@ function parseHourlyWeather({ hourly, current }) {
         icon: hour.weather[0].icon,
         temp: Math.round(hour.temp),
         feelsLike: Math.round(hour.feels_like),
+        precip: Math.round(hour.pop * 100),
         humidity: Math.round(hour.humidity),
         windSpeed: Math.round(hour.wind_speed),
         windDirection: getCardinalDirection(hour.wind_deg),
