@@ -68,13 +68,13 @@ header {
   grid-template-areas:
     'city-search'
     'places';
-  margin: 1rem 2rem 0rem;
+  margin: 2rem;
 }
 
 .city-search-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .city-search {
@@ -90,9 +90,19 @@ header {
 
 .places-container {
   grid-area: places;
-  display: flex;
+  display: grid;
+  gap: 0.5rem;
+  /* max = size places card so location text does not wrap */
+  grid-template-columns: repeat(auto-fit, minmax(70px, max-content));
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
+  margin: 1rem 0rem 0rem;
+
+  /* grid defaults */
+  /* justify-items: stretch; */
+  /* align-items: stretch; */
+  /* justify-content: stretch; */
+  /* align-content: center; */
 }
 
 .place-card {
@@ -101,19 +111,16 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid hsl(200, 100%, 70%);
+  /* border: 1px solid hsl(200, 100%, 70%); */
   border: 1px solid hsl(200, 100%, 25%);
   border-radius: 0.25rem;
   padding: 0.2rem;
   cursor: pointer;
-  /* outline: none; */
-  margin: 0.3rem;
   text-align: center;
 }
 
 .place-card:hover {
-  /* background-color: hsl(200, 100%, 92%); */
-  background-color: hsl(203, 92%, 80%);
+  background-color: rgba(244, 244, 244, 0.3);
 }
 
 .place-card-item {
@@ -192,7 +199,7 @@ header {
 .current-container {
   display: grid;
   grid-template-columns: 1.25fr 1fr;
-  grid-template-rows: 233px 50px;
+  grid-template-rows: 250px 50px;
   gap: 0.4rem;
   padding: 0.75rem 1rem;
   border: 1px solid white;
@@ -273,6 +280,7 @@ header {
   grid-template-columns: repeat(auto-fit, 120px);
   gap: 0.55rem;
   justify-content: center;
+  /* max-height: 300px; */
 }
 
 .daily-card {
@@ -293,6 +301,7 @@ header {
   color: hsl(200, 100%, 40%);
   text-transform: capitalize;
   text-align: center;
+
   /* dark mode */
   /* color: rgba(244, 244, 244, 1); */
 }
@@ -308,12 +317,6 @@ header {
   display: grid;
   grid-template-columns: repeat(7, minmax(60px, 1fr));
   gap: 0.4rem;
-
-  /* grid defaults */
-  /* justify-items: stretch; */
-  /* align-items: stretch; */
-  /* justify-content: stretch; */
-  /* align-content: center; */
 }
 
 .hour-row:nth-child(2n) {
@@ -334,6 +337,7 @@ header {
 .hour-value {
   color: hsl(200, 100%, 30%);
   font-size: 0.65rem;
+
   /* dark mode */
   /* color: rgba(244, 244, 244, 1); */
 }
@@ -352,9 +356,18 @@ footer {
   height: 30px;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1150px) {
   body {
-    grid-template-rows: 120px 1fr 100px 30px;
+    grid-template-rows: 120px 1fr 80px 20px;
+  }
+
+  .main {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+
+    grid-template-areas:
+      'current daily'
+      'hourly hourly';
   }
 
   header {
@@ -367,15 +380,7 @@ footer {
   }
 
   .places-container {
-    justify-content: flex-end;
-  }
-
-  .main {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-
-    grid-template-areas:
-      'current daily'
-      'hourly hourly';
+    justify-content: end;
+    margin: 0rem;
   }
 }
