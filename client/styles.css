@@ -372,7 +372,8 @@ footer {
   }
 
   .main {
-    grid-template-columns: 1fr 1.25fr;
+    /* grid-template-columns: 1fr 1.618fr; */
+    grid-template-columns: 1fr 1.5fr;
     grid-template-rows: auto;
 
     grid-template-areas:
