@@ -13,13 +13,17 @@ City/Places Search
  - Units (Imperial, Metric)
 
  misc
- - refactor localStorage, make asynchronous (wrap get in Promise?)
  - convert to DST (server side). Verify why this is not done automatically
+
 
  test
  - migrate to cross-env package? research dotenv vs cross-env
  - server: write tests for parse functions
  - client: create Cyrpress test to view, add, delete
+
+ ui
+ - how to prevent location text from wrapping when shrinking screen width?
+ - how to remove padding from span TEMP
 
  final clean
   - remove console.logs
@@ -41,10 +45,11 @@ const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
 const DEFAULT_PLACES = [
-  { id: '', location: '', lat: 44.977753, long: -93.265015 }, //Minneapolis
+  // { id: '', location: 'minneapolis', lat: 44.977753, long: -93.265015 }, //Minneapolis
+  // { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.334591, long: 18.06324 },
   // { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
   // { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
-  // { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.508888, long: -73.561668 },
+  { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.508888, long: -73.561668 },
   { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7306, long: -73.9352 },
 ]
 
@@ -52,14 +57,24 @@ const DEFAULT_PLACES = [
  * initialize page
  */
 
-let places = getPlaces()
-console.log('places: ', places)
+let places = []
 let placesWeather = []
 
-getPlacesWeather().then(initialize)
+getPlaces()
+  .then((data) => {
+    places = data
+    console.log('from localStorage ', data)
+  })
+  .then(getPlacesWeather)
+  .then(initialize)
+  .catch((err) => {
+    console.log('ERROR: ', err)
+    alert(`There was a problem loading your places from the browser's localStorage.`)
+  })
 
 function initialize() {
-  console.log('initialized: ', placesWeather)
+  console.log('places initialized: ', places)
+  console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
   renderPageWeather(placesWeather[0], { location: places[0].location })
 }
@@ -67,7 +82,6 @@ function initialize() {
 async function getPlacesWeather() {
   let promises = []
 
-  //TODO: Pass place id and location if known
   places.forEach((place) => {
     const promise = fetchAxiosPromise(place.lat, place.long, place.id, place.location)
     promises.push(promise)
@@ -104,7 +118,7 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
 //if id and location are known, pass to server to include in the response
 //otherwise, the server will set and return the id in the response
 //note: params that are null or undefined are not rendered in the axios.get URL
-//use param name 'reqID' so the server can use 'id' in the response object
+//pass 'id' as 'reqId' so the server can use 'id' in the response object
 async function fetchAxiosPromise(lat, long, reqId, location) {
   // console.log(id, location)
   try {
@@ -174,7 +188,6 @@ function renderWeather(id, location) {
 }
 
 function renderPageWeather({ coordinates, current, daily, hourly }, { location = '' } = {}) {
-  console.log('location from renderPageWeather:', location)
   document.body.classList.remove('blurred')
   renderCurrentWeather({ coordinates, current }, { location: location })
   renderDailyWeather(daily)
@@ -265,30 +278,30 @@ function renderHourlyWeather(hourly) {
  * helper functions
  */
 
-//TODO: Try wrapping localStorage.get/localStorage.set in  promises
-
+//make localStorage.getItem thenable
 function getPlaces() {
-  localStorage.clear()
-  if (localStorage.getItem(PLACES_STORAGE_KEY) == null) {
-    setDefaultPlaces()
-  }
-  /*
-    Try
-    If the value after await operator is not a Promise, converts the value to a resolved Promise, and waits for it. 
-    const result = await localStorage.getItem(PLACES_STORAGE_KEY)
-    return JSON.parse(result)
-    
-  */
-  return JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
+  return new Promise((resolve, reject) => {
+    localStorage.clear()
+    if (localStorage.getItem(PLACES_STORAGE_KEY) == null) {
+      setDefaultPlaces()
+    }
+
+    const data = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
+    if (true) {
+      resolve(data)
+    } else {
+      reject(err)
+    }
+  })
 }
 
-function setDefaultPlaces() {
-  localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(DEFAULT_PLACES))
+//make localStorage.setItem thenable
+//per MDN, if the value after await operator is not a Promise,
+//converts the value to a resolved Promise, and waits for it.
+async function setDefaultPlaces() {
+  await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(DEFAULT_PLACES))
 }
 
-//Test again without async await, localStorage is synchronous so not sure why this works
-//Otherwise, make it asynchronous by hacking delay with an additional code step,
-// if (localStorage.getItem(PLACES_STORAGE_KEY) != null) return true
 async function savePlaces() {
   await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places))
 }
@@ -302,11 +315,21 @@ function newPlace() {
   }
 
   places.push(newPlace)
+
+  //limit the number of places to 10
+  if (places.length >= 10) {
+    document.querySelector('[data-new-place]').classList.add('btn-new-place-disabled')
+  }
   savePlaces().then(getPlacesWeather).then(renderPlacesWeather)
-  console.log('places: ', places)
+  console.log('new places: ', places)
 }
 
 function deletePlace(cardId) {
   places = places.filter((place) => place.id !== cardId)
+
+  if (places.length < 10) {
+    document.querySelector('[data-new-place]').classList.remove('btn-new-place-disabled')
+  }
+
   savePlaces().then(getPlacesWeather).then(renderPlacesWeather)
 }
