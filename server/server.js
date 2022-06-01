@@ -22,7 +22,7 @@ app.listen(3001)
 app.get('/weather', (req, res) => {
   const { lat, long, reqId, location } = req.query
 
-  //generate a response id, if id is null
+  //generate id, if id is null
   let id = reqId === '' ? v4() : reqId
 
   axios
@@ -68,7 +68,6 @@ function parseCurrentWeather({ current, daily }) {
     visibility: Math.round((current.visibility / 1609.344) * 10) / 10,
     precip: Math.round(pop * 100),
     dewPoint: Math.round(current.dew_point),
-    //TODO: How to adjust for DST??
     sunrise: current.sunrise * 1000,
     sunset: current.sunset * 1000,
     uvIndex: current.uvi,
