@@ -1,5 +1,5 @@
 //https://date-fns.org/v2.28.0/docs/format
-import { format } from 'date-fns'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 export function getIconUrl(iconKey, { size = '' } = {}) {
   let sizeKey = ''
@@ -46,4 +46,10 @@ export function formatDate(timestamp) {
 //05:25 PM
 export function formatTime(timestamp) {
   return format(new Date(timestamp), 'p')
+}
+
+//displays the timezone time for the particular place
+export function formatZonedTime(timestamp, timezone) {
+  const zonedDate = utcToZonedTime(new Date(timestamp), timezone)
+  return format(zonedDate, 'p', { timezone })
 }

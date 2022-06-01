@@ -118,9 +118,10 @@ header {
   border: 1px solid hsl(200, 100%, 70%);
   /* border: 1px solid hsl(200, 100%, 25%); */
   border-radius: 0.25rem;
-  padding: 0.2rem;
+  padding: 0.3rem;
   cursor: pointer;
   text-align: center;
+  white-space: nowrap;
 }
 
 .place-card:hover {

@@ -12,18 +12,13 @@ City/Places Search
  - night mode
  - Units (Imperial, Metric)
 
- misc
- - convert to DST (server side). Verify why this is not done automatically
-
-
  test
  - migrate to cross-env package? research dotenv vs cross-env
  - server: write tests for parse functions
  - client: create Cyrpress test to view, add, delete
 
  ui
- - how to prevent location text from wrapping when shrinking screen width?
- - how to remove padding from span TEMP
+ - how to remove top bottom padding from current temp span?
 
  final clean
   - remove console.logs
@@ -39,13 +34,14 @@ import {
   formatHour,
   formatDate,
   formatTime,
+  formatZonedTime,
 } from './helpers.js'
 
 const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
 const DEFAULT_PLACES = [
-  // { id: '', location: 'minneapolis', lat: 44.977753, long: -93.265015 }, //Minneapolis
+  // { id: '', location: 'minneapolis', lat: 44.977753, long: -93.265015 },
   // { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.334591, long: 18.06324 },
   // { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
   // { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
@@ -76,7 +72,7 @@ function initialize() {
   console.log('places initialized: ', places)
   console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
-  renderPageWeather(placesWeather[0], { location: places[0].location })
+  renderPageWeather(placesWeather[0])
 }
 
 async function getPlacesWeather() {
@@ -115,12 +111,11 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
  * axios
  */
 
-//if id and location are known, pass to server to include in the response
-//otherwise, the server will set and return the id in the response
-//note: params that are null or undefined are not rendered in the axios.get URL
+//if id and location are known, pass to server so server can include in the response
 //pass 'id' as 'reqId' so the server can use 'id' in the response object
+//when id is null, the server will generate the id and return it in the response
+//NOTE: params that are null or undefined are not rendered in the axios.get URL
 async function fetchAxiosPromise(lat, long, reqId, location) {
-  // console.log(id, location)
   try {
     const res = await axios.get('http://localhost:3001/weather', {
       params: { lat, long, reqId, location },
@@ -152,44 +147,44 @@ async function getWeather(lat, long, { target = '' } = {}) {
 /*
  * render weather
  */
-//TODO: Populate from places or placesWeather??
+
 const placesContainer = document.querySelector('.places-container')
 const templatePlaceCard = document.querySelector('#template-place-card')
 function renderPlacesWeather() {
   placesContainer.innerHTML = ''
 
-  places.forEach((place, i) => {
+  placesWeather.forEach((place) => {
     const element = templatePlaceCard.content.cloneNode(true)
     const card = element.querySelector('.place-card')
-    card.dataset.id = place.id
-    card.dataset.location = place.location
-    card.dataset.lat = placesWeather[i].coordinates.lat
-    card.dataset.long = placesWeather[i].coordinates.long
-    card.dataset.high = placesWeather[i].current.high
-    card.dataset.low = placesWeather[i].current.low
-    card.dataset.icon = getIconUrl(placesWeather[i].current.icon)
-    card.querySelector('[data-location').innerText = place.location
-    card.querySelector('[data-icon]').src = getIconUrl(placesWeather[i].current.icon)
-    card.querySelector('[data-hl] > [data-high]').innerText = placesWeather[i].current.high
-    card.querySelector('[data-hl] > [data-low]').innerText = placesWeather[i].current.low
+    card.dataset.id = place.coordinates.id
+    card.dataset.location = place.coordinates.location
+    card.dataset.lat = place.coordinates.lat
+    card.dataset.long = place.coordinates.long
+    card.dataset.high = place.current.high
+    card.dataset.low = place.current.low
+    card.dataset.icon = getIconUrl(place.current.icon)
+    card.querySelector('[data-location').innerText = place.coordinates.location
+    card.querySelector('[data-icon]').src = getIconUrl(place.current.icon)
+    card.querySelector('[data-hl] > [data-high]').innerText = place.current.high
+    card.querySelector('[data-hl] > [data-low]').innerText = place.current.low
     card.addEventListener('click', (e) => {
       if (e.target.id === 'btnDeletePlace') return
-      renderWeather(e.target.dataset.id, e.target.dataset.location)
+      renderWeather(e.target.dataset.id)
     })
     placesContainer.append(element)
   })
 }
 
-function renderWeather(id, location) {
-  const index = places.findIndex((place) => {
-    return place.id === id
+function renderWeather(id) {
+  const index = placesWeather.findIndex((place) => {
+    return place.coordinates.id === id
   })
-  renderPageWeather(placesWeather[index], { location: location })
+  renderPageWeather(placesWeather[index])
 }
 
-function renderPageWeather({ coordinates, current, daily, hourly }, { location = '' } = {}) {
+function renderPageWeather({ coordinates, current, daily, hourly }) {
   document.body.classList.remove('blurred')
-  renderCurrentWeather({ coordinates, current }, { location: location })
+  renderCurrentWeather({ coordinates, current })
   renderDailyWeather(daily)
   renderHourlyWeather(hourly)
 }
@@ -199,9 +194,9 @@ const currentTopLeft = document.querySelector('.current-top-left')
 const currentTopRight = document.querySelector('.current-top-right')
 const currentBotLeft = document.querySelector('.current-bottom-left')
 const currentBotRight = document.querySelector('.current-bottom-right')
-function renderCurrentWeather({ coordinates, current }, { location = '' } = {}) {
+function renderCurrentWeather({ coordinates, current }) {
   currentTopLeft.querySelector('[data-id]').dataset.id = coordinates.id
-  currentTopLeft.querySelector('[data-current-location').textContent = location
+  currentTopLeft.querySelector('[data-current-location').textContent = coordinates.location
   currentTopLeft.querySelector('[data-current-icon').src = getIconUrl(current.icon, { size: 'large' })
 
   currentTopRight.querySelector('[data-current-dt').textContent = `${formatDayOfWeekShort(
@@ -216,7 +211,6 @@ function renderCurrentWeather({ coordinates, current }, { location = '' } = {}) 
   currentTopRight.querySelector('[data-current-description').textContent = current.description
   currentTopRight.querySelector('[data-current-precip').textContent = current.precip
   currentTopRight.querySelector('[data-current-visibility').textContent = current.visibility
-
   currentBotLeft.querySelector('[data-current-uv-index]').textContent = current.uvIndex
   currentBotLeft.querySelector('[data-current-uv-level]').textContent = current.uvLevel
   currentBotLeft.querySelector('[data-current-humidity]').textContent = current.humidity
@@ -225,8 +219,14 @@ function renderCurrentWeather({ coordinates, current }, { location = '' } = {}) 
 
   currentBotRight.querySelector('[data-current-dew-point').textContent = current.dewPoint
   //TODO: Adjust sunrise/sunset for DST
-  currentBotRight.querySelector('[data-current-sunrise').textContent = formatTime(current.sunrise)
-  currentBotRight.querySelector('[data-current-sunset').textContent = formatTime(current.sunset)
+  currentBotRight.querySelector('[data-current-sunrise').textContent = formatZonedTime(
+    current.sunrise,
+    coordinates.timezone
+  )
+  currentBotRight.querySelector('[data-current-sunset').textContent = formatZonedTime(
+    current.sunset,
+    coordinates.timezone
+  )
 }
 
 //render daily weather
@@ -296,8 +296,8 @@ function getPlaces() {
 }
 
 //make localStorage.setItem thenable
-//per MDN, if the value after await operator is not a Promise,
-//converts the value to a resolved Promise, and waits for it.
+//per MDN, if the value after the await operator is not a Promise,
+//then converts the value to a resolved Promise, and waits for it.
 async function setDefaultPlaces() {
   await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(DEFAULT_PLACES))
 }
@@ -316,7 +316,7 @@ function newPlace() {
 
   places.push(newPlace)
 
-  //limit the number of places to 10
+  //limit the number of saved places to 10
   if (places.length >= 10) {
     document.querySelector('[data-new-place]').classList.add('btn-new-place-disabled')
   }
