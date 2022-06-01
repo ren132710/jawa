@@ -216,9 +216,7 @@ function renderCurrentWeather({ coordinates, current }) {
   currentBotLeft.querySelector('[data-current-humidity]').textContent = current.humidity
   currentBotLeft.querySelector('[data-current-wind-speed]').textContent = current.windSpeed
   currentBotLeft.querySelector('[data-current-wind-direction]').textContent = current.windDirection
-
   currentBotRight.querySelector('[data-current-dew-point').textContent = current.dewPoint
-  //TODO: Adjust sunrise/sunset for DST
   currentBotRight.querySelector('[data-current-sunrise').textContent = formatZonedTime(
     current.sunrise,
     coordinates.timezone
@@ -297,7 +295,7 @@ function getPlaces() {
 
 //make localStorage.setItem thenable
 //per MDN, if the value after the await operator is not a Promise,
-//then converts the value to a resolved Promise, and waits for it.
+//converts the value to a resolved Promise, and waits for it.
 async function setDefaultPlaces() {
   await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(DEFAULT_PLACES))
 }
