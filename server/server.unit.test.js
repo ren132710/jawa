@@ -42,7 +42,7 @@ describe('#parseDailyWeather', () => {
     expect(sthlm.daily[4].windDirection).toBe('E')
     expect(sthlm.daily[4].windDeg).toBe(107)
 
-    //daily remaining daily data
+    //sample test remaining daily data
     expect(sthlm.daily[2].description).toBe('scattered clouds')
     expect(sthlm.daily[3].icon).toBe('04d')
     expect(sthlm.daily[5].high).toBe(64)
@@ -66,7 +66,7 @@ describe('#parseHourlyWeather', () => {
     expect(sthlm.hourly[5].humidity).toBe(94)
     expect(sthlm.hourly[5].uvLevel).toBe('low')
 
-    //daily remaining hourly data
+    //sample test remaining hourly data
     expect(sthlm.hourly[7].timestamp).toBe(1654210800000)
     expect(sthlm.hourly[9].icon).toBe('04n')
     expect(sthlm.hourly[11].temp).toBe(47)
