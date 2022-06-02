@@ -1,11 +1,9 @@
-// if (process.env.NODE_ENV !== 'production') {
-//   require('dotenv').config()
-//   console.log(process.env.API_KEY)
-// }
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express')
 const cors = require('cors')
 const axios = require('axios')
-require('dotenv').config()
 const app = express()
 const { v4 } = require('uuid')
 const { getCardinalDirection, getUVIndexLevel } = require('./utils.js')
@@ -16,9 +14,11 @@ app.use(cors())
 //enable the ability to parse req.query
 app.use(express.urlencoded({ extended: true }))
 
-app.listen(3001)
+//prevent open handles when running unit tests
+if (process.env.SERVER_UNIT_TEST !== 'true') {
+  app.listen(3001)
+}
 
-//TODO: if (process.env.TEST === true) { use TEST_DATA and run test code }
 app.get('/weather', (req, res) => {
   const { lat, long, reqId, location } = req.query
 
@@ -105,7 +105,6 @@ function parseHourlyWeather({ hourly, current }) {
         timestamp: hour.dt * 1000,
         icon: hour.weather[0].icon,
         temp: Math.round(hour.temp),
-        feelsLike: Math.round(hour.feels_like),
         precip: Math.round(hour.pop * 100),
         humidity: Math.round(hour.humidity),
         windSpeed: Math.round(hour.wind_speed),
@@ -115,4 +114,10 @@ function parseHourlyWeather({ hourly, current }) {
         uvLevel: getUVIndexLevel(hour.uvi),
       }
     })
+}
+
+module.exports = {
+  parseCurrentWeather,
+  parseDailyWeather,
+  parseHourlyWeather,
 }
