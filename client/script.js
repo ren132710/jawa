@@ -14,8 +14,6 @@ City/Places Search
 
  test
  - use Stockholm as test to test timezone
- - migrate to cross-env package? research dotenv vs cross-env
- - server: write tests for parse functions
  - client: create Cyrpress test to view, add, delete
 
  ui
