@@ -8,7 +8,7 @@ const app = express()
 const { v4 } = require('uuid')
 const { getCardinalDirection, getUVIndexLevel } = require('./utils.js')
 
-//with no params, allows requests from any url
+//with no params, cors() allows requests from any url
 app.use(cors())
 
 //enable the ability to parse req.query
@@ -20,9 +20,10 @@ if (process.env.SERVER_UNIT_TEST !== 'true') {
 }
 
 app.get('/weather', (req, res) => {
+  console.log('req: ', req)
   const { lat, long, reqId, location } = req.query
 
-  //generate id, if id is null
+  //if there is no id, generate the id
   let id = reqId === '' ? v4() : reqId
 
   axios
@@ -64,7 +65,7 @@ function parseCurrentWeather({ current, daily }) {
     feelsLike: Math.round(current.feels_like),
 
     //visibility is always provided in meters, so convert to miles, round to one decimal place
-    //TODO: Add switch if units are metric
+    //TODO: Do not convert to miles if units are metric
     visibility: Math.round((current.visibility / 1609.344) * 10) / 10,
     precip: Math.round(pop * 100),
     dewPoint: Math.round(current.dew_point),

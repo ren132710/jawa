@@ -23,6 +23,7 @@ City/Places Search
   - remove console.logs
 
 */
+
 import axios from 'axios'
 import {
   getIconUrl,
@@ -40,12 +41,12 @@ const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
 const DEFAULT_PLACES = [
-  { id: '', location: 'minneapolis', lat: 44.977753, long: -93.265015 },
+  // { id: '', location: 'minneapolis', lat: 44.977753, long: -93.265015 },
   { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.334591, long: 18.06324 },
-  { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
-  { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
+  // { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
+  // { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
   { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.508888, long: -73.561668 },
-  { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7306, long: -73.9352 },
+  // { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7306, long: -73.9352 },
 ]
 
 /*
@@ -54,6 +55,25 @@ const DEFAULT_PLACES = [
 
 let places = []
 let placesWeather = []
+
+//Client side testing only, not full E2E
+// if (process.env.CYPRESS === 'true') {
+//   const { TEST_STHLM } = require('./data/test-data-sthlm')
+//   placesWeather = TEST_STHLM
+//   getPlacesWeather().then(initialize)
+// } else {
+//   getPlaces()
+//     .then((data) => {
+//       places = data
+//       console.log('from localStorage ', data)
+//     })
+//     .then(getPlacesWeather)
+//     .then(initialize)
+//     .catch((err) => {
+//       console.log('ERROR: ', err)
+//       alert(`There was a problem loading your places from the browser's localStorage.`)
+//     })
+// }
 
 getPlaces()
   .then((data) => {
@@ -82,7 +102,7 @@ async function getPlacesWeather() {
     promises.push(promise)
   })
 
-  //TODO: use Promise.allSettled??
+  //TODO: should use Promise.allSettled instead??
   await Promise.all(promises).then((data) => {
     placesWeather = data
   })
@@ -106,14 +126,20 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
   deletePlace(e.target.closest('[data-place-card]').dataset.id)
 })
 
-/*
- * axios
+/**
+ * axios call
+ *
+ * @param {*} reqId
+ * if id is known, pass to server so server can include in the response object
+ * pass 'id' as 'reqId' so the server can use the 'id' key in the response object
+ * when id is null, the server will generate the id and return it in the response object
+ * 
+ * @param {*} reqId
+ * if location is known, pass to server so server can include in the response object
+
+ * NOTE: params that are null or undefined are not rendered in the axios.get URL
  */
 
-//if id and location are known, pass to server so server can include in the response
-//pass 'id' as 'reqId' so the server can use 'id' in the response object
-//when id is null, the server will generate the id and return it in the response
-//NOTE: params that are null or undefined are not rendered in the axios.get URL
 async function fetchAxiosPromise(lat, long, reqId, location) {
   try {
     const res = await axios.get('http://localhost:3001/weather', {

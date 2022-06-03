@@ -6,7 +6,7 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
-    "test:unit": "jest \\.unit\\. --coverage --detectOpenHandles"
+    "test:unit": "jest \\.unit\\. --coverage"
   },
   "keywords": [],
   "author": "",
