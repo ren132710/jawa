@@ -36,14 +36,15 @@
             <div class="current-detail">long:&nbsp;<span data-current-long></span></div>
             <br />
             <div class="current-high-low"><span data-current-high></span>/<span data-current-low></span>&deg;</div>
-            <div class="current-temp"><span data-current-temp></span>&deg;&nbsp;F</div>
+            <div class="current-temp" data-temp-units><span data-current-temp></span>&deg;&nbsp;F</div>
             <div class="current-feels-like">Feels Like:&nbsp;<span data-current-fl></span>&deg;</div>
             <div class="current-description" data-current-description></div>
             <div class="label">
               Precip:&nbsp;<span class="value" data-current-precip></span><span class="value">&percnt;</span>
             </div>
             <div class="label">
-              Visibility:&nbsp;<span class="value" data-current-visibility></span><span class="value">&nbsp;mi</span>
+              Visibility:&nbsp;<span class="value" data-current-visibility></span
+              ><span class="value" data-visibility-units>&nbsp;mi</span>
             </div>
           </div>
           <div class="current-bottom-left">
@@ -55,7 +56,8 @@
               Humidity:&nbsp;<span class="value" data-current-humidity></span><span class="value">&percnt;</span>
             </div>
             <div class="label">
-              Wind:&nbsp;<span class="value" data-current-wind-speed></span><span class="value">&nbsp;mph&nbsp;</span
+              Wind:&nbsp;<span class="value" data-current-wind-speed></span
+              ><span class="value" data-wind-units>&nbsp;mph&nbsp;</span
               ><span class="value" data-current-wind-direction></span>
             </div>
           </div>
@@ -97,7 +99,8 @@
           Humidity:&nbsp;<span class="value" data-daily-humidity></span><span class="value">&percnt;</span>
         </div>
         <div class="label">
-          Wind:&nbsp;<span class="value" data-daily-wind-speed></span><span class="value">&nbsp;mph&nbsp;</span
+          Wind:&nbsp;<span class="value" data-daily-wind-speed></span
+          ><span class="value" data-wind-units>&nbsp;mph&nbsp;</span
           ><span class="value" data-daily-wind-direction></span>
         </div>
       </div>
@@ -106,7 +109,7 @@
     <template id="template-hour-row">
       <div class="hour-row">
         <div class="hour-data">
-          <div class="hour-label" data-date></div>
+          <div class="hour-label" data-hour-date></div>
           <div data-hour class="hour-value"></div>
         </div>
         <div class="hour-data">
@@ -127,7 +130,8 @@
         <div class="hour-data">
           <div class="hour-label">Wind</div>
           <div class="hour-value-margin">
-            <span class="hour-value" data-hour-wind-speed></span><span class="hour-value">&nbsp;mph&nbsp;</span
+            <span class="hour-value" data-hour-wind-speed></span
+            ><span class="hour-value" data-wind-units>&nbsp;mph&nbsp;</span
             ><span class="hour-value" data-hour-wind-direction></span>
           </div>
         </div>

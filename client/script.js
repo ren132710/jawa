@@ -13,8 +13,12 @@ City/Places Search
  - Units (Imperial, Metric)
 
  test
- - use Stockholm as test to test timezone
- - client: create Cyrpress test to view, add, delete
+
+ - refactoring loading of test data
+ - research cypress fixtures, finish cypress videos
+ - test: delete place
+ - test: add place
+ - test: localStorage
 
  ui
  - how to remove top bottom padding from current temp span?
@@ -23,6 +27,8 @@ City/Places Search
   - remove console.logs
 
 */
+
+//TODO: Hour time needs to account for timezone
 
 import axios from 'axios'
 import {
@@ -43,10 +49,10 @@ const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 const DEFAULT_PLACES = [
   // { id: '', location: 'minneapolis', lat: 44.977753, long: -93.265015 },
   { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.334591, long: 18.06324 },
-  // { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
-  // { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
+  { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
+  { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
   { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.508888, long: -73.561668 },
-  // { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7306, long: -73.9352 },
+  { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7306, long: -73.9352 },
 ]
 
 /*
@@ -56,36 +62,29 @@ const DEFAULT_PLACES = [
 let places = []
 let placesWeather = []
 
-//Client side testing only, not full E2E
-// if (process.env.CYPRESS === 'true') {
-//   const { TEST_STHLM } = require('./data/test-data-sthlm')
-//   placesWeather = TEST_STHLM
-//   getPlacesWeather().then(initialize)
-// } else {
-//   getPlaces()
-//     .then((data) => {
-//       places = data
-//       console.log('from localStorage ', data)
-//     })
-//     .then(getPlacesWeather)
-//     .then(initialize)
-//     .catch((err) => {
-//       console.log('ERROR: ', err)
-//       alert(`There was a problem loading your places from the browser's localStorage.`)
-//     })
-// }
+//allow for cypress testing
+console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
 
-getPlaces()
-  .then((data) => {
-    places = data
-    console.log('from localStorage ', data)
-  })
-  .then(getPlacesWeather)
-  .then(initialize)
-  .catch((err) => {
-    console.log('ERROR: ', err)
-    alert(`There was a problem loading your places from the browser's localStorage.`)
-  })
+if (process.env.NODE_ENV === 'cypress') {
+  //TODO: Move test data to onBeforeLoad in cypress test, remove require statement from prod code
+  const { TEST_PLACES, TEST_PLACES_WEATHER } = require('./data/cypress-test-data')
+  places = TEST_PLACES
+  placesWeather = TEST_PLACES_WEATHER
+  //allow time for the page to load before running tests
+  setTimeout(initialize, 200)
+} else {
+  getPlaces()
+    .then((data) => {
+      places = data
+      console.log('from localStorage ', data)
+    })
+    .then(getPlacesWeather)
+    .then(initialize)
+    .catch((err) => {
+      console.log('ERROR: ', err)
+      alert(`There was a problem loading your places.`)
+    })
+}
 
 function initialize() {
   console.log('places initialized: ', places)
@@ -284,7 +283,7 @@ function renderHourlyWeather(hourly) {
     .forEach((hour) => {
       const element = templateHourRow.content.cloneNode(true)
       const row = element.querySelector('.hour-row')
-      row.querySelector('[data-date]').textContent = formatDayOfWeek(hour.timestamp)
+      row.querySelector('[data-hour-date]').textContent = formatDayOfWeek(hour.timestamp)
       row.querySelector('[data-hour]').textContent = formatHour(hour.timestamp)
       row.querySelector('[data-icon]').src = getIconUrl(hour.icon)
       row.querySelector('[data-hour-temp]').textContent = hour.temp

@@ -1,6 +1,8 @@
 .DS_Store
 .cache
+.env
 coverage
 dist
 node_modules
-
+cypress/screenshots/
+cypress/videos/

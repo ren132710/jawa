@@ -5,8 +5,14 @@
   "main": "script.js",
   "scripts": {
     "start": "parcel index.html",
+    "start:static": "NODE_ENV=cypress parcel index.html",
     "build": "parcel build index.html",
-    "test:unit": "jest \\.unit\\. --coverage"
+    "test:unit": "jest \\.unit\\. --coverage",
+    "cy:open": "NODE_ENV=cypress cypress open",
+    "cy:run": "NODE_ENV=cypress cypress run -b chrome",
+    "test:e2e:browser": "NODE_ENV=cypress start-server-and-test start http://localhost:1234 cy:open",
+    "test:e2e:headless": "NODE_ENV=cypress start-server-and-test start http://localhost:1234 cy:run",
+    "test:all": "npm run test:unit && npm run test:e2e:headless"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +26,10 @@
     "@babel/core": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
     "@types/jest": "^27.5.1",
+    "cypress": "^10.0.2",
+    "dotenv": "^16.0.1",
     "jest": "^28.1.0",
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.12.5",
+    "start-server-and-test": "^1.14.0"
   }
 }
