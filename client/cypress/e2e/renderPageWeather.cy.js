@@ -56,7 +56,7 @@ describe('#renderPageWeather', () => {
     cy.get('@day1').find('[data-wind-units]').contains('mph')
     cy.get('@day1').find('[data-daily-wind-direction]').should('have.text', 'N')
     cy.get('@day1')
-      .find('[data-icon]')
+      .find('[data-daily-icon]')
       .invoke('attr', 'src')
       .should('eq', 'http://openweathermap.org/img/wn/02d.png')
       .then((src) => {
@@ -74,7 +74,7 @@ describe('#renderPageWeather', () => {
     cy.get('@day2').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day2', '[data-daily-wind-direction]', 'N')
     cy.get('@day2')
-      .find('[data-icon]')
+      .find('[data-daily-icon]')
       .invoke('attr', 'src')
       .should('eq', 'http://openweathermap.org/img/wn/03d.png')
       .then((src) => {
@@ -92,7 +92,7 @@ describe('#renderPageWeather', () => {
     cy.get('@day3').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day3', '[data-daily-wind-direction]', 'SE')
     cy.get('@day3')
-      .find('[data-icon]')
+      .find('[data-daily-icon]')
       .invoke('attr', 'src')
       .should('eq', 'http://openweathermap.org/img/wn/04d.png')
       .then((src) => {
@@ -110,7 +110,7 @@ describe('#renderPageWeather', () => {
     cy.get('@day4').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day4', '[data-daily-wind-direction]', 'S')
     cy.get('@day4')
-      .find('[data-icon]')
+      .find('[data-daily-icon]')
       .invoke('attr', 'src')
       .should('eq', 'http://openweathermap.org/img/wn/04d.png')
       .then((src) => {
@@ -128,7 +128,7 @@ describe('#renderPageWeather', () => {
     cy.get('@day5').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day5', '[data-daily-wind-direction]', 'S')
     cy.get('@day5')
-      .find('[data-icon]')
+      .find('[data-daily-icon]')
       .invoke('attr', 'src')
       .should('eq', 'http://openweathermap.org/img/wn/10d.png')
       .then((src) => {
@@ -146,7 +146,7 @@ describe('#renderPageWeather', () => {
     cy.get('@day6').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day6', '[data-daily-wind-direction]', 'SW')
     cy.get('@day6')
-      .find('[data-icon]')
+      .find('[data-daily-icon]')
       .invoke('attr', 'src')
       .should('eq', 'http://openweathermap.org/img/wn/10d.png')
       .then((src) => {
@@ -164,7 +164,7 @@ describe('#renderPageWeather', () => {
     cy.get('@day7').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day7', '[data-daily-wind-direction]', 'SW')
     cy.get('@day7')
-      .find('[data-icon]')
+      .find('[data-daily-icon]')
       .invoke('attr', 'src')
       .should('eq', 'http://openweathermap.org/img/wn/01d.png')
       .then((src) => {
@@ -173,11 +173,13 @@ describe('#renderPageWeather', () => {
   })
 
   it('should correctly display hourly weather', () => {
+    //keep, alternative length assertion syntax
     cy.get('.hourly-container').children('div').its('length').should('eq', 12)
 
     //now try streamline testing numerous children by asserting at the collection level
     cy.get('.hourly-container')
       .children('div')
+      .should('have.length', 12)
       .then(() => {
         cy.get('[data-hour-date]').should(
           'have.text',
@@ -191,6 +193,29 @@ describe('#renderPageWeather', () => {
         cy.get('[data-hour-wind-direction]').should('have.text', 'SSSNNWNWNWNWNWWWNW')
         cy.get('[data-hour-humidity]').should('have.text', '716768535150524941342925')
         cy.get('[data-hour-uv-level]').should('have.text', 'lowlowlowlowlowlowlowlowlowhighvery highhigh')
+      })
+  })
+
+  it('should display the correct weather icon for each hour', function () {
+    const icons = [
+      'http://openweathermap.org/img/wn/01d.png',
+      'http://openweathermap.org/img/wn/03d.png',
+      'http://openweathermap.org/img/wn/04n.png',
+      'http://openweathermap.org/img/wn/04n.png',
+      'http://openweathermap.org/img/wn/04n.png',
+      'http://openweathermap.org/img/wn/01n.png',
+      'http://openweathermap.org/img/wn/02n.png',
+      'http://openweathermap.org/img/wn/01d.png',
+      'http://openweathermap.org/img/wn/03d.png',
+      'http://openweathermap.org/img/wn/02d.png',
+      'http://openweathermap.org/img/wn/02d.png',
+      'http://openweathermap.org/img/wn/01d.png',
+    ]
+
+    cy.get('[data-hour-icon]')
+      .should('have.length', 12)
+      .each((img, index, arr) => {
+        cy.wrap(img).should('have.attr', 'src', icons[index])
       })
   })
 })

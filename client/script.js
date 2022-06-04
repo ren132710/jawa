@@ -259,7 +259,7 @@ function renderDailyWeather(daily) {
   daily.forEach((day) => {
     const element = templateDailyCard.content.cloneNode(true)
     const card = element.querySelector('.daily-card')
-    card.querySelector('[data-icon]').src = getIconUrl(day.icon)
+    card.querySelector('[data-daily-icon]').src = getIconUrl(day.icon)
     card.querySelector('[data-daily-date').textContent = formatDayOfWeek(day.timestamp)
     card.querySelector('[data-daily-description').textContent = day.description
     card.querySelector('[data-hl] > [data-daily-high]').textContent = day.high
@@ -285,7 +285,7 @@ function renderHourlyWeather(hourly) {
       const row = element.querySelector('.hour-row')
       row.querySelector('[data-hour-date]').textContent = formatDayOfWeek(hour.timestamp)
       row.querySelector('[data-hour]').textContent = formatHour(hour.timestamp)
-      row.querySelector('[data-icon]').src = getIconUrl(hour.icon)
+      row.querySelector('[data-hour-icon]').src = getIconUrl(hour.icon)
       row.querySelector('[data-hour-temp]').textContent = hour.temp
       row.querySelector('[data-hour-precip]').textContent = hour.precip
       row.querySelector('[data-hour-wind-speed]').textContent = hour.windSpeed
