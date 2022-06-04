@@ -45,7 +45,7 @@ describe('#renderPageWeather', () => {
   it('should correctly display daily weather', () => {
     cy.get('.daily-container').children('div').its('length').should('eq', 7)
 
-    //day 1
+    //day 1, the long version
     cy.get('.daily-container').children('div').eq(0).as('day1')
     cy.get('@day1').find('[data-daily-date]').should('have.text', 'Saturday')
     cy.get('@day1').find('[data-daily-high]').should('have.text', '82')
@@ -175,7 +175,7 @@ describe('#renderPageWeather', () => {
   it('should correctly display hourly weather', () => {
     cy.get('.hourly-container').children('div').its('length').should('eq', 12)
 
-    //streamline testing numerous hour rows by asserting at the collection level
+    //now try streamline testing numerous children by asserting at the collection level
     cy.get('.hourly-container')
       .children('div')
       .then(() => {
