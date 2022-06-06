@@ -62,15 +62,14 @@ const DEFAULT_PLACES = [
 let places = []
 let placesWeather = []
 
-//allow for cypress testing
-console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
+// allow for cypress testing
+// console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
 
 //TODO: replace with cypress response interceptor and fixture
 if (process.env.NODE_ENV === 'cypress') {
   const { TEST_PLACES, TEST_PLACES_WEATHER } = require('./data/cypress-test-data') // put this in the test file
   places = TEST_PLACES
   placesWeather = TEST_PLACES_WEATHER
-  //allow time for the page to load before running tests
   setTimeout(initialize, 200)
 } else {
   getPlaces()
@@ -88,7 +87,9 @@ if (process.env.NODE_ENV === 'cypress') {
 
 function initialize() {
   console.log('places initialized: ', places)
+  console.log('places json: ', JSON.stringify(places))
   console.log('placesWeather initialized: ', placesWeather)
+  console.log('placesWeather json: ', JSON.stringify(placesWeather))
   renderPlacesWeather()
   renderPageWeather(placesWeather[0])
 }

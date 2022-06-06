@@ -1,6 +1,23 @@
 describe('#renderPageWeather', () => {
-  before(() => {
+  beforeEach(() => {
+    // cy.intercept('GET', '**/weather', { fixture: 'placesWeather.json' })
+    // cy.intercept({ method: 'GET', path: 'weather' }, { fixture: 'placesWeather.json' })
     cy.visit('/')
+  })
+
+  it('page smoke test should pass', () => {
+    // cy.contains('Weather at your places').should('exist')
+    cy.contains('Current Weather').should('exist')
+    cy.contains('Forecast').should('exist')
+    cy.contains('Hourly Weather').should('exist')
+    cy.contains('America/New_York').should('exist')
+    cy.contains('Powered By OpenWeather').should('exist')
+    cy.get('a')
+      .invoke('attr', 'href')
+      .should('eq', 'https://openweathermap.org/api')
+      .then((href) => {
+        cy.request(href).its('status').should('eq', 200)
+      })
   })
 
   it('should correctly display current weather', () => {
@@ -16,30 +33,30 @@ describe('#renderPageWeather', () => {
       })
 
     //bottom left
-    cy.get('[data-current-uv-index]').should('have.text', '2.4')
+    cy.get('[data-current-uv-index]').should('have.text', '2.56')
     cy.get('[data-current-uv-level]').should('have.text', 'low')
-    cy.get('[data-current-humidity]').should('have.text', '71')
-    cy.get('[data-current-wind-speed]').should('have.text', '12')
+    cy.get('[data-current-humidity]').should('have.text', '40')
+    cy.get('[data-current-wind-speed]').should('have.text', '17')
     cy.get('[data-wind-units]').contains('mph')
     cy.get('[data-current-wind-direction]').should('have.text', 'S')
 
     //top right
-    cy.get('[data-current-dt]').should('have.text', 'Fri, 3 Jun 3:50 PM')
+    cy.get('[data-current-dt]').should('have.text', 'Mon, 6 Jun 4:19 PM')
     cy.get('[data-current-lat]').should('have.text', '40.7306')
     cy.get('[data-current-long]').should('have.text', '-73.9352')
-    cy.get('[data-current-high]').should('have.text', '75')
-    cy.get('[data-current-temp]').should('have.text', '74')
+    cy.get('[data-current-high]').should('have.text', '78')
+    cy.get('[data-current-temp]').should('have.text', '78')
     cy.get('[data-temp-units]').contains('F')
-    cy.get('[data-current-fl]').should('have.text', '75')
+    cy.get('[data-current-fl]').should('have.text', '77')
     cy.get('[data-current-description]').should('have.text', 'clear sky')
-    cy.get('[data-current-precip]').should('have.text', '50')
+    cy.get('[data-current-precip]').should('have.text', '0')
     cy.get('[data-current-visibility]').should('have.text', '6.2')
     cy.get('[data-visibility-units]').contains('mi')
 
     //bottom right
-    cy.get('[data-current-dew-point]').should('have.text', '64')
-    cy.get('[data-current-sunrise]').should('have.text', '5:26 AM')
-    cy.get('[data-current-sunset]').should('have.text', '8:22 PM')
+    cy.get('[data-current-dew-point]').should('have.text', '51')
+    cy.get('[data-current-sunrise]').should('have.text', '5:25 AM')
+    cy.get('[data-current-sunset]').should('have.text', '8:24 PM')
   })
 
   it('should correctly display daily weather', () => {
@@ -47,51 +64,15 @@ describe('#renderPageWeather', () => {
 
     //day 1, the long way: for each day, explicitly evaluate each child value
     cy.get('.daily-container').children('div').eq(0).as('day1')
-    cy.get('@day1').find('[data-daily-date]').should('have.text', 'Saturday')
-    cy.get('@day1').find('[data-daily-high]').should('have.text', '82')
-    cy.get('@day1').find('[data-daily-low]').should('have.text', '63')
-    cy.get('@day1').find('[data-daily-description]').should('have.text', 'few clouds')
-    cy.get('@day1').find('[data-daily-humidity]').should('have.text', '32')
-    cy.get('@day1').find('[data-daily-wind-speed]').should('have.text', '15')
+    cy.get('@day1').find('[data-daily-date]').should('have.text', 'Tuesday')
+    cy.get('@day1').find('[data-daily-high]').should('have.text', '75')
+    cy.get('@day1').find('[data-daily-low]').should('have.text', '64')
+    cy.get('@day1').find('[data-daily-description]').should('have.text', 'overcast clouds')
+    cy.get('@day1').find('[data-daily-humidity]').should('have.text', '49')
+    cy.get('@day1').find('[data-daily-wind-speed]').should('have.text', '21')
     cy.get('@day1').find('[data-wind-units]').contains('mph')
-    cy.get('@day1').find('[data-daily-wind-direction]').should('have.text', 'N')
+    cy.get('@day1').find('[data-daily-wind-direction]').should('have.text', 'S')
     cy.get('@day1')
-      .find('[data-daily-icon]')
-      .invoke('attr', 'src')
-      .should('eq', 'http://openweathermap.org/img/wn/02d.png')
-      .then((src) => {
-        cy.request(src).its('status').should('eq', 200)
-      })
-
-    //day 2, try leveraging custom commands
-    cy.get('.daily-container').children('div').eq(1).as('day2')
-    cy.evalChildValue('@day2', '[data-daily-date]', 'Sunday')
-    cy.evalChildValue('@day2', '[data-daily-high]', '74')
-    cy.evalChildValue('@day2', '[data-daily-low]', '60')
-    cy.evalChildValue('@day2', '[data-daily-description]', 'scattered clouds')
-    cy.evalChildValue('@day2', '[data-daily-humidity]', '26')
-    cy.evalChildValue('@day2', '[data-daily-wind-speed]', '13')
-    cy.get('@day2').find('[data-wind-units]').contains('mph')
-    cy.evalChildValue('@day2', '[data-daily-wind-direction]', 'N')
-    cy.get('@day2')
-      .find('[data-daily-icon]')
-      .invoke('attr', 'src')
-      .should('eq', 'http://openweathermap.org/img/wn/03d.png')
-      .then((src) => {
-        cy.request(src).its('status').should('eq', 200)
-      })
-
-    //day 3
-    cy.get('.daily-container').children('div').eq(2).as('day3')
-    cy.evalChildValue('@day3', '[data-daily-date]', 'Monday')
-    cy.evalChildValue('@day3', '[data-daily-high]', '75')
-    cy.evalChildValue('@day3', '[data-daily-low]', '63')
-    cy.evalChildValue('@day3', '[data-daily-description]', 'broken clouds')
-    cy.evalChildValue('@day3', '[data-daily-humidity]', '33')
-    cy.evalChildValue('@day3', '[data-daily-wind-speed]', '13')
-    cy.get('@day3').find('[data-wind-units]').contains('mph')
-    cy.evalChildValue('@day3', '[data-daily-wind-direction]', 'SE')
-    cy.get('@day3')
       .find('[data-daily-icon]')
       .invoke('attr', 'src')
       .should('eq', 'http://openweathermap.org/img/wn/04d.png')
@@ -99,14 +80,50 @@ describe('#renderPageWeather', () => {
         cy.request(src).its('status').should('eq', 200)
       })
 
+    //day 2, try leveraging custom commands
+    cy.get('.daily-container').children('div').eq(1).as('day2')
+    cy.evalChildValue('@day2', '[data-daily-date]', 'Wednesday')
+    cy.evalChildValue('@day2', '[data-daily-high]', '80')
+    cy.evalChildValue('@day2', '[data-daily-low]', '67')
+    cy.evalChildValue('@day2', '[data-daily-description]', 'moderate rain')
+    cy.evalChildValue('@day2', '[data-daily-humidity]', '72')
+    cy.evalChildValue('@day2', '[data-daily-wind-speed]', '14')
+    cy.get('@day2').find('[data-wind-units]').contains('mph')
+    cy.evalChildValue('@day2', '[data-daily-wind-direction]', 'S')
+    cy.get('@day2')
+      .find('[data-daily-icon]')
+      .invoke('attr', 'src')
+      .should('eq', 'http://openweathermap.org/img/wn/10d.png')
+      .then((src) => {
+        cy.request(src).its('status').should('eq', 200)
+      })
+
+    //day 3
+    cy.get('.daily-container').children('div').eq(2).as('day3')
+    cy.evalChildValue('@day3', '[data-daily-date]', 'Thursday')
+    cy.evalChildValue('@day3', '[data-daily-high]', '81')
+    cy.evalChildValue('@day3', '[data-daily-low]', '68')
+    cy.evalChildValue('@day3', '[data-daily-description]', 'moderate rain')
+    cy.evalChildValue('@day3', '[data-daily-humidity]', '58')
+    cy.evalChildValue('@day3', '[data-daily-wind-speed]', '17')
+    cy.get('@day3').find('[data-wind-units]').contains('mph')
+    cy.evalChildValue('@day3', '[data-daily-wind-direction]', 'NW')
+    cy.get('@day3')
+      .find('[data-daily-icon]')
+      .invoke('attr', 'src')
+      .should('eq', 'http://openweathermap.org/img/wn/10d.png')
+      .then((src) => {
+        cy.request(src).its('status').should('eq', 200)
+      })
+
     //day 4
     cy.get('.daily-container').children('div').eq(3).as('day4')
-    cy.evalChildValue('@day4', '[data-daily-date]', 'Tuesday')
-    cy.evalChildValue('@day4', '[data-daily-high]', '75')
-    cy.evalChildValue('@day4', '[data-daily-low]', '64')
+    cy.evalChildValue('@day4', '[data-daily-date]', 'Friday')
+    cy.evalChildValue('@day4', '[data-daily-high]', '77')
+    cy.evalChildValue('@day4', '[data-daily-low]', '63')
     cy.evalChildValue('@day4', '[data-daily-description]', 'overcast clouds')
-    cy.evalChildValue('@day4', '[data-daily-humidity]', '56')
-    cy.evalChildValue('@day4', '[data-daily-wind-speed]', '19')
+    cy.evalChildValue('@day4', '[data-daily-humidity]', '48')
+    cy.evalChildValue('@day4', '[data-daily-wind-speed]', '10')
     cy.get('@day4').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day4', '[data-daily-wind-direction]', 'S')
     cy.get('@day4')
@@ -119,14 +136,14 @@ describe('#renderPageWeather', () => {
 
     //day 5
     cy.get('.daily-container').children('div').eq(4).as('day5')
-    cy.evalChildValue('@day5', '[data-daily-date]', 'Wednesday')
-    cy.evalChildValue('@day5', '[data-daily-high]', '79')
-    cy.evalChildValue('@day5', '[data-daily-low]', '67')
-    cy.evalChildValue('@day5', '[data-daily-description]', 'light rain')
-    cy.evalChildValue('@day5', '[data-daily-humidity]', '49')
-    cy.evalChildValue('@day5', '[data-daily-wind-speed]', '13')
+    cy.evalChildValue('@day5', '[data-daily-date]', 'Saturday')
+    cy.evalChildValue('@day5', '[data-daily-high]', '70')
+    cy.evalChildValue('@day5', '[data-daily-low]', '61')
+    cy.evalChildValue('@day5', '[data-daily-description]', 'heavy intensity rain')
+    cy.evalChildValue('@day5', '[data-daily-humidity]', '96')
+    cy.evalChildValue('@day5', '[data-daily-wind-speed]', '15')
     cy.get('@day5').find('[data-wind-units]').contains('mph')
-    cy.evalChildValue('@day5', '[data-daily-wind-direction]', 'S')
+    cy.evalChildValue('@day5', '[data-daily-wind-direction]', 'NE')
     cy.get('@day5')
       .find('[data-daily-icon]')
       .invoke('attr', 'src')
@@ -137,32 +154,32 @@ describe('#renderPageWeather', () => {
 
     //day 6
     cy.get('.daily-container').children('div').eq(5).as('day6')
-    cy.evalChildValue('@day6', '[data-daily-date]', 'Thursday')
-    cy.evalChildValue('@day6', '[data-daily-high]', '82')
-    cy.evalChildValue('@day6', '[data-daily-low]', '68')
-    cy.evalChildValue('@day6', '[data-daily-description]', 'moderate rain')
-    cy.evalChildValue('@day6', '[data-daily-humidity]', '49')
-    cy.evalChildValue('@day6', '[data-daily-wind-speed]', '18')
+    cy.evalChildValue('@day6', '[data-daily-date]', 'Sunday')
+    cy.evalChildValue('@day6', '[data-daily-high]', '77')
+    cy.evalChildValue('@day6', '[data-daily-low]', '58')
+    cy.evalChildValue('@day6', '[data-daily-description]', 'clear sky')
+    cy.evalChildValue('@day6', '[data-daily-humidity]', '47')
+    cy.evalChildValue('@day6', '[data-daily-wind-speed]', '14')
     cy.get('@day6').find('[data-wind-units]').contains('mph')
-    cy.evalChildValue('@day6', '[data-daily-wind-direction]', 'SW')
+    cy.evalChildValue('@day6', '[data-daily-wind-direction]', 'W')
     cy.get('@day6')
       .find('[data-daily-icon]')
       .invoke('attr', 'src')
-      .should('eq', 'http://openweathermap.org/img/wn/10d.png')
+      .should('eq', 'http://openweathermap.org/img/wn/01d.png')
       .then((src) => {
         cy.request(src).its('status').should('eq', 200)
       })
 
     //day 7
     cy.get('.daily-container').children('div').eq(6).as('day7')
-    cy.evalChildValue('@day7', '[data-daily-date]', 'Friday')
-    cy.evalChildValue('@day7', '[data-daily-high]', '80')
-    cy.evalChildValue('@day7', '[data-daily-low]', '62')
+    cy.evalChildValue('@day7', '[data-daily-date]', 'Monday')
+    cy.evalChildValue('@day7', '[data-daily-high]', '77')
+    cy.evalChildValue('@day7', '[data-daily-low]', '61')
     cy.evalChildValue('@day7', '[data-daily-description]', 'clear sky')
-    cy.evalChildValue('@day7', '[data-daily-humidity]', '34')
-    cy.evalChildValue('@day7', '[data-daily-wind-speed]', '14')
+    cy.evalChildValue('@day7', '[data-daily-humidity]', '46')
+    cy.evalChildValue('@day7', '[data-daily-wind-speed]', '13')
     cy.get('@day7').find('[data-wind-units]').contains('mph')
-    cy.evalChildValue('@day7', '[data-daily-wind-direction]', 'SW')
+    cy.evalChildValue('@day7', '[data-daily-wind-direction]', 'NW')
     cy.get('@day7')
       .find('[data-daily-icon]')
       .invoke('attr', 'src')
@@ -185,16 +202,16 @@ describe('#renderPageWeather', () => {
       .then(() => {
         cy.get('[data-hour-date]').should(
           'have.text',
-          'FridayFridayFridayFridaySaturdaySaturdaySaturdaySaturdaySaturdaySaturdaySaturdaySaturday'
+          'MondayMondayMondayMondayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayTuesday'
         )
-        cy.get('[data-hour]').should('have.text', '5PM7PM9PM11PM1AM3AM5AM7AM9AM11AM1PM3PM')
-        cy.get('[data-hour-temp]').should('have.text', '747370696765636571768082')
-        cy.get('[data-hour-precip]').should('have.text', '2190000000000')
-        cy.get('[data-hour-wind-speed]').should('have.text', '953777545789')
+        cy.get('[data-hour]').should('have.text', '6PM8PM10PM12AM2AM4AM6AM8AM10AM12PM2PM4PM')
+        cy.get('[data-hour-temp]').should('have.text', '777471686665646772757574')
+        cy.get('[data-hour-precip]').should('have.text', '000000000000')
+        cy.get('[data-hour-wind-speed]').should('have.text', '141312109871112162021')
         cy.get('[data-wind-units]').contains('mph')
-        cy.get('[data-hour-wind-direction]').should('have.text', 'SSSNNWNWNWNWNWWWNW')
-        cy.get('[data-hour-humidity]').should('have.text', '716768535150524941342925')
-        cy.get('[data-hour-uv-level]').should('have.text', 'lowlowlowlowlowlowlowlowlowhighvery highhigh')
+        cy.get('[data-hour-wind-direction]').should('have.text', 'SSSSWSWSWSWSWSSSS')
+        cy.get('[data-hour-humidity]').should('have.text', '384144464956636151495155')
+        cy.get('[data-hour-uv-level]').should('have.text', 'lowlowlowlowlowlowlowlowmediumhighhighmedium')
       })
   })
 
@@ -206,13 +223,28 @@ describe('#renderPageWeather', () => {
       'http://openweathermap.org/img/wn/04n.png',
       'http://openweathermap.org/img/wn/04n.png',
       'http://openweathermap.org/img/wn/04n.png',
-      'http://openweathermap.org/img/wn/01n.png',
-      'http://openweathermap.org/img/wn/02n.png',
-      'http://openweathermap.org/img/wn/01d.png',
-      'http://openweathermap.org/img/wn/03d.png',
-      'http://openweathermap.org/img/wn/02d.png',
-      'http://openweathermap.org/img/wn/02d.png',
-      'http://openweathermap.org/img/wn/01d.png',
+      'http://openweathermap.org/img/wn/04n.png',
+      'http://openweathermap.org/img/wn/04d.png',
+      'http://openweathermap.org/img/wn/04d.png',
+      'http://openweathermap.org/img/wn/04d.png',
+      'http://openweathermap.org/img/wn/04d.png',
+      'http://openweathermap.org/img/wn/04d.png',
+      'http://openweathermap.org/img/wn/04d.png',
+    ]
+
+    const alts = [
+      'clear sky',
+      'scattered clouds',
+      'overcast clouds',
+      'overcast clouds',
+      'broken clouds',
+      'broken clouds',
+      'broken clouds',
+      'overcast clouds',
+      'overcast clouds',
+      'overcast clouds',
+      'overcast clouds',
+      'broken clouds',
     ]
 
     cy.get('[data-hour-icon]')
@@ -220,6 +252,7 @@ describe('#renderPageWeather', () => {
       .each((img, index, arr) => {
         //cy.wrap the variable in order to call cypress commands
         cy.wrap(img).should('have.attr', 'src', icons[index])
+        cy.wrap(img).should('have.attr', 'alt', alts[index])
       })
   })
 })
