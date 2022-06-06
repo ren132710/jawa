@@ -45,7 +45,7 @@ describe('#renderPageWeather', () => {
   it('should correctly display daily weather', () => {
     cy.get('.daily-container').children('div').its('length').should('eq', 7)
 
-    //day 1, the long version
+    //day 1, the long way: for each day, explicitly evaluate each child value
     cy.get('.daily-container').children('div').eq(0).as('day1')
     cy.get('@day1').find('[data-daily-date]').should('have.text', 'Saturday')
     cy.get('@day1').find('[data-daily-high]').should('have.text', '82')
@@ -173,19 +173,21 @@ describe('#renderPageWeather', () => {
   })
 
   it('should correctly display hourly weather', () => {
-    //keep, alternative length assertion syntax
+    cy.get('[data-hour-timezone]').should('have.text', 'America/New_York')
+
+    //assert collection size
     cy.get('.hourly-container').children('div').its('length').should('eq', 12)
 
-    //now try streamline testing numerous children by asserting at the collection level
+    //now, streamline testing by evaluating numerous child values at once at the collection level
     cy.get('.hourly-container')
       .children('div')
-      .should('have.length', 12)
+      .should('have.length', 12) //shorter way to evaluate collection size
       .then(() => {
         cy.get('[data-hour-date]').should(
           'have.text',
           'FridayFridayFridayFridaySaturdaySaturdaySaturdaySaturdaySaturdaySaturdaySaturdaySaturday'
         )
-        cy.get('[data-hour]').should('have.text', '4PM6PM8PM10PM12AM2AM4AM6AM8AM10AM12PM2PM')
+        cy.get('[data-hour]').should('have.text', '5PM7PM9PM11PM1AM3AM5AM7AM9AM11AM1PM3PM')
         cy.get('[data-hour-temp]').should('have.text', '747370696765636571768082')
         cy.get('[data-hour-precip]').should('have.text', '2190000000000')
         cy.get('[data-hour-wind-speed]').should('have.text', '953777545789')
@@ -197,6 +199,7 @@ describe('#renderPageWeather', () => {
   })
 
   it('should display the correct weather icon for each hour', function () {
+    //iterating over the collection to evaluate child values also works
     const icons = [
       'http://openweathermap.org/img/wn/01d.png',
       'http://openweathermap.org/img/wn/03d.png',
@@ -215,6 +218,7 @@ describe('#renderPageWeather', () => {
     cy.get('[data-hour-icon]')
       .should('have.length', 12)
       .each((img, index, arr) => {
+        //cy.wrap the variable in order to call cypress commands
         cy.wrap(img).should('have.attr', 'src', icons[index])
       })
   })

@@ -53,3 +53,8 @@ export function formatZonedTime(timestamp, timezone) {
   const zonedDate = utcToZonedTime(new Date(timestamp), timezone)
   return format(zonedDate, 'p', { timezone })
 }
+
+export function formatZonedHour(timestamp, timezone) {
+  const zonedDate = utcToZonedTime(new Date(timestamp), timezone)
+  return format(zonedDate, 'ha', { timezone })
+}

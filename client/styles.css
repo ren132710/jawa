@@ -200,9 +200,14 @@ header {
 }
 
 .section-title {
+  position: relative;
   padding-top: 1rem;
   padding-bottom: 0.6rem;
   text-align: center;
+}
+
+.section-title-hourly {
+  padding-bottom: 0rem;
 }
 
 .current-container {
@@ -355,6 +360,12 @@ header {
 .hour-value-margin {
   line-height: 0;
   margin-top: 0.33rem;
+}
+
+.hour-timezone {
+  font-size: 0.75rem;
+  text-align: center;
+  color: hsl(200, 100%, 30%);
 }
 
 footer {

@@ -13,22 +13,21 @@ City/Places Search
  - Units (Imperial, Metric)
 
  test
-
- - refactoring loading of test data
+ - TODO: Recopy placesWeather test data (should include hourly description)
  - research cypress fixtures, finish cypress videos
  - test: delete place
  - test: add place
  - test: localStorage
 
  ui
+ - need more margin at top of page (although this might happen with pres and light/dark mode)
  - how to remove top bottom padding from current temp span?
+ - media query for 320x480 (mobile portrait)
+ - media query for 480 x 320 (mobile landscape)
 
  final clean
   - remove console.logs
-
 */
-
-//TODO: Hour time needs to account for timezone
 
 import axios from 'axios'
 import {
@@ -41,6 +40,7 @@ import {
   formatDate,
   formatTime,
   formatZonedTime,
+  formatZonedHour,
 } from './helpers.js'
 
 const LOCAL_STORAGE_PREFIX = 'JAWA'
@@ -65,9 +65,9 @@ let placesWeather = []
 //allow for cypress testing
 console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
 
+//TODO: replace with cypress response interceptor and fixture
 if (process.env.NODE_ENV === 'cypress') {
-  //TODO: Move test data to onBeforeLoad in cypress test, remove require statement from prod code
-  const { TEST_PLACES, TEST_PLACES_WEATHER } = require('./data/cypress-test-data')
+  const { TEST_PLACES, TEST_PLACES_WEATHER } = require('./data/cypress-test-data') // put this in the test file
   places = TEST_PLACES
   placesWeather = TEST_PLACES_WEATHER
   //allow time for the page to load before running tests
@@ -189,6 +189,7 @@ function renderPlacesWeather() {
     card.dataset.icon = getIconUrl(place.current.icon)
     card.querySelector('[data-location').innerText = place.coordinates.location
     card.querySelector('[data-icon]').src = getIconUrl(place.current.icon)
+    card.querySelector('[data-icon]').alt = place.current.description
     card.querySelector('[data-hl] > [data-high]').innerText = place.current.high
     card.querySelector('[data-hl] > [data-low]').innerText = place.current.low
     card.addEventListener('click', (e) => {
@@ -210,7 +211,7 @@ function renderPageWeather({ coordinates, current, daily, hourly }) {
   document.body.classList.remove('blurred')
   renderCurrentWeather({ coordinates, current })
   renderDailyWeather(daily)
-  renderHourlyWeather(hourly)
+  renderHourlyWeather(hourly, coordinates)
 }
 
 //render current weather
@@ -222,6 +223,7 @@ function renderCurrentWeather({ coordinates, current }) {
   currentTopLeft.querySelector('[data-id]').dataset.id = coordinates.id
   currentTopLeft.querySelector('[data-current-location').textContent = coordinates.location
   currentTopLeft.querySelector('[data-current-icon').src = getIconUrl(current.icon, { size: 'large' })
+  currentTopLeft.querySelector('[data-current-icon').alt = current.description
 
   currentTopRight.querySelector('[data-current-dt').textContent = `${formatDayOfWeekShort(
     current.timestamp
@@ -260,6 +262,7 @@ function renderDailyWeather(daily) {
     const element = templateDailyCard.content.cloneNode(true)
     const card = element.querySelector('.daily-card')
     card.querySelector('[data-daily-icon]').src = getIconUrl(day.icon)
+    card.querySelector('[data-daily-icon]').alt = day.description
     card.querySelector('[data-daily-date').textContent = formatDayOfWeek(day.timestamp)
     card.querySelector('[data-daily-description').textContent = day.description
     card.querySelector('[data-hl] > [data-daily-high]').textContent = day.high
@@ -274,7 +277,9 @@ function renderDailyWeather(daily) {
 //render hourly weather
 const hourlyContainer = document.querySelector('.hourly-container')
 const templateHourRow = document.querySelector('#template-hour-row')
-function renderHourlyWeather(hourly) {
+function renderHourlyWeather(hourly, coordinates) {
+  console.log('timezone: ', coordinates.timezone)
+  document.querySelector('[data-hour-timezone]').textContent = coordinates.timezone
   hourlyContainer.innerHTML = ''
   hourly
     .slice(0, 24)
@@ -284,8 +289,10 @@ function renderHourlyWeather(hourly) {
       const element = templateHourRow.content.cloneNode(true)
       const row = element.querySelector('.hour-row')
       row.querySelector('[data-hour-date]').textContent = formatDayOfWeek(hour.timestamp)
-      row.querySelector('[data-hour]').textContent = formatHour(hour.timestamp)
+      // row.querySelector('[data-hour]').textContent = formatHour(hour.timestamp)
+      row.querySelector('[data-hour]').textContent = formatZonedHour(hour.timestamp, coordinates.timezone)
       row.querySelector('[data-hour-icon]').src = getIconUrl(hour.icon)
+      row.querySelector('[data-hour-icon]').alt = hour.description
       row.querySelector('[data-hour-temp]').textContent = hour.temp
       row.querySelector('[data-hour-precip]').textContent = hour.precip
       row.querySelector('[data-hour-wind-speed]').textContent = hour.windSpeed
