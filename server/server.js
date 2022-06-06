@@ -64,7 +64,7 @@ function parseCurrentWeather({ current, daily }) {
     low: Math.round(temp.min),
     feelsLike: Math.round(current.feels_like),
 
-    //visibility is always provided in meters, so convert to miles, round to one decimal place
+    //visibility is provided in meters, so convert to miles and round to one decimal place
     //TODO: Do not convert to miles if units are metric
     visibility: Math.round((current.visibility / 1609.344) * 10) / 10,
     precip: Math.round(pop * 100),
@@ -104,6 +104,7 @@ function parseHourlyWeather({ hourly, current }) {
     .map((hour) => {
       return {
         timestamp: hour.dt * 1000,
+        description: hour.weather[0].description,
         icon: hour.weather[0].icon,
         temp: Math.round(hour.temp),
         precip: Math.round(hour.pop * 100),

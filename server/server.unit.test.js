@@ -69,6 +69,7 @@ describe('#parseHourlyWeather', () => {
     //sample test remaining hourly data
     expect(sthlm.hourly[7].timestamp).toBe(1654210800000)
     expect(sthlm.hourly[9].icon).toBe('04n')
+    expect(sthlm.hourly[9].description).toBe('overcast clouds')
     expect(sthlm.hourly[11].temp).toBe(47)
     expect(sthlm.hourly[13].precip).toBe(0)
     expect(sthlm.hourly[15].windSpeed).toBe(8)
