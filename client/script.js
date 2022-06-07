@@ -286,7 +286,7 @@ function renderHourlyWeather(hourly, coordinates) {
 }
 
 /*
- * helper functions
+ * localStorage functions
  */
 
 //make localStorage.getItem thenable
