@@ -1,6 +1,22 @@
+/* /// <reference types= "cypress" /> */
+
 describe('#renderPageWeather', () => {
-  before(() => {
-    //TODO: load NYC info into localStorage
+  const testPlace = [
+    {
+      id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87',
+      location: 'new york',
+      lat: 40.7306,
+      long: -73.9352,
+    },
+  ]
+
+  function setDefaultPlace() {
+    localStorage.setItem('JAWA-Places', JSON.stringify(testPlace))
+  }
+
+  before(function () {
+    setDefaultPlace()
+
     //register the intercept before loading the page
     cy.intercept('GET', '**/weather**', { fixture: 'nycWeatherFixture.json' }).as('nycMock')
     cy.visit('/')
@@ -12,7 +28,8 @@ describe('#renderPageWeather', () => {
     })
   })
 
-  it('page smoke test should pass', () => {
+  it('page smoke test should pass', function () {
+    // cy.pause()
     //different ways to test the value of an element attribute
     cy.get('[data-city-search]').invoke('attr', 'placeholder', 'Weather at your places').should('exist')
     cy.get('[data-city-search]').invoke('attr', 'placeholder').should('eq', 'Weather at your places')
@@ -31,7 +48,7 @@ describe('#renderPageWeather', () => {
       })
   })
 
-  it('should correctly display current weather', () => {
+  it('should correctly display current weather', function () {
     //top left
     cy.get('[data-current-location]').invoke('attr', 'data-id').should('equal', 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87')
     cy.get('[data-current-location]').should('have.text', 'new york')
@@ -70,7 +87,7 @@ describe('#renderPageWeather', () => {
     cy.get('[data-current-sunset]').should('have.text', '8:24 PM')
   })
 
-  it('should correctly display daily weather', () => {
+  it('should correctly display daily weather', function () {
     cy.get('.daily-container').children('div').its('length').should('eq', 7)
 
     //day 1, the long way: for each day, explicitly evaluate each child value
@@ -200,7 +217,7 @@ describe('#renderPageWeather', () => {
       })
   })
 
-  it('should correctly display hourly weather', () => {
+  it('should correctly display hourly weather', function () {
     cy.get('[data-hour-timezone]').should('have.text', 'America/New_York')
 
     //assert collection size

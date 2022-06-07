@@ -5,13 +5,12 @@
   "main": "script.js",
   "scripts": {
     "start": "parcel index.html",
-    "start:static": "NODE_ENV=cypress parcel index.html",
     "build": "parcel build index.html",
     "test:unit": "jest \\.unit\\. --coverage",
-    "cy:open": "NODE_ENV=cypress cypress open",
-    "cy:run": "NODE_ENV=cypress cypress run -b chrome",
-    "test:e2e:browser": "NODE_ENV=cypress start-server-and-test start http://localhost:1234 cy:open",
-    "test:e2e:headless": "NODE_ENV=cypress start-server-and-test start http://localhost:1234 cy:run",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run -b chrome",
+    "test:e2e:browser": "start-server-and-test start http://localhost:1234 cy:open",
+    "test:e2e:headless": "start-server-and-test start http://localhost:1234 cy:run",
     "test:all": "npm run test:unit && npm run test:e2e:headless"
   },
   "keywords": [],
