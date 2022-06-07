@@ -13,8 +13,7 @@ City/Places Search
  - Units (Imperial, Metric)
 
  test
- - TODO: Recopy placesWeather test data (should include hourly description)
- - research cypress fixtures, finish cypress videos
+ - populate localStorage from fixture
  - test: delete place
  - test: add place
  - test: localStorage
@@ -36,8 +35,6 @@ import {
   formatDayOfMonth,
   formatDayOfWeek,
   formatDayOfWeekShort,
-  formatHour,
-  formatDate,
   formatTime,
   formatZonedTime,
   formatZonedHour,
@@ -47,11 +44,10 @@ const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
 const DEFAULT_PLACES = [
-  // { id: '', location: 'minneapolis', lat: 44.977753, long: -93.265015 },
-  { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.334591, long: 18.06324 },
-  { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
-  { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
-  { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.508888, long: -73.561668 },
+  // { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.334591, long: 18.06324 },
+  // { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
+  // { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
+  // { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.508888, long: -73.561668 },
   { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7306, long: -73.9352 },
 ]
 
@@ -62,34 +58,21 @@ const DEFAULT_PLACES = [
 let places = []
 let placesWeather = []
 
-// allow for cypress testing
-// console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
-
-//TODO: replace with cypress response interceptor and fixture
-if (process.env.NODE_ENV === 'cypress') {
-  const { TEST_PLACES, TEST_PLACES_WEATHER } = require('./data/cypress-test-data') // put this in the test file
-  places = TEST_PLACES
-  placesWeather = TEST_PLACES_WEATHER
-  setTimeout(initialize, 200)
-} else {
-  getPlaces()
-    .then((data) => {
-      places = data
-      console.log('from localStorage ', data)
-    })
-    .then(getPlacesWeather)
-    .then(initialize)
-    .catch((err) => {
-      console.log('ERROR: ', err)
-      alert(`There was a problem loading your places.`)
-    })
-}
+getPlacesFromLocalStorage()
+  .then((data) => {
+    places = data
+    console.log('from localStorage ', data)
+  })
+  .then(getPlacesWeather)
+  .then(initialize)
+  .catch((err) => {
+    console.log('ERROR: ', err)
+    alert(`There was a problem loading your places.`)
+  })
 
 function initialize() {
   console.log('places initialized: ', places)
-  console.log('places json: ', JSON.stringify(places))
   console.log('placesWeather initialized: ', placesWeather)
-  console.log('placesWeather json: ', JSON.stringify(placesWeather))
   renderPlacesWeather()
   renderPageWeather(placesWeather[0])
 }
@@ -129,12 +112,12 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
 /**
  * axios call
  *
- * @param {*} reqId
+ * @param reqId
  * if id is known, pass to server so server can include in the response object
  * pass 'id' as 'reqId' so the server can use the 'id' key in the response object
  * when id is null, the server will generate the id and return it in the response object
  * 
- * @param {*} reqId
+ * @param location
  * if location is known, pass to server so server can include in the response object
 
  * NOTE: params that are null or undefined are not rendered in the axios.get URL
@@ -290,7 +273,6 @@ function renderHourlyWeather(hourly, coordinates) {
       const element = templateHourRow.content.cloneNode(true)
       const row = element.querySelector('.hour-row')
       row.querySelector('[data-hour-date]').textContent = formatDayOfWeek(hour.timestamp)
-      // row.querySelector('[data-hour]').textContent = formatHour(hour.timestamp)
       row.querySelector('[data-hour]').textContent = formatZonedHour(hour.timestamp, coordinates.timezone)
       row.querySelector('[data-hour-icon]').src = getIconUrl(hour.icon)
       row.querySelector('[data-hour-icon]').alt = hour.description
@@ -309,7 +291,7 @@ function renderHourlyWeather(hourly, coordinates) {
  */
 
 //make localStorage.getItem thenable
-function getPlaces() {
+function getPlacesFromLocalStorage() {
   return new Promise((resolve, reject) => {
     localStorage.clear()
     if (localStorage.getItem(PLACES_STORAGE_KEY) == null) {
@@ -325,9 +307,11 @@ function getPlaces() {
   })
 }
 
-//make localStorage.setItem thenable
-//per MDN, if the value after the await operator is not a Promise,
-//converts the value to a resolved Promise, and waits for it.
+/**
+ * make localStorage.setItem thenable
+ * per MDN, if the value after the await operator is not a Promise,
+ * converts the value to a resolved Promise, and waits for it
+ */
 async function setDefaultPlaces() {
   await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(DEFAULT_PLACES))
 }

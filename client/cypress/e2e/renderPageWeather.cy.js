@@ -1,12 +1,23 @@
 describe('#renderPageWeather', () => {
-  beforeEach(() => {
-    // cy.intercept('GET', '**/weather', { fixture: 'placesWeather.json' })
-    // cy.intercept({ method: 'GET', path: 'weather' }, { fixture: 'placesWeather.json' })
+  before(() => {
+    //TODO: load NYC info into localStorage
+    //register the intercept before loading the page
+    cy.intercept('GET', '**/weather**', { fixture: 'nycWeatherFixture.json' }).as('nycMock')
     cy.visit('/')
+
+    //access the alias from.then()
+    cy.wait('@nycMock').then((interception) => {
+      expect(interception.response.statusCode).to.eq(200)
+      expect(interception.response.body.coordinates.id).to.equal('c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87')
+    })
   })
 
   it('page smoke test should pass', () => {
-    // cy.contains('Weather at your places').should('exist')
+    //different ways to test the value of an element attribute
+    cy.get('[data-city-search]').invoke('attr', 'placeholder', 'Weather at your places').should('exist')
+    cy.get('[data-city-search]').invoke('attr', 'placeholder').should('eq', 'Weather at your places')
+
+    //ensure major page sections exist
     cy.contains('Current Weather').should('exist')
     cy.contains('Forecast').should('exist')
     cy.contains('Hourly Weather').should('exist')
@@ -215,7 +226,7 @@ describe('#renderPageWeather', () => {
       })
   })
 
-  it('should display the correct weather icon for each hour', function () {
+  it('should display the correct weather icon and alt text for each hour', function () {
     //iterating over the collection to evaluate child values also works
     const icons = [
       'http://openweathermap.org/img/wn/01d.png',
