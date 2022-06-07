@@ -29,7 +29,6 @@ describe('#renderPageWeather', () => {
   })
 
   it('page smoke test should pass', function () {
-    // cy.pause()
     //different ways to test the value of an element attribute
     cy.get('[data-city-search]').invoke('attr', 'placeholder', 'Weather at your places').should('exist')
     cy.get('[data-city-search]').invoke('attr', 'placeholder').should('eq', 'Weather at your places')
