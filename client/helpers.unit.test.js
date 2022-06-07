@@ -1,4 +1,4 @@
-import { getIconUrl, parseIconUrl, generatePlaceId } from './helpers.js'
+import { getIconUrl, parseIconUrl } from './helpers.js'
 
 describe('#getIconUrl', () => {
   const iconKeys = [
