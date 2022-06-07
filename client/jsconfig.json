@@ -1,5 +1,5 @@
 {
   "typeAcquisition": {
-    "include": ["jest"]
+    "include": ["jest", "./node_modules/cypress", "cypress/**/*.js"]
   }
 }
