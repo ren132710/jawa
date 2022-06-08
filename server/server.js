@@ -21,10 +21,10 @@ if (process.env.SERVER_UNIT_TEST !== 'true') {
 
 app.get('/weather', (req, res) => {
   console.log('req: ', req)
-  const { lat, long, reqId, location } = req.query
+  const { lat, long, placeId, location } = req.query
 
   //if there is no id, generate the id
-  let id = reqId === '' ? v4() : reqId
+  let id = placeId === '' ? v4() : placeId
 
   axios
     .get('https://api.openweathermap.org/data/3.0/onecall', {

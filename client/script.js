@@ -111,21 +111,20 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
 /**
  * axios call
  *
- * @param reqId
  * if id is known, pass to server so server can include in the response object
- * pass 'id' as 'reqId' so the server can use the 'id' key in the response object
+ * pass 'id' as 'placeId' so the server can use the 'id' key in the response object
  * when id is null, the server will generate the id and return it in the response object
- * 
- * @param location
+ * @param {string} placeId - place id, for adding/removing places from localStorage
  * if location is known, pass to server so server can include in the response object
-
+ * @param {string} location
+ *
  * NOTE: params that are null or undefined are not rendered in the axios.get URL
  */
 
-async function fetchAxiosPromise(lat, long, reqId, location) {
+async function fetchAxiosPromise(lat, long, placeId, location) {
   try {
     const res = await axios.get('http://localhost:3001/weather', {
-      params: { lat, long, reqId, location },
+      params: { lat, long, placeId, location },
       timeout: 5000,
     })
     return res.data
