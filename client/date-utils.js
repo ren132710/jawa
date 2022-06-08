@@ -36,12 +36,13 @@ export function formatTime(timestamp) {
   return format(new Date(timestamp), 'p')
 }
 
-//displays the timezone time for the particular place
+//5:30 AM, 8:21 PM (for the given timezone)
 export function formatZonedTime(timestamp, timezone) {
   const zonedDate = utcToZonedTime(new Date(timestamp), timezone)
   return format(zonedDate, 'p', { timezone })
 }
 
+//5PM, 2AM (for the given timezone)
 export function formatZonedHour(timestamp, timezone) {
   const zonedDate = utcToZonedTime(new Date(timestamp), timezone)
   return format(zonedDate, 'ha', { timezone })
