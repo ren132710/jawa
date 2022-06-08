@@ -3,13 +3,15 @@
 Practice
 
 - client / server
-- OpenWeather API
+- OpenWeather
 - express
 - axios
 - css grid, responsive design
-- localStorage (browser)
-- uuid
+- localStorage
 - date-fns
+- dotenv
+- uuid
 - regex
 - jest
-- node
+- cypress (fixtures, intercepts, implicit and explicit assertions, validating numerous child values at the collection level)
+- parcel
