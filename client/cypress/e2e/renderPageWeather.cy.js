@@ -16,6 +16,8 @@ describe('#renderPageWeather', () => {
 
   before(function () {
     setDefaultPlace()
+    // deep equality
+    expect(JSON.parse(localStorage.getItem('JAWA-Places'))).to.eql(testPlace)
 
     //register the intercept before loading the page
     cy.intercept('GET', '**/weather**', { fixture: 'nycWeatherFixture.json' }).as('nycMock')
