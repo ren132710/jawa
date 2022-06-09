@@ -7,9 +7,10 @@ City/Places Search
  -fetch location based on lat & long, reverse geocoding
 
  prefs
- - open preferences drawer on right side of screen
- - themes: default, sunrise, desert, winter
- - night mode
+ - open preferences, see Bancor's ||| popover
+ - themes:
+  -light, morning, sunrise, desert, winter
+ - night, dusk, new moon
  - Units (Imperial, Metric)
 
  test

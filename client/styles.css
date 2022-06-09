@@ -8,7 +8,7 @@
 
 body {
   display: grid;
-  grid-template-rows: auto;
+  grid-template-rows: auto; /*TODO: *understand this behavior*/
   margin: 0;
   padding: 0;
   position: relative;
@@ -93,8 +93,12 @@ header {
   display: grid;
   gap: 0.5rem;
   /* max = size places card so location text does not wrap */
+  /* TODO: Work on this. */
+  /* auto-fill FILLS the row with as many columns as if can fit, creating implicit columns as needed */
+  /* auto-fit FITS the CURRENTLY AVAILABLE explicit columns in the space by expanding them to take up the available space */
+  /* grid-template-columns: repeat(auto-fit, minmax(min-content, max-content)); */
+
   grid-template-columns: repeat(auto-fit, minmax(70px, max-content));
-  /* grid-template-columns: repeat(auto-fit, minmax(max-content, max-content)); */
   justify-content: center;
   align-items: baseline;
 
