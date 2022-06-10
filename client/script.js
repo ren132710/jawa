@@ -19,10 +19,7 @@ City/Places Search
  - test: localStorage
 
  ui
- - media query for 320x480 (mobile portrait)
- - media query for 480 x 320 (mobile landscape)
- - need more margin at top of page (although this might happen with pres and light/dark mode)
- - how to remove top bottom padding from current temp span?
+ - great grid row for ||| prefs and light/dark mode
 
  final clean
   - remove console.logs
@@ -203,14 +200,18 @@ const currentTopRight = document.querySelector('.current-top-right')
 const currentBotLeft = document.querySelector('.current-bottom-left')
 const currentBotRight = document.querySelector('.current-bottom-right')
 function renderCurrentWeather({ coordinates, current }) {
+  //sub title
+  document.querySelector('[data-current-dt').textContent = `${formatDayOfWeekShort(
+    current.timestamp
+  )} ${formatDayOfMonth(current.timestamp)} ${formatMonth(current.timestamp)} ${formatTime(current.timestamp)}`
+
+  //top left quadrant
   currentTopLeft.querySelector('[data-id]').dataset.id = coordinates.id
   currentTopLeft.querySelector('[data-current-location').textContent = coordinates.location
   currentTopLeft.querySelector('[data-current-icon').src = getIconUrl(current.icon, { size: 'large' })
   currentTopLeft.querySelector('[data-current-icon').alt = current.description
 
-  currentTopRight.querySelector('[data-current-dt').textContent = `${formatDayOfWeekShort(
-    current.timestamp
-  )}, ${formatDayOfMonth(current.timestamp)} ${formatMonth(current.timestamp)} ${formatTime(current.timestamp)}`
+  //to right quadrant
   currentTopRight.querySelector('[data-current-lat').textContent = coordinates.lat
   currentTopRight.querySelector('[data-current-long').textContent = coordinates.long
   currentTopRight.querySelector('[data-current-high').textContent = current.high
@@ -220,11 +221,15 @@ function renderCurrentWeather({ coordinates, current }) {
   currentTopRight.querySelector('[data-current-description').textContent = current.description
   currentTopRight.querySelector('[data-current-precip').textContent = current.precip
   currentTopRight.querySelector('[data-current-visibility').textContent = current.visibility
+
+  //bottom left quadrant
   currentBotLeft.querySelector('[data-current-uv-index]').textContent = current.uvIndex
   currentBotLeft.querySelector('[data-current-uv-level]').textContent = current.uvLevel
   currentBotLeft.querySelector('[data-current-humidity]').textContent = current.humidity
   currentBotLeft.querySelector('[data-current-wind-speed]').textContent = current.windSpeed
   currentBotLeft.querySelector('[data-current-wind-direction]').textContent = current.windDirection
+
+  //bottom right quadrant
   currentBotRight.querySelector('[data-current-dew-point').textContent = current.dewPoint
   currentBotRight.querySelector('[data-current-sunrise').textContent = formatZonedTime(
     current.sunrise,

@@ -70,7 +70,7 @@ describe('#renderPageWeather', () => {
     cy.get('[data-current-wind-direction]').should('have.text', 'S')
 
     //top right
-    cy.get('[data-current-dt]').should('have.text', 'Mon, 6 Jun 4:19 PM')
+    cy.get('[data-current-dt]').should('have.text', 'Mon 6 Jun 4:19 PM')
     cy.get('[data-current-lat]').should('have.text', '40.7306')
     cy.get('[data-current-long]').should('have.text', '-73.9352')
     cy.get('[data-current-high]').should('have.text', '78')

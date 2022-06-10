@@ -5,10 +5,19 @@
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
+@viewport {
+  width: device-width;
+  zoom: 1;
+}
+
+html {
+  height: 100%;
+}
 
 body {
   display: grid;
-  grid-template-rows: auto; /*TODO: *understand this behavior*/
+  /* grid-template-rows: auto; */
+  grid-template-rows: minmax(120px, auto) 1fr 80px 1rem;
   margin: 0;
   padding: 0;
   position: relative;
@@ -18,16 +27,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  min-height: 100vh;
+  min-height: 100%;
+  /* min-height: 100vh; */
 
   /** LIGHT MODE THEMES **/
 
   /* day */
   /* background: white; */
-  /* background: rgba(243, 241, 243, 1); */
+  background: rgba(243, 241, 243, 1);
 
   /* morning */
   background: linear-gradient(to right, rgba(244, 244, 244, 1), rgba(135, 206, 250, 1));
+  /* background: linear-gradient(to right, rgba(243, 241, 243, 1), rgba(135, 206, 250, 1)); */
 
   /* sunrise  TODO: Sunrise can be better */
   /* background: linear-gradient(to right, rgba(251, 244, 138, 1), rgba(135, 206, 250, 1)); */
@@ -68,7 +79,7 @@ header {
   grid-template-areas:
     'city-search'
     'places';
-  margin: 2rem 3rem;
+  margin: 2rem 1rem;
 }
 
 .city-search-container {
@@ -85,32 +96,18 @@ header {
   /* border-radius: 5px; */
   border-radius: 0.3rem;
   padding: 10px 15px;
-  width: 65%;
+  width: 90%;
+  height: 2.5rem;
 }
 
 .places-container {
   grid-area: places;
   display: grid;
   gap: 0.5rem;
-  /* max = size places card so location text does not wrap */
-  /* TODO: Work on this. */
-  /* auto-fill FILLS the row with as many columns as if can fit, creating implicit columns as needed */
-  /* auto-fit FITS the CURRENTLY AVAILABLE explicit columns in the space by expanding them to take up the available space */
-  /* grid-template-columns: repeat(auto-fit, minmax(min-content, max-content)); */
-
-  grid-template-columns: repeat(auto-fit, minmax(70px, max-content));
+  grid-template-columns: repeat(3, minmax(70px, max-content));
   justify-content: center;
-  align-items: baseline;
-
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-
-  /* grid defaults */
-  /* justify-items: stretch; */
-  /* align-items: stretch; */
-  /* justify-content: stretch; */
-  /* align-content: center; */
+  align-items: center;
+  margin-top: 0.5rem;
 }
 
 .place-card {
@@ -188,7 +185,7 @@ header {
     'current'
     'daily'
     'hourly';
-  margin: 1rem 3rem;
+  margin: 0rem 1rem;
 }
 
 .current-section {
@@ -204,22 +201,24 @@ header {
 }
 
 .section-title {
-  position: relative;
-  padding-top: 1rem;
-  padding-bottom: 0.6rem;
+  font-size: 1.25rem;
   text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 0.7rem;
 }
 
-.section-title-hourly {
-  padding-bottom: 0rem;
+.section-subtitle {
+  font-size: 0.7rem;
+  font-style: oblique;
+  text-align: center;
+  color: hsl(200, 100%, 30%);
 }
 
 .current-container {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  grid-template-rows: 250px 50px;
+  grid-template-columns: 150px 150px;
   gap: 0.4rem;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem;
   border: 1px solid white;
   border-radius: 0.25rem;
 }
@@ -268,7 +267,8 @@ header {
 }
 
 .current-temp {
-  font-size: 3.25rem;
+  font-size: 3rem;
+  line-height: 1.2;
 }
 
 .current-feels-like {
@@ -297,7 +297,7 @@ header {
 
 .daily-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 120px);
+  grid-template-columns: 120px 120px;
   gap: 0.55rem;
   justify-content: center;
 }
@@ -325,17 +325,14 @@ header {
   /* color: rgba(244, 244, 244, 1); */
 }
 
-.hour-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.hourly-container {
+  display: grid;
 }
 
 .hour-row {
   display: grid;
-  grid-template-columns: repeat(7, minmax(60px, 1fr));
-  gap: 0.4rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
 .hour-row:nth-child(2n) {
@@ -347,6 +344,18 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.hour-data:nth-child(2) {
+  grid-column: 2/4;
+}
+
+.hour-data:nth-child(5) {
+  justify-content: flex-start;
+}
+
+.hour-data:nth-child(6) {
+  justify-content: flex-start;
 }
 
 .hour-label {
@@ -366,48 +375,100 @@ header {
   margin-top: 0.33rem;
 }
 
-.hour-timezone {
-  font-size: 0.75rem;
-  text-align: center;
-  color: hsl(200, 100%, 30%);
-}
-
 footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2rem 3rem;
+  margin: 2rem 1rem;
   font-size: 0.75rem;
   height: 30px;
 }
 
-@media screen and (min-width: 1150px) {
-  body {
-    grid-template-rows: minmax(120px, auto) 1fr 80px 1rem;
+@media screen and (min-width: 480px) {
+  .places-container {
+    grid-template-columns: repeat(auto-fit, minmax(70px, max-content));
   }
 
   .main {
-    /* grid-template-columns: 1fr 1.618fr; */
-    grid-template-columns: 1fr 1.5fr;
+    margin: 0rem 2rem;
+  }
+
+  .current-container {
+    grid-template-columns: 1fr 1fr;
+    padding: 1rem;
+  }
+
+  .daily-container {
+    grid-template-columns: repeat(auto-fit, 120px);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  header {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'city-search places';
+    margin: 2rem 3rem;
+  }
+
+  .places-container {
+    justify-content: end;
+  }
+
+  .main {
+    margin: 0rem 3rem;
+  }
+
+  .current-temp {
+    font-size: 3rem;
+  }
+
+  .daily-container {
+    grid-template-columns: repeat(auto-fit, 120px);
+  }
+
+  .hour-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hour-row {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(60px, 1fr));
+    grid-template-rows: auto;
+    gap: 0.4rem;
+  }
+
+  .hour-data:nth-child(2) {
+    grid-column: 2/3;
+  }
+
+  .hour-data:nth-child(5) {
+    justify-content: center;
+  }
+
+  .hour-data:nth-child(6) {
+    justify-content: center;
+  }
+
+  .footer {
+    margin: 2rem 3rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  header {
+    grid-template-columns: 1fr 1.618fr;
+  }
+
+  .main {
+    grid-template-columns: 1fr 1.618fr;
+    /* grid-template-columns: 1fr 1.5fr; */
     grid-template-rows: auto;
 
     grid-template-areas:
       'current daily'
       'hourly hourly';
-  }
-
-  header {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 'city-search places';
-  }
-
-  .city-search {
-    width: 75%;
-    height: 55px;
-  }
-
-  .places-container {
-    justify-content: end;
-    margin: 0rem;
   }
 }

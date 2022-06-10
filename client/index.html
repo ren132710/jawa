@@ -23,7 +23,11 @@
     </header>
     <main class="main">
       <div class="current-section">
-        <div class="section-title">Current Weather</div>
+        <div class="section-title">
+          Current Weather
+          <div class="section-subtitle"><span data-current-dt></span></div>
+        </div>
+
         <div class="current-container">
           <div class="current-top-left">
             <div class="current-location" data-id data-current-location></div>
@@ -34,10 +38,8 @@
               src="http://openweathermap.org/img/wn/10d@4x.png"
               alt="rain"
             />
-            <br />
           </div>
           <div class="current-top-right">
-            <div class="current-detail">Last updated:&nbsp;<span data-current-dt></span></div>
             <div class="current-detail">lat:&nbsp;<span data-current-lat></span></div>
             <div class="current-detail">long:&nbsp;<span data-current-long></span></div>
             <br />
@@ -77,12 +79,17 @@
         </div>
       </div>
       <div class="daily-section">
-        <div class="section-title">Forecast</div>
+        <div class="section-title">
+          Forecast
+          <div class="section-subtitle"><span>&nbsp</span></div>
+        </div>
         <div class="daily-container"></div>
       </div>
       <div class="hourly-section">
-        <div class="section-title section-title-hourly">Hourly Weather</div>
-        <div class="hour-timezone" data-hour-timezone></div>
+        <div class="section-title">
+          Hourly Weather
+          <div class="section-subtitle" data-hour-timezone></div>
+        </div>
         <div class="hourly-container"></div>
       </div>
     </main>
