@@ -152,7 +152,6 @@ header {
 }
 
 .btn-delete-place:hover {
-  background-color: hsl(200, 100%, 50%);
   background-color: hsl(0, 100%, 55%);
   border-radius: 25%;
   color: rgba(243, 241, 243, 1);
