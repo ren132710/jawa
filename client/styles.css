@@ -34,14 +34,14 @@ body {
 
   /* day */
   /* background: white; */
-  background: rgba(243, 241, 243, 1);
+  /* background: rgba(243, 241, 243, 1); */
 
   /* morning */
-  background: linear-gradient(to right, rgba(244, 244, 244, 1), rgba(135, 206, 250, 1));
+  /* background: linear-gradient(to right, rgba(244, 244, 244, 1), rgba(135, 206, 250, 1)); */
   /* background: linear-gradient(to right, rgba(243, 241, 243, 1), rgba(135, 206, 250, 1)); */
 
   /* sunrise  TODO: Sunrise can be better */
-  /* background: linear-gradient(to right, rgba(251, 244, 138, 1), rgba(135, 206, 250, 1)); */
+  background: linear-gradient(to right, rgba(251, 244, 138, 1), rgba(135, 206, 250, 1));
 
   /* desert */
   /* background: linear-gradient(to right, rgba(245, 176, 65, 1), rgba(135, 206, 250, 1)); */
@@ -140,20 +140,22 @@ header {
 
 .btn-delete-place {
   position: absolute;
-  top: 1px;
-  right: 1px;
-  border: 1px solid hsl(200, 100%, 70%);
-  border-radius: 25%;
+  top: 2px;
+  right: 2px;
+  background-color: transparent;
+  border: none;
   padding: 0.16rem 0.25rem;
+  font-size: 0.65rem;
+  color: hsl(200, 100%, 30%);
+  font-weight: bold;
   text-align: center;
-  font-size: 0.35rem;
-  background-color: hsl(200, 100%, 20%);
-  color: white;
-  font-weight: bolder;
 }
 
 .btn-delete-place:hover {
-  background-color: orangered;
+  background-color: hsl(200, 100%, 50%);
+  background-color: hsl(0, 100%, 55%);
+  border-radius: 25%;
+  color: rgba(243, 241, 243, 1);
 }
 
 .btn-new-place {
@@ -276,7 +278,7 @@ header {
 }
 
 .current-description {
-  color: hsl(200, 100%, 40%);
+  color: hsl(200, 100%, 30%);
   text-transform: capitalize;
 
   /* dark mode */
@@ -317,7 +319,7 @@ header {
   padding-top: 0.1rem;
   padding-bottom: 0.1rem;
   font-weight: 500;
-  color: hsl(200, 100%, 40%);
+  color: hsl(200, 100%, 30%);
   text-transform: capitalize;
   text-align: center;
 
