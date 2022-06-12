@@ -21,6 +21,7 @@ City/Places Search
  ui
  - create NavBar for JAWA logo and Prefs |||, review Bancor
  - save place button adjacent to location, review webdeasy.de
+ - globally change rbga to hsl
 
  final clean
   - remove console.logs
