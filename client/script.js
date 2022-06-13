@@ -19,9 +19,12 @@ City/Places Search
  - test: localStorage
 
  ui
+ - Do CSS course
  - create NavBar for JAWA logo and Prefs |||, review Bancor
  - save place button adjacent to location, review webdeasy.de
- - globally change rbga to hsl
+ - globally change rbga to hsl?
+ - try Euclid Circular A Sans Serif font family
+
 
  final clean
   - remove console.logs
@@ -58,9 +61,9 @@ let places = []
 let placesWeather = []
 
 getPlacesFromLocalStorage()
-  .then((data) => {
-    places = data
-    console.log('from localStorage ', data)
+  .then((savedPlaces) => {
+    places = savedPlaces
+    console.log('from localStorage ', savedPlaces)
   })
   .then(getPlacesWeather)
   .then(initialize)
@@ -300,13 +303,15 @@ function renderHourlyWeather(hourly, coordinates) {
 function getPlacesFromLocalStorage() {
   return new Promise((resolve, reject) => {
     // localStorage.clear()
-    if (places.length === 0) {
+    const isNull = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
+
+    if (isNull == null) {
       setDefaultPlaces()
     }
 
-    const data = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
+    const savedPlaces = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
     if (true) {
-      resolve(data)
+      resolve(savedPlaces)
     } else {
       reject(err)
     }
