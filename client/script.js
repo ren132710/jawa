@@ -1,7 +1,7 @@
 /*
 TODO:
 City/Places Search
- -fetch lon, lat, placeName from google api
+ -fetch long, lat, placeName from google api
  -fetch openWeather data
  -populate: current, daily, hourly
  -fetch location based on lat & long, reverse geocoding
@@ -12,19 +12,24 @@ City/Places Search
   -light, morning, sunrise, desert, winter
  - night, dusk, new moon
  - Units (Imperial, Metric)
+ - use ::before pseudo element to create custom radio buttons
 
- test
+ cypress testing:
  - test: delete place
  - test: add place
  - test: localStorage
 
  ui
- - Do CSS course
- - create NavBar for JAWA logo and Prefs |||, review Bancor
- - save place button adjacent to location, review webdeasy.de
+ - refactor css properties into variables
+ - use ::after pseudo element for UNIT, degrees, wind speed, percent - so we can remove the spans from html
+ - create NavBar for JAWA logo and Prefs |||, review Bancor/Ren, position: fixed. Push navBar to bottom of screen in mobile context
+ - build prefs pop-up overlay, use transform property for menu button
+ - modernize savePlace button
+ - modernize deletePlace button - when hovering on place card, delete X top corner of place card border (similar to macos notifications)
+ - box-shadow on place card when hovering
  - globally change rbga to hsl?
- - try Euclid Circular A Sans Serif font family
-
+ - use margin: 0 auto; to center content in mobile context
+ - try font-family Montserrat (from google fonts)
 
  final clean
   - remove console.logs
