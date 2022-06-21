@@ -1,10 +1,8 @@
 /*
 TODO:
 City/Places Search
- -fetch long, lat, placeName from google api
- -fetch openWeather data
- -populate: current, daily, hourly
- -fetch location based on lat & long, reverse geocoding
+ - implement google maps api for places search
+ - remove uuid from server if setting id server side is no longer necessary
 
  prefs
  - open preferences, see Bancor's ||| popover
@@ -36,6 +34,7 @@ City/Places Search
 */
 
 import axios from 'axios'
+const { v4 } = require('uuid')
 import {
   formatMonth,
   formatDayOfMonth,
@@ -119,39 +118,23 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
 /**
  * axios call
  *
- * if id is known, pass to server so server can include in the response object
- * pass 'id' as 'placeId' so the server can use the 'id' key in the response object
- * when id is null, the server will generate the id and return it in the response object
- * @param {string} placeId - place id, for adding/removing places from localStorage
+ * an id is needed for adding/removing places from localStorage
+ * when the id is known, pass to server so server can include in the response object
+ * otherwise the server will generate the id and return it in the response object
+ * @param {string} id
  * if location is known, pass to server so server can include in the response object
  * @param {string} location
  *
  * NOTE: params that are null or undefined are not rendered in the axios.get URL
  */
 
-async function fetchAxiosPromise(lat, long, placeId, location) {
+async function fetchAxiosPromise(lat, long, id, location) {
   try {
     const res = await axios.get('http://localhost:3001/weather', {
-      params: { lat, long, placeId, location },
+      params: { lat, long, id, location },
       timeout: 5000,
     })
     return res.data
-  } catch (e) {
-    console.log(`ERROR: ${e}`)
-    alert('Fetching weather encountered an issue. Please try again.')
-  }
-}
-
-async function getWeather(lat, long, { target = '' } = {}) {
-  try {
-    const res = await axios.get('http://localhost:3001/weather', { params: { lat, long }, timeout: 5000 })
-    if (target === 'page') {
-      renderPageWeather(res.data)
-    } else if (target === 'places') {
-      renderPlacesWeather(res.data)
-    } else {
-      renderPageWeather(res.data)
-    }
   } catch (e) {
     console.log(`ERROR: ${e}`)
     alert('Fetching weather encountered an issue. Please try again.')
@@ -338,7 +321,7 @@ async function savePlaces() {
 
 function newPlace() {
   const newPlace = {
-    id: currentTopLeft.querySelector('[data-id').dataset.id,
+    id: v4(),
     location: currentTopLeft.querySelector('[data-current-location').innerText.toLowerCase(),
     lat: currentTopRight.querySelector('[data-current-lat').innerText,
     long: currentTopRight.querySelector('[data-current-long').innerText,
