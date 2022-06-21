@@ -20,7 +20,7 @@ if (process.env.SERVER_UNIT_TEST !== 'true') {
 }
 
 app.get('/weather', (req, res) => {
-  console.log('req: ', req)
+  // console.log('req: ', req)
   const { lat, long, placeId, location } = req.query
 
   //if there is no id, generate the id
