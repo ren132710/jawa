@@ -32,8 +32,8 @@ describe('#renderPageWeather', () => {
 
   it('page smoke test should pass', function () {
     //different ways to test the value of an element attribute
-    cy.get('[data-city-search]').invoke('attr', 'placeholder', 'Weather at your places').should('exist')
-    cy.get('[data-city-search]').invoke('attr', 'placeholder').should('eq', 'Weather at your places')
+    cy.get('[data-place-search]').invoke('attr', 'placeholder', 'Weather at your places').should('exist')
+    cy.get('[data-place-search]').invoke('attr', 'placeholder').should('eq', 'Weather at your places')
 
     //ensure major page sections exist
     cy.contains('Current Weather').should('exist')
@@ -51,8 +51,10 @@ describe('#renderPageWeather', () => {
 
   it('should correctly display current weather', function () {
     //top left
-    cy.get('[data-current-location]').invoke('attr', 'data-id').should('equal', 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87')
-    cy.get('[data-current-location]').should('have.text', 'new york')
+    cy.get('.current-top-left>[data-location]')
+      .invoke('attr', 'data-id')
+      .should('equal', 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87')
+    cy.get('.current-top-left>[data-location]').should('have.text', 'new york')
     cy.get('[data-new-place]').should('have.text', 'New Place')
     cy.get('[data-current-icon]')
       .invoke('attr', 'src')

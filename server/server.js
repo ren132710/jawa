@@ -22,7 +22,7 @@ if (process.env.SERVER_UNIT_TEST !== 'true') {
 app.get('/weather', (req, res) => {
   let { lat, long, id, location } = req.query
 
-  //if there is no id, generate an id
+  //if no id, generate the id
   id = id === '' ? v4() : id
 
   axios

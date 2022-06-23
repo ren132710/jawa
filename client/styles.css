@@ -88,13 +88,13 @@ header {
   margin: 2rem 1rem;
 }
 
-.city-search-container {
+.place-search-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.city-search {
+.place-search {
   grid-area: city-search;
   font-size: 1.2rem;
   border: 1px solid #777;

@@ -1,8 +1,12 @@
 /*
 TODO:
 City/Places Search
- - implement google maps api for places search
- - remove uuid from server if setting id server side is no longer necessary
+ - hide api key
+
+  cypress testing:
+ - test: delete place
+ - test: add place
+ - test: localStorage
 
  prefs
  - open preferences, see Bancor's ||| popover
@@ -11,11 +15,6 @@ City/Places Search
  - night, dusk, new moon
  - Units (Imperial, Metric)
  - use ::before pseudo element to create custom radio buttons
-
- cypress testing:
- - test: delete place
- - test: add place
- - test: localStorage
 
  ui
  - refactor css properties into variables
@@ -26,12 +25,17 @@ City/Places Search
  - modernize deletePlace button - when hovering on place card, delete X top corner of place card border (similar to macos notifications)
  - box-shadow on place card when hovering
  - globally change rbga to hsl?
+ - onFocus - support tabbing between place cards and to New Place button
  - use margin: 0 auto; to center content in mobile context
  - try font-family Montserrat (from google fonts)
 
  final clean
   - remove console.logs
 */
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 import axios from 'axios'
 const { v4 } = require('uuid')
@@ -50,11 +54,30 @@ const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
 const DEFAULT_PLACES = [
-  { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.334591, long: 18.06324 },
-  // { id: '8f38cdb4-ba91-444a-a121-48e6ad26e751', location: 'boston', lat: 42.361145, long: -71.057083 },
-  // { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.733795, long: -122.446747 },
-  // { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.508888, long: -73.561668 },
-  { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7306, long: -73.9352 },
+  {
+    id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443',
+    location: 'stockholm',
+    lat: 59.3293,
+    long: 18.0685,
+  },
+  // {
+  //   id: '90f3d018-bbd3-45be-9c11-debbff73fb6c',
+  //   location: 'san francisco',
+  //   lat: 37.7749295,
+  //   long: -122.4194155,
+  // },
+  // {
+  //   id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8',
+  //   location: 'montreal',
+  //   lat: 45.5016889,
+  //   long: -73.567256,
+  // },
+  // {
+  //   id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87',
+  //   location: 'new york',
+  //   lat: 40.7127753,
+  //   long: -74.0059728,
+  // },
 ]
 
 /*
@@ -80,14 +103,14 @@ function initialize() {
   console.log('places initialized: ', places)
   console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
-  renderPageWeather(placesWeather[0])
+  renderWeather(placesWeather[0])
 }
 
 async function getPlacesWeather() {
   let promises = []
 
   places.forEach((place) => {
-    const promise = fetchAxiosPromise(place.lat, place.long, place.id, place.location)
+    const promise = getWeather(place.lat, place.long, place.id, place.location)
     promises.push(promise)
   })
 
@@ -112,23 +135,24 @@ addGlobalEventListener('click', '#btnNewPlace', () => {
 })
 
 addGlobalEventListener('click', '#btnDeletePlace', (e) => {
+  console.log(e.target.closest('[data-place-card]').dataset.id)
   deletePlace(e.target.closest('[data-place-card]').dataset.id)
 })
 
-/**
+/*
  * axios call
- *
- * an id is needed for adding/removing places from localStorage
- * when the id is known, pass to server so server can include in the response object
- * otherwise the server will generate the id and return it in the response object
- * @param {string} id
- * if location is known, pass to server so server can include in the response object
- * @param {string} location
+ * @param {string} lat: latitude, required by OpenWeather for weather data
+ * @param {string} long: longitude, required by OpenWeather for weather data
+ * @param {string} id:
+ *    - If known, pass to server so server can include in the response
+ *    - Otherwise, pass empty string and server will generate the id
+ *    - Necessary for adding/deleting places from localStorage
+ * @param {string} location: pass to server so server can include in the response
  *
  * NOTE: params that are null or undefined are not rendered in the axios.get URL
  */
 
-async function fetchAxiosPromise(lat, long, id, location) {
+async function getWeather(lat, long, id, location) {
   try {
     const res = await axios.get('http://localhost:3001/weather', {
       params: { lat, long, id, location },
@@ -142,7 +166,33 @@ async function fetchAxiosPromise(lat, long, id, location) {
 }
 
 /*
- * render weather
+ * google autocomplete
+ */
+
+const placeSearch = document.querySelector('[data-place-search]')
+
+const autocomplete = new google.maps.places.Autocomplete(placeSearch, {
+  types: ['geocode'],
+  fields: ['place_id', 'name', 'geometry.location'],
+})
+
+autocomplete.addListener('place_changed', () => {
+  const place = autocomplete.getPlace()
+  // if (place == null) return
+  if (!place.geometry) return
+  const lat = place.geometry.location.lat()
+  const long = place.geometry.location.lng()
+  const location = place.name
+
+  const res = getWeather(lat, long, (id = ''), location)
+  res.then((data) => {
+    console.log('new weather: ', data)
+    renderWeather(data)
+  })
+})
+
+/*
+ * render places weather
  */
 
 const placesContainer = document.querySelector('.places-container')
@@ -157,9 +207,7 @@ function renderPlacesWeather() {
     card.dataset.location = place.coordinates.location
     card.dataset.lat = place.coordinates.lat
     card.dataset.long = place.coordinates.long
-    card.dataset.high = place.current.high
-    card.dataset.low = place.current.low
-    card.dataset.icon = getIconUrl(place.current.icon)
+    card.dataset.mapsPlaceId = place.coordinates.maps_place_id
     card.querySelector('[data-location').innerText = place.coordinates.location
     card.querySelector('[data-icon]').src = getIconUrl(place.current.icon)
     card.querySelector('[data-icon]').alt = place.current.description
@@ -167,20 +215,24 @@ function renderPlacesWeather() {
     card.querySelector('[data-hl] > [data-low]').innerText = place.current.low
     card.addEventListener('click', (e) => {
       if (e.target.id === 'btnDeletePlace') return
-      renderWeather(e.target.dataset.id)
+      renderSavedPlaceWeather(e.target.dataset.id)
     })
     placesContainer.append(element)
   })
 }
 
-function renderWeather(id) {
+/*
+ * render weather
+ */
+
+function renderSavedPlaceWeather(id) {
   const index = placesWeather.findIndex((place) => {
     return place.coordinates.id === id
   })
-  renderPageWeather(placesWeather[index])
+  renderWeather(placesWeather[index])
 }
 
-function renderPageWeather({ coordinates, current, daily, hourly }) {
+function renderWeather({ coordinates, current, daily, hourly }) {
   document.body.classList.remove('blurred')
   renderCurrentWeather({ coordinates, current })
   renderDailyWeather(daily)
@@ -200,7 +252,8 @@ function renderCurrentWeather({ coordinates, current }) {
 
   //top left quadrant
   currentTopLeft.querySelector('[data-id]').dataset.id = coordinates.id
-  currentTopLeft.querySelector('[data-current-location').textContent = coordinates.location
+  currentTopLeft.querySelector('[data-location]').dataset.location = coordinates.location
+  currentTopLeft.querySelector('[data-location]').textContent = coordinates.location
   currentTopLeft.querySelector('[data-current-icon').src = getIconUrl(current.icon, { size: 'large' })
   currentTopLeft.querySelector('[data-current-icon').alt = current.description
 
@@ -321,10 +374,10 @@ async function savePlaces() {
 
 function newPlace() {
   const newPlace = {
-    id: v4(),
-    location: currentTopLeft.querySelector('[data-current-location').innerText.toLowerCase(),
-    lat: currentTopRight.querySelector('[data-current-lat').innerText,
-    long: currentTopRight.querySelector('[data-current-long').innerText,
+    id: currentTopLeft.querySelector('[data-id').dataset.id,
+    location: currentTopLeft.querySelector('[data-location]').innerText.toLowerCase(),
+    lat: currentTopRight.querySelector('[data-current-lat]').innerText,
+    long: currentTopRight.querySelector('[data-current-long]').innerText,
   }
 
   places.push(newPlace)

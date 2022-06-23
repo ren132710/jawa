@@ -7,17 +7,20 @@
     <meta name="description" content="Just another weather app." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" /> -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet" />
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet" /> -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
-    <script src="script.js" defer></script>
+    <script
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUze6i1FN3eI28JozPm0nXd0rRSAzb6Yk&libraries=places"
+    ></script>
+    <script defer src="script.js"></script>
     <title>JAWA | Just Another Weather App</title>
   </head>
   <body class="blurred">
     <header class="header">
-      <div class="city-search-container">
-        <input type="text" class="city-search" data-city-search placeholder="Weather at your places" />
+      <div class="place-search-container">
+        <input type="text" class="place-search" data-place-search placeholder="Weather at your places" />
       </div>
       <div class="places-container"></div>
     </header>
@@ -30,7 +33,7 @@
 
         <div class="current-container">
           <div class="current-top-left">
-            <div class="current-location" data-id data-current-location></div>
+            <div class="current-location" data-id data-location></div>
             <button id="btnNewPlace" class="btn-new-place" data-new-place>New Place</button>
             <img
               class="weather-icon large"
