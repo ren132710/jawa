@@ -125,12 +125,9 @@ async function getPlacesWeather() {
  * @param {string} lat: latitude, required by OpenWeather for weather data
  * @param {string} long: longitude, required by OpenWeather for weather data
  * @param {string} id:
- *    - If known, pass to server so server can include in the response
- *    - Otherwise, pass empty string and server will generate the id
- *    - Necessary for adding/deleting places from localStorage
+ *    - pass to server so server can include in the response
+ *    -necessary for adding/deleting places from localStorage
  * @param {string} location: pass to server so server can include in the response
- *
- * NOTE: params that are null or undefined are not rendered in the axios.get URL
  */
 
 async function getWeather(lat, long, id, location) {
