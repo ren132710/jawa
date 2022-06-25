@@ -33,12 +33,11 @@ City/Places Search
   - remove console.logs
 */
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
+import dotenv from 'dotenv'
+// Loads .env file and sets environment variable
+dotenv.config()
 
 import axios from 'axios'
-const { v4 } = require('uuid')
 import {
   formatMonth,
   formatDayOfMonth,
@@ -48,7 +47,8 @@ import {
   formatZonedTime,
   formatZonedHour,
 } from './date-utils.js'
-import { getIconUrl, parseIconUrl } from './helpers.js'
+import { getIconUrl } from './helpers.js'
+const { v4 } = require('uuid')
 
 const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
@@ -72,12 +72,12 @@ const DEFAULT_PLACES = [
   //   lat: 45.5016889,
   //   long: -73.567256,
   // },
-  // {
-  //   id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87',
-  //   location: 'new york',
-  //   lat: 40.7127753,
-  //   long: -74.0059728,
-  // },
+  {
+    id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87',
+    location: 'new york',
+    lat: 40.7127753,
+    long: -74.0059728,
+  },
 ]
 
 /*
@@ -119,25 +119,6 @@ async function getPlacesWeather() {
     placesWeather = data
   })
 }
-
-/*
- * event listeners
- */
-
-function addGlobalEventListener(type, selector, callback) {
-  document.addEventListener(type, (e) => {
-    if (e.target.matches(selector)) callback(e)
-  })
-}
-
-addGlobalEventListener('click', '#btnNewPlace', () => {
-  newPlace()
-})
-
-addGlobalEventListener('click', '#btnDeletePlace', (e) => {
-  console.log(e.target.closest('[data-place-card]').dataset.id)
-  deletePlace(e.target.closest('[data-place-card]').dataset.id)
-})
 
 /*
  * axios call
@@ -183,8 +164,9 @@ autocomplete.addListener('place_changed', () => {
   const lat = place.geometry.location.lat()
   const long = place.geometry.location.lng()
   const location = place.name
+  const id = ''
 
-  const res = getWeather(lat, long, (id = ''), location)
+  const res = getWeather(lat, long, id, location)
   res.then((data) => {
     console.log('new weather: ', data)
     renderWeather(data)
@@ -343,10 +325,9 @@ function renderHourlyWeather(hourly, coordinates) {
 //make localStorage.getItem thenable
 function getPlacesFromLocalStorage() {
   return new Promise((resolve, reject) => {
-    // localStorage.clear()
     const isNull = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
 
-    if (isNull == null) {
+    if (isNull.length === 0) {
       setDefaultPlaces()
     }
 
@@ -372,9 +353,15 @@ async function savePlaces() {
   await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places))
 }
 
+/*
+ * new / delete place
+ */
+
+//newPlace
+document.querySelector('#btnNewPlace').addEventListener('click', newPlace)
 function newPlace() {
   const newPlace = {
-    id: currentTopLeft.querySelector('[data-id').dataset.id,
+    id: v4(),
     location: currentTopLeft.querySelector('[data-location]').innerText.toLowerCase(),
     lat: currentTopRight.querySelector('[data-current-lat]').innerText,
     long: currentTopRight.querySelector('[data-current-long]').innerText,
@@ -389,6 +376,19 @@ function newPlace() {
   savePlaces().then(getPlacesWeather).then(renderPlacesWeather)
   console.log('new places: ', places)
 }
+
+//deletePlace
+// TODO: could only get deletePlace listener to work by wrapping in function
+function addGlobalEventListener(type, selector, callback) {
+  document.addEventListener(type, (e) => {
+    if (e.target.matches(selector)) callback(e)
+  })
+}
+
+addGlobalEventListener('click', '#btnDeletePlace', (e) => {
+  // console.log(e.target.closest('[data-place-card]').dataset.id)
+  deletePlace(e.target.closest('[data-place-card]').dataset.id)
+})
 
 function deletePlace(cardId) {
   places = places.filter((place) => place.id !== cardId)
