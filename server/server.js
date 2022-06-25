@@ -19,7 +19,7 @@ if (process.env.SERVER_UNIT_TEST !== 'true') {
 }
 
 app.get('/weather', (req, res) => {
-  let { lat, long, id, location } = req.query
+  const { lat, long, id, location } = req.query
 
   axios
     .get('https://api.openweathermap.org/data/3.0/onecall', {
