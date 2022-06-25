@@ -22,9 +22,6 @@ if (process.env.SERVER_UNIT_TEST !== 'true') {
 app.get('/weather', (req, res) => {
   let { lat, long, id, location } = req.query
 
-  //if no id, generate the id
-  id = id === '' ? v4() : id
-
   axios
     .get('https://api.openweathermap.org/data/3.0/onecall', {
       params: { lat: lat, lon: long, appid: process.env.API_KEY, units: 'imperial', exclude: 'minutely' },
