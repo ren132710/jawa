@@ -164,7 +164,7 @@ autocomplete.addListener('place_changed', () => {
   const lat = place.geometry.location.lat()
   const long = place.geometry.location.lng()
   const location = place.name
-  const id = ''
+  const id = v4()
 
   const res = getWeather(lat, long, id, location)
   res.then((data) => {
