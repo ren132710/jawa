@@ -10,10 +10,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
-    <script
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUze6i1FN3eI28JozPm0nXd0rRSAzb6Yk&libraries=places"
-    ></script>
+    <!-- in order to hide the api key on github, build the script tag programmatically using dotenv.-->
+    <script>
+      const API_KEY = process.env.API_KEY
+      const API_URL = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`
+      // const API_URL = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initAutocomplete`
+      const script = document.createElement('script')
+      script.src = API_URL
+      script.defer = true
+      script.async = true
+      document.head.appendChild(script)
+      console.log('script tag: ', document.head.appendChild(script))
+    </script>
     <script defer src="script.js"></script>
     <title>JAWA | Just Another Weather App</title>
   </head>

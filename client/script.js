@@ -1,8 +1,5 @@
 /*
 TODO:
-City/Places Search
- - hide api key
-
   cypress testing:
  - test: delete place
  - test: add place
@@ -54,30 +51,10 @@ const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
 const DEFAULT_PLACES = [
-  {
-    id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443',
-    location: 'stockholm',
-    lat: 59.3293,
-    long: 18.0685,
-  },
-  // {
-  //   id: '90f3d018-bbd3-45be-9c11-debbff73fb6c',
-  //   location: 'san francisco',
-  //   lat: 37.7749295,
-  //   long: -122.4194155,
-  // },
-  // {
-  //   id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8',
-  //   location: 'montreal',
-  //   lat: 45.5016889,
-  //   long: -73.567256,
-  // },
-  {
-    id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87',
-    location: 'new york',
-    lat: 40.7127753,
-    long: -74.0059728,
-  },
+  { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.3293, long: 18.0685 },
+  { id: '905e58e1-5510-4535-b4c8-2ed30045772d', location: 'austin', lat: 30.2672, long: -97.7431 },
+  { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.5016889, long: -73.567256 },
+  { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7127753, long: -74.0059728 },
 ]
 
 /*
@@ -104,6 +81,7 @@ function initialize() {
   console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
   renderWeather(placesWeather[0])
+  initAutocomplete()
 }
 
 async function getPlacesWeather() {
@@ -121,7 +99,7 @@ async function getPlacesWeather() {
 }
 
 /*
- * axios call
+ * axios
  * @param {string} lat: latitude, required by OpenWeather for weather data
  * @param {string} long: longitude, required by OpenWeather for weather data
  * @param {string} id:
@@ -148,27 +126,29 @@ async function getWeather(lat, long, id, location) {
  */
 
 const placeSearch = document.querySelector('[data-place-search]')
-
-const autocomplete = new google.maps.places.Autocomplete(placeSearch, {
-  types: ['geocode'],
-  fields: ['place_id', 'name', 'geometry.location'],
-})
-
-autocomplete.addListener('place_changed', () => {
-  const place = autocomplete.getPlace()
-  // if (place == null) return
-  if (!place.geometry) return
-  const lat = place.geometry.location.lat()
-  const long = place.geometry.location.lng()
-  const location = place.name
-  const id = v4()
-
-  const res = getWeather(lat, long, id, location)
-  res.then((data) => {
-    console.log('new weather: ', data)
-    renderWeather(data)
+let autocomplete
+function initAutocomplete() {
+  autocomplete = new google.maps.places.Autocomplete(placeSearch, {
+    types: ['(cities)'],
+    componentRestrictions: { country: 'us' },
   })
-})
+
+  autocomplete.addListener('place_changed', () => {
+    const place = autocomplete.getPlace()
+    // if (place == null) return
+    if (!place.geometry) return
+    const lat = place.geometry.location.lat()
+    const long = place.geometry.location.lng()
+    const location = place.name
+    const id = v4()
+
+    const res = getWeather(lat, long, id, location)
+    res.then((data) => {
+      console.log('new weather: ', data)
+      renderWeather(data)
+    })
+  })
+}
 
 /*
  * render places weather
@@ -323,10 +303,10 @@ function renderHourlyWeather(hourly, coordinates) {
 function getPlacesFromLocalStorage() {
   return new Promise((resolve, reject) => {
     const isNull = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
+    console.log('isNull: ', isNull)
 
-    if (isNull.length === 0) {
-      setDefaultPlaces()
-    }
+    if (isNull == null) setDefaultPlaces()
+    if (isNull.length < 1) setDefaultPlaces()
 
     const savedPlaces = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
     if (true) {
