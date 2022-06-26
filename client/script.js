@@ -3,7 +3,7 @@ TODO:
   cypress testing:
  - test: delete place
  - test: add place
- - test: localStorage
+ - test: localStorage, unit tests
 
  prefs
  - open preferences, see Bancor's ||| popover
@@ -45,16 +45,17 @@ import {
   formatZonedHour,
 } from './date-utils.js'
 import { getIconUrl } from './parse.js'
+import { getLocalStorage, setLocalStorage } from './localStorage.js'
 const { v4 } = require('uuid')
 
 const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
 const DEFAULT_PLACES = [
-  { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.3293, long: 18.0685 },
+  // { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.3293, long: 18.0685 },
   { id: '905e58e1-5510-4535-b4c8-2ed30045772d', location: 'austin', lat: 30.2672, long: -97.7431 },
-  { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.5016889, long: -73.567256 },
-  { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7127753, long: -74.0059728 },
+  // { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.5016889, long: -73.567256 },
+  // { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7127753, long: -74.0059728 },
 ]
 
 /*
@@ -72,7 +73,7 @@ getPlacesFromLocalStorage()
   .then(getPlacesWeather)
   .then(initialize)
   .catch((err) => {
-    console.log('ERROR: ', err)
+    console.error('ERROR: ', err)
     alert(`There was a problem loading your places.`)
   })
 
@@ -92,7 +93,6 @@ async function getPlacesWeather() {
     promises.push(promise)
   })
 
-  //TODO: should use Promise.allSettled instead??
   await Promise.all(promises).then((data) => {
     placesWeather = data
   })
@@ -298,56 +298,18 @@ function renderHourlyWeather(hourly, coordinates) {
 }
 
 /*
- * localStorage
+ * localStorage (thenable)
  */
 
-//make localStorage.getItem thenable
-//TODO: extract localStorage.getItem function
-// function getItem(key) {
-//   return new Promise((resolve, reject) => {
-//     const data = JSON.parse(localStorage.getItem(key))
-//     resolve(data)
-//     reject(err)
-//   })
-// }
-
-function getPlacesFromLocalStorage() {
-  return new Promise((resolve, reject) => {
-    const isStorageEmpty = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
-    console.log('isStorageEmpty: ', isStorageEmpty)
-
-    // if (isStorageEmpty == null || isStorageEmpty.length < 1) setDefaultPlaces()
-    if (isStorageEmpty == null) setDefaultPlaces()
-    if (isStorageEmpty.length < 1) setDefaultPlaces()
-
-    const savedPlaces = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
-    if (true) {
-      resolve(savedPlaces)
-    } else {
-      reject(err)
-    }
-  })
+async function getPlacesFromLocalStorage() {
+  const isStorageEmpty = await getLocalStorage(PLACES_STORAGE_KEY)
+  if (isStorageEmpty == null || isStorageEmpty.length < 1) setPlaces(PLACES_STORAGE_KEY, DEFAULT_PLACES)
+  const savedPlaces = await getLocalStorage(PLACES_STORAGE_KEY)
+  return savedPlaces
 }
 
-/**
- * make localStorage.setItem thenable
- * per MDN, if the value after the await operator is not a Promise,
- * converts the value to a resolved Promise, and waits for it
- */
-// //TODO: make single function and modularize
-// function setItem(key, value) {
-//   return new Promise((resolve, reject) => {
-//     resolve(localStorage.setItem(key, JSON.stringify(value)))
-//     reject(err)
-//   })
-// }
-
-async function setDefaultPlaces() {
-  await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(DEFAULT_PLACES))
-}
-
-async function savePlaces() {
-  await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places))
+async function setPlaces(key, value) {
+  await setLocalStorage(key, value)
 }
 
 /*
@@ -370,7 +332,7 @@ function newPlace() {
   if (places.length >= 10) {
     document.querySelector('[data-new-place]').classList.add('btn-new-place-disabled')
   }
-  savePlaces().then(getPlacesWeather).then(renderPlacesWeather)
+  setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
   console.log('new places: ', places)
 }
 
@@ -394,5 +356,5 @@ function deletePlace(cardId) {
     document.querySelector('[data-new-place]').classList.remove('btn-new-place-disabled')
   }
 
-  savePlaces().then(getPlacesWeather).then(renderPlacesWeather)
+  setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
 }
