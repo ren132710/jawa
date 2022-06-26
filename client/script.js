@@ -44,7 +44,7 @@ import {
   formatZonedTime,
   formatZonedHour,
 } from './date-utils.js'
-import { getIconUrl } from './helpers.js'
+import { getIconUrl } from './parse.js'
 const { v4 } = require('uuid')
 
 const LOCAL_STORAGE_PREFIX = 'JAWA'
@@ -302,13 +302,23 @@ function renderHourlyWeather(hourly, coordinates) {
  */
 
 //make localStorage.getItem thenable
+//TODO: extract localStorage.getItem function
+// function getItem(key) {
+//   return new Promise((resolve, reject) => {
+//     const data = JSON.parse(localStorage.getItem(key))
+//     resolve(data)
+//     reject(err)
+//   })
+// }
+
 function getPlacesFromLocalStorage() {
   return new Promise((resolve, reject) => {
-    const isNull = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
-    console.log('isNull: ', isNull)
+    const isStorageEmpty = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
+    console.log('isStorageEmpty: ', isStorageEmpty)
 
-    if (isNull == null) setDefaultPlaces()
-    if (isNull.length < 1) setDefaultPlaces()
+    // if (isStorageEmpty == null || isStorageEmpty.length < 1) setDefaultPlaces()
+    if (isStorageEmpty == null) setDefaultPlaces()
+    if (isStorageEmpty.length < 1) setDefaultPlaces()
 
     const savedPlaces = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY))
     if (true) {
@@ -324,6 +334,14 @@ function getPlacesFromLocalStorage() {
  * per MDN, if the value after the await operator is not a Promise,
  * converts the value to a resolved Promise, and waits for it
  */
+// //TODO: make single function and modularize
+// function setItem(key, value) {
+//   return new Promise((resolve, reject) => {
+//     resolve(localStorage.setItem(key, JSON.stringify(value)))
+//     reject(err)
+//   })
+// }
+
 async function setDefaultPlaces() {
   await localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(DEFAULT_PLACES))
 }
