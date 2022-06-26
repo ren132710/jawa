@@ -54,7 +54,7 @@ const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 const DEFAULT_PLACES = [
   // { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.3293, long: 18.0685 },
   { id: '905e58e1-5510-4535-b4c8-2ed30045772d', location: 'austin', lat: 30.2672, long: -97.7431 },
-  // { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.5016889, long: -73.567256 },
+  { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.5016889, long: -73.567256 },
   // { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7127753, long: -74.0059728 },
 ]
 
@@ -337,7 +337,17 @@ function newPlace() {
 }
 
 //deletePlace
-// TODO: deletePlace listener only works when wrapped in a function
+function deletePlace(cardId) {
+  places = places.filter((place) => place.id !== cardId)
+
+  if (places.length < 10) {
+    document.querySelector('[data-new-place]').classList.remove('btn-new-place-disabled')
+  }
+
+  setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
+}
+
+// wrapping delete button listeners in function allows adding them dynamically
 function addGlobalEventListener(type, selector, callback) {
   document.addEventListener(type, (e) => {
     if (e.target.matches(selector)) callback(e)
@@ -348,13 +358,3 @@ addGlobalEventListener('click', '#btnDeletePlace', (e) => {
   // console.log(e.target.closest('[data-place-card]').dataset.id)
   deletePlace(e.target.closest('[data-place-card]').dataset.id)
 })
-
-function deletePlace(cardId) {
-  places = places.filter((place) => place.id !== cardId)
-
-  if (places.length < 10) {
-    document.querySelector('[data-new-place]').classList.remove('btn-new-place-disabled')
-  }
-
-  setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
-}
