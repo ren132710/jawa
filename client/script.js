@@ -103,9 +103,11 @@ async function getPlacesWeather() {
  * @param {string} lat: latitude, required by OpenWeather for weather data
  * @param {string} long: longitude, required by OpenWeather for weather data
  * @param {string} id:
- *    - pass to server so server can include in the response
- *    -necessary for adding/deleting places from localStorage
- * @param {string} location: pass to server so server can include in the response
+ *   - id is used for adding/deleting places from localStorage
+ *   - pass to server so server can include in the response object
+ * @param {string} location:
+ *  - location is not provided by OpenWeather
+ *  - pass to server so server can include in the response object
  */
 
 async function getWeather(lat, long, id, location) {
@@ -355,7 +357,7 @@ function newPlace() {
 }
 
 //deletePlace
-// TODO: could only get deletePlace listener to work by wrapping in function
+// TODO: deletePlace listener only works when wrapped in a function
 function addGlobalEventListener(type, selector, callback) {
   document.addEventListener(type, (e) => {
     if (e.target.matches(selector)) callback(e)
