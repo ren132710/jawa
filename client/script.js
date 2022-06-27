@@ -132,7 +132,9 @@ let autocomplete
 function initAutocomplete() {
   autocomplete = new google.maps.places.Autocomplete(placeSearch, {
     types: ['(cities)'],
-    componentRestrictions: { country: 'us' },
+    // types: ['geocode'],
+    // componentRestrictions: { country: 'us' },
+    fields: ['name', 'geometry.location'],
   })
 
   autocomplete.addListener('place_changed', () => {
