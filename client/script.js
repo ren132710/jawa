@@ -19,8 +19,7 @@ TODO:
  - create NavBar for JAWA logo and Prefs |||, review Bancor/Ren, position: fixed. Push navBar to bottom of screen in mobile context
  - build prefs pop-up overlay, use transform property for menu button
  - modernize savePlace button
- - modernize deletePlace button - when hovering on place card, delete X top corner of place card border (similar to macos notifications)
- - box-shadow on place card when hovering
+ - modernize place card when hovering, box-shadow, grow 1.1x, delete button appears top left corner
  - globally change rbga to hsl?
  - onFocus - support tabbing between place cards and to New Place button
  - use margin: 0 auto; to center content in mobile context
@@ -131,8 +130,8 @@ const placeSearch = document.querySelector('[data-place-search]')
 let autocomplete
 function initAutocomplete() {
   autocomplete = new google.maps.places.Autocomplete(placeSearch, {
-    types: ['(cities)'],
-    // types: ['geocode'],
+    // types: ['(cities)'],
+    types: ['geocode'],
     // componentRestrictions: { country: 'us' },
     fields: ['name', 'geometry.location'],
   })
