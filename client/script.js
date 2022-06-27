@@ -348,7 +348,7 @@ function deletePlace(cardId) {
   setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
 }
 
-// wrapping delete button listeners in function allows adding them dynamically
+//wrapping delete button listeners in function allows adding them dynamically
 function addGlobalEventListener(type, selector, callback) {
   document.addEventListener(type, (e) => {
     if (e.target.matches(selector)) callback(e)
@@ -356,6 +356,5 @@ function addGlobalEventListener(type, selector, callback) {
 }
 
 addGlobalEventListener('click', '#btnDeletePlace', (e) => {
-  // console.log(e.target.closest('[data-place-card]').dataset.id)
   deletePlace(e.target.closest('[data-place-card]').dataset.id)
 })
