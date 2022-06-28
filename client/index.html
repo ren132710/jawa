@@ -5,13 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Just another weather app." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <!-- in order to hide the api key on github, build the script tag programmatically using dotenv-->
-    <script src="dotenv.js"></script>
+    <script defer src="script.js"></script>
     <script>
       const API_KEY = process.env.API_KEY
       const API_URL = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initAutocomplete`
@@ -21,7 +17,6 @@
       console.log('script tag: ', document.head.appendChild(script))
       document.head.appendChild(script)
     </script>
-    <script defer src="script.js"></script>
     <title>JAWA | Just Another Weather App</title>
   </head>
   <body class="blurred">
@@ -176,5 +171,8 @@
     <footer>
       <a href="https://openweathermap.org/api" class="openweather-logo" target="_blank">Powered By OpenWeather</a>
     </footer>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+    </style>
   </body>
 </html>

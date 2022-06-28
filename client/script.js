@@ -25,6 +25,8 @@ TODO:
   - remove console.logs
 */
 
+//parcel build seems to prefer this syntax for importing dotenv/config
+import {} from 'dotenv/config'
 import axios from 'axios'
 import {
   formatMonth,
@@ -120,7 +122,7 @@ async function getWeather(lat, long, id, location) {
 
 const placeSearch = document.querySelector('[data-place-search]')
 let autocomplete
-function initAutocomplete() {
+window.initAutocomplete = function () {
   autocomplete = new google.maps.places.Autocomplete(placeSearch, {
     // types: ['(cities)'],
     types: ['geocode'],
@@ -145,7 +147,7 @@ function initAutocomplete() {
   })
 }
 
-window.initAutocomplete = initAutocomplete
+// window.initAutocomplete = initAutocomplete
 
 /*
  * render places weather
