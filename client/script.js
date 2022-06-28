@@ -13,12 +13,10 @@ TODO:
  - refactor css properties into variables
  - create NavBar for JAWA logo and Prefs |||, review Bancor/Ren, position: fixed. Push navBar to bottom of screen in mobile context
  - build prefs pop-up overlay, use transform property for menu button
- - modernize savePlace button
+ - modernize newPlace button
  - modernize place card when hovering, box-shadow, grow 1.1x, delete button appears top left corner
  - globally change rbga to hsl?
  - onFocus - support tabbing between place cards and to New Place button
- - use margin: 0 auto; to center content in mobile context
- - try font-family Montserrat (from google fonts)
 
  final clean
   - remove console.logs
