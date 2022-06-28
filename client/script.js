@@ -51,10 +51,10 @@ const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
 
 const DEFAULT_PLACES = [
-  // { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.3293, long: 18.0685 },
-  { id: '905e58e1-5510-4535-b4c8-2ed30045772d', location: 'austin', lat: 30.2672, long: -97.7431 },
-  { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.5016889, long: -73.567256 },
-  // { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7127753, long: -74.0059728 },
+  // { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.3293, long: 18.0686 },
+  // { id: '905e58e1-5510-4535-b4c8-2ed30045772d', location: 'austin', lat: 30.2672, long: -97.7431 },
+  // { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.5017, long: -73.5673 },
+  { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7128, long: -74.006 },
 ]
 
 /*
@@ -81,7 +81,7 @@ function initialize() {
   console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
   renderWeather(placesWeather[0])
-  initAutocomplete()
+  // initAutocomplete()
 }
 
 async function getPlacesWeather() {
@@ -135,7 +135,7 @@ function initAutocomplete() {
     // componentRestrictions: { country: 'us' },
     fields: ['name', 'geometry.location'],
   })
-
+  console.log('autocomplete: ', autocomplete)
   autocomplete.addListener('place_changed', () => {
     const place = autocomplete.getPlace()
     // if (place == null) return
@@ -153,6 +153,8 @@ function initAutocomplete() {
   })
 }
 
+window.initAutocomplete = initAutocomplete
+
 /*
  * render places weather
  */
@@ -169,7 +171,6 @@ function renderPlacesWeather() {
     card.dataset.location = place.coordinates.location
     card.dataset.lat = place.coordinates.lat
     card.dataset.long = place.coordinates.long
-    card.dataset.mapsPlaceId = place.coordinates.maps_place_id
     card.querySelector('[data-location').innerText = place.coordinates.location
     card.querySelector('[data-icon]').src = getIconUrl(place.current.icon)
     card.querySelector('[data-icon]').alt = place.current.description
@@ -214,8 +215,8 @@ function renderCurrentWeather({ coordinates, current }) {
 
   //top left quadrant
   currentTopLeft.querySelector('[data-id]').dataset.id = coordinates.id
-  currentTopLeft.querySelector('[data-location]').dataset.location = coordinates.location
-  currentTopLeft.querySelector('[data-location]').textContent = coordinates.location
+  currentTopLeft.querySelector('[data-current-location]').dataset.location = coordinates.location
+  currentTopLeft.querySelector('[data-current-location]').textContent = coordinates.location
   currentTopLeft.querySelector('[data-current-icon').src = getIconUrl(current.icon, { size: 'large' })
   currentTopLeft.querySelector('[data-current-icon').alt = current.description
 

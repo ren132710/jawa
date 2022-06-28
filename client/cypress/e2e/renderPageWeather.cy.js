@@ -1,4 +1,4 @@
-/* /// <reference types= "cypress" /> */
+/// <reference types= "cypress" />
 
 describe('#renderPageWeather', () => {
   const testPlace = [
@@ -73,8 +73,8 @@ describe('#renderPageWeather', () => {
 
     //top right
     cy.get('[data-current-dt]').should('have.text', 'Mon 6 Jun 4:19 PM')
-    cy.get('[data-current-lat]').should('have.text', '40.7306')
-    cy.get('[data-current-long]').should('have.text', '-73.9352')
+    cy.get('[data-current-lat]').should('have.text', '40.7128')
+    cy.get('[data-current-long]').should('have.text', '-74.006')
     cy.get('[data-current-high]').should('have.text', '78')
     cy.get('[data-current-temp]').should('have.text', '78')
     cy.get('[data-temp-units]').contains('F')
