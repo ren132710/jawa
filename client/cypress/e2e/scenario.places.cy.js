@@ -61,7 +61,7 @@ describe('places scenario', () => {
     })
     //then the weather for austin should be displayed
     //wait until page loads, use optional param { timeout: 10000 } in lieu of cy.wait()
-    cy.get('.current-top-left>[data-current-location]', { timeout: 10000 }).should('have.text', 'Austin')
+    cy.get('.current-top-left>[data-current-location]', { timeout: 5000 }).should('have.text', 'Austin')
     cy.get('[data-current-lat]').should('have.text', '30.2672')
     cy.get('[data-current-long]').should('have.text', '-97.7431')
     //verify daily section

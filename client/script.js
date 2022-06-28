@@ -1,9 +1,5 @@
 /*
 TODO:
-  cypress testing:
- - test: delete place
- - test: add place
- - test: localStorage, unit tests
 
  prefs
  - open preferences, see Bancor's ||| popover
@@ -28,10 +24,6 @@ TODO:
  final clean
   - remove console.logs
 */
-
-import dotenv from 'dotenv'
-// Loads .env file and sets environment variable
-dotenv.config()
 
 import axios from 'axios'
 import {
