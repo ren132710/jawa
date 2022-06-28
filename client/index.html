@@ -108,9 +108,11 @@
     <template id="template-place-card">
       <div class="place-card" data-place-card>
         <button id="btnDeletePlace" class="btn-delete-place">X</button>
-        <img class="weather-icon place-card-item" data-icon src="" />
-        <div class="place-text place-card-item" data-location></div>
-        <div class="place-text place-card-item" data-hl><span data-high></span>/<span data-low></span>&deg;</div>
+        <img class="weather-icon place-card-item" data-card-icon src="" />
+        <div class="place-text place-card-item" data-card-location></div>
+        <div class="place-text place-card-item" data-card-hl>
+          <span data-card-high></span>/<span data-card-low></span>&deg;
+        </div>
       </div>
     </template>
 

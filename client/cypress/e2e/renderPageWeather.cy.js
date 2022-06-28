@@ -35,7 +35,12 @@ describe('#renderPageWeather', () => {
     cy.get('[data-place-search]').invoke('attr', 'placeholder', 'Weather at your places').should('exist')
     cy.get('[data-place-search]').invoke('attr', 'placeholder').should('eq', 'Weather at your places')
 
-    //ensure major page sections exist
+    //places is populated with default place
+    cy.get('.places-container').children('div').its('length').should('eq', 1)
+    cy.get('.places-container').children('div').eq(0).as('place1')
+    cy.get('@place1').find('[data-card-location]').should('have.text', 'new york')
+
+    //major page sections exist
     cy.contains('Current Weather').should('exist')
     cy.contains('Forecast').should('exist')
     cy.contains('Hourly Weather').should('exist')

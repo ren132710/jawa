@@ -117,7 +117,7 @@ async function getWeather(lat, long, id, location) {
     })
     return res.data
   } catch (e) {
-    console.log(`ERROR: ${e}`)
+    console.error(`ERROR: ${e}`)
     alert('Fetching weather encountered an issue. Please try again.')
   }
 }
@@ -171,11 +171,11 @@ function renderPlacesWeather() {
     card.dataset.location = place.coordinates.location
     card.dataset.lat = place.coordinates.lat
     card.dataset.long = place.coordinates.long
-    card.querySelector('[data-location').innerText = place.coordinates.location
-    card.querySelector('[data-icon]').src = getIconUrl(place.current.icon)
-    card.querySelector('[data-icon]').alt = place.current.description
-    card.querySelector('[data-hl] > [data-high]').innerText = place.current.high
-    card.querySelector('[data-hl] > [data-low]').innerText = place.current.low
+    card.querySelector('[data-card-location').innerText = place.coordinates.location
+    card.querySelector('[data-card-icon]').src = getIconUrl(place.current.icon)
+    card.querySelector('[data-card-icon]').alt = place.current.description
+    card.querySelector('[data-card-hl] > [data-card-high]').innerText = place.current.high
+    card.querySelector('[data-card-hl] > [data-card-low]').innerText = place.current.low
     card.addEventListener('click', (e) => {
       if (e.target.id === 'btnDeletePlace') return
       renderSavedPlaceWeather(e.target.dataset.id)
