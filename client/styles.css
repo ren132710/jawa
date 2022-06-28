@@ -314,6 +314,14 @@ header {
   /* color: rgba(244, 244, 244, 1); */
 }
 
+.degrees::after {
+  content: '°';
+}
+
+.percent::after {
+  content: '%';
+}
+
 .daily-container {
   display: grid;
   grid-template-columns: 120px 120px;

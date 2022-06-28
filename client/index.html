@@ -48,13 +48,13 @@
             <div class="current-detail">lat:&nbsp;<span data-current-lat></span></div>
             <div class="current-detail">long:&nbsp;<span data-current-long></span></div>
             <br />
-            <div class="current-high-low"><span data-current-high></span>/<span data-current-low></span>&deg;</div>
-            <div class="current-temp" data-temp-units><span data-current-temp></span>&deg;&nbsp;F</div>
-            <div class="current-feels-like">Feels Like:&nbsp;<span data-current-fl></span>&deg;</div>
-            <div class="current-description" data-current-description></div>
-            <div class="label">
-              Precip:&nbsp;<span class="value" data-current-precip></span><span class="value">&percnt;</span>
+            <div class="current-high-low">
+              <span data-current-high></span>/<span class="degrees" data-current-low></span>
             </div>
+            <div class="current-temp" data-temp-units><span class="degrees" data-current-temp></span>&nbsp;F</div>
+            <div class="current-feels-like">Feels Like:&nbsp;<span class="degrees" data-current-fl></span></div>
+            <div class="current-description" data-current-description></div>
+            <div class="label">Precip:&nbsp;<span class="value percent" data-current-precip></span></div>
             <div class="label">
               Visibility:&nbsp;<span class="value" data-current-visibility></span
               ><span class="value" data-visibility-units>&nbsp;mi</span>
@@ -65,9 +65,7 @@
               UV Index:&nbsp;<span class="value" data-current-uv-index></span><span>&nbsp;</span
               ><span class="value" data-current-uv-level></span>
             </div>
-            <div class="label">
-              Humidity:&nbsp;<span class="value" data-current-humidity></span><span class="value">&percnt;</span>
-            </div>
+            <div class="label">Humidity:&nbsp;<span class="value percent" data-current-humidity></span></div>
             <div class="label">
               Wind:&nbsp;<span class="value" data-current-wind-speed></span
               ><span class="value" data-wind-units>&nbsp;mph&nbsp;</span
@@ -75,9 +73,7 @@
             </div>
           </div>
           <div class="current-bottom-right">
-            <div class="label">
-              Dew Point:&nbsp;<span class="value" data-current-dew-point></span><span class="value">&deg;</span>
-            </div>
+            <div class="label">Dew Point:&nbsp;<span class="value degrees" data-current-dew-point></span></div>
             <div class="label">Sunrise:&nbsp;<span class="value" data-current-sunrise></span></div>
             <div class="label">Sunset:&nbsp;<span class="value" data-current-sunset></span></div>
           </div>
@@ -105,7 +101,7 @@
         <img class="weather-icon place-card-item" data-card-icon src="" />
         <div class="place-text place-card-item" data-card-location></div>
         <div class="place-text place-card-item" data-card-hl>
-          <span data-card-high></span>/<span data-card-low></span>&deg;
+          <span data-card-high></span>/<span class="degrees" data-card-low></span>
         </div>
       </div>
     </template>
@@ -114,11 +110,9 @@
       <div class="daily-card">
         <img class="weather-icon" data-daily-icon src="" />
         <div class="daily-date" data-daily-date></div>
-        <div data-hl><span data-daily-high></span>/<span data-daily-low></span>&deg;</div>
+        <div data-hl><span data-daily-high></span>/<span class="degrees" data-daily-low></span></div>
         <div class="daily-description" data-daily-description></div>
-        <div class="label">
-          Humidity:&nbsp;<span class="value" data-daily-humidity></span><span class="value">&percnt;</span>
-        </div>
+        <div class="label">Humidity:&nbsp;<span class="value percent" data-daily-humidity></span></div>
         <div class="label">
           Wind:&nbsp;<span class="value" data-daily-wind-speed></span
           ><span class="value" data-wind-units>&nbsp;mph&nbsp;</span
@@ -139,13 +133,13 @@
         <div class="hour-data">
           <div class="hour-label">Temp</div>
           <div class="hour-value-margin">
-            <span class="hour-value" data-hour-temp></span><span class="hour-value">&deg;</span>
+            <span class="hour-value degrees" data-hour-temp></span>
           </div>
         </div>
         <div class="hour-data">
           <div class="hour-label">Precip</div>
           <div class="hour-value-margin">
-            <span class="hour-value" data-hour-precip></span><span class="hour-value">&percnt;</span>
+            <span class="hour-value percent" data-hour-precip></span>
           </div>
         </div>
         <div class="hour-data">
@@ -159,7 +153,7 @@
         <div class="hour-data">
           <div class="hour-label">Humidity</div>
           <div class="hour-value-margin">
-            <span class="hour-value" data-hour-humidity></span><span class="hour-value">&percnt;</span>
+            <span class="hour-value percent" data-hour-humidity></span>
           </div>
         </div>
         <div class="hour-data">

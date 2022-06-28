@@ -11,7 +11,6 @@ TODO:
 
  ui
  - refactor css properties into variables
- - use ::after pseudo element for UNIT, degrees, wind speed, percent - so we can remove the spans from html
  - create NavBar for JAWA logo and Prefs |||, review Bancor/Ren, position: fixed. Push navBar to bottom of screen in mobile context
  - build prefs pop-up overlay, use transform property for menu button
  - modernize savePlace button
