@@ -194,7 +194,7 @@ header {
 .btn-new-place:hover,
 .btn-new-place:focus {
   border-bottom: 1px solid transparent;
-  color: hsl(200, 100%, 30%);
+  color: hsl(200, 100%, 60%);
   transition: 200ms;
 }
 

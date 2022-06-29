@@ -10,20 +10,17 @@ TODO:
  - use ::before pseudo element to create custom radio buttons
 
  ui
+  - modernize place card when hovering, box-shadow, grow 1.1x, delete button appears top left corner
+  - onFocus - support tabbing between place cards and to New Place button
  - refactor css properties into variables
+  - globally change rbga to hsl?
  - create NavBar for JAWA logo and Prefs |||, review Bancor/Ren, position: fixed. Push navBar to bottom of screen in mobile context
  - build prefs pop-up overlay, use transform property for menu button
- - modernize newPlace button
- - modernize place card when hovering, box-shadow, grow 1.1x, delete button appears top left corner
- - globally change rbga to hsl?
- - onFocus - support tabbing between place cards and to New Place button
 
  final clean
   - remove console.logs
 */
 
-//parcel build seems to prefer this syntax for importing dotenv/config
-import {} from 'dotenv/config'
 import axios from 'axios'
 import {
   formatMonth,
@@ -143,7 +140,6 @@ window.initAutocomplete = function () {
     })
   })
 }
-
 // window.initAutocomplete = initAutocomplete
 
 /*
