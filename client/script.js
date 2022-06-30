@@ -21,6 +21,7 @@ TODO:
   - remove console.logs
 */
 
+import { Loader } from '@googlemaps/js-api-loader'
 import axios from 'axios'
 import {
   formatMonth,
@@ -114,19 +115,22 @@ async function getWeather(lat, long, id, location) {
  * google autocomplete
  */
 
+const loader = new Loader({
+  apiKey: process.env.API_KEY,
+  libraries: ['places'],
+})
+
 const placeSearch = document.querySelector('[data-place-search]')
-let autocomplete
-window.initAutocomplete = function () {
-  autocomplete = new google.maps.places.Autocomplete(placeSearch, {
+loader.load().then((google) => {
+  const autocomplete = new google.maps.places.Autocomplete(placeSearch, {
     // types: ['(cities)'],
     types: ['geocode'],
     // componentRestrictions: { country: 'us' },
     fields: ['name', 'geometry.location'],
   })
-  console.log('autocomplete: ', autocomplete)
+
   autocomplete.addListener('place_changed', () => {
     const place = autocomplete.getPlace()
-    // if (place == null) return
     if (!place.geometry) return
     const lat = place.geometry.location.lat()
     const long = place.geometry.location.lng()
@@ -139,8 +143,7 @@ window.initAutocomplete = function () {
       renderWeather(data)
     })
   })
-}
-// window.initAutocomplete = initAutocomplete
+})
 
 /*
  * render places weather
@@ -336,7 +339,7 @@ function deletePlace(cardId) {
   setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
 }
 
-//wrapping delete button listeners in function allows adding them dynamically
+//wrapping listeners in function allows adding listeners dynamically
 function addGlobalEventListener(type, selector, callback) {
   document.addEventListener(type, (e) => {
     if (e.target.matches(selector)) callback(e)
