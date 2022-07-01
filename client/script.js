@@ -12,10 +12,10 @@ TODO:
  ui
   - modernize place card when hovering, box-shadow, grow 1.1x, delete button appears top left corner
   - onFocus - support tabbing between place cards and to New Place button
- - refactor css properties into variables
   - globally change rbga to hsl?
  - create NavBar for JAWA logo and Prefs |||, review Bancor/Ren, position: fixed. Push navBar to bottom of screen in mobile context
  - build prefs pop-up overlay, use transform property for menu button
+ - style search box using google classes
 
  final clean
   - remove console.logs
@@ -322,6 +322,7 @@ function newPlace() {
 
   //limit the number of saved places to 10
   if (places.length >= 10) {
+    // document.querySelector('[data-new-place]').disabled = true
     document.querySelector('[data-new-place]').classList.add('btn-new-place-disabled')
   }
   setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
@@ -333,6 +334,7 @@ function deletePlace(cardId) {
   places = places.filter((place) => place.id !== cardId)
 
   if (places.length < 10) {
+    // document.querySelector('[data-new-place]').disabled = false
     document.querySelector('[data-new-place]').classList.remove('btn-new-place-disabled')
   }
 

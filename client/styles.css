@@ -18,15 +18,18 @@
   --border-color-01: hsl(0, 0%, 100%);
   --border-color-02: hsl(200, 100%, 25%);
   --border-search-input: hsl(0, 0%, 47%);
-  --color: hsl(200, 100%, 10%);
+  --color-01: hsl(0, 0%, 100%);
+  --color-02: hsl(200, 100%, 10%);
+  --color-disabled: hsl(0, 0%, 50%);
   /* --color: hsl(162, 16%, 13%); */
   --color-value: hsl(200, 100%, 30%);
   --color-btn: hsl(200, 100%, 30%);
-  --color-btn-hover: hsl(200, 100%, 50%);
+  --color-btn-hover: hsl(200, 100%, 40%);
   --hour-nth-child-background-from: rgba(135, 206, 250, 0);
   --hour-nth-child-background-to: rgba(135, 206, 250, 1);
   --border-radius-search-input: 0.2em;
   --border-radius: 0.3em;
+  --border-radius-circle: 50%;
 }
 
 /* html {
@@ -42,7 +45,7 @@ body {
   margin: 0;
   padding: 0;
   position: relative;
-  color: var(--color);
+  color: var(--color-02);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -128,7 +131,7 @@ header {
 .places-container {
   grid-area: places;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.6rem;
   grid-template-columns: repeat(3, minmax(70px, max-content));
   justify-content: center;
   align-items: center;
@@ -154,6 +157,10 @@ header {
   background-color: var(--background-hover);
 }
 
+.place-card:focus {
+  background-color: var(--background-hover);
+}
+
 .place-card-item {
   pointer-events: none;
 }
@@ -165,22 +172,28 @@ header {
 
 .btn-delete-place {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 0;
+  left: 0;
+  /* transform: translate(-55%, -58%); */
+  transform: translate(-50%, -50%);
   background-color: transparent;
-  border: none;
+  border: 1px solid var(--border-color-01);
+  border-radius: var(--border-radius-circle);
   outline: none;
   padding: 0.25em 0.5em;
-  font-size: 0.65rem;
+  font-size: 0.5rem;
   font-weight: bold;
   text-align: center;
   color: var(--color-btn);
 }
 
 .btn-delete-place:hover {
-  background-color: hsl(0, 100%, 55%);
-  border-radius: var(--border-radius);
-  color: rgba(243, 241, 243, 1);
+  background-color: var(--background-hover);
+}
+
+.btn-delete-place:focus {
+  background-color: var(--color-02);
+  color: var(--color-01);
 }
 
 /*
@@ -219,7 +232,7 @@ header {
   grid-template-columns: 150px 150px;
   gap: 0.4rem;
   padding: 0.75rem;
-  border: 1px solid white;
+  border: 1px solid var(--border-color-01);
   border-radius: var(--border-radius);
 }
 
@@ -287,25 +300,36 @@ header {
   background-color: transparent;
   cursor: pointer;
   outline: none;
-  padding: 0;
   font-size: 0.5rem;
   font-style: italic;
   color: var(--color-btn);
   border: none;
-  border-bottom: 1px solid var(--color-btn);
+  border-radius: var(--border-radius);
+  text-decoration: underline;
+  padding: 0.25em 0.5em;
 }
 
 .btn-new-place-disabled {
   pointer-events: none;
   cursor: not-allowed;
-  color: grey;
+  color: var(--color-disabled);
 }
 
-.btn-new-place:hover,
-.btn-new-place:focus {
-  border-bottom: 1px solid transparent;
+.btn-new-place:hover {
+  text-decoration: none;
   color: var(--color-btn-hover);
-  transition: 200ms;
+  transition: 100ms;
+}
+
+.btn-new-place:focus {
+  animation: flash 100ms linear backwards;
+}
+
+@keyframes flash {
+  to {
+    background-color: var(--color-02);
+    color: var(--color-01);
+  }
 }
 
 /*
