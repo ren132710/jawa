@@ -1,4 +1,4 @@
-const { TEST_STHLM } = require('./data/test-data-sthlm')
+const { TEST_STHLM } = require('../data/test-data-sthlm')
 const { parseCurrentWeather, parseDailyWeather, parseHourlyWeather } = require('./server.js')
 
 const sthlm = {
