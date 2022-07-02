@@ -1,8 +1,5 @@
 /*
 TODO:
- - refactor mouse and tab events code
- - leverage domUtils.js throughout
-
  prefs
  - units: imperial, metric
  - themes:
@@ -73,7 +70,6 @@ function initialize() {
   console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
   renderWeather(placesWeather[0])
-  // initAutocomplete()
 }
 
 async function getPlacesWeather() {
@@ -176,43 +172,42 @@ function renderPlacesWeather() {
     qs('[data-card-icon]', card).alt = place.current.description
     qs('[data-card-hl] > [data-card-high]', card).innerText = place.current.high
     qs('[data-card-hl] > [data-card-low]', card).innerText = place.current.low
-
     card.addEventListener('click', (e) => {
       if (e.target.id === 'btnDeletePlace') return
 
-      let placeCard = e.target.closest('.place-card')
-      if (!placeCard) return
+      const placeCard = e.target.closest('.place-card')
+      if (placeCard == null) return
       renderSavedPlaceWeather(placeCard.dataset.id)
     })
 
+    //mouse and keyboard events
     card.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        let placeCard = e.target.closest('.place-card')
-        if (placeCard == null) return
-        renderSavedPlaceWeather(placeCard.dataset.id)
-      }
+      if (!e.key === 'Enter') return
+      const placeCard = e.target.closest('.place-card')
+      if (placeCard == null) return
+      renderSavedPlaceWeather(placeCard.dataset.id)
     })
 
     card.addEventListener('mouseenter', (e) => {
-      let placeCard = e.target.closest('.place-card')
+      const placeCard = e.target.closest('.place-card')
       if (placeCard == null) return
-      let btn = placeCard.querySelector('#btnDeletePlace')
-      if (btn.hidden === true) btn.hidden = false
+      const btn = qs('#btnDeletePlace', placeCard)
+      btn.hidden = false
     })
 
     card.addEventListener('mouseleave', (e) => {
-      let placeCard = e.target.closest('.place-card')
+      const placeCard = e.target.closest('.place-card')
       if (placeCard == null) return
-      let btn = placeCard.querySelector('#btnDeletePlace')
-      if (btn.hidden === false) btn.hidden = true
+      const btn = qs('#btnDeletePlace', placeCard)
+      btn.hidden = true
     })
 
     card.addEventListener('focusin', (e) => {
-      //show delete button when place card has focus
-      let placeCardNewFocus = e.target.closest('.place-card')
-      if (placeCardNewFocus == null) return
-      let btn = placeCardNewFocus.querySelector('#btnDeletePlace')
-      if (btn.hidden === true) btn.hidden = false
+      //show delete button when place card gets focus
+      const placeCard = e.target.closest('.place-card')
+      if (placeCard == null) return
+      const btn = qs('#btnDeletePlace', placeCard)
+      btn.hidden = false
 
       //hide delete button when place card loses focus
       if (e.relatedTarget == null) return
@@ -373,6 +368,7 @@ function newPlace() {
   console.log('new places: ', places)
 }
 
+//when tabbing to new place button
 newGlobalEventListener('focusin', '#btnNewPlace', (e) => {
   if (e.relatedTarget == null) return
   if (e.relatedTarget.id === 'btnDeletePlace') e.relatedTarget.hidden = true
