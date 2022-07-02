@@ -56,10 +56,10 @@ describe('#renderPageWeather', () => {
 
   it('should correctly display current weather', function () {
     //top left
-    cy.get('.current-top-left>[data-location]')
-      .invoke('attr', 'data-id')
+    cy.get('.current-top-left>[data-current-location]')
+      .invoke('attr', 'data-current-id')
       .should('equal', 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87')
-    cy.get('.current-top-left>[data-location]').should('have.text', 'new york')
+    cy.get('.current-top-left>[data-current-location]').should('have.text', 'new york')
     cy.get('[data-new-place]').should('have.text', 'New Place')
     cy.get('[data-current-icon]')
       .invoke('attr', 'src')

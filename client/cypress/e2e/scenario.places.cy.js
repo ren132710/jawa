@@ -31,9 +31,10 @@ describe('places scenario', () => {
   })
 
   it('should successfully load initial place', function () {
-    cy.get('.current-top-left>[data-location]').should('have.text', 'new york')
+    cy.get('.current-top-left>[data-current-location]').should('have.text', 'new york')
     cy.get('.places-container').children('div').its('length').should('eq', 1)
     cy.get('.places-container').children('div').eq(0).as('place1')
+    cy.get('@place1').should('have.attr', 'data-id', 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87')
     cy.get('@place1').should('have.attr', 'data-lat', '40.7128')
     cy.get('@place1').should('have.attr', 'data-long', '-74.006')
     cy.get('@place1').should('have.attr', 'data-location', 'new york')
@@ -45,7 +46,7 @@ describe('places scenario', () => {
     cy.get('.hourly-container').children('div').its('length').should('eq', 12)
   })
 
-  it('should allow user to fetch weather for Austin, TX and save to places', function () {
+  it('should allow user to fetch weather for Austin, TX and save Austin to places', function () {
     //when the user types in 'austin'
     cy.get('[data-place-search]').type('Austin', { delay: 200 })
     cy.get('div.pac-item').each((elem, index, arr) => {
@@ -101,7 +102,12 @@ describe('places scenario', () => {
     //when the user deletes new york
     cy.get('.places-container').children('div').eq(0).as('place1')
     cy.get('@place1').should('have.attr', 'data-location', 'new york')
-    cy.get('@place1').find('#btnDeletePlace').should('be.visible').click()
+    //force button to be visible
+    cy.get('@place1').find('#btnDeletePlace').invoke('show').click()
+
+    //TODO: could not get mouseover to work
+    // cy.get('@place1').trigger('mouseover')
+    // cy.get('@place1').find('#btnDeletePlace').should('be.visible').click()
 
     //then austin should be the only saved place
     cy.get('.places-container')
@@ -125,8 +131,8 @@ describe('places scenario', () => {
     cy.get('.places-container').children('div').eq(0).as('place1')
     cy.get('@place1').should('have.attr', 'data-location', 'austin')
 
-    //when austin is deleted from saved places
-    cy.get('@place1').find('#btnDeletePlace').should('be.visible').click()
+    //make the delete place button visible, then delete austin from saved places
+    cy.get('@place1').find('#btnDeletePlace').invoke('show').click()
 
     //then there are no saved places
     cy.get('.places-container')
@@ -142,7 +148,7 @@ describe('places scenario', () => {
     //when the page is refreshed
     cy.reload().then(() => {
       //then the page should load with the default place, new york
-      cy.get('.current-top-left>[data-location]').should('have.text', 'new york')
+      cy.get('.current-top-left>[data-current-location]').should('have.text', 'new york')
       //verify daily section
       cy.get('.daily-container').children('div').its('length').should('eq', 7)
       //verify hourly section

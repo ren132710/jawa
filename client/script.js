@@ -2,7 +2,7 @@
 TODO:
  - refactor mouse and tab events code
  - leverage domUtils.js throughout
- 
+
  prefs
  - units: imperial, metric
  - themes:
@@ -172,12 +172,10 @@ function renderPlacesWeather() {
     card.dataset.lat = place.coordinates.lat
     card.dataset.long = place.coordinates.long
     qs('[data-card-location]', card).innerText = place.coordinates.location
-    // card.querySelector('[data-card-location').innerText = place.coordinates.location
-    card.querySelector('[data-card-icon]').src = getIconUrl(place.current.icon)
-    card.querySelector('[data-card-icon]').src = getIconUrl(place.current.icon)
-    card.querySelector('[data-card-icon]').alt = place.current.description
-    card.querySelector('[data-card-hl] > [data-card-high]').innerText = place.current.high
-    card.querySelector('[data-card-hl] > [data-card-low]').innerText = place.current.low
+    qs('[data-card-icon]', card).src = getIconUrl(place.current.icon)
+    qs('[data-card-icon]', card).alt = place.current.description
+    qs('[data-card-hl] > [data-card-high]', card).innerText = place.current.high
+    qs('[data-card-hl] > [data-card-low]', card).innerText = place.current.low
 
     card.addEventListener('click', (e) => {
       if (e.target.id === 'btnDeletePlace') return
@@ -249,54 +247,41 @@ function renderWeather({ coordinates, current, daily, hourly }) {
 }
 
 //render current weather
-const currentTopLeft = document.querySelector('.current-top-left')
-const currentTopRight = document.querySelector('.current-top-right')
-const currentBotLeft = document.querySelector('.current-bottom-left')
-const currentBotRight = document.querySelector('.current-bottom-right')
 function renderCurrentWeather({ coordinates, current }) {
   //sub title
-  document.querySelector('[data-current-dt').textContent = `${formatDayOfWeekShort(
+  qs('[data-current-dt').textContent = `${formatDayOfWeekShort(current.timestamp)} ${formatDayOfMonth(
     current.timestamp
-  )} ${formatDayOfMonth(current.timestamp)} ${formatMonth(current.timestamp)} ${formatTime(current.timestamp)}`
+  )} ${formatMonth(current.timestamp)} ${formatTime(current.timestamp)}`
 
   //top left quadrant
-  currentTopLeft.querySelector('[data-id]').dataset.id = coordinates.id
-  currentTopLeft.querySelector('[data-current-location]').dataset.currentLocation = coordinates.location
-  currentTopLeft.querySelector('[data-current-location]').textContent = coordinates.location
-  currentTopLeft.querySelector('[data-current-icon]').src = getIconUrl(current.icon, { size: 'large' })
-  currentTopLeft.querySelector('[data-current-icon]').alt = current.description
+  qs('[data-current-id]').dataset.currentId = coordinates.id
+  qs('[data-current-location]').dataset.currentLocation = coordinates.location
+  qs('[data-current-location]').textContent = coordinates.location
+  qs('[data-current-icon]').src = getIconUrl(current.icon, { size: 'large' })
+  qs('[data-current-icon]').alt = current.description
 
   //to right quadrant
   qs('[data-current-lat]').textContent = coordinates.lat
-  // currentTopRight.querySelector('[data-current-lat]').textContent = coordinates.lat
   qs('[data-current-long]').textContent = coordinates.long
-  // currentTopRight.querySelector('[data-current-long]').textContent = coordinates.long
-  currentTopRight.querySelector('[data-current-high]').textContent = current.high
-  currentTopRight.querySelector('[data-current-low]').textContent = current.low
+  qs('[data-current-high]').textContent = current.high
+  qs('[data-current-low]').textContent = current.low
   qs('[data-current-temp]').textContent = current.temp
-  // currentTopRight.querySelector('[data-current-temp]').textContent = current.temp
-  currentTopRight.querySelector('[data-current-fl]').textContent = current.feelsLike
-  currentTopRight.querySelector('[data-current-description]').textContent = current.description
-  currentTopRight.querySelector('[data-current-precip]').textContent = current.precip
-  currentTopRight.querySelector('[data-current-visibility').textContent = current.visibility
+  qs('[data-current-fl]').textContent = current.feelsLike
+  qs('[data-current-description]').textContent = current.description
+  qs('[data-current-precip]').textContent = current.precip
+  qs('[data-current-visibility').textContent = current.visibility
 
   //bottom left quadrant
-  currentBotLeft.querySelector('[data-current-uv-index]').textContent = current.uvIndex
-  currentBotLeft.querySelector('[data-current-uv-level]').textContent = current.uvLevel
-  currentBotLeft.querySelector('[data-current-humidity]').textContent = current.humidity
-  currentBotLeft.querySelector('[data-current-wind-speed]').textContent = current.windSpeed
-  currentBotLeft.querySelector('[data-current-wind-direction]').textContent = current.windDirection
+  qs('[data-current-uv-index]').textContent = current.uvIndex
+  qs('[data-current-uv-level]').textContent = current.uvLevel
+  qs('[data-current-humidity]').textContent = current.humidity
+  qs('[data-current-wind-speed]').textContent = current.windSpeed
+  qs('[data-current-wind-direction]').textContent = current.windDirection
 
   //bottom right quadrant
-  currentBotRight.querySelector('[data-current-dew-point]').textContent = current.dewPoint
-  currentBotRight.querySelector('[data-current-sunrise]').textContent = formatZonedTime(
-    current.sunrise,
-    coordinates.timezone
-  )
-  currentBotRight.querySelector('[data-current-sunset]').textContent = formatZonedTime(
-    current.sunset,
-    coordinates.timezone
-  )
+  qs('[data-current-dew-point]').textContent = current.dewPoint
+  qs('[data-current-sunrise]').textContent = formatZonedTime(current.sunrise, coordinates.timezone)
+  qs('[data-current-sunset]').textContent = formatZonedTime(current.sunset, coordinates.timezone)
 }
 
 //render daily weather
@@ -307,15 +292,15 @@ function renderDailyWeather(daily) {
   daily.forEach((day) => {
     const element = templateDailyCard.content.cloneNode(true)
     const card = element.querySelector('.daily-card')
-    card.querySelector('[data-daily-icon]').src = getIconUrl(day.icon)
-    card.querySelector('[data-daily-icon]').alt = day.description
-    card.querySelector('[data-daily-date').textContent = formatDayOfWeek(day.timestamp)
-    card.querySelector('[data-daily-description').textContent = day.description
-    card.querySelector('[data-hl] > [data-daily-high]').textContent = day.high
-    card.querySelector('[data-hl] > [data-daily-low]').textContent = day.low
-    card.querySelector('[data-daily-humidity').textContent = day.humidity
-    card.querySelector('[data-daily-wind-speed]').textContent = day.windSpeed
-    card.querySelector('[data-daily-wind-direction]').textContent = day.windDirection
+    qs('[data-daily-icon]', card).src = getIconUrl(day.icon)
+    qs('[data-daily-icon]', card).alt = day.description
+    qs('[data-daily-date]', card).textContent = formatDayOfWeek(day.timestamp)
+    qs('[data-daily-description]', card).textContent = day.description
+    qs('[data-hl] > [data-daily-high]', card).textContent = day.high
+    qs('[data-hl] > [data-daily-low]', card).textContent = day.low
+    qs('[data-daily-humidity]', card).textContent = day.humidity
+    qs('[data-daily-wind-speed]', card).textContent = day.windSpeed
+    qs('[data-daily-wind-direction]', card).textContent = day.windDirection
     dailyContainer.append(card)
   })
 }
@@ -334,16 +319,16 @@ function renderHourlyWeather(hourly, coordinates) {
     .forEach((hour) => {
       const element = templateHourRow.content.cloneNode(true)
       const row = element.querySelector('.hour-row')
-      row.querySelector('[data-hour-date]').textContent = formatDayOfWeek(hour.timestamp)
-      row.querySelector('[data-hour]').textContent = formatZonedHour(hour.timestamp, coordinates.timezone)
-      row.querySelector('[data-hour-icon]').src = getIconUrl(hour.icon)
-      row.querySelector('[data-hour-icon]').alt = hour.description
-      row.querySelector('[data-hour-temp]').textContent = hour.temp
-      row.querySelector('[data-hour-precip]').textContent = hour.precip
-      row.querySelector('[data-hour-wind-speed]').textContent = hour.windSpeed
-      row.querySelector('[data-hour-wind-direction]').textContent = hour.windDirection
-      row.querySelector('[data-hour-humidity]').textContent = hour.humidity
-      row.querySelector('[data-hour-uv-level]').textContent = hour.uvLevel
+      qs('[data-hour-date]', row).textContent = formatDayOfWeek(hour.timestamp)
+      qs('[data-hour]', row).textContent = formatZonedHour(hour.timestamp, coordinates.timezone)
+      qs('[data-hour-icon]', row).src = getIconUrl(hour.icon)
+      qs('[data-hour-icon]', row).alt = hour.description
+      qs('[data-hour-temp]', row).textContent = hour.temp
+      qs('[data-hour-precip]', row).textContent = hour.precip
+      qs('[data-hour-wind-speed]', row).textContent = hour.windSpeed
+      qs('[data-hour-wind-direction]', row).textContent = hour.windDirection
+      qs('[data-hour-humidity]', row).textContent = hour.humidity
+      qs('[data-hour-uv-level]', row).textContent = hour.uvLevel
       hourlyContainer.append(row)
     })
 }
@@ -394,6 +379,10 @@ newGlobalEventListener('focusin', '#btnNewPlace', (e) => {
 })
 
 //deletePlace
+newGlobalEventListener('click', '#btnDeletePlace', (e) => {
+  deletePlace(e.target.closest('[data-place-card]').dataset.id)
+})
+
 function deletePlace(cardId) {
   places = places.filter((place) => place.id !== cardId)
 
@@ -403,7 +392,3 @@ function deletePlace(cardId) {
 
   setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
 }
-
-newGlobalEventListener('click', '#btnDeletePlace', (e) => {
-  deletePlace(e.target.closest('[data-place-card]').dataset.id)
-})
