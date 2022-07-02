@@ -2,7 +2,7 @@
 TODO:
 
  prefs
- - open preferences, see Bancor's ||| popover
+ - units: imperial, metric
  - themes:
   -light, morning, sunrise, desert, winter
  - night, dusk, new moon
@@ -10,11 +10,10 @@ TODO:
  - use ::before pseudo element to create custom radio buttons
 
  ui
-  - modernize place card when hovering, box-shadow, grow 1.1x, delete button appears top left corner
-  - onFocus - support tabbing between place cards and to New Place button
-  - globally change rbga to hsl?
- - create NavBar for JAWA logo and Prefs |||, review Bancor/Ren, position: fixed. Push navBar to bottom of screen in mobile context
- - build prefs pop-up overlay, use transform property for menu button
+ - create NavBar for JAWA logo and Prefs |||
+      - review Bancor/Ren, position: fixed
+      - review MDN menu bar
+ - prefs modal
  - style search box using google classes
 
  final clean
@@ -31,9 +30,10 @@ import {
   formatTime,
   formatZonedTime,
   formatZonedHour,
-} from './date-utils.js'
+} from './dateUtils.js'
 import { getIconUrl } from './parse.js'
 import { getLocalStorage, setLocalStorage } from './localStorage.js'
+import { addGlobalEventListener } from './domUtils.js'
 const { v4 } = require('uuid')
 
 const LOCAL_STORAGE_PREFIX = 'JAWA'
@@ -166,10 +166,59 @@ function renderPlacesWeather() {
     card.querySelector('[data-card-icon]').alt = place.current.description
     card.querySelector('[data-card-hl] > [data-card-high]').innerText = place.current.high
     card.querySelector('[data-card-hl] > [data-card-low]').innerText = place.current.low
+    //TODO: reverse tab - hide delete button
+    //TODO: focusin: if e.relatedTarget is div, hide related button
+    //TODO: tabbing back to search box hides delete button
+    //TODO: refactor event listeners
     card.addEventListener('click', (e) => {
       if (e.target.id === 'btnDeletePlace') return
-      renderSavedPlaceWeather(e.target.dataset.id)
+
+      let placeCard = e.target.closest('.place-card')
+      if (!placeCard) return
+      renderSavedPlaceWeather(placeCard.dataset.id)
     })
+
+    card.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        let placeCard = e.target.closest('.place-card')
+        if (!placeCard) return
+        renderSavedPlaceWeather(placeCard.dataset.id)
+      }
+    })
+
+    card.addEventListener('mouseenter', (e) => {
+      let placeCard = e.target.closest('.place-card')
+      if (!placeCard) return
+      let btn = placeCard.querySelector('#btnDeletePlace')
+      if (btn.hidden === true) btn.hidden = false
+    })
+
+    card.addEventListener('mouseleave', (e) => {
+      let placeCard = e.target.closest('.place-card')
+      if (!placeCard) return
+      let btn = placeCard.querySelector('#btnDeletePlace')
+      if (btn.hidden === false) btn.hidden = true
+    })
+
+    card.addEventListener('focusin', (e) => {
+      console.log('1) focusin event: ', e)
+      console.log('2) focusin event target: ', e.target)
+
+      //show delete button on the new focus place card
+      let placeCardNewFocus = e.target.closest('.place-card')
+      if (!placeCardNewFocus) return
+      let btn = placeCardNewFocus.querySelector('#btnDeletePlace')
+
+      if (btn.hidden === true) btn.hidden = false
+
+      console.log('3) focusin event relatedTarget: ', e.relatedTarget)
+      if (e.relatedTarget.id === 'btnDeletePlace') e.relatedTarget.hidden = true
+
+      //tabbing in reverse direction does not recognize the child delete button
+      //so if tabbing skips to next place card, hide button from previous place card
+      //TODO: focusin: if e.relatedTarget is div, hide related button
+    })
+
     placesContainer.append(element)
   })
 }
@@ -309,7 +358,8 @@ async function setPlaces(key, value) {
  */
 
 //newPlace
-document.querySelector('#btnNewPlace').addEventListener('click', newPlace)
+const btnNewPlace = document.querySelector('#btnNewPlace')
+btnNewPlace.addEventListener('click', newPlace)
 function newPlace() {
   const newPlace = {
     id: v4(),
@@ -329,6 +379,14 @@ function newPlace() {
   console.log('new places: ', places)
 }
 
+btnNewPlace.addEventListener('focusin', (e) => {
+  // console.log('1) focusin event: ', e)
+  // console.log('2) focusin event target: ', e.target)
+  // console.log('3) focusin event relatedTarget: ', e.relatedTarget)
+  if (e.relatedTarget == null) return
+  if (e.relatedTarget.id === 'btnDeletePlace') e.relatedTarget.hidden = true
+})
+
 //deletePlace
 function deletePlace(cardId) {
   places = places.filter((place) => place.id !== cardId)
@@ -341,13 +399,13 @@ function deletePlace(cardId) {
   setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
 }
 
-//wrapping listeners in function allows adding listeners dynamically
-function addGlobalEventListener(type, selector, callback) {
-  document.addEventListener(type, (e) => {
-    if (e.target.matches(selector)) callback(e)
-  })
-}
+// function addGlobalEventListener(type, selector, callback) {
+//   document.addEventListener(type, (e) => {
+//     if (e.target.matches(selector)) callback(e)
+//   })
+// }
 
+//wrapping listeners in function allows adding listeners dynamically
 addGlobalEventListener('click', '#btnDeletePlace', (e) => {
   deletePlace(e.target.closest('[data-place-card]').dataset.id)
 })

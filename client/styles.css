@@ -8,13 +8,12 @@
   font-family: 'Lato', sans-serif;
 }
 
-/* background: linear-gradient(to right, rgba(243, 241, 243, 1), rgba(135, 206, 250, 1)); */
-
 :root {
   --background-blur: hsl(0, 0%, 96%);
   --background-linear-from: hsl(300, 8%, 95%);
   --background-linear-to: hsl(203, 92%, 75%);
-  --background-hover: hsla(0, 0%, 96%, 0.3);
+  --background-place-hover: hsla(0, 0%, 96%, 0.3);
+  --background-place-btn-hover: hsla(0, 0%, 96%, 0.9);
   --border-color-01: hsl(0, 0%, 100%);
   --border-color-02: hsl(200, 100%, 25%);
   --border-search-input: hsl(0, 0%, 47%);
@@ -60,6 +59,7 @@ body {
   /* background: rgba(255, 252, 252, 1); */
 
   /* morning */
+  /* background: linear-gradient(to right, rgba(243, 241, 243, 1), rgba(135, 206, 250, 1)); */
   /* background: linear-gradient(to right, rgba(244, 244, 244, 1), rgba(135, 206, 250, 1)); */
   background: linear-gradient(to right, var(--background-linear-from), var(--background-linear-to));
   /* background: linear-gradient(to right, rgba(246, 230, 238, 1), rgba(135, 206, 250, 1)); */
@@ -153,16 +153,10 @@ header {
   white-space: nowrap;
 }
 
-.place-card:hover {
-  background-color: var(--background-hover);
-}
-
+.place-card:hover,
 .place-card:focus {
-  background-color: var(--background-hover);
-}
-
-.place-card-item {
-  pointer-events: none;
+  outline: none;
+  background-color: var(--background-place-hover);
 }
 
 .place-text {
@@ -185,14 +179,17 @@ header {
   font-weight: bold;
   text-align: center;
   color: var(--color-btn);
+  background-color: var(--background-place-hover);
+  background-color: var(--background-place-btn-hover);
 }
 
 .btn-delete-place:hover {
-  background-color: var(--background-hover);
+  box-shadow: 0 0 5px 0 var(--border-color-01);
 }
 
 .btn-delete-place:focus {
   background-color: var(--color-02);
+  box-shadow: 0 0 5px 0 var(--border-color-01);
   color: var(--color-01);
 }
 
@@ -302,11 +299,11 @@ header {
   outline: none;
   font-size: 0.5rem;
   font-style: italic;
-  color: var(--color-btn);
   border: none;
   border-radius: var(--border-radius);
+  color: var(--color-btn);
   text-decoration: underline;
-  padding: 0.25em 0.5em;
+  padding: 0;
 }
 
 .btn-new-place-disabled {
@@ -315,13 +312,14 @@ header {
   color: var(--color-disabled);
 }
 
-.btn-new-place:hover {
+.btn-new-place:hover,
+.btn-new-place:focus {
   text-decoration: none;
   color: var(--color-btn-hover);
   transition: 100ms;
 }
 
-.btn-new-place:focus {
+/* .btn-new-place:focus {
   animation: flash 100ms linear backwards;
 }
 
@@ -330,7 +328,7 @@ header {
     background-color: var(--color-02);
     color: var(--color-01);
   }
-}
+} */
 
 /*
  * daily section 
