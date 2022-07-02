@@ -312,14 +312,13 @@ header {
   color: var(--color-disabled);
 }
 
-.btn-new-place:hover,
-.btn-new-place:focus {
+.btn-new-place:hover {
   text-decoration: none;
   color: var(--color-btn-hover);
   transition: 100ms;
 }
 
-/* .btn-new-place:focus {
+.btn-new-place:focus {
   animation: flash 100ms linear backwards;
 }
 
@@ -328,7 +327,7 @@ header {
     background-color: var(--color-02);
     color: var(--color-01);
   }
-} */
+}
 
 /*
  * daily section 

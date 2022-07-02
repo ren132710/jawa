@@ -1,6 +1,8 @@
 /*
 TODO:
-
+ - refactor mouse and tab events code
+ - leverage domUtils.js throughout
+ 
  prefs
  - units: imperial, metric
  - themes:
@@ -11,9 +13,9 @@ TODO:
 
  ui
  - create NavBar for JAWA logo and Prefs |||
-      - review Bancor/Ren, position: fixed
-      - review MDN menu bar
+      - review Bancor/Ren, transparent, then white when page scroll, position: fixed at top of screen
  - prefs modal
+     - review MDN menu bar <--Use this with menu Class
  - style search box using google classes
 
  final clean
@@ -33,11 +35,12 @@ import {
 } from './dateUtils.js'
 import { getIconUrl } from './parse.js'
 import { getLocalStorage, setLocalStorage } from './localStorage.js'
-import { addGlobalEventListener } from './domUtils.js'
+import { newGlobalEventListener, qs } from './domUtils.js'
 const { v4 } = require('uuid')
 
 const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
+const PLACES_CAP = 6
 
 const DEFAULT_PLACES = [
   // { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.3293, long: 18.0686 },
@@ -145,6 +148,13 @@ loader.load().then((google) => {
   })
 })
 
+newGlobalEventListener('focusin', '[data-place-search]', (e) => {
+  if (e.relatedTarget == null) return
+  if (e.relatedTarget.hasAttribute('data-place-card')) {
+    qs('#btnDeletePlace', e.relatedTarget).hidden = true
+  }
+})
+
 /*
  * render places weather
  */
@@ -161,15 +171,14 @@ function renderPlacesWeather() {
     card.dataset.location = place.coordinates.location
     card.dataset.lat = place.coordinates.lat
     card.dataset.long = place.coordinates.long
-    card.querySelector('[data-card-location').innerText = place.coordinates.location
+    qs('[data-card-location]', card).innerText = place.coordinates.location
+    // card.querySelector('[data-card-location').innerText = place.coordinates.location
+    card.querySelector('[data-card-icon]').src = getIconUrl(place.current.icon)
     card.querySelector('[data-card-icon]').src = getIconUrl(place.current.icon)
     card.querySelector('[data-card-icon]').alt = place.current.description
     card.querySelector('[data-card-hl] > [data-card-high]').innerText = place.current.high
     card.querySelector('[data-card-hl] > [data-card-low]').innerText = place.current.low
-    //TODO: reverse tab - hide delete button
-    //TODO: focusin: if e.relatedTarget is div, hide related button
-    //TODO: tabbing back to search box hides delete button
-    //TODO: refactor event listeners
+
     card.addEventListener('click', (e) => {
       if (e.target.id === 'btnDeletePlace') return
 
@@ -181,42 +190,40 @@ function renderPlacesWeather() {
     card.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         let placeCard = e.target.closest('.place-card')
-        if (!placeCard) return
+        if (placeCard == null) return
         renderSavedPlaceWeather(placeCard.dataset.id)
       }
     })
 
     card.addEventListener('mouseenter', (e) => {
       let placeCard = e.target.closest('.place-card')
-      if (!placeCard) return
+      if (placeCard == null) return
       let btn = placeCard.querySelector('#btnDeletePlace')
       if (btn.hidden === true) btn.hidden = false
     })
 
     card.addEventListener('mouseleave', (e) => {
       let placeCard = e.target.closest('.place-card')
-      if (!placeCard) return
+      if (placeCard == null) return
       let btn = placeCard.querySelector('#btnDeletePlace')
       if (btn.hidden === false) btn.hidden = true
     })
 
     card.addEventListener('focusin', (e) => {
-      console.log('1) focusin event: ', e)
-      console.log('2) focusin event target: ', e.target)
-
-      //show delete button on the new focus place card
+      //show delete button when place card has focus
       let placeCardNewFocus = e.target.closest('.place-card')
-      if (!placeCardNewFocus) return
+      if (placeCardNewFocus == null) return
       let btn = placeCardNewFocus.querySelector('#btnDeletePlace')
-
       if (btn.hidden === true) btn.hidden = false
 
-      console.log('3) focusin event relatedTarget: ', e.relatedTarget)
+      //hide delete button when place card loses focus
+      if (e.relatedTarget == null) return
       if (e.relatedTarget.id === 'btnDeletePlace') e.relatedTarget.hidden = true
 
-      //tabbing in reverse direction does not recognize the child delete button
-      //so if tabbing skips to next place card, hide button from previous place card
-      //TODO: focusin: if e.relatedTarget is div, hide related button
+      //reverse tab does not recognize the delete button, so handle differently
+      if (e.target.hasAttribute('data-place-card') && e.relatedTarget.hasAttribute('data-place-card')) {
+        qs('#btnDeletePlace', e.relatedTarget).hidden = true
+      }
     })
 
     placesContainer.append(element)
@@ -254,20 +261,23 @@ function renderCurrentWeather({ coordinates, current }) {
 
   //top left quadrant
   currentTopLeft.querySelector('[data-id]').dataset.id = coordinates.id
-  currentTopLeft.querySelector('[data-current-location]').dataset.location = coordinates.location
+  currentTopLeft.querySelector('[data-current-location]').dataset.currentLocation = coordinates.location
   currentTopLeft.querySelector('[data-current-location]').textContent = coordinates.location
-  currentTopLeft.querySelector('[data-current-icon').src = getIconUrl(current.icon, { size: 'large' })
-  currentTopLeft.querySelector('[data-current-icon').alt = current.description
+  currentTopLeft.querySelector('[data-current-icon]').src = getIconUrl(current.icon, { size: 'large' })
+  currentTopLeft.querySelector('[data-current-icon]').alt = current.description
 
   //to right quadrant
-  currentTopRight.querySelector('[data-current-lat').textContent = coordinates.lat
-  currentTopRight.querySelector('[data-current-long').textContent = coordinates.long
-  currentTopRight.querySelector('[data-current-high').textContent = current.high
-  currentTopRight.querySelector('[data-current-low').textContent = current.low
-  currentTopRight.querySelector('[data-current-temp').textContent = current.temp
-  currentTopRight.querySelector('[data-current-fl').textContent = current.feelsLike
-  currentTopRight.querySelector('[data-current-description').textContent = current.description
-  currentTopRight.querySelector('[data-current-precip').textContent = current.precip
+  qs('[data-current-lat]').textContent = coordinates.lat
+  // currentTopRight.querySelector('[data-current-lat]').textContent = coordinates.lat
+  qs('[data-current-long]').textContent = coordinates.long
+  // currentTopRight.querySelector('[data-current-long]').textContent = coordinates.long
+  currentTopRight.querySelector('[data-current-high]').textContent = current.high
+  currentTopRight.querySelector('[data-current-low]').textContent = current.low
+  qs('[data-current-temp]').textContent = current.temp
+  // currentTopRight.querySelector('[data-current-temp]').textContent = current.temp
+  currentTopRight.querySelector('[data-current-fl]').textContent = current.feelsLike
+  currentTopRight.querySelector('[data-current-description]').textContent = current.description
+  currentTopRight.querySelector('[data-current-precip]').textContent = current.precip
   currentTopRight.querySelector('[data-current-visibility').textContent = current.visibility
 
   //bottom left quadrant
@@ -278,12 +288,12 @@ function renderCurrentWeather({ coordinates, current }) {
   currentBotLeft.querySelector('[data-current-wind-direction]').textContent = current.windDirection
 
   //bottom right quadrant
-  currentBotRight.querySelector('[data-current-dew-point').textContent = current.dewPoint
-  currentBotRight.querySelector('[data-current-sunrise').textContent = formatZonedTime(
+  currentBotRight.querySelector('[data-current-dew-point]').textContent = current.dewPoint
+  currentBotRight.querySelector('[data-current-sunrise]').textContent = formatZonedTime(
     current.sunrise,
     coordinates.timezone
   )
-  currentBotRight.querySelector('[data-current-sunset').textContent = formatZonedTime(
+  currentBotRight.querySelector('[data-current-sunset]').textContent = formatZonedTime(
     current.sunset,
     coordinates.timezone
   )
@@ -358,31 +368,27 @@ async function setPlaces(key, value) {
  */
 
 //newPlace
-const btnNewPlace = document.querySelector('#btnNewPlace')
-btnNewPlace.addEventListener('click', newPlace)
+newGlobalEventListener('click', '#btnNewPlace', newPlace)
+
 function newPlace() {
   const newPlace = {
     id: v4(),
-    location: currentTopLeft.querySelector('[data-location]').innerText.toLowerCase(),
-    lat: currentTopRight.querySelector('[data-current-lat]').innerText,
-    long: currentTopRight.querySelector('[data-current-long]').innerText,
+    location: qs('[data-current-location]').innerText.toLowerCase(),
+    lat: qs('[data-current-lat]').innerText,
+    long: qs('[data-current-long]').innerText,
   }
-
   places.push(newPlace)
 
   //limit the number of saved places to 10
-  if (places.length >= 10) {
-    // document.querySelector('[data-new-place]').disabled = true
-    document.querySelector('[data-new-place]').classList.add('btn-new-place-disabled')
+  if (places.length >= PLACES_CAP) {
+    qs('[data-new-place]').classList.add('btn-new-place-disabled')
   }
+
   setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
   console.log('new places: ', places)
 }
 
-btnNewPlace.addEventListener('focusin', (e) => {
-  // console.log('1) focusin event: ', e)
-  // console.log('2) focusin event target: ', e.target)
-  // console.log('3) focusin event relatedTarget: ', e.relatedTarget)
+newGlobalEventListener('focusin', '#btnNewPlace', (e) => {
   if (e.relatedTarget == null) return
   if (e.relatedTarget.id === 'btnDeletePlace') e.relatedTarget.hidden = true
 })
@@ -391,21 +397,13 @@ btnNewPlace.addEventListener('focusin', (e) => {
 function deletePlace(cardId) {
   places = places.filter((place) => place.id !== cardId)
 
-  if (places.length < 10) {
-    // document.querySelector('[data-new-place]').disabled = false
-    document.querySelector('[data-new-place]').classList.remove('btn-new-place-disabled')
+  if (places.length < PLACES_CAP) {
+    qs('[data-new-place]').classList.remove('btn-new-place-disabled')
   }
 
   setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
 }
 
-// function addGlobalEventListener(type, selector, callback) {
-//   document.addEventListener(type, (e) => {
-//     if (e.target.matches(selector)) callback(e)
-//   })
-// }
-
-//wrapping listeners in function allows adding listeners dynamically
-addGlobalEventListener('click', '#btnDeletePlace', (e) => {
+newGlobalEventListener('click', '#btnDeletePlace', (e) => {
   deletePlace(e.target.closest('[data-place-card]').dataset.id)
 })
