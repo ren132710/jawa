@@ -4,8 +4,8 @@
   "description": "Practice",
   "main": "script.js",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html",
+    "start": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html",
     "test:unit": "jest \\.unit\\. --coverage",
     "cy:open": "cypress open",
     "cy:run": "cypress run -b chrome",
