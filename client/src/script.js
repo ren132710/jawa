@@ -46,7 +46,7 @@ const DEFAULT_PLACES = [
   { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7128, long: -74.006 },
 ]
 
-/*
+/**
  * initialize page
  */
 
@@ -85,12 +85,12 @@ async function getPlacesWeather() {
   })
 }
 
-/*
+/**
  * axios
  * @param {string} lat: latitude, required by OpenWeather for weather data
  * @param {string} long: longitude, required by OpenWeather for weather data
  * @param {string} id:
- *   - id is used for adding/deleting places from localStorage
+ *   - used for adding/deleting places from localStorage
  *   - pass to server so server can include in the response object
  * @param {string} location:
  *  - location is not provided by OpenWeather
@@ -110,7 +110,7 @@ async function getWeather(lat, long, id, location) {
   }
 }
 
-/*
+/**
  * google autocomplete
  */
 
@@ -122,9 +122,9 @@ const loader = new Loader({
 const placeSearch = document.querySelector('[data-place-search]')
 loader.load().then((google) => {
   const autocomplete = new google.maps.places.Autocomplete(placeSearch, {
-    // types: ['(cities)'],
+    //types: ['(cities)'],
     types: ['geocode'],
-    // componentRestrictions: { country: 'us' },
+    //componentRestrictions: { country: 'us' },
     fields: ['name', 'geometry.location'],
   })
 
@@ -144,6 +144,7 @@ loader.load().then((google) => {
   })
 })
 
+//hide btnDeletePlace when reverse tabbing to search box
 newGlobalEventListener('focusin', '[data-place-search]', (e) => {
   if (e.relatedTarget == null) return
   if (e.relatedTarget.hasAttribute('data-place-card')) {
@@ -151,7 +152,7 @@ newGlobalEventListener('focusin', '[data-place-search]', (e) => {
   }
 })
 
-/*
+/**
  * render places weather
  */
 
@@ -172,17 +173,11 @@ function renderPlacesWeather() {
     qs('[data-card-icon]', card).alt = place.current.description
     qs('[data-card-hl] > [data-card-high]', card).innerText = place.current.high
     qs('[data-card-hl] > [data-card-low]', card).innerText = place.current.low
+
+    //mouse events
     card.addEventListener('click', (e) => {
       if (e.target.id === 'btnDeletePlace') return
 
-      const placeCard = e.target.closest('.place-card')
-      if (placeCard == null) return
-      renderSavedPlaceWeather(placeCard.dataset.id)
-    })
-
-    //mouse and keyboard events
-    card.addEventListener('keypress', (e) => {
-      if (!e.key === 'Enter') return
       const placeCard = e.target.closest('.place-card')
       if (placeCard == null) return
       renderSavedPlaceWeather(placeCard.dataset.id)
@@ -202,16 +197,20 @@ function renderPlacesWeather() {
       btn.hidden = true
     })
 
+    //keyboard events
+    card.addEventListener('keypress', (e) => {
+      if (!e.key === 'Enter') return
+      const placeCard = e.target.closest('.place-card')
+      if (placeCard == null) return
+      renderSavedPlaceWeather(placeCard.dataset.id)
+    })
+
     card.addEventListener('focusin', (e) => {
       //show delete button when place card gets focus
       const placeCard = e.target.closest('.place-card')
       if (placeCard == null) return
       const btn = qs('#btnDeletePlace', placeCard)
       btn.hidden = false
-
-      //hide delete button when place card loses focus
-      if (e.relatedTarget == null) return
-      if (e.relatedTarget.id === 'btnDeletePlace') e.relatedTarget.hidden = true
 
       //reverse tab does not recognize the delete button, so handle differently
       if (e.target.hasAttribute('data-place-card') && e.relatedTarget.hasAttribute('data-place-card')) {
@@ -223,7 +222,7 @@ function renderPlacesWeather() {
   })
 }
 
-/*
+/**
  * render weather
  */
 
@@ -328,7 +327,7 @@ function renderHourlyWeather(hourly, coordinates) {
     })
 }
 
-/*
+/**
  * localStorage (thenable)
  */
 
@@ -343,11 +342,10 @@ async function setPlaces(key, value) {
   await setLocalStorage(key, value)
 }
 
-/*
- * new / delete place
+/**
+ * new place
  */
 
-//newPlace
 newGlobalEventListener('click', '#btnNewPlace', newPlace)
 
 function newPlace() {
@@ -367,13 +365,18 @@ function newPlace() {
   console.log('new places: ', places)
 }
 
-//when tabbing to new place button from places, hide delete place button
+//when tabbing to btnNewPlace from places, hide btnDeletePlace
 newGlobalEventListener('focusin', '#btnNewPlace', (e) => {
   if (e.relatedTarget == null) return
-  if (e.relatedTarget.id === 'btnDeletePlace') e.relatedTarget.hidden = true
+  if (e.relatedTarget.hasAttribute('data-place-card')) {
+    qs('#btnDeletePlace', e.relatedTarget).hidden = true
+  }
 })
 
-//deletePlace
+/**
+ * delete place
+ */
+
 newGlobalEventListener('click', '#btnDeletePlace', (e) => {
   deletePlace(e.target.closest('[data-place-card]').dataset.id)
 })
