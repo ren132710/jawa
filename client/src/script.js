@@ -212,7 +212,7 @@ function renderPlacesWeather() {
       const btn = qs('#btnDeletePlace', placeCard)
       btn.hidden = false
 
-      //reverse tab does not recognize the delete button, so handle differently
+      //hide delete button when place card loses focus
       if (e.target.hasAttribute('data-place-card') && e.relatedTarget.hasAttribute('data-place-card')) {
         qs('#btnDeletePlace', e.relatedTarget).hidden = true
       }
