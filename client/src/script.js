@@ -359,7 +359,6 @@ function newPlace() {
   }
   places.push(newPlace)
 
-  //limit the number of saved places to 10
   if (places.length >= PLACES_CAP) {
     qs('[data-new-place]').classList.add('btn-new-place-disabled')
   }
@@ -368,7 +367,7 @@ function newPlace() {
   console.log('new places: ', places)
 }
 
-//when tabbing to new place button
+//when tabbing to new place button from places, hide delete place button
 newGlobalEventListener('focusin', '#btnNewPlace', (e) => {
   if (e.relatedTarget == null) return
   if (e.relatedTarget.id === 'btnDeletePlace') e.relatedTarget.hidden = true
