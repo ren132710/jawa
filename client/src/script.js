@@ -213,6 +213,7 @@ function renderPlacesWeather() {
       btn.hidden = false
 
       //hide delete button when place card loses focus
+      if (e.target.hasAttribute == null || e.relatedTarget.hasAttribute == null) return
       if (e.target.hasAttribute('data-place-card') && e.relatedTarget.hasAttribute('data-place-card')) {
         qs('#btnDeletePlace', e.relatedTarget).hidden = true
       }
