@@ -558,6 +558,11 @@ footer {
     align-items: space-around;
   }
 
+  .place-search {
+    font-size: 1.5rem;
+    width: 95%;
+  }
+
   .places-container {
     justify-content: end;
   }
@@ -605,6 +610,10 @@ footer {
 @media screen and (min-width: 1022px) {
   .places-section {
     grid-template-columns: 1fr 1.618fr;
+  }
+
+  .place-search {
+    width: 90%;
   }
 
   .main {
