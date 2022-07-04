@@ -15,20 +15,17 @@
       <nav class="navbar">
         <div class="logo-container">
           <div class="jawa">jawa</div>
-          <div class="iconify" data-icon="mdi-kite"></div>
+          <svg class="jawa-logo" viewBox="0 0 24 24">
+            <path
+              d="M16.5 4.5L15.5 3.43L17.92 1H20L16.5 4.5M20.96 23C19.9 23 18.9 22.75 17.96 22.25C16.12 23.25 13.81 23.25 11.97 22.25C10.13 23.25 7.82 23.25 6 22.25C4.77 22.94 3.36 23.05 2 23V21C3.41 21.05 4.77 20.9 6 20C7.74 21.25 10.21 21.25 11.97 20C13.74 21.25 16.2 21.25 17.96 20C19.17 20.9 20.54 21.05 21.94 21V23H20.96M20.35 12.26C18.3 11.5 16.14 12.61 14.08 13.36L12.39 11.5H9.58V8C11.89 8.19 14.29 7.67 15.9 5.96L14.5 4.56C13.6 5.46 12.3 6 11 6H8C6.89 6 5.95 6.92 6 8C6.07 9.35 5.67 12.73 6.45 13.87L8 16.82C7.43 17.23 6.93 17.62 6.5 18C8.09 19.5 10.65 19.17 11.97 17.5C12.91 18.59 14.45 19.3 15.9 18.83C17.45 17.77 22.74 14 20.35 12.26M11.43 14.65C11 14.89 10.16 15.37 9.82 15.61L8.97 13.59L11.46 13.5L12.16 14.25L11.43 14.65M8 1C6.9 1 6 1.9 6 3S6.9 5 8 5 10 4.11 10 3 9.11 1 8 1Z"
+            />
+          </svg>
         </div>
-        <div class="menu=container">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-[20px]"
-          >
+        <div class="menu-container">
+          <svg class="jawa-menu" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M2.14589 6.50006C2.0615 6.49887 1.97772 6.51445 1.89941 6.54589C1.8211 6.57734 1.74983 6.62402 1.68973 6.68323C1.62964 6.74244 1.58192 6.81299 1.54935 6.89079C1.51677 6.96859 1.5 7.05208 1.5 7.13642C1.5 7.22075 1.51677 7.30424 1.54935 7.38204C1.58192 7.45984 1.62964 7.53039 1.68973 7.5896C1.74983 7.64881 1.8211 7.69549 1.89941 7.72694C1.97772 7.75838 2.0615 7.77396 2.14589 7.77277H17.8541C17.9385 7.77396 18.0223 7.75838 18.1006 7.72694C18.1789 7.69549 18.2502 7.64881 18.3103 7.5896C18.3704 7.53039 18.4181 7.45984 18.4507 7.38204C18.4832 7.30424 18.5 7.22075 18.5 7.13642C18.5 7.05208 18.4832 6.96859 18.4507 6.89079C18.4181 6.81299 18.3704 6.74244 18.3103 6.68323C18.2502 6.62402 18.1789 6.57734 18.1006 6.54589C18.0223 6.51445 17.9385 6.49887 17.8541 6.50006H2.14589ZM7.24045 12.2272C7.15606 12.226 7.07228 12.2416 6.99397 12.2731C6.91566 12.3045 6.84439 12.3512 6.78429 12.4104C6.7242 12.4696 6.67648 12.5402 6.6439 12.618C6.61133 12.6958 6.59456 12.7793 6.59456 12.8636C6.59456 12.9479 6.61133 13.0314 6.6439 13.1092C6.67648 13.187 6.7242 13.2576 6.78429 13.3168C6.84439 13.376 6.91566 13.4227 6.99397 13.4541C7.07228 13.4855 7.15606 13.5011 7.24045 13.4999H17.8541C17.9385 13.5011 18.0223 13.4855 18.1006 13.4541C18.1789 13.4227 18.2502 13.376 18.3103 13.3168C18.3704 13.2576 18.4181 13.187 18.4507 13.1092C18.4832 13.0314 18.5 12.9479 18.5 12.8636C18.5 12.7793 18.4832 12.6958 18.4507 12.618C18.4181 12.5402 18.3704 12.4696 18.3103 12.4104C18.2502 12.3512 18.1789 12.3045 18.1006 12.2731C18.0223 12.2416 17.9385 12.226 17.8541 12.2272H7.24045Z"
-            ></path>
+            />
           </svg>
         </div>
       </nav>
@@ -53,9 +50,11 @@
               <button id="btnNewPlace" class="btn-new-place" data-new-place>New Place</button>
               <img
                 class="weather-icon large"
-                data-current-icon
                 src="http://openweathermap.org/img/wn/10d@4x.png"
+                width="200"
+                height="200"
                 alt="rain"
+                data-current-icon
               />
             </div>
             <div class="current-top-right">
@@ -118,9 +117,11 @@
         <button id="btnDeletePlace" class="btn-delete-place" tabindex="-1" hidden>✕</button>
         <img
           class="weather-icon place-card-item"
-          data-card-icon
           src="http://openweathermap.org/img/wn/01d.png"
+          width="50"
+          height="50"
           alt="clear sky"
+          data-card-icon
         />
         <div class="place-text place-card-item" data-card-location></div>
         <div class="place-text place-card-item" data-card-hl>
@@ -131,7 +132,14 @@
 
     <template id="template-daily-card">
       <div class="daily-card">
-        <img class="weather-icon" data-daily-icon src="http://openweathermap.org/img/wn/01d.png" alt="clear sky" />
+        <img
+          class="weather-icon"
+          src="http://openweathermap.org/img/wn/01d.png"
+          width="50"
+          height="50"
+          alt="clear sky"
+          data-daily-icon
+        />
         <div class="daily-date" data-daily-date></div>
         <div data-hl><span data-daily-high></span>/<span class="degrees" data-daily-low></span></div>
         <div class="daily-description" data-daily-description></div>
@@ -151,7 +159,14 @@
           <div data-hour class="hour-value"></div>
         </div>
         <div class="hour-data">
-          <img class="weather-icon" data-hour-icon src="http://openweathermap.org/img/wn/01d.png" alt="clear sky" />
+          <img
+            class="weather-icon"
+            src="http://openweathermap.org/img/wn/01d.png"
+            width="50"
+            height="50"
+            alt="clear sky"
+            data-hour-icon
+          />
         </div>
         <div class="hour-data">
           <div class="hour-label">Temp</div>

@@ -8,12 +8,9 @@ TODO:
  - Units (Imperial, Metric)
 
  ui
- - create NavBar for JAWA logo and Prefs |||
-      - review Bancor/Ren, transparent, then white when page scroll, position: fixed at top of screen
  - prefs modal
      - review MDN menu bar <--Use this with menu Class
  - style search box using google classes
- - load fonts locally in lieu of download
 
  final clean
   - remove console.logs
@@ -37,8 +34,7 @@ const { v4 } = require('uuid')
 
 const LOCAL_STORAGE_PREFIX = 'JAWA'
 const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
-const PLACES_CAP = 6
-
+const PLACES_CAP = 9
 const DEFAULT_PLACES = [
   // { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.3293, long: 18.0686 },
   // { id: '905e58e1-5510-4535-b4c8-2ed30045772d', location: 'austin', lat: 30.2672, long: -97.7431 },

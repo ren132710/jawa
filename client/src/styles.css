@@ -17,7 +17,7 @@
   --background-place-btn-hover: hsla(0, 0%, 96%, 0.9);
   --border-color-01: hsl(0, 0%, 100%);
   --border-color-02: hsl(200, 100%, 25%);
-  --border-search-input: hsl(0, 0%, 47%);
+  --border-search-input: hsl(0, 0%, 47%); /* border for light mode */
   --color-01: hsl(0, 0%, 100%);
   --color-02: hsl(200, 100%, 10%);
   --color-disabled: hsl(0, 0%, 50%);
@@ -52,12 +52,12 @@ body {
   /* day */
   /* background: white; */
   /* background: rgba(243, 241, 243, 1); */
-  /* background: rgba(255, 252, 252, 1); */
+  /* background: rgba(255, 252, 252, 1); */ /* this one */
 
   /* morning */
   /* background: linear-gradient(to right, rgba(243, 241, 243, 1), rgba(135, 206, 250, 1)); */
   /* background: linear-gradient(to right, rgba(244, 244, 244, 1), rgba(135, 206, 250, 1)); */
-  background: linear-gradient(to right, var(--background-linear-from), var(--background-linear-to));
+  background: linear-gradient(to right, var(--background-linear-from), var(--background-linear-to)); /* this one */
   /* background: linear-gradient(to right, rgba(246, 230, 238, 1), rgba(135, 206, 250, 1)); */
   /* background: linear-gradient(to right, rgba(253, 249, 251, 1), rgba(135, 206, 250, 1)); */
 
@@ -70,6 +70,7 @@ body {
   /** DARK MODE THEMES **/
   /* dark */
   /* background: rgba(0, 0, 0, 1); */
+  /* background: #333; */
 
   /* new moon */
   /* background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.85)); */
@@ -83,6 +84,13 @@ body {
   /* dark mode font color */
   /* color: rgba(244, 244, 244, 1); */
 }
+
+/* body.dark {
+  --accent-color: #D0D066;
+  --background-color: #333;
+  --text-color: white;
+  etc.
+} */
 
 .blurred {
   /* background: white; */
@@ -113,7 +121,7 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 1.5rem 0;
 }
 
 .navbar-bg-active {
@@ -128,6 +136,11 @@ body {
   gap: 10%;
 }
 
+.menu-container {
+  display: flex;
+  align-items: center;
+}
+
 .jawa {
   font-style: oblique;
   font-weight: bold;
@@ -135,6 +148,12 @@ body {
 
 .jawa::first-letter {
   font-size: 125%;
+}
+
+.jawa-logo,
+.jawa-menu {
+  width: 30px;
+  height: 30px;
 }
 
 /*
