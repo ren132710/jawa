@@ -1,7 +1,7 @@
 /// <reference types= "cypress" />
 
 //scenario testing is end-to-end. Server must be running
-describe('places scenario', () => {
+describe('#scenario: places', () => {
   const initialPlace = [
     {
       id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87',
