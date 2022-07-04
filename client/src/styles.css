@@ -12,6 +12,7 @@
   --background-blur: hsl(0, 0%, 96%);
   --background-linear-from: hsl(300, 8%, 95%);
   --background-linear-to: hsl(203, 92%, 75%);
+  --background-linear-to-lighter: hsl(203, 92%, 85%);
   --background-place-hover: hsla(0, 0%, 96%, 0.3);
   --background-place-btn-hover: hsla(0, 0%, 96%, 0.9);
   --border-color-01: hsl(0, 0%, 100%);
@@ -36,11 +37,6 @@
 } */
 
 body {
-  display: grid;
-  /* grid-template-rows: auto; */
-  /* grid-template-rows: auto 1fr auto auto; */
-  grid-template-rows: auto minmax(120px, auto) 1fr 80px 1rem;
-  /* try margin: 0, auto; for centering in mobile context */
   position: relative;
   margin: 0;
   padding: 0;
@@ -98,17 +94,32 @@ body {
   /* background: rgba(0, 0, 0, 0.85); */
 }
 
+.main-grid-container {
+  display: grid;
+  /* grid-template-rows: auto; */
+  /* grid-template-rows: auto 1fr auto auto; */
+  grid-template-rows: 2rem minmax(120px, auto) 1fr 80px 1rem;
+  /* try margin: 0, auto; for centering in mobile context */
+}
+
 /*
  * header
  */
 
-.nav-container {
+.navbar {
+  position: fixed;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0.5rem 1rem;
-  /* position: fixed;
-  z-index: 10; */
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+}
+
+.navbar-bg-active {
+  background-color: var(--background-linear-from);
+  background: linear-gradient(to right, var(--background-linear-from), var(--background-linear-to-lighter));
+  transition: 100ms linear;
 }
 
 .logo-container {
@@ -119,6 +130,7 @@ body {
 
 .jawa {
   font-style: oblique;
+  font-weight: bold;
 }
 
 .jawa::first-letter {
@@ -135,7 +147,8 @@ body {
   grid-template-areas:
     'places-search'
     'places';
-  margin: 2rem 1rem;
+  /* margin auto for top/bottom is typical setting for mobile */
+  margin: 2rem 0;
 }
 
 .place-search-container {
@@ -229,8 +242,7 @@ body {
     'current'
     'daily'
     'hourly';
-  /* typical margin settings for mobile */
-  margin: 0rem auto;
+  margin: 0 auto;
 }
 
 .current-section {
@@ -490,8 +502,7 @@ footer {
   align-items: center;
   font-size: 0.75rem;
   height: 30px;
-  /* margin: 2rem auto; */
-  margin: 2rem 1rem;
+  margin: 2rem auto;
 }
 
 /*
@@ -517,7 +528,7 @@ footer {
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 766px) {
   .places-section {
     grid-template-columns: 1fr 1fr;
     grid-template-areas: 'places-search places';
@@ -551,6 +562,7 @@ footer {
     align-items: center;
   }
 
+  /* flatten hour rows */
   .hour-row {
     display: grid;
     grid-template-columns: repeat(7, minmax(60px, 1fr));
@@ -569,13 +581,9 @@ footer {
   .hour-data:nth-child(6) {
     justify-content: center;
   }
-
-  .footer {
-    margin: 2rem 3rem;
-  }
 }
 
-@media screen and (min-width: 1023px) {
+@media screen and (min-width: 1022px) {
   .places-section {
     grid-template-columns: 1fr 1.618fr;
   }

@@ -6,7 +6,6 @@ TODO:
   -light, morning, sunrise, desert, winter
  - night, dusk, new moon
  - Units (Imperial, Metric)
- - use ::before pseudo element to create custom radio buttons
 
  ui
  - create NavBar for JAWA logo and Prefs |||
@@ -14,6 +13,7 @@ TODO:
  - prefs modal
      - review MDN menu bar <--Use this with menu Class
  - style search box using google classes
+ - load fonts locally in lieu of download
 
  final clean
   - remove console.logs
@@ -84,6 +84,15 @@ async function getPlacesWeather() {
     placesWeather = data
   })
 }
+
+window.addEventListener('scroll', () => {
+  const navbar = qs('.navbar')
+  if (window.scrollY > 0) {
+    navbar.classList.add('navbar-bg-active')
+  } else {
+    navbar.classList.remove('navbar-bg-active')
+  }
+})
 
 /**
  * axios
@@ -213,7 +222,7 @@ function renderPlacesWeather() {
       btn.hidden = false
 
       //hide delete button when place card loses focus
-      if (e.target.hasAttribute == null || e.relatedTarget.hasAttribute == null) return
+      if (e.relatedTarget == null) return
       if (e.target.hasAttribute('data-place-card') && e.relatedTarget.hasAttribute('data-place-card')) {
         qs('#btnDeletePlace', e.relatedTarget).hidden = true
       }

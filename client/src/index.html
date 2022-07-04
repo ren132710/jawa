@@ -12,7 +12,7 @@
   </head>
   <body class="blurred">
     <header class="header">
-      <nav class="nav-container">
+      <nav class="navbar">
         <div class="logo-container">
           <div class="jawa">jawa</div>
           <div class="iconify" data-icon="mdi-kite"></div>
@@ -36,81 +36,86 @@
         </div>
       </nav>
     </header>
-    <section class="places-section">
-      <div class="place-search-container">
-        <input type="text" class="place-search" data-place-search placeholder="Weather at your places" />
-      </div>
-      <div class="places-container"></div>
-    </section>
-    <main class="main">
-      <div class="current-section">
-        <div class="section-title">
-          Current Weather
-          <div class="section-subtitle"><span data-current-dt></span></div>
+    <div class="main-grid-container">
+      <div class="spacer"></div>
+      <div class="places-section">
+        <div class="place-search-container">
+          <input type="text" class="place-search" data-place-search placeholder="Weather at your places" />
         </div>
+        <div class="places-container"></div>
+      </div>
+      <main class="main">
+        <div class="current-section">
+          <div class="section-title">
+            Current Weather
+            <div class="section-subtitle"><span data-current-dt></span></div>
+          </div>
+          <div class="current-container">
+            <div class="current-top-left">
+              <div class="current-location" data-current-id data-current-location></div>
+              <button id="btnNewPlace" class="btn-new-place" data-new-place>New Place</button>
+              <img
+                class="weather-icon large"
+                data-current-icon
+                src="http://openweathermap.org/img/wn/10d@4x.png"
+                alt="rain"
+              />
+            </div>
+            <div class="current-top-right">
+              <div class="current-detail">lat:&nbsp;<span data-current-lat></span></div>
+              <div class="current-detail">long:&nbsp;<span data-current-long></span></div>
+              <br />
+              <div class="current-high-low">
+                <span data-current-high></span>/<span class="degrees" data-current-low></span>
+              </div>
+              <div class="current-temp" data-temp-units><span class="degrees" data-current-temp></span>&nbsp;F</div>
+              <div class="current-feels-like">Feels Like:&nbsp;<span class="degrees" data-current-fl></span></div>
+              <div class="current-description" data-current-description></div>
+              <div class="label">Precip:&nbsp;<span class="value percent" data-current-precip></span></div>
+              <div class="label">
+                Visibility:&nbsp;<span class="value" data-current-visibility></span
+                ><span class="value" data-visibility-units>&nbsp;mi</span>
+              </div>
+            </div>
+            <div class="current-bottom-left">
+              <div class="label">
+                UV Index:&nbsp;<span class="value" data-current-uv-index></span><span>&nbsp;</span
+                ><span class="value" data-current-uv-level></span>
+              </div>
+              <div class="label">Humidity:&nbsp;<span class="value percent" data-current-humidity></span></div>
+              <div class="label">
+                Wind:&nbsp;<span class="value" data-current-wind-speed></span
+                ><span class="value" data-wind-units>&nbsp;mph&nbsp;</span
+                ><span class="value" data-current-wind-direction></span>
+              </div>
+            </div>
+            <div class="current-bottom-right">
+              <div class="label">Dew Point:&nbsp;<span class="value degrees" data-current-dew-point></span></div>
+              <div class="label">Sunrise:&nbsp;<span class="value" data-current-sunrise></span></div>
+              <div class="label">Sunset:&nbsp;<span class="value" data-current-sunset></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="daily-section">
+          <div class="section-title">
+            Forecast
+            <div class="section-subtitle"><span>&nbsp</span></div>
+          </div>
+          <div class="daily-container"></div>
+        </div>
+        <div class="hourly-section">
+          <div class="section-title">
+            Hourly Weather
+            <div class="section-subtitle" data-hour-timezone></div>
+          </div>
+          <div class="hourly-container"></div>
+        </div>
+      </main>
 
-        <div class="current-container">
-          <div class="current-top-left">
-            <div class="current-location" data-current-id data-current-location></div>
-            <button id="btnNewPlace" class="btn-new-place" data-new-place>New Place</button>
-            <img
-              class="weather-icon large"
-              data-current-icon
-              src="http://openweathermap.org/img/wn/10d@4x.png"
-              alt="rain"
-            />
-          </div>
-          <div class="current-top-right">
-            <div class="current-detail">lat:&nbsp;<span data-current-lat></span></div>
-            <div class="current-detail">long:&nbsp;<span data-current-long></span></div>
-            <br />
-            <div class="current-high-low">
-              <span data-current-high></span>/<span class="degrees" data-current-low></span>
-            </div>
-            <div class="current-temp" data-temp-units><span class="degrees" data-current-temp></span>&nbsp;F</div>
-            <div class="current-feels-like">Feels Like:&nbsp;<span class="degrees" data-current-fl></span></div>
-            <div class="current-description" data-current-description></div>
-            <div class="label">Precip:&nbsp;<span class="value percent" data-current-precip></span></div>
-            <div class="label">
-              Visibility:&nbsp;<span class="value" data-current-visibility></span
-              ><span class="value" data-visibility-units>&nbsp;mi</span>
-            </div>
-          </div>
-          <div class="current-bottom-left">
-            <div class="label">
-              UV Index:&nbsp;<span class="value" data-current-uv-index></span><span>&nbsp;</span
-              ><span class="value" data-current-uv-level></span>
-            </div>
-            <div class="label">Humidity:&nbsp;<span class="value percent" data-current-humidity></span></div>
-            <div class="label">
-              Wind:&nbsp;<span class="value" data-current-wind-speed></span
-              ><span class="value" data-wind-units>&nbsp;mph&nbsp;</span
-              ><span class="value" data-current-wind-direction></span>
-            </div>
-          </div>
-          <div class="current-bottom-right">
-            <div class="label">Dew Point:&nbsp;<span class="value degrees" data-current-dew-point></span></div>
-            <div class="label">Sunrise:&nbsp;<span class="value" data-current-sunrise></span></div>
-            <div class="label">Sunset:&nbsp;<span class="value" data-current-sunset></span></div>
-          </div>
-        </div>
-      </div>
-      <div class="daily-section">
-        <div class="section-title">
-          Forecast
-          <div class="section-subtitle"><span>&nbsp</span></div>
-        </div>
-        <div class="daily-container"></div>
-      </div>
-      <div class="hourly-section">
-        <div class="section-title">
-          Hourly Weather
-          <div class="section-subtitle" data-hour-timezone></div>
-        </div>
-        <div class="hourly-container"></div>
-      </div>
-    </main>
-
+      <footer>
+        <a href="https://openweathermap.org/api" class="openweather-logo" target="_blank">Powered By OpenWeather</a>
+      </footer>
+    </div>
     <template id="template-place-card">
       <div class="place-card" data-place-card tabindex="0">
         <button id="btnDeletePlace" class="btn-delete-place" tabindex="-1" hidden>✕</button>
@@ -183,9 +188,7 @@
         </div>
       </div>
     </template>
-    <footer>
-      <a href="https://openweathermap.org/api" class="openweather-logo" target="_blank">Powered By OpenWeather</a>
-    </footer>
+
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
     </style>
