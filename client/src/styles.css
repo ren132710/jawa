@@ -32,6 +32,12 @@
   --border-radius-circle: 50%;
   --transition-duration: 100ms;
   --transition-timing-function: linear;
+  /* smallest value was the original font-size value */
+  --font-size: clamp(1rem, 0.9vw, 1.05rem);
+  --font-size-small: clamp(0.75rem, 0.8vw, 0.8rem);
+  --font-size-large: clamp(1.25rem, 1.2vw, 1.5rem); /* section title */
+  /* --font-size-large: 1.2vw; */
+  /* --font-size-large: 1.5rem; */
 }
 
 /* html {
@@ -48,6 +54,8 @@ body {
   text-rendering: optimizeLegibility;
   /* min-height: 100%; */
   min-height: 100vh;
+  /* TODO: try responsive font size */
+  font-size: var(--font-size);
 
   /** LIGHT MODE THEMES **/
 
@@ -164,8 +172,9 @@ body {
   grid-template-areas:
     'places-search'
     'places';
-  /* margin auto for top/bottom is typical setting for mobile */
-  margin: 2rem 0;
+  /* auto centers objects when container has specified width */
+  margin: 2rem auto;
+  width: 90%;
 }
 
 .place-search-container {
@@ -203,7 +212,7 @@ body {
   background-color: transparent;
   border: 1px solid var(--border-color-01);
   border-radius: var(--border-radius);
-  padding: 0.3rem;
+  padding: 0.3em;
   cursor: pointer;
   text-align: center;
   white-space: nowrap;
@@ -216,8 +225,13 @@ body {
 }
 
 .place-text {
-  font-size: 0.75rem;
+  /* font-size: 0.75rem; */
   text-transform: capitalize;
+  font-size: var(--font-size-small);
+}
+
+.place-card-item {
+  pointer-events: none;
 }
 
 .btn-delete-place {
@@ -402,15 +416,15 @@ body {
   align-items: center;
   border: 1px solid var(--border-color-01);
   border-radius: var(--border-radius);
-  padding: 0.5rem;
+  padding: 0.5em;
 }
 
 .daily-description {
-  font-size: 0.75rem;
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
-  font-weight: 500;
+  font-size: var(--font-size-small);
   color: var(--color-value);
+  font-weight: 500;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
   text-transform: capitalize;
   text-align: center;
 
@@ -477,7 +491,7 @@ body {
  */
 
 .section-title {
-  font-size: 1.25rem;
+  font-size: var(--font-size-large);
   text-align: center;
   padding-top: 1rem;
   padding-bottom: 0.7rem;
@@ -529,6 +543,7 @@ footer {
 
 @media screen and (min-width: 480px) {
   .places-container {
+    /* fit columns into the available space */
     grid-template-columns: repeat(auto-fit, minmax(70px, max-content));
   }
 
@@ -595,7 +610,7 @@ footer {
   .places-section {
     grid-template-columns: 1fr 1.618fr;
     grid-template-areas: 'places-search places';
-    margin: 2rem 3rem;
+    margin: 2rem auto;
   }
 
   .place-search {

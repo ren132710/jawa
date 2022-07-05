@@ -10,7 +10,9 @@ TODO:
  ui
  - prefs modal
      - review MDN menu bar <--Use this with menu Class
+     -https://youtu.be/FqbOu5ZRFag
  - style search box using google classes
+ - responsive font size: current and hours labels and values, buttons
 
  final clean
   - remove console.logs
