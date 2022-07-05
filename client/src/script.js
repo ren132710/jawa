@@ -20,29 +20,12 @@ TODO:
 
 import { Loader } from '@googlemaps/js-api-loader'
 import axios from 'axios'
-import {
-  formatMonth,
-  formatDayOfMonth,
-  formatDayOfWeek,
-  formatDayOfWeekShort,
-  formatTime,
-  formatZonedTime,
-  formatZonedHour,
-} from './dateUtils.js'
+import * as df from './dateUtils.js'
 import { getIconUrl } from './parse.js'
 import { getLocalStorage, setLocalStorage } from './localStorage.js'
 import { newGlobalEventListener, qs } from './domUtils.js'
 const { v4 } = require('uuid')
-
-const LOCAL_STORAGE_PREFIX = 'JAWA'
-const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
-const PLACES_CAP = 9
-const DEFAULT_PLACES = [
-  // { id: '0498724f-63ce-4b17-81d3-9b3fbd4eb443', location: 'stockholm', lat: 59.3293, long: 18.0686 },
-  // { id: '905e58e1-5510-4535-b4c8-2ed30045772d', location: 'austin', lat: 30.2672, long: -97.7431 },
-  // { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.5017, long: -73.5673 },
-  { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7128, long: -74.006 },
-]
+import * as gc from './globals.js'
 
 /**
  * initialize page
@@ -251,9 +234,9 @@ function renderWeather({ coordinates, current, daily, hourly }) {
 //render current weather
 function renderCurrentWeather({ coordinates, current }) {
   //sub title
-  qs('[data-current-dt').textContent = `${formatDayOfWeekShort(current.timestamp)} ${formatDayOfMonth(
+  qs('[data-current-dt').textContent = `${df.formatDayOfWeekShort(current.timestamp)} ${df.formatDayOfMonth(
     current.timestamp
-  )} ${formatMonth(current.timestamp)} ${formatTime(current.timestamp)}`
+  )} ${df.formatMonth(current.timestamp)} ${df.formatTime(current.timestamp)}`
 
   //top left quadrant
   qs('[data-current-id]').dataset.currentId = coordinates.id
@@ -282,8 +265,8 @@ function renderCurrentWeather({ coordinates, current }) {
 
   //bottom right quadrant
   qs('[data-current-dew-point]').textContent = current.dewPoint
-  qs('[data-current-sunrise]').textContent = formatZonedTime(current.sunrise, coordinates.timezone)
-  qs('[data-current-sunset]').textContent = formatZonedTime(current.sunset, coordinates.timezone)
+  qs('[data-current-sunrise]').textContent = df.formatZonedTime(current.sunrise, coordinates.timezone)
+  qs('[data-current-sunset]').textContent = df.formatZonedTime(current.sunset, coordinates.timezone)
 }
 
 //render daily weather
@@ -296,7 +279,7 @@ function renderDailyWeather(daily) {
     const card = element.querySelector('.daily-card')
     qs('[data-daily-icon]', card).src = getIconUrl(day.icon)
     qs('[data-daily-icon]', card).alt = day.description
-    qs('[data-daily-date]', card).textContent = formatDayOfWeek(day.timestamp)
+    qs('[data-daily-date]', card).textContent = df.formatDayOfWeek(day.timestamp)
     qs('[data-daily-description]', card).textContent = day.description
     qs('[data-hl] > [data-daily-high]', card).textContent = day.high
     qs('[data-hl] > [data-daily-low]', card).textContent = day.low
@@ -321,8 +304,8 @@ function renderHourlyWeather(hourly, coordinates) {
     .forEach((hour) => {
       const element = templateHourRow.content.cloneNode(true)
       const row = element.querySelector('.hour-row')
-      qs('[data-hour-date]', row).textContent = formatDayOfWeek(hour.timestamp)
-      qs('[data-hour]', row).textContent = formatZonedHour(hour.timestamp, coordinates.timezone)
+      qs('[data-hour-date]', row).textContent = df.formatDayOfWeek(hour.timestamp)
+      qs('[data-hour]', row).textContent = df.formatZonedHour(hour.timestamp, coordinates.timezone)
       qs('[data-hour-icon]', row).src = getIconUrl(hour.icon)
       qs('[data-hour-icon]', row).alt = hour.description
       qs('[data-hour-temp]', row).textContent = hour.temp
@@ -340,9 +323,9 @@ function renderHourlyWeather(hourly, coordinates) {
  */
 
 async function getPlacesFromLocalStorage() {
-  const isStorageEmpty = await getLocalStorage(PLACES_STORAGE_KEY)
-  if (isStorageEmpty == null || isStorageEmpty.length < 1) setPlaces(PLACES_STORAGE_KEY, DEFAULT_PLACES)
-  const savedPlaces = await getLocalStorage(PLACES_STORAGE_KEY)
+  const isStorageEmpty = await getLocalStorage(gc.PLACES_STORAGE_KEY)
+  if (isStorageEmpty == null || isStorageEmpty.length < 1) setPlaces(gc.PLACES_STORAGE_KEY, gc.DEFAULT_PLACES)
+  const savedPlaces = await getLocalStorage(gc.PLACES_STORAGE_KEY)
   return savedPlaces
 }
 
@@ -365,11 +348,11 @@ function newPlace() {
   }
   places.push(newPlace)
 
-  if (places.length >= PLACES_CAP) {
+  if (places.length >= gc.PLACES_CAP) {
     qs('[data-new-place]').classList.add('btn-new-place-disabled')
   }
 
-  setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
+  setPlaces(gc.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
   console.log('new places: ', places)
 }
 
@@ -392,9 +375,9 @@ newGlobalEventListener('click', '#btnDeletePlace', (e) => {
 function deletePlace(cardId) {
   places = places.filter((place) => place.id !== cardId)
 
-  if (places.length < PLACES_CAP) {
+  if (places.length < gc.PLACES_CAP) {
     qs('[data-new-place]').classList.remove('btn-new-place-disabled')
   }
 
-  setPlaces(PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
+  setPlaces(gc.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
 }

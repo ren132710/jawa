@@ -147,12 +147,15 @@ describe('#scenario: places', () => {
 
     //when the page is refreshed
     cy.reload().then(() => {
-      //then the page should load with the default place, new york
-      cy.get('.current-top-left>[data-current-location]').should('have.text', 'new york')
+      //then the page should load with the default places
+      cy.get('.places-container').children('div').its('length').should('eq', 4)
+      cy.get('.places-container').children('div').eq(0).as('place1')
+      cy.get('@place1').should('have.attr', 'data-location', 'austin')
+      cy.get('.current-top-left>[data-current-location]').should('have.text', 'austin')
       //verify daily section
       cy.get('.daily-container').children('div').its('length').should('eq', 7)
       //verify hourly section
-      cy.get('[data-hour-timezone]').should('have.text', 'America/New_York')
+      cy.get('[data-hour-timezone]').should('have.text', 'America/Chicago')
       cy.get('.hourly-container').children('div').its('length').should('eq', 12)
     })
   })
