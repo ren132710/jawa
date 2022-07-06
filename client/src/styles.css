@@ -198,8 +198,8 @@ body {
 .places-container {
   grid-area: places;
   display: grid;
-  gap: 0.6rem;
-  grid-template-columns: repeat(4, minmax(70px, max-content));
+  gap: 0.5rem;
+  grid-template-columns: repeat(4, minmax(75px, max-content));
   justify-content: center;
   align-items: center;
 }
@@ -274,7 +274,7 @@ body {
     'current'
     'daily'
     'hourly';
-  margin: 0 auto;
+  margin: 0 1rem;
 }
 
 .current-section {
@@ -295,9 +295,9 @@ body {
 
 .current-container {
   display: grid;
-  grid-template-columns: 150px 150px;
+  grid-template-columns: 1fr 1fr;
   gap: 0.4rem;
-  padding: 0.75rem;
+  padding: 0.75em;
   border: 1px solid var(--border-color-01);
   border-radius: var(--border-radius);
 }
@@ -404,9 +404,8 @@ body {
 
 .daily-container {
   display: grid;
-  /* grid-template-columns: 120px 120px; */
-  grid-template-columns: repeat(auto-fit, 104px);
-  gap: 0.55rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
   justify-content: center;
 }
 
@@ -549,7 +548,7 @@ footer {
 @media screen and (min-width: 480px) {
   .places-container {
     /* fit columns into the available space */
-    grid-template-columns: repeat(auto-fit, minmax(70px, max-content));
+    grid-template-columns: repeat(auto-fit, minmax(75px, max-content));
   }
 
   .main {
@@ -558,15 +557,6 @@ footer {
 
   .places-container {
     margin: 0 1rem;
-  }
-
-  .current-container {
-    grid-template-columns: 1fr 1fr;
-    padding: 1rem;
-  }
-
-  .daily-container {
-    grid-template-columns: repeat(auto-fit, 120px);
   }
 }
 
@@ -583,8 +573,8 @@ footer {
     font-size: 3rem;
   }
 
-  .daily-card:nth-child(6) {
-    display: none;
+  .daily-container {
+    grid-template-columns: repeat(6, 1fr);
   }
 
   .hour-container {
