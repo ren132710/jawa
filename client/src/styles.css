@@ -4,7 +4,7 @@
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   font-family: 'Lato', sans-serif;
 }
 
@@ -420,6 +420,10 @@ body {
   padding: 0.5em;
 }
 
+.daily-card:nth-child(7) {
+  display: none;
+}
+
 .daily-description {
   font-size: var(--font-size-small);
   color: var(--color-value);
@@ -579,6 +583,10 @@ footer {
     font-size: 3rem;
   }
 
+  .daily-card:nth-child(6) {
+    display: none;
+  }
+
   .hour-container {
     display: flex;
     flex-direction: column;
@@ -629,5 +637,13 @@ footer {
     grid-template-areas:
       'current daily'
       'hourly hourly';
+  }
+
+  .daily-card:nth-child(6) {
+    display: flex;
+  }
+
+  .daily-card:nth-child(7) {
+    display: flex;
   }
 }
