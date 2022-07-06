@@ -629,6 +629,10 @@ footer {
       'hourly hourly';
   }
 
+  .daily-container {
+    grid-template-columns: repeat(auto-fit, 120px);
+  }
+
   .daily-card:nth-child(6) {
     display: flex;
   }
