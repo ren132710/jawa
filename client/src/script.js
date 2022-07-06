@@ -13,6 +13,7 @@ TODO:
      -https://youtu.be/FqbOu5ZRFag
  - style search box using google classes
  - responsive font size: current and hours labels and values, buttons
+ - if mobile portrait, show 6 days; if mobile landscape, show 5 days
 
  final clean
   - remove console.logs
@@ -26,7 +27,8 @@ import * as df from './dateUtils.js'
 import { getIconUrl } from './parse.js'
 import * as gc from './globals.js'
 const { v4 } = require('uuid')
-
+import Menu from './menu.js'
+new Menu(menu)
 /**
  * initialize page
  */
@@ -66,14 +68,25 @@ async function getPlacesWeather() {
   })
 }
 
-//highlight fixed navbar when window scrolled
+/**
+ * header and menu
+ */
+
+//highlight header when window scrolled
 window.addEventListener('scroll', () => {
-  const navbar = qs('.navbar')
+  const header = qs('.header-container')
   if (window.scrollY > 0) {
-    navbar.classList.add('navbar-bg-active')
+    header.classList.add('header-bg-active')
   } else {
-    navbar.classList.remove('navbar-bg-active')
+    header.classList.remove('header-bg-active')
   }
+})
+
+//hamburger menu toggle
+const header = qs('.header-container')
+const menuToggle = qs('.menu-toggle')
+menuToggle.addEventListener('click', (e) => {
+  header.classList.toggle('open')
 })
 
 /**
