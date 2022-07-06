@@ -20,12 +20,12 @@ TODO:
 
 import { Loader } from '@googlemaps/js-api-loader'
 import axios from 'axios'
-import * as df from './dateUtils.js'
-import { getIconUrl } from './parse.js'
 import { getLocalStorage, setLocalStorage } from './localStorage.js'
 import { newGlobalEventListener, qs } from './domUtils.js'
-const { v4 } = require('uuid')
+import * as df from './dateUtils.js'
+import { getIconUrl } from './parse.js'
 import * as gc from './globals.js'
+const { v4 } = require('uuid')
 
 /**
  * initialize page
@@ -66,6 +66,7 @@ async function getPlacesWeather() {
   })
 }
 
+//highlight fixed navbar when window scrolled
 window.addEventListener('scroll', () => {
   const navbar = qs('.navbar')
   if (window.scrollY > 0) {
@@ -356,7 +357,7 @@ function newPlace() {
   console.log('new places: ', places)
 }
 
-//when tabbing to btnNewPlace from places, hide btnDeletePlace
+//hide delete place button when tabbing to new place button
 newGlobalEventListener('focusin', '#btnNewPlace', (e) => {
   if (e.relatedTarget == null) return
   if (e.relatedTarget.hasAttribute('data-place-card')) {

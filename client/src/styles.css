@@ -81,6 +81,7 @@ body {
   /* dark */
   /* background: rgba(0, 0, 0, 1); */
   /* background: #333; */
+  /* background: hsl(240, 4%, 10%) */ /* this one, same as	rgb(24, 24, 26) */
 
   /* new moon */
   /* background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.85)); */
