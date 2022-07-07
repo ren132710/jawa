@@ -117,6 +117,7 @@ body {
 .page-grid-container {
   display: grid;
   grid-template-rows: 2rem minmax(120px, auto) 1fr 80px 2rem;
+  padding: 0 1rem;
 }
 
 /*
@@ -418,13 +419,10 @@ body {
 .current-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* justify-content: center;
-  align-content: center; */
   gap: 0.4rem;
   border: 1px solid var(--border-color-01);
   border-radius: var(--border-radius);
   padding: 0.75em;
-  width: 95%;
   margin: 0 auto;
 }
 
@@ -496,7 +494,6 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
-  width: 95%;
   margin: 0 auto;
 }
 
@@ -533,7 +530,6 @@ body {
 
 .hourly-container {
   display: grid;
-  width: 95%;
   margin: 0 auto;
 }
 
@@ -643,26 +639,11 @@ footer {
     /* fit columns into the available space */
     grid-template-columns: repeat(auto-fit, minmax(75px, max-content));
   }
-
-  /* TODO: need to fix Current Container in landscape mode */
-
-  /* .current-container {
-    justify-content: stretch;
-    align-content: stretch;
-  } */
-
-  /* .main {
-    margin: 0rem 2rem;
-  } */
-
-  .places-container {
-    margin: 0 1rem;
-  }
 }
 
 @media screen and (min-width: 766px) {
   .page-grid-container {
-    padding: 0 1rem;
+    padding: 0 2rem;
   }
 
   /* TODO: this should be handled by dynamic scaling fonts */
@@ -708,7 +689,7 @@ footer {
 
 @media screen and (min-width: 1022px) {
   .page-grid-container {
-    padding: 0 2rem;
+    padding: 0 3rem;
   }
 
   .places-section {
