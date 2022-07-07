@@ -114,7 +114,7 @@ body {
   /* background: rgba(0, 0, 0, 0.85); */
 }
 
-.main-grid-container {
+.page-grid-container {
   display: grid;
   grid-template-rows: 2rem minmax(120px, auto) 1fr 80px 2rem;
 }
@@ -130,7 +130,7 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.2rem 1rem;
 }
 
 .header-bg-active {
@@ -258,9 +258,9 @@ body {
   grid-template-areas:
     'places-search'
     'places';
-  /* auto centers objects when container has specified width */
+  /* auto centers objects only when container has specified width */
   margin: 2rem auto;
-  width: 90%;
+  width: 100%;
 }
 
 .place-search-container {
@@ -283,10 +283,9 @@ body {
 .places-container {
   grid-area: places;
   display: grid;
-  gap: 0.5rem;
   grid-template-columns: repeat(4, minmax(75px, max-content));
   justify-content: center;
-  align-items: center;
+  gap: 0.5rem;
 }
 
 .place-card {
@@ -395,7 +394,9 @@ body {
     'current'
     'daily'
     'hourly';
-  margin: 0 1rem;
+  /* auto centers objects only when container has specified width */
+  width: 100%;
+  margin: 0 auto;
 }
 
 .current-section {
@@ -417,10 +418,14 @@ body {
 .current-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  /* justify-content: center;
+  align-content: center; */
   gap: 0.4rem;
-  padding: 0.75em;
   border: 1px solid var(--border-color-01);
   border-radius: var(--border-radius);
+  padding: 0.75em;
+  width: 95%;
+  margin: 0 auto;
 }
 
 .current-top-left {
@@ -491,7 +496,8 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
-  justify-content: center;
+  width: 95%;
+  margin: 0 auto;
 }
 
 .daily-card {
@@ -527,6 +533,8 @@ body {
 
 .hourly-container {
   display: grid;
+  width: 95%;
+  margin: 0 auto;
 }
 
 .hour-row {
@@ -636,9 +644,16 @@ footer {
     grid-template-columns: repeat(auto-fit, minmax(75px, max-content));
   }
 
-  .main {
+  /* TODO: need to fix Current Container in landscape mode */
+
+  /* .current-container {
+    justify-content: stretch;
+    align-content: stretch;
+  } */
+
+  /* .main {
     margin: 0rem 2rem;
-  }
+  } */
 
   .places-container {
     margin: 0 1rem;
@@ -646,12 +661,13 @@ footer {
 }
 
 @media screen and (min-width: 766px) {
-  .place-search {
-    font-size: 1.3rem;
+  .page-grid-container {
+    padding: 0 1rem;
   }
 
-  .main {
-    margin: 0rem 3rem;
+  /* TODO: this should be handled by dynamic scaling fonts */
+  .place-search {
+    font-size: 1.3rem;
   }
 
   .current-temp {
@@ -691,6 +707,10 @@ footer {
 }
 
 @media screen and (min-width: 1022px) {
+  .page-grid-container {
+    padding: 0 2rem;
+  }
+
   .places-section {
     grid-template-columns: 1fr 1.618fr;
     grid-template-areas: 'places-search places';
@@ -698,7 +718,7 @@ footer {
   }
 
   .place-search {
-    width: 90%;
+    width: 95%;
   }
 
   .places-container {
