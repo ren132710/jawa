@@ -480,9 +480,8 @@ body {
   line-height: 1.2;
 }
 
-.current-temp::after {
+[data-temp-units]::after {
   content: attr(data-temp-units);
-  /* content: ' C'; */
 }
 
 .current-feels-like {
@@ -495,6 +494,10 @@ body {
 
   /* dark mode */
   /* color: rgba(244, 244, 244, 1); */
+}
+
+[data-visibility-units]::after {
+  content: attr(data-visibility-units);
 }
 
 /*

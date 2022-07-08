@@ -103,15 +103,14 @@ menuToggle.addEventListener('click', (e) => {
 
 //TODOs
 //client-side
-//use pseudo elements for units: write the unit to the data attribute, then apply to pseudo element content
+//use pseudo elements for units:
 //convert mph to kph, use pseudo elements (wind speed); content: attr(data-wind-units="mp"));
-//convert mi to km, use pseudo elements (visibility); content: attr(data-visibility-units="km"));
 
 //server-side
 //default wind speed is kilometer so do not convert to miles
 //verify wind speed; the quantities seem reversed
 
-//preferences menu
+//preferences
 qs('#menu').addEventListener('click', (e) => {
   if (e.target == null || !e.target.matches('button')) return
 
@@ -135,7 +134,7 @@ qs('#menu').addEventListener('click', (e) => {
     getPlacesWeather().then(renderPlacesWeather)
   } else {
     //TODO: implement themes
-    console.log('do something else')
+    console.log('change theme to: ', action)
   }
 })
 
@@ -313,7 +312,6 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-icon]').alt = current.description
 
   //top right quadrant
-  qs('[data-temp-units]').dataset.tempUnits = prefs[0].units === 'imperial' ? ' F' : ' C'
   qs('[data-current-lat]').dataset.currentLat = coordinates.lat
   qs('[data-current-long]').dataset.currentLong = coordinates.long
   qs('[data-current-lat]').textContent = coordinates.lat
@@ -321,10 +319,12 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-high]').textContent = current.high
   qs('[data-current-low]').textContent = current.low
   qs('[data-current-temp]').textContent = current.temp
+  qs('[data-temp-units]').dataset.tempUnits = prefs[0].units === 'imperial' ? ' F' : '  C'
   qs('[data-current-fl]').textContent = current.feelsLike
   qs('[data-current-description]').textContent = current.description
   qs('[data-current-precip]').textContent = current.precip
   qs('[data-current-visibility').textContent = current.visibility
+  qs('[data-visibility-units]').dataset.visibilityUnits = prefs[0].units === 'imperial' ? ' mi' : ' km'
 
   //bottom left quadrant
   qs('[data-current-uv-index]').textContent = current.uvIndex
