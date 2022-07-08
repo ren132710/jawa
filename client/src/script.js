@@ -1,28 +1,17 @@
 /*
 TODO:
  prefs
- - units: imperial, metric
- - create global variable = default is imperial
- -update global variable and reinitialize the package
-  - add units param to getWeather, client and server axios calls
-  - server: changes miles to kilometers, add units to coordinates object
-  - client: data-temp-units = 'C or F'; use pseudo elements?
-
-
  - themes:
   -light, morning, sunrise, desert, winter
  - night, dusk, new moon
- - Units (Imperial, Metric)
 
  ui
- - prefs modal
-     - review MDN menu bar <--Use this with menu Class
-     -https://youtu.be/FqbOu5ZRFag
  - style search box using google classes
  - responsive font size: current and hours labels and values, buttons
- - if mobile portrait, show 6 days; if mobile landscape, show 5 days
+ - check clarity of font
 
  final clean
+  - remove unused css, modularize css
   - remove console.logs
 */
 
@@ -101,15 +90,6 @@ menuToggle.addEventListener('click', (e) => {
   header.classList.toggle('open')
 })
 
-//TODOs
-//client-side
-//use pseudo elements for units:
-//convert mph to kph, use pseudo elements (wind speed); content: attr(data-wind-units="mp"));
-
-//server-side
-//default wind speed is kilometer so do not convert to miles
-//verify wind speed; the quantities seem reversed
-
 //preferences
 qs('#menu').addEventListener('click', (e) => {
   if (e.target == null || !e.target.matches('button')) return
@@ -120,13 +100,15 @@ qs('#menu').addEventListener('click', (e) => {
     setStorage(gc.PREFS_STORAGE_KEY, prefs)
     console.log('updated prefs: ', prefs)
 
-    const lat = qs('[data-current-lat]').dataset.currentLat
-    const long = qs('[data-current-long]').dataset.currentLong
-    const units = prefs[0].units
-    const id = qs('[data-current-id]').dataset.currentId
-    const location = qs('[data-current-location]').dataset.currentLocation
-    console.log('params: ', lat, long, units, id, location)
-    const res = getWeather(lat, long, units, id, location)
+    const params = [
+      qs('[data-current-lat]').dataset.currentLat,
+      qs('[data-current-long]').dataset.currentLong,
+      prefs[0].units,
+      qs('[data-current-id]').dataset.currentId,
+      qs('[data-current-location]').dataset.currentLocation,
+    ]
+
+    const res = getWeather(...params)
     res.then((data) => {
       console.log('new weather after units change: ', data)
       renderWeather(data)
@@ -186,13 +168,9 @@ loader.load().then((google) => {
     const place = autocomplete.getPlace()
     if (!place.geometry) return
 
-    const lat = place.geometry.location.lat()
-    const long = place.geometry.location.lng()
-    const units = prefs[0].units
-    const id = v4()
-    const location = place.name
+    const params = [place.geometry.location.lat(), place.geometry.location.lng(), prefs[0].units, v4(), place.name]
 
-    const res = getWeather(lat, long, units, id, location)
+    const res = getWeather(...params)
     res.then((data) => {
       console.log('new weather: ', data)
       renderWeather(data)
@@ -319,7 +297,7 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-high]').textContent = current.high
   qs('[data-current-low]').textContent = current.low
   qs('[data-current-temp]').textContent = current.temp
-  qs('[data-temp-units]').dataset.tempUnits = prefs[0].units === 'imperial' ? ' F' : '  C'
+  qs('[data-temp-units]').dataset.tempUnits = prefs[0].units === 'imperial' ? ' F' : ' C'
   qs('[data-current-fl]').textContent = current.feelsLike
   qs('[data-current-description]').textContent = current.description
   qs('[data-current-precip]').textContent = current.precip
@@ -331,6 +309,7 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-uv-level]').textContent = current.uvLevel
   qs('[data-current-humidity]').textContent = current.humidity
   qs('[data-current-wind-speed]').textContent = current.windSpeed
+  qs('[data-wind-units]').dataset.windUnits = prefs[0].units === 'imperial' ? ' mph ' : ' kph '
   qs('[data-current-wind-direction]').textContent = current.windDirection
 
   //bottom right quadrant
@@ -355,6 +334,7 @@ function renderDailyWeather(daily) {
     qs('[data-hl] > [data-daily-low]', card).textContent = day.low
     qs('[data-daily-humidity]', card).textContent = day.humidity
     qs('[data-daily-wind-speed]', card).textContent = day.windSpeed
+    qs('[data-wind-units]', card).dataset.windUnits = prefs[0].units === 'imperial' ? ' mph ' : ' kph '
     qs('[data-daily-wind-direction]', card).textContent = day.windDirection
     dailyContainer.append(card)
   })
@@ -368,8 +348,9 @@ function renderHourlyWeather(hourly, coordinates) {
   document.querySelector('[data-hour-timezone]').textContent = coordinates.timezone
   hourlyContainer.innerHTML = ''
   hourly
+    //only the first 24 hours
     .slice(0, 24)
-    //get every other hour
+    //and every other hour
     .filter((h, i) => i % 2 === 1)
     .forEach((hour) => {
       const element = templateHourRow.content.cloneNode(true)
@@ -381,6 +362,7 @@ function renderHourlyWeather(hourly, coordinates) {
       qs('[data-hour-temp]', row).textContent = hour.temp
       qs('[data-hour-precip]', row).textContent = hour.precip
       qs('[data-hour-wind-speed]', row).textContent = hour.windSpeed
+      qs('[data-wind-units]', row).dataset.windUnits = prefs[0].units === 'imperial' ? ' mph ' : ' kph '
       qs('[data-hour-wind-direction]', row).textContent = hour.windDirection
       qs('[data-hour-humidity]', row).textContent = hour.humidity
       qs('[data-hour-uv-level]', row).textContent = hour.uvLevel

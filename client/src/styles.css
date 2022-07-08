@@ -418,6 +418,32 @@ body {
   grid-area: hourly;
 }
 
+.section-title {
+  font-size: var(--font-size-large);
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 0.7rem;
+}
+
+.section-subtitle {
+  font-size: 0.7rem;
+  font-style: oblique;
+  text-align: center;
+  color: var(--color-value);
+}
+
+.label {
+  font-size: 0.6rem;
+  padding-top: 0.1rem;
+}
+
+.value {
+  color: var(--color-value);
+
+  /* dark mode */
+  /* color: rgba(244, 244, 244, 1); */
+}
+
 /*
  * current section 
  */
@@ -480,10 +506,6 @@ body {
   line-height: 1.2;
 }
 
-[data-temp-units]::after {
-  content: attr(data-temp-units);
-}
-
 .current-feels-like {
   font-size: 0.85rem;
 }
@@ -494,10 +516,6 @@ body {
 
   /* dark mode */
   /* color: rgba(244, 244, 244, 1); */
-}
-
-[data-visibility-units]::after {
-  content: attr(data-visibility-units);
 }
 
 /*
@@ -594,33 +612,19 @@ body {
 }
 
 /*
- * misc styles
+ * pseudo elements
  */
 
-.section-title {
-  font-size: var(--font-size-large);
-  text-align: center;
-  padding-top: 1rem;
-  padding-bottom: 0.7rem;
+[data-temp-units]::after {
+  content: attr(data-temp-units);
 }
 
-.section-subtitle {
-  font-size: 0.7rem;
-  font-style: oblique;
-  text-align: center;
-  color: var(--color-value);
+[data-visibility-units]::after {
+  content: attr(data-visibility-units);
 }
 
-.label {
-  font-size: 0.6rem;
-  padding-top: 0.1rem;
-}
-
-.value {
-  color: var(--color-value);
-
-  /* dark mode */
-  /* color: rgba(244, 244, 244, 1); */
+[data-wind-units]::after {
+  content: attr(data-wind-units);
 }
 
 .degrees::after {
@@ -660,14 +664,10 @@ footer {
     padding: 0 2rem;
   }
 
-  /* TODO: this should be handled by dynamic scaling fonts */
+  /* TODO: handle with scaling fonts? */
   .place-search {
     font-size: 1.3rem;
   }
-
-  /* .current-temp {
-    font-size: 3rem;
-  } */
 
   .daily-container {
     grid-template-columns: repeat(6, 1fr);

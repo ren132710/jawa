@@ -91,9 +91,8 @@
               </div>
               <div class="label">Humidity:&nbsp;<span class="value percent" data-current-humidity></span></div>
               <div class="label">
-                Wind:&nbsp;<span class="value" data-current-wind-speed></span
-                ><span class="value" data-wind-units>&nbsp;mph&nbsp;</span
-                ><span class="value" data-current-wind-direction></span>
+                Wind:&nbsp;<span class="value" data-current-wind-speed data-wind-units=" mi/h "></span>
+                <span class="value" data-current-wind-direction></span>
               </div>
             </div>
             <div class="current-bottom-right">
@@ -124,6 +123,7 @@
       </footer>
     </div>
 
+    <!-- templates -->
     <template id="template-place-card">
       <div class="place-card" data-place-card tabindex="0">
         <button id="btnDeletePlace" class="place-btn-delete" tabindex="-1" hidden>✕</button>
@@ -157,8 +157,7 @@
         <div class="daily-description" data-daily-description></div>
         <div class="label">Humidity:&nbsp;<span class="value percent" data-daily-humidity></span></div>
         <div class="label">
-          Wind:&nbsp;<span class="value" data-daily-wind-speed></span
-          ><span class="value" data-wind-units>&nbsp;mph&nbsp;</span
+          Wind:&nbsp;<span class="value" data-daily-wind-speed data-wind-units=" mi/h "></span
           ><span class="value" data-daily-wind-direction></span>
         </div>
       </div>
@@ -195,8 +194,7 @@
         <div class="hour-data">
           <div class="hour-label">Wind</div>
           <div class="hour-value-margin">
-            <span class="hour-value" data-hour-wind-speed></span
-            ><span class="hour-value" data-wind-units>&nbsp;mph&nbsp;</span
+            <span class="hour-value" data-hour-wind-speed data-wind-units=" mi/h "></span
             ><span class="hour-value" data-hour-wind-direction></span>
           </div>
         </div>

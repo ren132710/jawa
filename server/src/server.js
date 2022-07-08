@@ -37,7 +37,7 @@ app.get('/weather', (req, res) => {
           timezone_offset: data.timezone_offset,
           units,
         },
-        current: parseCurrentWeather(data),
+        current: parseCurrentWeather(data, units),
         daily: parseDailyWeather(data),
         hourly: parseHourlyWeather(data),
       })
@@ -48,7 +48,7 @@ app.get('/weather', (req, res) => {
     })
 })
 
-function parseCurrentWeather({ current, daily }) {
+function parseCurrentWeather({ current, daily }, units) {
   const { pop, temp } = daily[0]
 
   return {
@@ -60,10 +60,11 @@ function parseCurrentWeather({ current, daily }) {
     low: Math.round(temp.min),
     feelsLike: Math.round(current.feels_like),
 
-    //visibility is provided in meters, so convert to miles and round to one decimal place
-    //TODO: Do not convert to miles if units are metric
-    //TODO: verify wind speed; the quantities see reversed
-    visibility: Math.round((current.visibility / 1609.344) * 10) / 10,
+    //visibility is always provided in meters, convert to miles/kilometers and round to one decimal place
+    visibility:
+      units === 'imperial'
+        ? Math.round((current.visibility / 1609.344) * 10) / 10
+        : Math.round((current.visibility / 1000) * 10) / 10,
     precip: Math.round(pop * 100),
     dewPoint: Math.round(current.dew_point),
     sunrise: current.sunrise * 1000,

@@ -10,14 +10,18 @@ describe('#renderPageWeather', () => {
     },
   ]
 
-  function setDefaultPlace() {
-    localStorage.setItem('JAWA-Places', JSON.stringify(testPlace))
+  const testPrefs = [{ units: 'imperial', theme: 'morning' }]
+
+  function setTestDefaults() {
+    localStorage.setItem('jawa-places', JSON.stringify(testPlace))
+    localStorage.setItem('jawa-prefs', JSON.stringify(testPrefs))
   }
 
   before(function () {
-    setDefaultPlace()
+    setTestDefaults()
     // deep equality
-    expect(JSON.parse(localStorage.getItem('JAWA-Places'))).to.eql(testPlace)
+    expect(JSON.parse(localStorage.getItem('jawa-places'))).to.eql(testPlace)
+    expect(JSON.parse(localStorage.getItem('jawa-prefs'))).to.eql(testPrefs)
 
     //register the intercept before loading the page
     cy.intercept('GET', '**/weather**', { fixture: 'nycWeatherFixture.json' }).as('nycMock')
@@ -29,22 +33,30 @@ describe('#renderPageWeather', () => {
       expect(interception.response.body.coordinates.id).to.equal('c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87')
     })
   })
-
-  it('page smoke test should pass', function () {
-    //different ways to test the value of an element attribute
-    cy.get('[data-place-search]').invoke('attr', 'placeholder', 'Weather at your places').should('exist')
+  it('should pass smoke test of page layout', function () {
+    //place search input should have default placeholder text
+    //note different ways to verify the value of an element attribute
     cy.get('[data-place-search]').invoke('attr', 'placeholder').should('eq', 'Weather at your places')
+    cy.get('[data-place-search]').should('have.attr', 'placeholder', 'Weather at your places')
 
-    //places is populated with default place
+    //and places should be populated with default place
     cy.get('.places-container').children('div').its('length').should('eq', 1)
     cy.get('.places-container').children('div').eq(0).as('place1')
     cy.get('@place1').find('[data-card-location]').should('have.text', 'new york')
 
-    //major page sections exist
+    //and major page sections exist
+    //current section
     cy.contains('Current Weather').should('exist')
+    cy.get('.current-top-left>[data-current-location]').should('have.text', 'new york')
+    //daily section
     cy.contains('Forecast').should('exist')
+    cy.get('.daily-container').children('div').its('length').should('eq', 7)
+    //hourly section
     cy.contains('Hourly Weather').should('exist')
     cy.contains('America/New_York').should('exist')
+    cy.get('[data-hour-timezone]').should('have.text', 'America/New_York')
+    cy.get('.hourly-container').children('div').its('length').should('eq', 12)
+    //footer
     cy.contains('Powered By OpenWeather').should('exist')
     cy.get('a')
       .invoke('attr', 'href')
@@ -52,9 +64,51 @@ describe('#renderPageWeather', () => {
       .then((href) => {
         cy.request(href).its('status').should('eq', 200)
       })
+
+    //and default units should be imperial
+    cy.get('[data-temp-units]').should('have.attr', 'data-temp-units', ' F')
+    cy.get('[data-visibility-units]').should('have.attr', 'data-visibility-units', ' mi')
+    cy.get('[data-wind-units]').should('have.attr', 'data-wind-units', ' mph ')
+
+    //and pseudo elements are working
+    //use the window object to fetch the computed values of the pseudo elements
+    cy.window().then((win) => {
+      //current section
+      cy.get('.current-temp').then((elem) => {
+        //jQuery embeds elem in an array, so fetch using index
+        const after = win.getComputedStyle(elem[0], '::after')
+        //pseudo content is a string so surround in quotes
+        expect(after.getPropertyValue('content')).to.eq('" F"')
+      })
+      cy.get('[data-current-visibility]').then((elem) => {
+        const after = win.getComputedStyle(elem[0], '::after')
+        expect(after.getPropertyValue('content')).to.eq('" mi"')
+      })
+      cy.get('[data-current-wind-speed]').then((elem) => {
+        const after = win.getComputedStyle(elem[0], '::after')
+        expect(after.getPropertyValue('content')).to.eq('" mph "')
+      })
+
+      //daily section, wind units only
+      cy.get('.daily-container')
+        .find('[data-daily-wind-speed]')
+        .each((elem, index, arr) => {
+          let after = win.getComputedStyle(elem[0], '::after')
+          expect(after.getPropertyValue('content')).to.eq('" mph "')
+        })
+
+      //hourly section, wind units only
+      cy.get('.hourly-container')
+        .find('[data-hour-wind-speed]')
+        .each((elem, index, arr) => {
+          let after = win.getComputedStyle(elem[0], '::after')
+          expect(after.getPropertyValue('content')).to.eq('" mph "')
+        })
+    })
   })
 
   it('should correctly display current weather', function () {
+    //units of measure are verified in the smoke test
     //top left
     cy.get('.current-top-left>[data-current-location]')
       .invoke('attr', 'data-current-id')
@@ -73,7 +127,6 @@ describe('#renderPageWeather', () => {
     cy.get('[data-current-uv-level]').should('have.text', 'low')
     cy.get('[data-current-humidity]').should('have.text', '40')
     cy.get('[data-current-wind-speed]').should('have.text', '17')
-    cy.get('[data-wind-units]').contains('mph')
     cy.get('[data-current-wind-direction]').should('have.text', 'S')
 
     //top right
@@ -82,12 +135,10 @@ describe('#renderPageWeather', () => {
     cy.get('[data-current-long]').should('have.text', '-74.006')
     cy.get('[data-current-high]').should('have.text', '78')
     cy.get('[data-current-temp]').should('have.text', '78')
-    cy.get('[data-temp-units]').contains('F')
     cy.get('[data-current-fl]').should('have.text', '77')
     cy.get('[data-current-description]').should('have.text', 'clear sky')
     cy.get('[data-current-precip]').should('have.text', '0')
     cy.get('[data-current-visibility]').should('have.text', '6.2')
-    cy.get('[data-visibility-units]').contains('mi')
 
     //bottom right
     cy.get('[data-current-dew-point]').should('have.text', '51')
@@ -106,7 +157,6 @@ describe('#renderPageWeather', () => {
     cy.get('@day1').find('[data-daily-description]').should('have.text', 'overcast clouds')
     cy.get('@day1').find('[data-daily-humidity]').should('have.text', '49')
     cy.get('@day1').find('[data-daily-wind-speed]').should('have.text', '21')
-    cy.get('@day1').find('[data-wind-units]').contains('mph')
     cy.get('@day1').find('[data-daily-wind-direction]').should('have.text', 'S')
     cy.get('@day1')
       .find('[data-daily-icon]')
@@ -124,7 +174,6 @@ describe('#renderPageWeather', () => {
     cy.evalChildValue('@day2', '[data-daily-description]', 'moderate rain')
     cy.evalChildValue('@day2', '[data-daily-humidity]', '72')
     cy.evalChildValue('@day2', '[data-daily-wind-speed]', '14')
-    cy.get('@day2').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day2', '[data-daily-wind-direction]', 'S')
     cy.get('@day2')
       .find('[data-daily-icon]')
@@ -142,7 +191,6 @@ describe('#renderPageWeather', () => {
     cy.evalChildValue('@day3', '[data-daily-description]', 'moderate rain')
     cy.evalChildValue('@day3', '[data-daily-humidity]', '58')
     cy.evalChildValue('@day3', '[data-daily-wind-speed]', '17')
-    cy.get('@day3').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day3', '[data-daily-wind-direction]', 'NW')
     cy.get('@day3')
       .find('[data-daily-icon]')
@@ -160,7 +208,6 @@ describe('#renderPageWeather', () => {
     cy.evalChildValue('@day4', '[data-daily-description]', 'overcast clouds')
     cy.evalChildValue('@day4', '[data-daily-humidity]', '48')
     cy.evalChildValue('@day4', '[data-daily-wind-speed]', '10')
-    cy.get('@day4').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day4', '[data-daily-wind-direction]', 'S')
     cy.get('@day4')
       .find('[data-daily-icon]')
@@ -178,7 +225,6 @@ describe('#renderPageWeather', () => {
     cy.evalChildValue('@day5', '[data-daily-description]', 'heavy intensity rain')
     cy.evalChildValue('@day5', '[data-daily-humidity]', '96')
     cy.evalChildValue('@day5', '[data-daily-wind-speed]', '15')
-    cy.get('@day5').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day5', '[data-daily-wind-direction]', 'NE')
     cy.get('@day5')
       .find('[data-daily-icon]')
@@ -196,7 +242,6 @@ describe('#renderPageWeather', () => {
     cy.evalChildValue('@day6', '[data-daily-description]', 'clear sky')
     cy.evalChildValue('@day6', '[data-daily-humidity]', '47')
     cy.evalChildValue('@day6', '[data-daily-wind-speed]', '14')
-    cy.get('@day6').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day6', '[data-daily-wind-direction]', 'W')
     cy.get('@day6')
       .find('[data-daily-icon]')
@@ -214,7 +259,6 @@ describe('#renderPageWeather', () => {
     cy.evalChildValue('@day7', '[data-daily-description]', 'clear sky')
     cy.evalChildValue('@day7', '[data-daily-humidity]', '46')
     cy.evalChildValue('@day7', '[data-daily-wind-speed]', '13')
-    cy.get('@day7').find('[data-wind-units]').contains('mph')
     cy.evalChildValue('@day7', '[data-daily-wind-direction]', 'NW')
     cy.get('@day7')
       .find('[data-daily-icon]')
@@ -244,7 +288,6 @@ describe('#renderPageWeather', () => {
         cy.get('[data-hour-temp]').should('have.text', '777471686665646772757574')
         cy.get('[data-hour-precip]').should('have.text', '000000000000')
         cy.get('[data-hour-wind-speed]').should('have.text', '141312109871112162021')
-        cy.get('[data-wind-units]').contains('mph')
         cy.get('[data-hour-wind-direction]').should('have.text', 'SSSSWSWSWSWSWSSSS')
         cy.get('[data-hour-humidity]').should('have.text', '384144464956636151495155')
         cy.get('[data-hour-uv-level]').should('have.text', 'lowlowlowlowlowlowlowlowmediumhighhighmedium')

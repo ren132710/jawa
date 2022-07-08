@@ -2,7 +2,7 @@
 
 //scenario testing is end-to-end. Server must be running
 describe('#scenario: places', () => {
-  const initialPlace = [
+  const testPlace = [
     {
       id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87',
       location: 'new york',
@@ -11,17 +11,21 @@ describe('#scenario: places', () => {
     },
   ]
 
-  function setDefaultPlace() {
-    localStorage.setItem('JAWA-Places', JSON.stringify(initialPlace))
+  const testPrefs = [{ units: 'imperial', theme: 'morning' }]
+
+  function setTestDefaults() {
+    localStorage.setItem('jawa-places', JSON.stringify(testPlace))
+    localStorage.setItem('jawa-prefs', JSON.stringify(testPrefs))
   }
 
-  function getLocalStorage() {
-    return JSON.parse(localStorage.getItem('JAWA-Places'))
+  function getLocalStoragePlaces() {
+    return JSON.parse(localStorage.getItem('jawa-places'))
   }
 
   before(function () {
-    setDefaultPlace()
-    expect(JSON.parse(localStorage.getItem('JAWA-Places'))).to.eql(initialPlace)
+    setTestDefaults()
+    expect(JSON.parse(localStorage.getItem('jawa-places'))).to.eql(testPlace)
+    expect(JSON.parse(localStorage.getItem('jawa-prefs'))).to.eql(testPrefs)
     cy.visit('/')
     cy.wait(1000)
   })
@@ -30,8 +34,8 @@ describe('#scenario: places', () => {
     cy.get('[data-place-search]').clear()
   })
 
-  it('should successfully load initial place', function () {
-    cy.get('.current-top-left>[data-current-location]').should('have.text', 'new york')
+  it('should pass initial smoke test prior to running scenario', function () {
+    //verify places
     cy.get('.places-container').children('div').its('length').should('eq', 1)
     cy.get('.places-container').children('div').eq(0).as('place1')
     cy.get('@place1').should('have.attr', 'data-id', 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87')
@@ -39,11 +43,17 @@ describe('#scenario: places', () => {
     cy.get('@place1').should('have.attr', 'data-long', '-74.006')
     cy.get('@place1').should('have.attr', 'data-location', 'new york')
     cy.get('@place1').find('[data-card-location]').should('have.text', 'new york')
+    //verify current section
+    cy.get('.current-top-left>[data-current-location]').should('have.text', 'new york')
     //verify daily section
     cy.get('.daily-container').children('div').its('length').should('eq', 7)
     //verify hourly section
     cy.get('[data-hour-timezone]').should('have.text', 'America/New_York')
     cy.get('.hourly-container').children('div').its('length').should('eq', 12)
+    //and default units should be imperial
+    cy.get('[data-temp-units]').should('have.attr', 'data-temp-units', ' F')
+    cy.get('[data-visibility-units]').should('have.attr', 'data-visibility-units', ' mi')
+    cy.get('[data-wind-units]').should('have.attr', 'data-wind-units', ' mph ')
   })
 
   it('should allow user to fetch weather for Austin, TX and save Austin to places', function () {
@@ -85,7 +95,7 @@ describe('#scenario: places', () => {
       .should('have.text', 'austin')
       .then(() => {
         //and localStorage is updated
-        const storage = getLocalStorage()
+        const storage = getLocalStoragePlaces()
         expect(storage.length).to.eq(2)
       })
   })
@@ -120,7 +130,7 @@ describe('#scenario: places', () => {
       .should('have.text', 'austin')
       //and austin should be the only place saved to localStorage
       .then(() => {
-        const storage = getLocalStorage()
+        const storage = getLocalStoragePlaces()
         expect(storage.length).to.eq(1)
         expect(storage[0].location).to.equal('austin')
       })
@@ -141,7 +151,7 @@ describe('#scenario: places', () => {
         expect(places).to.have.length(0)
       })
       .then(() => {
-        const storage = getLocalStorage()
+        const storage = getLocalStoragePlaces()
         expect(storage.length).to.eq(0)
       })
 

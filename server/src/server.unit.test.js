@@ -1,8 +1,10 @@
 const { TEST_STHLM } = require('../data/test-data-sthlm')
 const { parseCurrentWeather, parseDailyWeather, parseHourlyWeather } = require('./server.js')
 
+const units = 'imperial'
+
 const sthlm = {
-  current: parseCurrentWeather(TEST_STHLM),
+  current: parseCurrentWeather(TEST_STHLM, units),
   daily: parseDailyWeather(TEST_STHLM),
   hourly: parseHourlyWeather(TEST_STHLM),
 }
