@@ -1,13 +1,3 @@
-*,
-*::after,
-*::before {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  /* font-family: sans-serif; */
-  font-family: 'Lato', sans-serif;
-}
-
 :root {
   --background-blur: hsl(0, 0%, 96%);
   --background-linear-from: hsl(300, 8%, 95%);
@@ -39,6 +29,16 @@
   --font-size-large: clamp(1.25rem, 1.2vw, 1.5rem); /* section title */
   /* --font-size-large: 1.2vw; */
   /* --font-size-large: 1.5rem; */
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  /* font-family: sans-serif; */
+  font-family: 'Lato', sans-serif;
 }
 
 /* html {
@@ -117,7 +117,8 @@ body {
 .page-grid-container {
   display: grid;
   grid-template-rows: 2rem minmax(120px, auto) 1fr 80px 2rem;
-  padding: 0 1rem;
+  width: 95%;
+  margin: 0 auto;
 }
 
 /*
@@ -204,10 +205,10 @@ body {
   right: 1rem;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.6rem;
+  gap: 0.7rem;
   background: hsl(300, 8%, 95%);
   border-radius: var(--border-radius);
-  padding: 0.75rem;
+  padding: 1em;
   clip-path: circle(0px at top right);
   transition: clip-path ease-in-out 500ms;
 }
@@ -229,8 +230,9 @@ body {
 
 .menu-btn:hover,
 .menu-btn:focus {
-  background-color: hsl(0, 0%, 80%);
-  box-shadow: 0 0 5px 0 hsl(0, 0%, 70%);
+  background-color: hsl(0, 0%, 85%);
+  /* h-offset v-offset blur spread color */
+  box-shadow: 0 0 3px 0 hsl(0, 0%, 70%);
 }
 
 .units-container {
@@ -239,10 +241,18 @@ body {
   gap: 0.3rem;
 }
 
+.units-container::before {
+  content: 'Units';
+}
+
 .theme-container {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.3rem;
+}
+
+.theme-container::before {
+  content: 'Theme';
 }
 
 /*
@@ -256,8 +266,8 @@ body {
     'places-search'
     'places';
   /* auto centers objects only when container has specified width */
-  margin: 2rem auto;
   width: 100%;
+  margin: 2rem auto;
 }
 
 .place-search-container {
@@ -470,6 +480,11 @@ body {
   line-height: 1.2;
 }
 
+.current-temp::after {
+  content: attr(data-temp-units);
+  /* content: ' C'; */
+}
+
 .current-feels-like {
   font-size: 0.85rem;
 }
@@ -647,9 +662,9 @@ footer {
     font-size: 1.3rem;
   }
 
-  .current-temp {
+  /* .current-temp {
     font-size: 3rem;
-  }
+  } */
 
   .daily-container {
     grid-template-columns: repeat(6, 1fr);

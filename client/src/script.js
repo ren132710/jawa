@@ -2,6 +2,13 @@
 TODO:
  prefs
  - units: imperial, metric
+ - create global variable = default is imperial
+ -update global variable and reinitialize the package
+  - add units param to getWeather, client and server axios calls
+  - server: changes miles to kilometers, add units to coordinates object
+  - client: data-temp-units = 'C or F'; use pseudo elements?
+
+
  - themes:
   -light, morning, sunrise, desert, winter
  - night, dusk, new moon
@@ -27,20 +34,26 @@ import * as df from './dateUtils.js'
 import { getIconUrl } from './parse.js'
 import * as gc from './globals.js'
 const { v4 } = require('uuid')
-import Menu from './menu.js'
-new Menu(menu)
+
 /**
  * initialize page
  */
 
 let places = []
 let placesWeather = []
+let prefs = []
 
-getPlacesFromLocalStorage()
-  .then((savedPlaces) => {
-    places = savedPlaces
-    console.log('from localStorage ', savedPlaces)
+getStorage(gc.PREFS_STORAGE_KEY, gc.DEFAULT_PREFS)
+  .then((userPrefs) => {
+    prefs = userPrefs
+    console.log('prefs from localStorage ', userPrefs)
   })
+  .then(
+    getStorage(gc.PLACES_STORAGE_KEY, gc.DEFAULT_PLACES).then((userPlaces) => {
+      places = userPlaces
+      console.log('places from localStorage ', userPlaces)
+    })
+  )
   .then(getPlacesWeather)
   .then(initialize)
   .catch((err) => {
@@ -49,7 +62,6 @@ getPlacesFromLocalStorage()
   })
 
 function initialize() {
-  console.log('places initialized: ', places)
   console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
   renderWeather(placesWeather[0])
@@ -59,7 +71,7 @@ async function getPlacesWeather() {
   let promises = []
 
   places.forEach((place) => {
-    const promise = getWeather(place.lat, place.long, place.id, place.location)
+    const promise = getWeather(place.lat, place.long, prefs[0].units, place.id, place.location)
     promises.push(promise)
   })
 
@@ -69,7 +81,7 @@ async function getPlacesWeather() {
 }
 
 /**
- * header and menu
+ * header and preferences menu
  */
 
 //highlight header when window scrolled
@@ -89,10 +101,49 @@ menuToggle.addEventListener('click', (e) => {
   header.classList.toggle('open')
 })
 
+//TODOs
+//client-side
+//use pseudo elements for units: write the unit to the data attribute, then apply to pseudo element content
+//convert mph to kph, use pseudo elements (wind speed); content: attr(data-wind-units="mp"));
+//convert mi to km, use pseudo elements (visibility); content: attr(data-visibility-units="km"));
+
+//server-side
+//default wind speed is kilometer so do not convert to miles
+//verify wind speed; the quantities seem reversed
+
+//preferences menu
+qs('#menu').addEventListener('click', (e) => {
+  if (e.target == null || !e.target.matches('button')) return
+
+  const action = e.target.dataset.action
+  if (['metric', 'imperial'].includes(action)) {
+    prefs[0].units = action
+    setStorage(gc.PREFS_STORAGE_KEY, prefs)
+    console.log('updated prefs: ', prefs)
+
+    const lat = qs('[data-current-lat]').dataset.currentLat
+    const long = qs('[data-current-long]').dataset.currentLong
+    const units = prefs[0].units
+    const id = qs('[data-current-id]').dataset.currentId
+    const location = qs('[data-current-location]').dataset.currentLocation
+    console.log('params: ', lat, long, units, id, location)
+    const res = getWeather(lat, long, units, id, location)
+    res.then((data) => {
+      console.log('new weather after units change: ', data)
+      renderWeather(data)
+    })
+    getPlacesWeather().then(renderPlacesWeather)
+  } else {
+    //TODO: implement themes
+    console.log('do something else')
+  }
+})
+
 /**
  * axios
- * @param {string} lat: latitude, required by OpenWeather for weather data
- * @param {string} long: longitude, required by OpenWeather for weather data
+ * @param {string} lat: latitude, required by OpenWeather
+ * @param {string} long: longitude, required by OpenWeather
+ * @param {string} units: (imperial | metric ), required by OpenWeather
  * @param {string} id:
  *   - used for adding/deleting places from localStorage
  *   - pass to server so server can include in the response object
@@ -101,10 +152,10 @@ menuToggle.addEventListener('click', (e) => {
  *  - pass to server so server can include in the response object
  */
 
-async function getWeather(lat, long, id, location) {
+async function getWeather(lat, long, units, id, location) {
   try {
     const res = await axios.get('http://localhost:3001/weather', {
-      params: { lat, long, id, location },
+      params: { lat, long, units, id, location },
       timeout: 5000,
     })
     return res.data
@@ -135,12 +186,14 @@ loader.load().then((google) => {
   autocomplete.addListener('place_changed', () => {
     const place = autocomplete.getPlace()
     if (!place.geometry) return
+
     const lat = place.geometry.location.lat()
     const long = place.geometry.location.lng()
-    const location = place.name
+    const units = prefs[0].units
     const id = v4()
+    const location = place.name
 
-    const res = getWeather(lat, long, id, location)
+    const res = getWeather(lat, long, units, id, location)
     res.then((data) => {
       console.log('new weather: ', data)
       renderWeather(data)
@@ -259,7 +312,10 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-icon]').src = getIconUrl(current.icon, { size: 'large' })
   qs('[data-current-icon]').alt = current.description
 
-  //to right quadrant
+  //top right quadrant
+  qs('[data-temp-units]').dataset.tempUnits = prefs[0].units === 'imperial' ? ' F' : ' C'
+  qs('[data-current-lat]').dataset.currentLat = coordinates.lat
+  qs('[data-current-long]').dataset.currentLong = coordinates.long
   qs('[data-current-lat]').textContent = coordinates.lat
   qs('[data-current-long]').textContent = coordinates.long
   qs('[data-current-high]').textContent = current.high
@@ -336,14 +392,14 @@ function renderHourlyWeather(hourly, coordinates) {
  * localStorage (thenable)
  */
 
-async function getPlacesFromLocalStorage() {
-  const isStorageEmpty = await getLocalStorage(gc.PLACES_STORAGE_KEY)
-  if (isStorageEmpty == null || isStorageEmpty.length < 1) setPlaces(gc.PLACES_STORAGE_KEY, gc.DEFAULT_PLACES)
-  const savedPlaces = await getLocalStorage(gc.PLACES_STORAGE_KEY)
-  return savedPlaces
+async function getStorage(key, value) {
+  const isStorageEmpty = await getLocalStorage(key)
+  if (isStorageEmpty == null || isStorageEmpty.length < 1) setStorage(key, value)
+  const data = await getLocalStorage(key)
+  return data
 }
 
-async function setPlaces(key, value) {
+async function setStorage(key, value) {
   await setLocalStorage(key, value)
 }
 
@@ -366,7 +422,7 @@ function newPlace() {
     qs('[data-new-place]').classList.add('btn-new-place-disabled')
   }
 
-  setPlaces(gc.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
+  setStorage(gc.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
   console.log('new places: ', places)
 }
 
@@ -393,5 +449,5 @@ function deletePlace(cardId) {
     qs('[data-new-place]').classList.remove('btn-new-place-disabled')
   }
 
-  setPlaces(gc.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
+  setStorage(gc.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
 }

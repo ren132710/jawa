@@ -19,11 +19,11 @@ if (process.env.SERVER_UNIT_TEST !== 'true') {
 }
 
 app.get('/weather', (req, res) => {
-  const { lat, long, id, location } = req.query
+  const { lat, long, units, id, location } = req.query
 
   axios
     .get('https://api.openweathermap.org/data/3.0/onecall', {
-      params: { lat: lat, lon: long, appid: process.env.API_KEY, units: 'imperial', exclude: 'minutely' },
+      params: { lat: lat, lon: long, appid: process.env.API_KEY, units: units, exclude: 'minutely' },
       timeout: 5000,
     })
     .then(({ data }) => {
@@ -35,6 +35,7 @@ app.get('/weather', (req, res) => {
           long: data.lon,
           timezone: data.timezone,
           timezone_offset: data.timezone_offset,
+          units,
         },
         current: parseCurrentWeather(data),
         daily: parseDailyWeather(data),
@@ -61,6 +62,7 @@ function parseCurrentWeather({ current, daily }) {
 
     //visibility is provided in meters, so convert to miles and round to one decimal place
     //TODO: Do not convert to miles if units are metric
+    //TODO: verify wind speed; the quantities see reversed
     visibility: Math.round((current.visibility / 1609.344) * 10) / 10,
     precip: Math.round(pop * 100),
     dewPoint: Math.round(current.dew_point),

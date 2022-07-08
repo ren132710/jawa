@@ -1,6 +1,8 @@
-const LOCAL_STORAGE_PREFIX = 'JAWA'
+const LOCAL_STORAGE_PREFIX = 'jawa'
 
-export const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-Places`
+export const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-places`
+
+export const PREFS_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-prefs`
 
 export const PLACES_CAP = 9
 
@@ -10,3 +12,5 @@ export const DEFAULT_PLACES = [
   { id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8', location: 'montreal', lat: 45.5017, long: -73.5673 },
   { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7128, long: -74.006 },
 ]
+
+export const DEFAULT_PREFS = [{ units: 'imperial', theme: 'morning' }]
