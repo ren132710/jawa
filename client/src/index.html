@@ -43,84 +43,87 @@
       </div>
     </header>
     <div class="page-grid-container">
-      <div class="spacer"></div>
-      <div class="places-section">
-        <div class="place-search-container">
-          <input type="text" class="place-search" data-place-search placeholder="Weather at your places" />
-        </div>
-        <div class="places-container"></div>
-      </div>
-      <main class="main">
-        <div class="current-section">
-          <div class="section-title">
-            Current Weather
-            <div class="section-subtitle"><span data-current-dt></span></div>
+      <div class="page-grid-frame">
+        <div class="spacer"></div>
+        <div class="places-section">
+          <div class="place-search-container">
+            <input type="text" class="place-search" data-place-search placeholder="Weather at your places" />
           </div>
-          <div class="current-container">
-            <div class="current-top-left">
-              <div class="current-location" data-current-id data-current-location></div>
-              <button id="btnNewPlace" class="place-btn-new" data-new-place>New Place</button>
-              <img
-                class="weather-icon large"
-                src="http://openweathermap.org/img/wn/10d@4x.png"
-                width="200"
-                height="200"
-                alt="rain"
-                data-current-icon
-              />
+          <div class="places-container"></div>
+        </div>
+        <main class="main">
+          <div class="current-section">
+            <div class="section-title">
+              Current Weather
+              <div class="section-subtitle"><span data-current-dt></span></div>
             </div>
-            <div class="current-top-right">
-              <div class="current-detail">lat:&nbsp;<span data-current-lat></span></div>
-              <div class="current-detail">long:&nbsp;<span data-current-long></span></div>
-              <br />
-              <div class="current-high-low">
-                <span data-current-high></span>/<span class="degrees" data-current-low></span>
+            <div class="current-container">
+              <div class="current-top-left">
+                <div class="current-location" data-current-id data-current-location></div>
+                <button id="btnNewPlace" class="place-btn-new" data-new-place>New Place</button>
+                <img
+                  class="weather-icon large"
+                  src="http://openweathermap.org/img/wn/10d@4x.png"
+                  width="200"
+                  height="200"
+                  alt="rain"
+                  data-current-icon
+                />
               </div>
-              <div class="current-temp" data-temp-units=" F"><span class="degrees" data-current-temp></span></div>
-              <div class="current-feels-like">Feels Like:&nbsp;<span class="degrees" data-current-fl></span></div>
-              <div class="current-description" data-current-description></div>
-              <div class="label">Precip:&nbsp;<span class="value percent" data-current-precip></span></div>
-              <div class="label visibility">
-                Visibility:&nbsp;<span class="value" data-current-visibility data-visibility-units=" mi"></span>
+              <div class="current-top-right">
+                <div class="current-detail">lat:&nbsp;<span data-current-lat></span></div>
+                <div class="current-detail">long:&nbsp;<span data-current-long></span></div>
+                <div class="current-top-right-block">
+                  <div class="current-high-low">
+                    <span data-current-high></span>/<span class="degrees" data-current-low></span>
+                  </div>
+                  <div class="current-temp" data-temp-units=" F"><span class="degrees" data-current-temp></span></div>
+                  <div class="current-feels-like">Feels Like:&nbsp;<span class="degrees" data-current-fl></span></div>
+                  <div class="current-description" data-current-description></div>
+                  <div class="label">Precip:&nbsp;<span class="value percent" data-current-precip></span></div>
+                  <div class="label visibility">
+                    Visibility:&nbsp;<span class="value" data-current-visibility data-visibility-units=" mi"></span>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="current-bottom-left">
-              <div class="label">
-                UV Index:&nbsp;<span class="value" data-current-uv-index></span><span>&nbsp;</span
-                ><span class="value" data-current-uv-level></span>
+              <div class="current-bottom-left">
+                <div class="label">
+                  UV Index:&nbsp;<span class="value" data-current-uv-index></span><span>&nbsp;</span
+                  ><span class="value" data-current-uv-level></span>
+                </div>
+                <div class="label">Humidity:&nbsp;<span class="value percent" data-current-humidity></span></div>
+                <div class="label">
+                  Wind:&nbsp;<span class="value" data-current-wind-speed data-wind-units=" mi/h "></span>
+                  <span class="value" data-current-wind-direction></span>
+                </div>
               </div>
-              <div class="label">Humidity:&nbsp;<span class="value percent" data-current-humidity></span></div>
-              <div class="label">
-                Wind:&nbsp;<span class="value" data-current-wind-speed data-wind-units=" mi/h "></span>
-                <span class="value" data-current-wind-direction></span>
+              <div class="current-bottom-right">
+                <div class="label">Dew Point:&nbsp;<span class="value degrees" data-current-dew-point></span></div>
+                <div class="label">Sunrise:&nbsp;<span class="value" data-current-sunrise></span></div>
+                <div class="label">Sunset:&nbsp;<span class="value" data-current-sunset></span></div>
               </div>
-            </div>
-            <div class="current-bottom-right">
-              <div class="label">Dew Point:&nbsp;<span class="value degrees" data-current-dew-point></span></div>
-              <div class="label">Sunrise:&nbsp;<span class="value" data-current-sunrise></span></div>
-              <div class="label">Sunset:&nbsp;<span class="value" data-current-sunset></span></div>
             </div>
           </div>
-        </div>
-        <div class="daily-section">
-          <div class="section-title">
-            Forecast
-            <div class="section-subtitle"><span>&nbsp</span></div>
+          <div class="daily-section">
+            <div class="section-title">
+              Forecast
+              <div class="section-subtitle"><span>&nbsp</span></div>
+            </div>
+            <div class="daily-container"></div>
           </div>
-          <div class="daily-container"></div>
-        </div>
-        <div class="hourly-section">
-          <div class="section-title">
-            Hourly Weather
-            <div class="section-subtitle" data-hour-timezone></div>
+          <div class="hourly-section">
+            <div class="section-title">
+              Hourly Weather
+              <div class="section-subtitle" data-hour-timezone></div>
+            </div>
+            <div class="hourly-container"></div>
           </div>
-          <div class="hourly-container"></div>
-        </div>
-      </main>
+        </main>
 
-      <footer>
-        <a href="https://openweathermap.org/api" class="openweather-logo" target="_blank">Powered By OpenWeather</a>
-      </footer>
+        <footer>
+          <a href="https://openweathermap.org/api" class="openweather-logo" target="_blank">Powered By OpenWeather</a>
+        </footer>
+      </div>
     </div>
 
     <!-- templates -->

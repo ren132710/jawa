@@ -37,13 +37,8 @@
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  /* font-family: sans-serif; */
   font-family: 'Lato', sans-serif;
 }
-
-/* html {
-  height: 100%;
-} */
 
 body {
   position: relative;
@@ -116,9 +111,13 @@ body {
 
 .page-grid-container {
   display: grid;
-  grid-template-rows: 2rem minmax(120px, auto) 1fr 80px 2rem;
+}
+
+.page-grid-frame {
   width: 95%;
   margin: 0 auto;
+  display: grid;
+  grid-template-rows: 2rem minmax(120px, auto) 1fr 80px 1rem;
 }
 
 /*
@@ -132,7 +131,7 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0.5rem 1rem 0.2rem 1rem;
+  padding: 0.5rem 1rem 0.2rem;
 }
 
 .header-bg-active {
@@ -221,7 +220,6 @@ body {
 .menu-btn {
   cursor: pointer;
   outline: none;
-  /* padding: 0.5em 1em; */
   padding: 1em 3em;
   border-radius: var(--border-radius);
   background-color: hsl(0, 0%, 90%);
@@ -261,7 +259,7 @@ body {
 
 .places-section {
   display: grid;
-  grid-gap: 2.5rem;
+  grid-gap: 2rem;
   grid-template-areas:
     'places-search'
     'places';
@@ -284,7 +282,6 @@ body {
   border-radius: var(--border-radius-search-input);
   padding: 0.5em;
   width: 90%;
-  height: 2em;
 }
 
 .places-container {
@@ -455,7 +452,7 @@ body {
   border: 1px solid var(--border-color-01);
   border-radius: var(--border-radius);
   padding: 0.75em;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .current-top-left {
@@ -468,8 +465,14 @@ body {
 .current-top-right {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: flex-end;
+}
+
+.current-top-right-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 15%;
 }
 
 .current-bottom-left {
@@ -501,13 +504,14 @@ body {
   font-size: 0.75rem;
 }
 
+/* Galaxy Fold */
 .current-temp {
-  font-size: 3rem;
+  font-size: 1.75rem;
   line-height: 1.2;
 }
 
 .current-feels-like {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
 }
 
 .current-description {
@@ -526,7 +530,6 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
-  margin: 0 auto;
 }
 
 .daily-card {
@@ -562,7 +565,6 @@ body {
 
 .hourly-container {
   display: grid;
-  margin: 0 auto;
 }
 
 .hour-row {
@@ -652,6 +654,35 @@ footer {
  * media queries
  */
 
+@media screen and (min-width: 360px) {
+  /* Galaxy S20 */
+  .current-temp {
+    font-size: 2.3rem;
+  }
+
+  .current-feels-like {
+    font-size: 0.85rem;
+  }
+}
+
+@media screen and (min-width: 375px) {
+  .current-temp {
+    font-size: 2.6rem;
+  }
+}
+
+@media screen and (min-width: 380px) {
+  .current-temp {
+    font-size: 2.75rem;
+  }
+}
+
+@media screen and (min-width: 391px) {
+  .current-temp {
+    font-size: 3rem;
+  }
+}
+
 @media screen and (min-width: 480px) {
   .places-container {
     /* fit columns into the available space */
@@ -660,24 +691,16 @@ footer {
 }
 
 @media screen and (min-width: 766px) {
-  .page-grid-container {
-    padding: 0 2rem;
+  .page-grid-frame {
+    width: 90%;
   }
 
-  /* TODO: handle with scaling fonts? */
-  .place-search {
-    font-size: 1.3rem;
+  .current-top-right-block {
+    padding-top: 12%;
   }
 
   .daily-container {
     grid-template-columns: repeat(6, 1fr);
-  }
-
-  .hour-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
 
   /* flatten hour rows */
@@ -699,17 +722,16 @@ footer {
   .hour-data:nth-child(6) {
     justify-content: center;
   }
+
+  .header-container {
+    padding: 0.5rem 1.5rem 0.2rem;
+  }
 }
 
 @media screen and (min-width: 1022px) {
-  .page-grid-container {
-    padding: 0 3rem;
-  }
-
   .places-section {
     grid-template-columns: 1fr 1.618fr;
     grid-template-areas: 'places-search places';
-    margin: 2rem auto;
   }
 
   .place-search {
@@ -721,9 +743,8 @@ footer {
   }
 
   .main {
-    grid-template-columns: 1fr 1.618fr;
-    grid-template-rows: auto;
-
+    /* grid-template-columns: 1fr 1.618fr; */
+    grid-template-columns: minmax(375px, 1fr) 1.5fr;
     grid-template-areas:
       'current daily'
       'hourly hourly';
@@ -731,6 +752,7 @@ footer {
 
   .daily-container {
     grid-template-columns: repeat(auto-fit, 120px);
+    justify-content: center;
   }
 
   .daily-card:nth-child(6) {
