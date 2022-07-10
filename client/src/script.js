@@ -302,19 +302,22 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-high]').textContent = current.high
   qs('[data-current-low]').textContent = current.low
   qs('[data-current-temp]').textContent = current.temp
-  qs('[data-temp-units]').dataset.tempUnits = prefs[0].units === 'imperial' ? ' F' : ' C'
+  qs('[data-temp-units]').dataset.tempUnits =
+    prefs[0].units === 'imperial' ? ` ${gc.UoM.imperial.temp}` : ` ${gc.UoM.metric.temp}`
   qs('[data-current-fl]').textContent = current.feelsLike
   qs('[data-current-description]').textContent = current.description
   qs('[data-current-precip]').textContent = current.precip
   qs('[data-current-visibility').textContent = current.visibility
-  qs('[data-visibility-units]').dataset.visibilityUnits = prefs[0].units === 'imperial' ? ' mi' : ' km'
+  qs('[data-visibility-units]').dataset.visibilityUnits =
+    prefs[0].units === 'imperial' ? ` ${gc.UoM.imperial.visibility}` : ` ${gc.UoM.metric.visibility}`
 
   //bottom left quadrant
   qs('[data-current-uv-index]').textContent = current.uvIndex
   qs('[data-current-uv-level]').textContent = current.uvLevel
   qs('[data-current-humidity]').textContent = current.humidity
   qs('[data-current-wind-speed]').textContent = current.windSpeed
-  qs('[data-wind-units]').dataset.windUnits = prefs[0].units === 'imperial' ? ' mph ' : ' kph '
+  qs('[data-wind-units]').dataset.windUnits =
+    prefs[0].units === 'imperial' ? ` ${gc.UoM.imperial.wind_speed} ` : ` ${gc.UoM.metric.wind_speed} `
   qs('[data-current-wind-direction]').textContent = current.windDirection
 
   //bottom right quadrant
@@ -339,7 +342,8 @@ function renderDailyWeather(daily) {
     qs('[data-hl] > [data-daily-low]', card).textContent = day.low
     qs('[data-daily-humidity]', card).textContent = day.humidity
     qs('[data-daily-wind-speed]', card).textContent = day.windSpeed
-    qs('[data-wind-units]', card).dataset.windUnits = prefs[0].units === 'imperial' ? ' mph ' : ' kph '
+    qs('[data-wind-units]', card).dataset.windUnits =
+      prefs[0].units === 'imperial' ? ` ${gc.UoM.imperial.wind_speed} ` : ` ${gc.UoM.metric.wind_speed} `
     qs('[data-daily-wind-direction]', card).textContent = day.windDirection
     dailyContainer.append(card)
   })
@@ -367,7 +371,8 @@ function renderHourlyWeather(hourly, coordinates) {
       qs('[data-hour-temp]', row).textContent = hour.temp
       qs('[data-hour-precip]', row).textContent = hour.precip
       qs('[data-hour-wind-speed]', row).textContent = hour.windSpeed
-      qs('[data-wind-units]', row).dataset.windUnits = prefs[0].units === 'imperial' ? ' mph ' : ' kph '
+      qs('[data-wind-units]', row).dataset.windUnits =
+        prefs[0].units === 'imperial' ? ` ${gc.UoM.imperial.wind_speed} ` : ` ${gc.UoM.metric.wind_speed} `
       qs('[data-hour-wind-direction]', row).textContent = hour.windDirection
       qs('[data-hour-humidity]', row).textContent = hour.humidity
       qs('[data-hour-uv-level]', row).textContent = hour.uvLevel
