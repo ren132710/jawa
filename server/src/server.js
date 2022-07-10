@@ -6,6 +6,9 @@ const cors = require('cors')
 const axios = require('axios')
 const app = express()
 const { getCardinalDirection, getUVIndexLevel } = require('./utils.js')
+const PORT = process.env.PORT_LISTEN
+const API_KEY = process.env.API_KEY
+const URL = 'https://api.openweathermap.org/data/3.0/onecall'
 
 //with no params, cors() allows requests from any url
 app.use(cors())
@@ -15,15 +18,15 @@ app.use(express.urlencoded({ extended: true }))
 
 //prevent open handles when running unit tests
 if (process.env.SERVER_UNIT_TEST !== 'true') {
-  app.listen(3001)
+  app.listen(PORT)
 }
 
 app.get('/weather', (req, res) => {
   const { lat, long, units, id, location } = req.query
 
   axios
-    .get('https://api.openweathermap.org/data/3.0/onecall', {
-      params: { lat: lat, lon: long, appid: process.env.API_KEY, units: units, exclude: 'minutely' },
+    .get(URL, {
+      params: { lat: lat, lon: long, appid: API_KEY, units: units, exclude: 'minutely' },
       timeout: 5000,
     })
     .then(({ data }) => {
