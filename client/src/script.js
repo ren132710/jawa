@@ -1,9 +1,11 @@
 /*
 TODO:
  prefs
- - themes:
-  -light, morning, sunrise, desert, winter
- - night, dusk, new moon
+ - put UoM into globals.js
+ - themes
+ - language
+ - extract axios and google into separate file?
+ - extract menu into object
 
  ui
  - style search box using google classes
@@ -23,6 +25,9 @@ import * as df from './dateUtils.js'
 import { getIconUrl } from './parse.js'
 import * as gc from './globals.js'
 const { v4 } = require('uuid')
+const SERVER = process.env.JAWA_SERVER || 'localhost'
+const PORT = process.env.JAWA_PORT || '3001'
+const GOOGLE_API_KEY = process.env.API_KEY
 
 /**
  * initialize page
@@ -83,14 +88,14 @@ window.addEventListener('scroll', () => {
   }
 })
 
-//hamburger menu toggle
+//preferences menu toggle
 const header = qs('.header-container')
 const menuToggle = qs('.menu-toggle')
 menuToggle.addEventListener('click', (e) => {
   header.classList.toggle('open')
 })
 
-//preferences
+//preferences menu
 qs('#menu').addEventListener('click', (e) => {
   if (e.target == null || !e.target.matches('button')) return
 
@@ -121,7 +126,7 @@ qs('#menu').addEventListener('click', (e) => {
 })
 
 /**
- * axios
+ * OpenWeather
  * @param {string} lat: latitude, required by OpenWeather
  * @param {string} long: longitude, required by OpenWeather
  * @param {string} units: (imperial | metric ), required by OpenWeather
@@ -135,7 +140,7 @@ qs('#menu').addEventListener('click', (e) => {
 
 async function getWeather(lat, long, units, id, location) {
   try {
-    const res = await axios.get('http://localhost:3001/weather', {
+    const res = await axios.get(`http://${SERVER}:${PORT}/weather`, {
       params: { lat, long, units, id, location },
       timeout: 5000,
     })
@@ -151,7 +156,7 @@ async function getWeather(lat, long, units, id, location) {
  */
 
 const loader = new Loader({
-  apiKey: process.env.API_KEY,
+  apiKey: GOOGLE_API_KEY,
   libraries: ['places'],
 })
 
