@@ -1,10 +1,13 @@
 const LOCAL_STORAGE_PREFIX = 'jawa'
 
 export const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-places`
-
 export const PREFS_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-prefs`
-
 export const PLACES_CAP = 9
+
+export const UoM = {
+  imperial: { temp: 'F', visibility: 'mi', wind_speed: 'mph' },
+  metric: { temp: 'C', visibility: 'km', wind_speed: 'kpm' },
+}
 
 export const DEFAULT_PLACES = [
   { id: '905e58e1-5510-4535-b4c8-2ed30045772d', location: 'austin', lat: 30.2672, long: -97.7431 },
