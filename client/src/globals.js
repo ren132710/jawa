@@ -6,7 +6,7 @@ export const PLACES_CAP = 9
 
 export const UoM = {
   imperial: { temp: 'F', visibility: 'mi', wind_speed: 'mph' },
-  metric: { temp: 'C', visibility: 'km', wind_speed: 'kpm' },
+  metric: { temp: 'C', visibility: 'km', wind_speed: 'kph' },
 }
 
 export const DEFAULT_PLACES = [
