@@ -41,8 +41,8 @@ app.get('/weather', (req, res) => {
           units,
         },
         current: parseCurrentWeather(data, units),
-        daily: parseDailyWeather(data),
-        hourly: parseHourlyWeather(data),
+        daily: parseDailyWeather(data, units),
+        hourly: parseHourlyWeather(data, units),
       })
     })
     .catch((e) => {
