@@ -23,7 +23,7 @@ import { getLocalStorage, setLocalStorage } from './localStorage.js'
 import { newGlobalEventListener, qs } from './domUtils.js'
 import * as df from './dateUtils.js'
 import { getIconUrl } from './parse.js'
-import * as gc from './globals.js'
+import * as g from './globals.js'
 const { v4 } = require('uuid')
 const SERVER = process.env.JAWA_SERVER || 'localhost'
 const PORT = process.env.JAWA_PORT || '3001'
@@ -37,13 +37,13 @@ let places = []
 let placesWeather = []
 let prefs = []
 
-getStorage(gc.PREFS_STORAGE_KEY, gc.DEFAULT_PREFS)
+getStorage(g.PREFS_STORAGE_KEY, g.DEFAULT_PREFS)
   .then((userPrefs) => {
     prefs = userPrefs
     console.log('prefs from localStorage ', userPrefs)
   })
   .then(
-    getStorage(gc.PLACES_STORAGE_KEY, gc.DEFAULT_PLACES).then((userPlaces) => {
+    getStorage(g.PLACES_STORAGE_KEY, g.DEFAULT_PLACES).then((userPlaces) => {
       places = userPlaces
       console.log('places from localStorage ', userPlaces)
     })
@@ -102,7 +102,7 @@ qs('#menu').addEventListener('click', (e) => {
   const action = e.target.dataset.action
   if (['metric', 'imperial'].includes(action)) {
     prefs[0].units = action
-    setStorage(gc.PREFS_STORAGE_KEY, prefs)
+    setStorage(g.PREFS_STORAGE_KEY, prefs)
     console.log('updated prefs: ', prefs)
 
     const params = [
@@ -303,13 +303,13 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-low]').textContent = current.low
   qs('[data-current-temp]').textContent = current.temp
   qs('[data-temp-units]').dataset.tempUnits =
-    prefs[0].units === 'imperial' ? ` ${gc.UoM.imperial.temp}` : ` ${gc.UoM.metric.temp}`
+    prefs[0].units === 'imperial' ? ` ${g.UoM.imperial.temp}` : ` ${g.UoM.metric.temp}`
   qs('[data-current-fl]').textContent = current.feelsLike
   qs('[data-current-description]').textContent = current.description
   qs('[data-current-precip]').textContent = current.precip
   qs('[data-current-visibility').textContent = current.visibility
   qs('[data-visibility-units]').dataset.visibilityUnits =
-    prefs[0].units === 'imperial' ? ` ${gc.UoM.imperial.visibility}` : ` ${gc.UoM.metric.visibility}`
+    prefs[0].units === 'imperial' ? ` ${g.UoM.imperial.visibility}` : ` ${g.UoM.metric.visibility}`
 
   //bottom left quadrant
   qs('[data-current-uv-index]').textContent = current.uvIndex
@@ -317,7 +317,7 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-humidity]').textContent = current.humidity
   qs('[data-current-wind-speed]').textContent = current.windSpeed
   qs('[data-wind-units]').dataset.windUnits =
-    prefs[0].units === 'imperial' ? ` ${gc.UoM.imperial.wind_speed} ` : ` ${gc.UoM.metric.wind_speed} `
+    prefs[0].units === 'imperial' ? ` ${g.UoM.imperial.wind_speed} ` : ` ${g.UoM.metric.wind_speed} `
   qs('[data-current-wind-direction]').textContent = current.windDirection
 
   //bottom right quadrant
@@ -343,7 +343,7 @@ function renderDailyWeather(daily) {
     qs('[data-daily-humidity]', card).textContent = day.humidity
     qs('[data-daily-wind-speed]', card).textContent = day.windSpeed
     qs('[data-wind-units]', card).dataset.windUnits =
-      prefs[0].units === 'imperial' ? ` ${gc.UoM.imperial.wind_speed} ` : ` ${gc.UoM.metric.wind_speed} `
+      prefs[0].units === 'imperial' ? ` ${g.UoM.imperial.wind_speed} ` : ` ${g.UoM.metric.wind_speed} `
     qs('[data-daily-wind-direction]', card).textContent = day.windDirection
     dailyContainer.append(card)
   })
@@ -372,7 +372,7 @@ function renderHourlyWeather(hourly, coordinates) {
       qs('[data-hour-precip]', row).textContent = hour.precip
       qs('[data-hour-wind-speed]', row).textContent = hour.windSpeed
       qs('[data-wind-units]', row).dataset.windUnits =
-        prefs[0].units === 'imperial' ? ` ${gc.UoM.imperial.wind_speed} ` : ` ${gc.UoM.metric.wind_speed} `
+        prefs[0].units === 'imperial' ? ` ${g.UoM.imperial.wind_speed} ` : ` ${g.UoM.metric.wind_speed} `
       qs('[data-hour-wind-direction]', row).textContent = hour.windDirection
       qs('[data-hour-humidity]', row).textContent = hour.humidity
       qs('[data-hour-uv-level]', row).textContent = hour.uvLevel
@@ -410,11 +410,11 @@ function newPlace() {
   }
   places.push(newPlace)
 
-  if (places.length >= gc.PLACES_CAP) {
+  if (places.length >= g.PLACES_CAP) {
     qs('[data-new-place]').classList.add('btn-new-place-disabled')
   }
 
-  setStorage(gc.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
+  setStorage(g.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
   console.log('new places: ', places)
 }
 
@@ -437,9 +437,9 @@ newGlobalEventListener('click', '#btnDeletePlace', (e) => {
 function deletePlace(cardId) {
   places = places.filter((place) => place.id !== cardId)
 
-  if (places.length < gc.PLACES_CAP) {
+  if (places.length < g.PLACES_CAP) {
     qs('[data-new-place]').classList.remove('btn-new-place-disabled')
   }
 
-  setStorage(gc.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
+  setStorage(g.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
 }
