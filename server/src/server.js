@@ -53,7 +53,6 @@ app.get('/weather', (req, res) => {
 
 function parseCurrentWeather({ current, daily }, units) {
   const { pop, temp } = daily[0]
-
   return {
     timestamp: current.dt * 1000, //convert Unix (seconds) to JS (milliseconds)
     description: current.weather[0].description,
@@ -62,8 +61,7 @@ function parseCurrentWeather({ current, daily }, units) {
     high: Math.round(temp.max),
     low: Math.round(temp.min),
     feelsLike: Math.round(current.feels_like),
-
-    //visibility is always provided in meters, convert to miles/kilometers and round to one decimal place
+    //visibility is always given in meters, so convert to (miles | kilometers) and round to one decimal place
     visibility:
       units === 'imperial'
         ? Math.round((current.visibility / 1609.344) * 10) / 10
@@ -75,13 +73,14 @@ function parseCurrentWeather({ current, daily }, units) {
     uvIndex: current.uvi,
     uvLevel: getUVIndexLevel(current.uvi),
     humidity: Math.round(current.humidity),
-    windSpeed: Math.round(current.wind_speed),
+    //metric wind speed is given in m/s, so convert to km/h (1 m/s = 3.6 km/h)
+    windSpeed: units === 'imperial' ? Math.round(current.wind_speed) : Math.round(current.wind_speed * 3.6),
     windDirection: getCardinalDirection(current.wind_deg),
     windDeg: Math.round(current.wind_deg),
   }
 }
 
-function parseDailyWeather({ daily }) {
+function parseDailyWeather({ daily }, units) {
   return daily.slice(1).map((day) => {
     return {
       timestamp: day.dt * 1000,
@@ -91,7 +90,7 @@ function parseDailyWeather({ daily }) {
       low: Math.round(day.temp.min),
       precip: Math.round(day.pop * 100),
       humidity: Math.round(day.humidity),
-      windSpeed: Math.round(day.wind_speed),
+      windSpeed: units === 'imperial' ? Math.round(day.wind_speed) : Math.round(day.wind_speed * 3.6),
       windDirection: getCardinalDirection(day.wind_deg),
       windDeg: Math.round(day.wind_deg),
     }
@@ -99,7 +98,7 @@ function parseDailyWeather({ daily }) {
 }
 
 const HOUR_IN_SECONDS = 3600
-function parseHourlyWeather({ hourly, current }) {
+function parseHourlyWeather({ hourly, current }, units) {
   return hourly
     .filter((hour) => hour.dt > current.dt - HOUR_IN_SECONDS)
     .map((hour) => {
@@ -110,7 +109,7 @@ function parseHourlyWeather({ hourly, current }) {
         temp: Math.round(hour.temp),
         precip: Math.round(hour.pop * 100),
         humidity: Math.round(hour.humidity),
-        windSpeed: Math.round(hour.wind_speed),
+        windSpeed: units === 'imperial' ? Math.round(hour.wind_speed) : Math.round(hour.wind_speed * 3.6),
         windDirection: getCardinalDirection(hour.wind_deg),
         windDeg: Math.round(hour.wind_deg),
         uvIndex: hour.uvi,
