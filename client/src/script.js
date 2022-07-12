@@ -1,11 +1,13 @@
 /*
 TODO:
  prefs
- - put UoM into globals.js
  - themes
  - language
+
+ refactor
  - extract axios and google into separate file?
- - extract menu into object
+ - extract menu into object?
+ - extract getWeather and res(data) into function?
 
  ui
  - style search box using google classes
@@ -96,34 +98,47 @@ menuToggle.addEventListener('click', (e) => {
 })
 
 //preferences menu
+
 qs('#menu').addEventListener('click', (e) => {
   if (e.target == null || !e.target.matches('button')) return
 
   const action = e.target.dataset.action
-  if (['metric', 'imperial'].includes(action)) {
-    prefs[0].units = action
-    setStorage(g.PREFS_STORAGE_KEY, prefs)
-    console.log('updated prefs: ', prefs)
-
-    const params = [
-      qs('[data-current-lat]').dataset.currentLat,
-      qs('[data-current-long]').dataset.currentLong,
-      prefs[0].units,
-      qs('[data-current-id]').dataset.currentId,
-      qs('[data-current-location]').dataset.currentLocation,
-    ]
-
-    const res = getWeather(...params)
-    res.then((data) => {
-      console.log('new weather after units change: ', data)
-      renderWeather(data)
-    })
-    getPlacesWeather().then(renderPlacesWeather)
-  } else {
-    //TODO: implement themes
-    console.log('change theme to: ', action)
-  }
+  if (['metric', 'imperial'].includes(action)) switchUoM(action)
+  if (['light', 'jawa', 'dark'].includes(action)) switchTheme(action)
+  if (['english', 'french', 'swedish'].includes(action)) switchLanguage(action)
+  return
 })
+
+function switchUoM(UoM) {
+  console.log(UoM)
+  prefs[0].units = UoM
+  setStorage(g.PREFS_STORAGE_KEY, prefs)
+  console.log('updated prefs: ', prefs)
+
+  const params = [
+    qs('[data-current-lat]').dataset.currentLat,
+    qs('[data-current-long]').dataset.currentLong,
+    prefs[0].units,
+    qs('[data-current-id]').dataset.currentId,
+    qs('[data-current-location]').dataset.currentLocation,
+  ]
+
+  const res = getWeather(...params)
+  res.then((data) => {
+    console.log('new weather after units change: ', data)
+    renderWeather(data)
+  })
+  getPlacesWeather().then(renderPlacesWeather)
+}
+
+function switchTheme(theme) {
+  console.log('change theme to: ', theme)
+  qs('body').setAttribute('data-theme', theme)
+}
+
+function switchLanguage(lang) {
+  console.log('change theme to: ', lang)
+}
 
 /**
  * OpenWeather

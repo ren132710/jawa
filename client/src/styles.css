@@ -1,11 +1,7 @@
 :root {
-  --background-blur: hsl(0, 0%, 96%);
-  --background-linear-from: hsl(300, 8%, 95%);
-  --background-linear-to: hsl(203, 92%, 75%);
-  --background-linear-to-lighter: hsl(203, 92%, 85%);
   --background-place-hover: hsla(0, 0%, 96%, 0.3);
   --background-place-btn-hover: hsla(0, 0%, 96%, 0.9);
-  --border-color-01: hsl(0, 0%, 100%);
+  --border-color: hsl(0, 0%, 100%);
   --border-color-02: hsl(200, 100%, 25%);
   --border-search-input: hsl(0, 0%, 47%); /* border for light mode */
   --color-01: hsl(0, 0%, 100%);
@@ -29,6 +25,16 @@
   --font-size-large: clamp(1.25rem, 1.2vw, 1.5rem); /* section title */
   /* --font-size-large: 1.2vw; */
   /* --font-size-large: 1.5rem; */
+
+  /* jawa default */
+  --background-blur: hsl(0, 100%, 99%); /*snow */
+  --background-linear-from: hsl(300, 8%, 95%);
+  --background-linear-to: hsl(203, 92%, 75%); /* light sky blue */
+  --header-background-linear-from: var(--background-linear-from);
+  --header-background-linear-to: hsl(203, 92%, 85%);
+  --hour-nth-child-background-from: hsla(203, 92%, 75%, 0);
+  --hour-nth-child-background-to: hsla(203, 92%, 75%, 1);
+  --border-thickness: 1px;
 }
 
 *,
@@ -52,53 +58,16 @@ body {
   min-height: 100vh;
   /* TODO: try responsive font size */
   font-size: var(--font-size);
-
-  /** LIGHT MODE THEMES **/
-
-  /* day */
-  /* background: white; */
-  /* background: rgba(243, 241, 243, 1); */
-  /* background: rgba(255, 252, 252, 1); */ /* this one */
-
-  /* morning */
-  /* background: linear-gradient(to right, rgba(243, 241, 243, 1), rgba(135, 206, 250, 1)); */
-  /* background: linear-gradient(to right, rgba(244, 244, 244, 1), rgba(135, 206, 250, 1)); */
   background: linear-gradient(to right, var(--background-linear-from), var(--background-linear-to)); /* this one */
-  /* background: linear-gradient(to right, rgba(246, 230, 238, 1), rgba(135, 206, 250, 1)); */
-  /* background: linear-gradient(to right, rgba(253, 249, 251, 1), rgba(135, 206, 250, 1)); */
-
-  /* sunrise  TODO: Sunrise can be better */
-  /* https://coolors.co/ff7b00-ff8800-ff9500-ffa200-ffaa00-ffb700-ffc300-ffd000-ffdd00-ffea00 */
-  /* background: linear-gradient(to right, rgba(251, 244, 138, 1), rgba(135, 206, 250, 1)); */
-
-  /* desert */
-  /* background: linear-gradient(to right, rgba(245, 176, 65, 1), rgba(135, 206, 250, 1)); */
-
-  /** DARK MODE THEMES **/
-  /* dark */
-  /* background: rgba(0, 0, 0, 1); */
-  /* background: #333; */
-  /* background: hsl(240, 4%, 10%) */ /* this one, same as	rgb(24, 24, 26) */
-
-  /* new moon */
-  /* background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.85)); */
-
-  /* dusk */
-  /* background: linear-gradient(to right, rgba(4, 13, 28, 1), rgba(135, 206, 250, 1)); */
-
-  /* winter */
-  /* background: linear-gradient(to right, rgba(91, 44, 111, 1), rgba(135, 206, 250, 1)); */
-
-  /* dark mode font color */
-  /* color: rgba(244, 244, 244, 1); */
 }
 
-/* body.dark {
-  --accent-color: #D0D066;
-  --background-color: #333;
-  --text-color: white;
-  etc.
-} */
+body[data-theme='light'] {
+  --background-linear-to: hsl(0, 0%, 99%);
+  --border-color: hsl(0, 0%, 90%);
+  --border-color: hsla(200, 100%, 10%, 0.1);
+  --hour-nth-child-background-to: hsl(203, 92%, 90%);
+  --border-thickness: 1.5px;
+}
 
 .blurred {
   background: var(--background-blur);
@@ -136,7 +105,7 @@ body {
 
 .header-bg-active {
   background-color: var(--background-linear-from);
-  background: linear-gradient(to right, var(--background-linear-from), var(--background-linear-to-lighter));
+  background: linear-gradient(to right, var(--header-background-linear-from), var(--header-background-linear-to));
   transition: var(--transition-duration) var(--transition-timing-function);
 }
 
@@ -233,24 +202,22 @@ body {
   box-shadow: 0 0 3px 0 hsl(0, 0%, 70%);
 }
 
-.units-container {
+.sub-menu {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.3rem;
 }
 
-.units-container::before {
+.units::before {
   content: 'Units';
 }
 
-.theme-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.3rem;
+.theme::before {
+  content: 'Theme';
 }
 
-.theme-container::before {
-  content: 'Theme';
+.lang::before {
+  content: 'Language';
 }
 
 /*
@@ -277,7 +244,7 @@ body {
 .place-search {
   grid-area: places-search;
   font-size: 1.2rem;
-  border: 1px solid var(--border-search-input);
+  border: var(--border-thickness) solid var(--border-search-input);
   outline: none;
   border-radius: var(--border-radius-search-input);
   padding: 0.5em;
@@ -299,7 +266,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: transparent;
-  border: 1px solid var(--border-color-01);
+  border: var(--border-thickness) solid var(--border-color);
   border-radius: var(--border-radius);
   padding: 0.3em;
   cursor: pointer;
@@ -329,7 +296,7 @@ body {
   left: 0;
   transform: translate(-50%, -50%);
   background-color: transparent;
-  border: 1px solid var(--border-color-01);
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius-circle);
   outline: none;
   padding: 0.25em 0.5em;
@@ -342,12 +309,12 @@ body {
 }
 
 .place-btn-delete:hover {
-  box-shadow: 0 0 5px 0 var(--border-color-01);
+  box-shadow: 0 0 5px 0 var(--border-color);
 }
 
 .place-btn-delete:focus {
   background-color: var(--color-02);
-  box-shadow: 0 0 5px 0 var(--border-color-01);
+  box-shadow: 0 0 5px 0 var(--border-color);
   color: var(--color-01);
 }
 
@@ -449,7 +416,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.4rem;
-  border: 1px solid var(--border-color-01);
+  border: var(--border-thickness) solid var(--border-color);
   border-radius: var(--border-radius);
   padding: 0.75em;
   /* margin: 0 auto; */
@@ -537,7 +504,7 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid var(--border-color-01);
+  border: var(--border-thickness) solid var(--border-color);
   border-radius: var(--border-radius);
   padding: 0.5em;
 }
