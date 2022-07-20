@@ -1,20 +1,20 @@
 /*
 TODO:
  prefs
- - themes
  - language
 
  refactor
- - extract axios and google into separate file?
+ - extract axios and google into separate file? Use object instead of array to pass params
+ - getUnit() function for printing units
  - extract menu into object?
  - extract getWeather and res(data) into function?
 
  ui
  - style search box using google classes
- - responsive font size: current and hours labels and values, buttons
- - check clarity of font
+ - search box variable height
 
  final clean
+  - load performance
   - remove unused css, modularize css
   - remove console.logs
 */
@@ -43,6 +43,7 @@ getStorage(g.PREFS_STORAGE_KEY, g.DEFAULT_PREFS)
   .then((userPrefs) => {
     prefs = userPrefs
     console.log('prefs from localStorage ', userPrefs)
+    setTheme(prefs[0].theme)
   })
   .then(
     getStorage(g.PLACES_STORAGE_KEY, g.DEFAULT_PLACES).then((userPlaces) => {
@@ -93,27 +94,39 @@ window.addEventListener('scroll', () => {
 //preferences menu toggle
 const header = qs('.header-container')
 const menuToggle = qs('.menu-toggle')
+const menu = qs('#menu')
 menuToggle.addEventListener('click', (e) => {
   header.classList.toggle('open')
 })
 
-//preferences menu
+//close the menu if the user clicks away
+document.addEventListener('click', (e) => {
+  if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
+    header.classList.remove('open')
+  }
+})
 
-qs('#menu').addEventListener('click', (e) => {
+//close the menu if the user tabs away
+document.addEventListener('focusin', (e) => {
+  if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
+    header.classList.remove('open')
+  }
+})
+
+//preferences menu
+menu.addEventListener('click', (e) => {
   if (e.target == null || !e.target.matches('button')) return
 
   const action = e.target.dataset.action
   if (['metric', 'imperial'].includes(action)) switchUoM(action)
   if (['light', 'jawa', 'dark'].includes(action)) switchTheme(action)
-  if (['english', 'french', 'swedish'].includes(action)) switchLanguage(action)
+  if (['english', 'french', 'swedish'].includes(action)) switchLang(action)
   return
 })
 
 function switchUoM(UoM) {
-  console.log(UoM)
   prefs[0].units = UoM
   setStorage(g.PREFS_STORAGE_KEY, prefs)
-  console.log('updated prefs: ', prefs)
 
   const params = [
     qs('[data-current-lat]').dataset.currentLat,
@@ -125,18 +138,22 @@ function switchUoM(UoM) {
 
   const res = getWeather(...params)
   res.then((data) => {
-    console.log('new weather after units change: ', data)
     renderWeather(data)
   })
   getPlacesWeather().then(renderPlacesWeather)
 }
 
 function switchTheme(theme) {
-  console.log('change theme to: ', theme)
+  prefs[0].theme = theme
+  setStorage(g.PREFS_STORAGE_KEY, prefs)
+  setTheme(theme)
+}
+
+function setTheme(theme) {
   qs('body').setAttribute('data-theme', theme)
 }
 
-function switchLanguage(lang) {
+function switchLang(lang) {
   console.log('change theme to: ', lang)
 }
 

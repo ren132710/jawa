@@ -11,7 +11,7 @@ describe('#scenario: prefs', () => {
     },
   ]
 
-  const testPrefs = [{ units: 'imperial', theme: 'morning' }]
+  const testPrefs = [{ units: 'imperial', theme: 'jawa', lang: 'en' }]
 
   function setTestDefaults() {
     localStorage.setItem('jawa-places', JSON.stringify(testPlace))
@@ -200,7 +200,50 @@ describe('#scenario: prefs', () => {
     //we cannot know what values OpenWeather will return so skip this verification
   })
 
-  it('should allow user to switch display theme', function () {
-    cy.log('hello from themes test')
+  it('should allow user to switch theme', function () {
+    //given: default theme = 'jawa'
+    cy.get('body').should('have.attr', 'data-theme', 'jawa')
+
+    //when: user opens prefs menu and clicks Light button
+    cy.get('.menu-toggle').click()
+    cy.get('#menu')
+      .should('be.visible')
+      .then(() => {
+        cy.get('button').contains('Light').as('btnLight')
+      })
+    cy.get('@btnLight').should('be.visible').and('have.text', 'Light').and('have.attr', 'data-action', 'light').click()
+    cy.get('.menu-toggle').click()
+    cy.get('#menu').should('not.be.visible')
+
+    //then: theme should be switched to light
+    cy.get('body').should('have.attr', 'data-theme', 'light')
+
+    //when: user switches to dark theme
+    cy.get('.menu-toggle').click()
+    cy.get('#menu')
+      .should('be.visible')
+      .then(() => {
+        cy.get('button').contains('Dark').as('btnDark')
+      })
+    cy.get('@btnDark').should('be.visible').and('have.text', 'Dark').and('have.attr', 'data-action', 'dark').click()
+    cy.get('.menu-toggle').click()
+    cy.get('#menu').should('not.be.visible')
+
+    //then: theme should be switched to dark
+    cy.get('body').should('have.attr', 'data-theme', 'dark')
+
+    //when: user switches back to the default theme 'jawa'
+    cy.get('.menu-toggle').click()
+    cy.get('#menu')
+      .should('be.visible')
+      .then(() => {
+        cy.get('button').contains('Jawa').as('btnJawa')
+      })
+    cy.get('@btnJawa').should('be.visible').and('have.text', 'Jawa').and('have.attr', 'data-action', 'jawa').click()
+    cy.get('.menu-toggle').click()
+    cy.get('#menu').should('not.be.visible')
+
+    //then: theme should be switched to jawa
+    cy.get('body').should('have.attr', 'data-theme', 'jawa')
   })
 })

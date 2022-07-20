@@ -16,4 +16,4 @@ export const DEFAULT_PLACES = [
   { id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87', location: 'new york', lat: 40.7128, long: -74.006 },
 ]
 
-export const DEFAULT_PREFS = [{ units: 'imperial', theme: 'morning' }]
+export const DEFAULT_PREFS = [{ units: 'imperial', theme: 'jawa', lang: 'en' }]
