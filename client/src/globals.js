@@ -4,11 +4,6 @@ export const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-places`
 export const PREFS_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-prefs`
 export const PLACES_CAP = 9
 
-export const UoM = {
-  imperial: { temp: 'F', visibility: 'mi', wind_speed: 'mph' },
-  metric: { temp: 'C', visibility: 'km', wind_speed: 'kph' },
-}
-
 export const DEFAULT_PLACES = [
   { id: '905e58e1-5510-4535-b4c8-2ed30045772d', location: 'austin', lat: 30.2672, long: -97.7431 },
   { id: '90f3d018-bbd3-45be-9c11-debbff73fb6c', location: 'san francisco', lat: 37.7749, long: -122.4194 },

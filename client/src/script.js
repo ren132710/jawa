@@ -5,7 +5,6 @@ TODO:
 
  refactor
  - extract axios and google into separate file? Use object instead of array to pass params
- - getUnit() function for printing units
  - extract menu into object?
  - extract getWeather and res(data) into function?
 
@@ -17,6 +16,7 @@ TODO:
   - load performance
   - remove unused css, modularize css
   - remove console.logs
+  - remove comments from CSS file
 */
 
 import { Loader } from '@googlemaps/js-api-loader'
@@ -24,6 +24,7 @@ import axios from 'axios'
 import { getLocalStorage, setLocalStorage } from './localStorage.js'
 import { newGlobalEventListener, qs } from './domUtils.js'
 import * as df from './dateUtils.js'
+import { getUoM } from './uom.js'
 import { getIconUrl } from './parse.js'
 import * as g from './globals.js'
 const { v4 } = require('uuid')
@@ -334,22 +335,19 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-high]').textContent = current.high
   qs('[data-current-low]').textContent = current.low
   qs('[data-current-temp]').textContent = current.temp
-  qs('[data-temp-units]').dataset.tempUnits =
-    prefs[0].units === 'imperial' ? ` ${g.UoM.imperial.temp}` : ` ${g.UoM.metric.temp}`
+  qs('[data-temp-units]').dataset.tempUnits = ` ${getUoM(prefs[0].units, 'temp')}`
   qs('[data-current-fl]').textContent = current.feelsLike
   qs('[data-current-description]').textContent = current.description
   qs('[data-current-precip]').textContent = current.precip
   qs('[data-current-visibility').textContent = current.visibility
-  qs('[data-visibility-units]').dataset.visibilityUnits =
-    prefs[0].units === 'imperial' ? ` ${g.UoM.imperial.visibility}` : ` ${g.UoM.metric.visibility}`
+  qs('[data-visibility-units]').dataset.visibilityUnits = ` ${getUoM(prefs[0].units, 'distance')}`
 
   //bottom left quadrant
   qs('[data-current-uv-index]').textContent = current.uvIndex
   qs('[data-current-uv-level]').textContent = current.uvLevel
   qs('[data-current-humidity]').textContent = current.humidity
   qs('[data-current-wind-speed]').textContent = current.windSpeed
-  qs('[data-wind-units]').dataset.windUnits =
-    prefs[0].units === 'imperial' ? ` ${g.UoM.imperial.wind_speed} ` : ` ${g.UoM.metric.wind_speed} `
+  qs('[data-wind-units]').dataset.windUnits = ` ${getUoM(prefs[0].units, 'velocity')} `
   qs('[data-current-wind-direction]').textContent = current.windDirection
 
   //bottom right quadrant
@@ -374,8 +372,7 @@ function renderDailyWeather(daily) {
     qs('[data-hl] > [data-daily-low]', card).textContent = day.low
     qs('[data-daily-humidity]', card).textContent = day.humidity
     qs('[data-daily-wind-speed]', card).textContent = day.windSpeed
-    qs('[data-wind-units]', card).dataset.windUnits =
-      prefs[0].units === 'imperial' ? ` ${g.UoM.imperial.wind_speed} ` : ` ${g.UoM.metric.wind_speed} `
+    qs('[data-wind-units]', card).dataset.windUnits = ` ${getUoM(prefs[0].units, 'velocity')} `
     qs('[data-daily-wind-direction]', card).textContent = day.windDirection
     dailyContainer.append(card)
   })
@@ -403,8 +400,7 @@ function renderHourlyWeather(hourly, coordinates) {
       qs('[data-hour-temp]', row).textContent = hour.temp
       qs('[data-hour-precip]', row).textContent = hour.precip
       qs('[data-hour-wind-speed]', row).textContent = hour.windSpeed
-      qs('[data-wind-units]', row).dataset.windUnits =
-        prefs[0].units === 'imperial' ? ` ${g.UoM.imperial.wind_speed} ` : ` ${g.UoM.metric.wind_speed} `
+      qs('[data-wind-units]', row).dataset.windUnits = ` ${getUoM(prefs[0].units, 'velocity')} `
       qs('[data-hour-wind-direction]', row).textContent = hour.windDirection
       qs('[data-hour-humidity]', row).textContent = hour.humidity
       qs('[data-hour-uv-level]', row).textContent = hour.uvLevel
