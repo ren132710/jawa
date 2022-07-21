@@ -1,19 +1,3 @@
-/*
-TODO:
- refactor
- - extract menu into object?
-
- ui
- - style search box using google classes
- - search box variable height
-
- final clean
-  - load performance
-  - remove unused css, modularize css
-  - remove console.logs
-  - remove comments from CSS file
-*/
-
 import { Loader } from '@googlemaps/js-api-loader'
 import { getWeather } from './getWeather.js'
 import { getLocalStorage, setLocalStorage } from './localStorage.js'

@@ -52,11 +52,8 @@
   --skyblue-70: hsl(203, 92%, 70%);
 
   /* variable font size */
-  /* smallest value was the original font-size value */
   --font-size: 1rem;
-  /* --font-size: clamp(1rem, 0.9vw, 1.05rem); */
   --font-size-small: 0.75rem; /* place text, daily description */
-  /* --font-size-small: clamp(0.75rem, 0.8vw, 0.8rem);  */
   --font-size-large: clamp(1.25rem, 1.2vw, 1.5rem); /* section title */
   /* color and fills */
   --color: var(--blue-10);
@@ -120,6 +117,7 @@ body {
 }
 
 .page-grid-frame {
+  /* mobile: center container within parent using margin auto with specified width */
   width: 94%;
   margin: 0 auto;
   display: grid;
@@ -135,7 +133,6 @@ body {
 }
 
 /* light mode */
-
 body[data-theme='light'] {
   --color-value: var(--blue-35);
   --background-linear-to: var(--white);
@@ -150,16 +147,6 @@ body[data-theme='light'] .menu {
   box-shadow: 0 0 5px 0 var(--grey-90);
 }
 
-/* body[data-theme='light'] .menu-btn {
-  background-color: hsla(0, 0%, 95%, 0.3);
-  border: 1px solid var(--grey-90);
-} */
-
-/* body[data-theme='light'] .menu-btn:hover,
-body[data-theme='light'] .menu-btn:focus {
-  box-shadow: 0 0 5px 0 var(--skyblue-85);
-} */
-
 body[data-theme='light'] .place-card:hover,
 body[data-theme='light'] .place-card:focus {
   background-color: hsla(0, 0%, 95%, 0.3);
@@ -167,7 +154,6 @@ body[data-theme='light'] .place-card:focus {
 }
 
 /* dark mode */
-
 body[data-theme='dark'].blurred {
   background: rgba(0, 0, 0, 0.85);
 }
@@ -314,7 +300,6 @@ body[data-theme='dark'] .place-card:focus {
 
 .open .menu {
   clip-path: circle(200% at top right);
-  /*   display: block; */
 }
 
 .menu-btn {
@@ -364,7 +349,6 @@ body[data-theme='dark'] .place-card:focus {
   grid-template-areas:
     'places-search'
     'places';
-  /* auto centers objects only when container has specified width */
   width: 100%;
   margin: 2rem auto;
 }
@@ -499,7 +483,6 @@ body[data-theme='dark'] .place-card:focus {
     'current'
     'daily'
     'hourly';
-  /* auto centers objects only when container has specified width */
   width: 100%;
   margin: 0 auto;
 }
@@ -550,7 +533,6 @@ body[data-theme='dark'] .place-card:focus {
   border: var(--border-thickness) solid var(--border-color);
   border-radius: var(--border-radius);
   padding: 0.75em;
-  /* margin: 0 auto; */
 }
 
 .current-top-left {
@@ -602,7 +584,7 @@ body[data-theme='dark'] .place-card:focus {
   font-size: 0.75rem;
 }
 
-/* Galaxy Fold */
+/* size for Galaxy Fold, then grow */
 .current-temp {
   font-size: 1.75rem;
   line-height: 1.2;
@@ -644,7 +626,6 @@ body[data-theme='dark'] .place-card:focus {
 .daily-description {
   font-size: var(--font-size-small);
   color: var(--color-value);
-  /* font-weight: 700; */
   padding-top: 0.1em;
   padding-bottom: 0.1em;
   text-transform: capitalize;
