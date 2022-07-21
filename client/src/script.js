@@ -1,12 +1,7 @@
 /*
 TODO:
- prefs
- - language
-
  refactor
- - extract axios and google into separate file? Use object instead of array to pass params
  - extract menu into object?
- - extract getWeather and res(data) into function?
 
  ui
  - style search box using google classes
@@ -20,7 +15,7 @@ TODO:
 */
 
 import { Loader } from '@googlemaps/js-api-loader'
-import axios from 'axios'
+import { getWeather } from './getWeather.js'
 import { getLocalStorage, setLocalStorage } from './localStorage.js'
 import { newGlobalEventListener, qs } from './domUtils.js'
 import * as df from './dateUtils.js'
@@ -29,8 +24,6 @@ import { getTranslation } from './dictionary.js'
 import { getIconUrl } from './parse.js'
 import * as g from './globals.js'
 const { v4 } = require('uuid')
-const SERVER = process.env.JAWA_SERVER || 'localhost'
-const PORT = process.env.JAWA_PORT || '3001'
 const GOOGLE_API_KEY = process.env.API_KEY
 
 /**
@@ -71,7 +64,15 @@ async function getPlacesWeather() {
   let promises = []
 
   places.forEach((place) => {
-    const promise = getWeather(place.lat, place.long, prefs[0].units, prefs[0].lang, place.id, place.location)
+    const params = {
+      lat: place.lat,
+      long: place.long,
+      units: prefs[0].units,
+      lang: prefs[0].lang,
+      id: place.id,
+      location: place.location,
+    }
+    const promise = getWeather(params)
     promises.push(promise)
   })
 
@@ -82,9 +83,9 @@ async function getPlacesWeather() {
 
 function setTranslations(lang) {
   qs('[data-place-search]').placeholder = getTranslation(1, lang)
-  qs('[data-section-title="Current"]').textContent = getTranslation(2, lang)
-  qs('[data-section-title="Forecast"]').textContent = getTranslation(3, lang)
-  qs('[data-section-title="Hourly"]').textContent = getTranslation(4, lang)
+  qs('[data-dictionary="Current"]').textContent = getTranslation(2, lang)
+  qs('[data-dictionary="Forecast"]').textContent = getTranslation(3, lang)
+  qs('[data-dictionary="Hourly"]').textContent = getTranslation(4, lang)
 }
 
 /**
@@ -128,7 +129,6 @@ menu.addEventListener('click', (e) => {
   if (e.target == null || !e.target.matches('button')) return
 
   const action = e.target.dataset.action
-  console.log('action: ', action)
   if (['metric', 'imperial'].includes(action)) switchUoM(action)
   if (['light', 'jawa', 'dark'].includes(action)) switchTheme(action)
   if (['en', 'fr', 'sv'].includes(action)) switchLang(action)
@@ -139,16 +139,16 @@ function switchUoM(UoM) {
   prefs[0].units = UoM
   setStorage(g.PREFS_STORAGE_KEY, prefs)
 
-  const params = [
-    qs('[data-current-lat]').dataset.currentLat,
-    qs('[data-current-long]').dataset.currentLong,
-    prefs[0].units,
-    prefs[0].lang,
-    qs('[data-current-id]').dataset.currentId,
-    qs('[data-current-location]').dataset.currentLocation,
-  ]
+  const params = {
+    lat: qs('[data-current-lat]').dataset.currentLat,
+    long: qs('[data-current-long]').dataset.currentLong,
+    units: prefs[0].units,
+    lang: prefs[0].lang,
+    id: qs('[data-current-id]').dataset.currentId,
+    location: qs('[data-current-location]').dataset.currentLocation,
+  }
 
-  const res = getWeather(...params)
+  const res = getWeather(params)
   res.then((data) => {
     renderWeather(data)
   })
@@ -160,16 +160,16 @@ function switchLang(lang) {
   setStorage(g.PREFS_STORAGE_KEY, prefs)
   setTranslations(prefs[0].lang)
 
-  const params = [
-    qs('[data-current-lat]').dataset.currentLat,
-    qs('[data-current-long]').dataset.currentLong,
-    prefs[0].units,
-    prefs[0].lang,
-    qs('[data-current-id]').dataset.currentId,
-    qs('[data-current-location]').dataset.currentLocation,
-  ]
+  const params = {
+    lat: qs('[data-current-lat]').dataset.currentLat,
+    long: qs('[data-current-long]').dataset.currentLong,
+    units: prefs[0].units,
+    lang: prefs[0].lang,
+    id: qs('[data-current-id]').dataset.currentId,
+    location: qs('[data-current-location]').dataset.currentLocation,
+  }
 
-  const res = getWeather(...params)
+  const res = getWeather(params)
   res.then((data) => {
     renderWeather(data)
   })
@@ -184,33 +184,6 @@ function switchTheme(theme) {
 
 function setTheme(theme) {
   qs('body').setAttribute('data-theme', theme)
-}
-
-/**
- * OpenWeather
- * @param {string} lat: latitude, required by OpenWeather
- * @param {string} long: longitude, required by OpenWeather
- * @param {string} units: (imperial | metric ), required by OpenWeather
- * @param {string} lang: (en | fr | sv ), OpenWeather option
- * @param {string} id:
- *   - used for adding/deleting places from localStorage
- *   - pass to server so server can include in the response object
- * @param {string} location:
- *  - location is not provided by OpenWeather
- *  - pass to server so server can include in the response object
- */
-
-async function getWeather(lat, long, units, lang, id, location) {
-  try {
-    const res = await axios.get(`http://${SERVER}:${PORT}/weather`, {
-      params: { lat, long, units, lang, id, location },
-      timeout: 5000,
-    })
-    return res.data
-  } catch (e) {
-    console.error(`ERROR: ${e}`)
-    alert('Fetching weather encountered an issue. Please try again.')
-  }
 }
 
 /**
@@ -235,18 +208,17 @@ loader.load().then((google) => {
     const place = autocomplete.getPlace()
     if (!place.geometry) return
 
-    const params = [
-      place.geometry.location.lat(),
-      place.geometry.location.lng(),
-      prefs[0].units,
-      prefs[0].lang,
-      v4(),
-      place.name,
-    ]
+    const params = {
+      lat: place.geometry.location.lat(),
+      long: place.geometry.location.lng(),
+      units: prefs[0].units,
+      lang: prefs[0].lang,
+      id: v4(),
+      location: place.name,
+    }
 
-    const res = getWeather(...params)
+    const res = getWeather(params)
     res.then((data) => {
-      console.log('new weather: ', data)
       renderWeather(data)
     })
   })

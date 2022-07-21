@@ -296,9 +296,9 @@ describe('#scenario: prefs', () => {
 
     //then: language should be switched to fr
     cy.get('[data-place-search]').should('have.attr', 'placeholder', 'Météo à vos places')
-    cy.get('[data-section-title="Current"]').contains('Météo Actuelle')
-    cy.get('[data-section-title="Forecast"]').contains('Prévisions')
-    cy.get('[data-section-title="Hourly"]').contains('Heure par Heure')
+    cy.get('[data-dictionary="Current"]').contains('Météo Actuelle')
+    cy.get('[data-dictionary="Forecast"]').contains('Prévisions')
+    cy.get('[data-dictionary="Hourly"]').contains('Heure par Heure')
 
     //when: user switches to Swedish
     cy.get('.menu-toggle').click()
@@ -318,9 +318,9 @@ describe('#scenario: prefs', () => {
 
     //then: language should be switched to sv
     cy.get('[data-place-search]').should('have.attr', 'placeholder', 'Väder på dina platser')
-    cy.get('[data-section-title="Current"]').contains('Vädret Just Nu')
-    cy.get('[data-section-title="Forecast"]').contains('Prognos')
-    cy.get('[data-section-title="Hourly"]').contains('Timmar')
+    cy.get('[data-dictionary="Current"]').contains('Vädret Just Nu')
+    cy.get('[data-dictionary="Forecast"]').contains('Prognos')
+    cy.get('[data-dictionary="Hourly"]').contains('Timmar')
 
     //when: user switches back to the default English'
     cy.get('.menu-toggle').click()
@@ -340,8 +340,8 @@ describe('#scenario: prefs', () => {
 
     //then: language should be switched to en
     cy.get('[data-place-search]').should('have.attr', 'placeholder', 'Weather at your places')
-    cy.get('[data-section-title="Current"]').contains('Current Weather')
-    cy.get('[data-section-title="Forecast"]').contains('Forecast')
-    cy.get('[data-section-title="Hourly"]').contains('Hourly Weather')
+    cy.get('[data-dictionary="Current"]').contains('Current Weather')
+    cy.get('[data-dictionary="Forecast"]').contains('Forecast')
+    cy.get('[data-dictionary="Hourly"]').contains('Hourly Weather')
   })
 })
