@@ -129,15 +129,14 @@ menu.addEventListener('click', (e) => {
   if (e.target == null || !e.target.matches('button')) return
 
   const action = e.target.dataset.action
-  if (['metric', 'imperial'].includes(action)) switchUoM(action)
-  if (['light', 'jawa', 'dark'].includes(action)) switchTheme(action)
-  if (['en', 'fr', 'sv'].includes(action)) switchLang(action)
+  if (['metric', 'imperial'].includes(action)) switchUoM('units', action)
+  if (['light', 'jawa', 'dark'].includes(action)) switchTheme('theme', action)
+  if (['en', 'fr', 'sv'].includes(action)) switchLang('lang', action)
   return
 })
 
-function switchUoM(UoM) {
-  prefs[0].units = UoM
-  setStorage(g.PREFS_STORAGE_KEY, prefs)
+function switchUoM(key, value) {
+  updatePrefs(key, value)
 
   const params = {
     lat: qs('[data-current-lat]').dataset.currentLat,
@@ -155,10 +154,9 @@ function switchUoM(UoM) {
   getPlacesWeather().then(renderPlacesWeather)
 }
 
-function switchLang(lang) {
-  prefs[0].lang = lang
-  setStorage(g.PREFS_STORAGE_KEY, prefs)
-  setTranslations(prefs[0].lang)
+function switchLang(key, value) {
+  updatePrefs(key, value)
+  setTranslations(prefs[0][key])
 
   const params = {
     lat: qs('[data-current-lat]').dataset.currentLat,
@@ -176,14 +174,18 @@ function switchLang(lang) {
   getPlacesWeather().then(renderPlacesWeather)
 }
 
-function switchTheme(theme) {
-  prefs[0].theme = theme
-  setStorage(g.PREFS_STORAGE_KEY, prefs)
-  setTheme(theme)
+function switchTheme(key, value) {
+  updatePrefs(key, value)
+  setTheme(value)
 }
 
-function setTheme(theme) {
-  qs('body').setAttribute('data-theme', theme)
+function setTheme(value) {
+  qs('body').setAttribute('data-theme', value)
+}
+
+function updatePrefs(key, value) {
+  prefs[0][key] = value
+  setStorage(g.PREFS_STORAGE_KEY, prefs)
 }
 
 /**
