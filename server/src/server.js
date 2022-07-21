@@ -22,11 +22,11 @@ if (process.env.SERVER_UNIT_TEST !== 'true') {
 }
 
 app.get('/weather', (req, res) => {
-  const { lat, long, units, id, location } = req.query
+  const { lat, long, units, lang, id, location } = req.query
 
   axios
     .get(URL, {
-      params: { lat: lat, lon: long, appid: API_KEY, units: units, exclude: 'minutely' },
+      params: { lat: lat, lon: long, units: units, lang: lang, appid: API_KEY, exclude: 'minutely' },
       timeout: 5000,
     })
     .then(({ data }) => {
@@ -39,6 +39,7 @@ app.get('/weather', (req, res) => {
           timezone: data.timezone,
           timezone_offset: data.timezone_offset,
           units,
+          lang,
         },
         current: parseCurrentWeather(data, units),
         daily: parseDailyWeather(data, units),
