@@ -3,7 +3,7 @@ export function getLocalStorage(key) {
   return new Promise((resolve, reject) => {
     const data = JSON.parse(localStorage.getItem(key))
     resolve(data)
-    reject(err)
+    reject('Error getting localStorage')
   })
 }
 
@@ -11,6 +11,6 @@ export function getLocalStorage(key) {
 export function setLocalStorage(key, value) {
   return new Promise((resolve, reject) => {
     resolve(localStorage.setItem(key, JSON.stringify(value)))
-    reject(err)
+    reject('Error setting localStorage')
   })
 }
