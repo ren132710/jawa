@@ -10,7 +10,7 @@ describe('#renderPageWeather', () => {
     },
   ]
 
-  const testPrefs = [{ units: 'imperial', theme: 'morning' }]
+  const testPrefs = [{ units: 'imperial', theme: 'jawa', lang: 'en' }]
 
   function setTestDefaults() {
     localStorage.setItem('jawa-places', JSON.stringify(testPlace))

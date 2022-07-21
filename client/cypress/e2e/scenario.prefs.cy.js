@@ -99,7 +99,12 @@ describe('#scenario: prefs', () => {
       .and('have.attr', 'data-action', 'metric')
       .click()
     cy.get('.menu-toggle').click()
-    cy.get('#menu').should('not.be.visible')
+    cy.get('#menu')
+      .should('not.be.visible')
+      .then(() => {
+        const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
+        expect(prefs[0].units).to.eq('metric')
+      })
 
     //then: units should be metric
     cy.get('[data-temp-units]').should('have.attr', 'data-temp-units', ' C')
@@ -156,7 +161,13 @@ describe('#scenario: prefs', () => {
       .and('have.attr', 'data-action', 'imperial')
       .click()
     cy.get('.menu-toggle').click()
-    cy.get('#menu').should('not.be.visible')
+    cy.get('#menu')
+      .should('not.be.visible')
+      .then(() => {
+        const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
+        expect(prefs[0].units).to.eq('imperial')
+      })
+    cy.wait(1000)
 
     //then: units should be imperial
     cy.get('[data-temp-units]').should('have.attr', 'data-temp-units', ' F')
@@ -200,7 +211,7 @@ describe('#scenario: prefs', () => {
     //we cannot know what values OpenWeather will return so skip this verification
   })
 
-  it('should allow user to switch theme', function () {
+  it('should allow user to successfully switch theme', function () {
     //given: default theme = 'jawa'
     cy.get('body').should('have.attr', 'data-theme', 'jawa')
 
@@ -213,7 +224,12 @@ describe('#scenario: prefs', () => {
       })
     cy.get('@btnLight').should('be.visible').and('have.text', 'Light').and('have.attr', 'data-action', 'light').click()
     cy.get('.menu-toggle').click()
-    cy.get('#menu').should('not.be.visible')
+    cy.get('#menu')
+      .should('not.be.visible')
+      .then(() => {
+        const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
+        expect(prefs[0].theme).to.eq('light')
+      })
 
     //then: theme should be switched to light
     cy.get('body').should('have.attr', 'data-theme', 'light')
@@ -227,7 +243,12 @@ describe('#scenario: prefs', () => {
       })
     cy.get('@btnDark').should('be.visible').and('have.text', 'Dark').and('have.attr', 'data-action', 'dark').click()
     cy.get('.menu-toggle').click()
-    cy.get('#menu').should('not.be.visible')
+    cy.get('#menu')
+      .should('not.be.visible')
+      .then(() => {
+        const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
+        expect(prefs[0].theme).to.eq('dark')
+      })
 
     //then: theme should be switched to dark
     cy.get('body').should('have.attr', 'data-theme', 'dark')
@@ -241,9 +262,86 @@ describe('#scenario: prefs', () => {
       })
     cy.get('@btnJawa').should('be.visible').and('have.text', 'Jawa').and('have.attr', 'data-action', 'jawa').click()
     cy.get('.menu-toggle').click()
-    cy.get('#menu').should('not.be.visible')
+    cy.get('#menu')
+      .should('not.be.visible')
+      .then(() => {
+        const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
+        expect(prefs[0].theme).to.eq('jawa')
+      })
 
     //then: theme should be switched to jawa
     cy.get('body').should('have.attr', 'data-theme', 'jawa')
+  })
+
+  it('should allow user to successfully switch language', function () {
+    //given: default language = 'en'
+    const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
+    expect(prefs[0].lang).to.eq('en')
+
+    //when: user switches to French
+    cy.get('.menu-toggle').click()
+    cy.get('#menu')
+      .should('be.visible')
+      .then(() => {
+        cy.get('button').contains('French').as('btnFrench')
+      })
+    cy.get('@btnFrench').should('be.visible').and('have.text', 'French').and('have.attr', 'data-action', 'fr').click()
+    cy.get('.menu-toggle').click()
+    cy.get('#menu')
+      .should('not.be.visible')
+      .then(() => {
+        const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
+        expect(prefs[0].lang).to.eq('fr')
+      })
+
+    //then: language should be switched to fr
+    cy.get('[data-place-search]').should('have.attr', 'placeholder', 'Météo à vos places')
+    cy.get('[data-section-title="Current"]').contains('Météo Actuelle')
+    cy.get('[data-section-title="Forecast"]').contains('Prévisions')
+    cy.get('[data-section-title="Hourly"]').contains('Heure par Heure')
+
+    //when: user switches to Swedish
+    cy.get('.menu-toggle').click()
+    cy.get('#menu')
+      .should('be.visible')
+      .then(() => {
+        cy.get('button').contains('Swedish').as('btnSwedish')
+      })
+    cy.get('@btnSwedish').should('be.visible').and('have.text', 'Swedish').and('have.attr', 'data-action', 'sv').click()
+    cy.get('.menu-toggle').click()
+    cy.get('#menu')
+      .should('not.be.visible')
+      .then(() => {
+        const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
+        expect(prefs[0].lang).to.eq('sv')
+      })
+
+    //then: language should be switched to sv
+    cy.get('[data-place-search]').should('have.attr', 'placeholder', 'Väder på dina platser')
+    cy.get('[data-section-title="Current"]').contains('Vädret Just Nu')
+    cy.get('[data-section-title="Forecast"]').contains('Prognos')
+    cy.get('[data-section-title="Hourly"]').contains('Timmar')
+
+    //when: user switches back to the default English'
+    cy.get('.menu-toggle').click()
+    cy.get('#menu')
+      .should('be.visible')
+      .then(() => {
+        cy.get('button').contains('English').as('btnEnglish')
+      })
+    cy.get('@btnEnglish').should('be.visible').and('have.text', 'English').and('have.attr', 'data-action', 'en').click()
+    cy.get('.menu-toggle').click()
+    cy.get('#menu')
+      .should('not.be.visible')
+      .then(() => {
+        const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
+        expect(prefs[0].lang).to.eq('en')
+      })
+
+    //then: language should be switched to en
+    cy.get('[data-place-search]').should('have.attr', 'placeholder', 'Weather at your places')
+    cy.get('[data-section-title="Current"]').contains('Current Weather')
+    cy.get('[data-section-title="Forecast"]').contains('Forecast')
+    cy.get('[data-section-title="Hourly"]').contains('Hourly Weather')
   })
 })

@@ -25,6 +25,7 @@ import { getLocalStorage, setLocalStorage } from './localStorage.js'
 import { newGlobalEventListener, qs } from './domUtils.js'
 import * as df from './dateUtils.js'
 import { getUoM } from './uom.js'
+import { getTranslation } from './dictionary.js'
 import { getIconUrl } from './parse.js'
 import * as g from './globals.js'
 const { v4 } = require('uuid')
@@ -45,6 +46,7 @@ getStorage(g.PREFS_STORAGE_KEY, g.DEFAULT_PREFS)
     prefs = userPrefs
     console.log('prefs from localStorage ', userPrefs)
     setTheme(prefs[0].theme)
+    setTranslations(prefs[0].lang)
   })
   .then(
     getStorage(g.PLACES_STORAGE_KEY, g.DEFAULT_PLACES).then((userPlaces) => {
@@ -69,13 +71,20 @@ async function getPlacesWeather() {
   let promises = []
 
   places.forEach((place) => {
-    const promise = getWeather(place.lat, place.long, prefs[0].units, place.id, place.location)
+    const promise = getWeather(place.lat, place.long, prefs[0].units, prefs[0].lang, place.id, place.location)
     promises.push(promise)
   })
 
   await Promise.all(promises).then((data) => {
     placesWeather = data
   })
+}
+
+function setTranslations(lang) {
+  qs('[data-place-search]').placeholder = getTranslation(1, lang)
+  qs('[data-section-title="Current"]').textContent = getTranslation(2, lang)
+  qs('[data-section-title="Forecast"]').textContent = getTranslation(3, lang)
+  qs('[data-section-title="Hourly"]').textContent = getTranslation(4, lang)
 }
 
 /**
@@ -119,9 +128,10 @@ menu.addEventListener('click', (e) => {
   if (e.target == null || !e.target.matches('button')) return
 
   const action = e.target.dataset.action
+  console.log('action: ', action)
   if (['metric', 'imperial'].includes(action)) switchUoM(action)
   if (['light', 'jawa', 'dark'].includes(action)) switchTheme(action)
-  if (['english', 'french', 'swedish'].includes(action)) switchLang(action)
+  if (['en', 'fr', 'sv'].includes(action)) switchLang(action)
   return
 })
 
@@ -133,6 +143,28 @@ function switchUoM(UoM) {
     qs('[data-current-lat]').dataset.currentLat,
     qs('[data-current-long]').dataset.currentLong,
     prefs[0].units,
+    prefs[0].lang,
+    qs('[data-current-id]').dataset.currentId,
+    qs('[data-current-location]').dataset.currentLocation,
+  ]
+
+  const res = getWeather(...params)
+  res.then((data) => {
+    renderWeather(data)
+  })
+  getPlacesWeather().then(renderPlacesWeather)
+}
+
+function switchLang(lang) {
+  prefs[0].lang = lang
+  setStorage(g.PREFS_STORAGE_KEY, prefs)
+  setTranslations(prefs[0].lang)
+
+  const params = [
+    qs('[data-current-lat]').dataset.currentLat,
+    qs('[data-current-long]').dataset.currentLong,
+    prefs[0].units,
+    prefs[0].lang,
     qs('[data-current-id]').dataset.currentId,
     qs('[data-current-location]').dataset.currentLocation,
   ]
@@ -154,15 +186,12 @@ function setTheme(theme) {
   qs('body').setAttribute('data-theme', theme)
 }
 
-function switchLang(lang) {
-  console.log('change theme to: ', lang)
-}
-
 /**
  * OpenWeather
  * @param {string} lat: latitude, required by OpenWeather
  * @param {string} long: longitude, required by OpenWeather
  * @param {string} units: (imperial | metric ), required by OpenWeather
+ * @param {string} lang: (en | fr | sv ), OpenWeather option
  * @param {string} id:
  *   - used for adding/deleting places from localStorage
  *   - pass to server so server can include in the response object
@@ -171,10 +200,10 @@ function switchLang(lang) {
  *  - pass to server so server can include in the response object
  */
 
-async function getWeather(lat, long, units, id, location) {
+async function getWeather(lat, long, units, lang, id, location) {
   try {
     const res = await axios.get(`http://${SERVER}:${PORT}/weather`, {
-      params: { lat, long, units, id, location },
+      params: { lat, long, units, lang, id, location },
       timeout: 5000,
     })
     return res.data
@@ -206,7 +235,14 @@ loader.load().then((google) => {
     const place = autocomplete.getPlace()
     if (!place.geometry) return
 
-    const params = [place.geometry.location.lat(), place.geometry.location.lng(), prefs[0].units, v4(), place.name]
+    const params = [
+      place.geometry.location.lat(),
+      place.geometry.location.lng(),
+      prefs[0].units,
+      prefs[0].lang,
+      v4(),
+      place.name,
+    ]
 
     const res = getWeather(...params)
     res.then((data) => {
@@ -316,7 +352,7 @@ function renderWeather({ coordinates, current, daily, hourly }) {
 //render current weather
 function renderCurrentWeather({ coordinates, current }) {
   //sub title
-  qs('[data-current-dt').textContent = `${df.formatDayOfWeekShort(current.timestamp)} ${df.formatDayOfMonth(
+  qs('[data-current-dt]').textContent = `${df.formatDayOfWeekShort(current.timestamp)} ${df.formatDayOfMonth(
     current.timestamp
   )} ${df.formatMonth(current.timestamp)} ${df.formatTime(current.timestamp)}`
 
@@ -382,7 +418,6 @@ function renderDailyWeather(daily) {
 const hourlyContainer = document.querySelector('.hourly-container')
 const templateHourRow = document.querySelector('#template-hour-row')
 function renderHourlyWeather(hourly, coordinates) {
-  console.log('timezone: ', coordinates.timezone)
   document.querySelector('[data-hour-timezone]').textContent = coordinates.timezone
   hourlyContainer.innerHTML = ''
   hourly

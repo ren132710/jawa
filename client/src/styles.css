@@ -520,7 +520,6 @@ body[data-theme='dark'] .place-card:focus {
   font-size: var(--font-size-large);
   text-align: center;
   padding-top: 1rem;
-  padding-bottom: 0.7rem;
 }
 
 .section-subtitle {
@@ -528,6 +527,7 @@ body[data-theme='dark'] .place-card:focus {
   font-style: oblique;
   text-align: center;
   color: var(--color-value);
+  padding-bottom: 0.7rem;
 }
 
 .label {

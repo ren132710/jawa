@@ -38,9 +38,9 @@
             <button class="menu-btn" data-action="dark">Dark</button>
           </div>
           <div class="sub-menu lang">
-            <button class="menu-btn" data-action="english">English</button>
-            <button class="menu-btn" data-action="french">French</button>
-            <button class="menu-btn" data-action="swedish">Swedish</button>
+            <button class="menu-btn" data-action="en">English</button>
+            <button class="menu-btn" data-action="fr">French</button>
+            <button class="menu-btn" data-action="sv">Swedish</button>
           </div>
         </div>
       </div>
@@ -56,10 +56,8 @@
         </div>
         <main class="main">
           <div class="current-section">
-            <div class="section-title">
-              Current Weather
-              <div class="section-subtitle"><span data-current-dt></span></div>
-            </div>
+            <div class="section-title" data-section-title="Current">Current Weather</div>
+            <div class="section-subtitle"><span data-current-dt></span></div>
             <div class="current-container">
               <div class="current-top-left">
                 <div class="current-location" data-current-id data-current-location></div>
@@ -108,17 +106,13 @@
             </div>
           </div>
           <div class="daily-section">
-            <div class="section-title">
-              Forecast
-              <div class="section-subtitle"><span>&nbsp</span></div>
-            </div>
+            <div class="section-title" data-section-title="Forecast">Forecast</div>
+            <div class="section-subtitle"><span>&nbsp</span></div>
             <div class="daily-container"></div>
           </div>
           <div class="hourly-section">
-            <div class="section-title">
-              Hourly Weather
-              <div class="section-subtitle" data-hour-timezone></div>
-            </div>
+            <div class="section-title" data-section-title="Hourly">Hourly Weather</div>
+            <div class="section-subtitle" data-hour-timezone></div>
             <div class="hourly-container"></div>
           </div>
         </main>
