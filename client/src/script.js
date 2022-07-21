@@ -121,46 +121,18 @@ menu.addEventListener('click', (e) => {
 
 function switchUoM(key, value) {
   updatePrefs(key, value)
-
-  const params = {
-    lat: qs('[data-current-lat]').dataset.currentLat,
-    long: qs('[data-current-long]').dataset.currentLong,
-    units: prefs[0].units,
-    lang: prefs[0].lang,
-    id: qs('[data-current-id]').dataset.currentId,
-    location: qs('[data-current-location]').dataset.currentLocation,
-  }
-
-  const res = getWeather(params)
-  res.then((data) => {
-    renderWeather(data)
-  })
-  getPlacesWeather().then(renderPlacesWeather)
-}
-
-function switchLang(key, value) {
-  updatePrefs(key, value)
-  setTranslations(prefs[0][key])
-
-  const params = {
-    lat: qs('[data-current-lat]').dataset.currentLat,
-    long: qs('[data-current-long]').dataset.currentLong,
-    units: prefs[0].units,
-    lang: prefs[0].lang,
-    id: qs('[data-current-id]').dataset.currentId,
-    location: qs('[data-current-location]').dataset.currentLocation,
-  }
-
-  const res = getWeather(params)
-  res.then((data) => {
-    renderWeather(data)
-  })
-  getPlacesWeather().then(renderPlacesWeather)
+  updateWeather()
 }
 
 function switchTheme(key, value) {
   updatePrefs(key, value)
   setTheme(value)
+}
+
+function switchLang(key, value) {
+  updatePrefs(key, value)
+  setTranslations(prefs[0][key])
+  updateWeather()
 }
 
 function setTheme(value) {
@@ -170,6 +142,23 @@ function setTheme(value) {
 function updatePrefs(key, value) {
   prefs[0][key] = value
   setStorage(g.PREFS_STORAGE_KEY, prefs)
+}
+
+function updateWeather() {
+  const params = {
+    lat: qs('[data-current-lat]').dataset.currentLat,
+    long: qs('[data-current-long]').dataset.currentLong,
+    units: prefs[0].units,
+    lang: prefs[0].lang,
+    id: qs('[data-current-id]').dataset.currentId,
+    location: qs('[data-current-location]').dataset.currentLocation,
+  }
+
+  const res = getWeather(params)
+  res.then((data) => {
+    renderWeather(data)
+  })
+  getPlacesWeather().then(renderPlacesWeather)
 }
 
 /**
