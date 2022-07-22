@@ -8,7 +8,7 @@ import { getTranslation } from './dictionary.js'
 import { getIconUrl } from './parse.js'
 import * as g from './globals.js'
 const { v4 } = require('uuid')
-const GOOGLE_API_KEY = process.env.API_KEY
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY
 
 /**
  * initialize page
