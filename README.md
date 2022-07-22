@@ -3,15 +3,17 @@
 Practice
 
 - client / server
+- asynchronous programming
 - OpenWeather
 - express
 - axios
-- css grid, responsive design
+- google maps api
+- css grid, responsive design, transitions, dark/light mode, etc
 - localStorage
 - date-fns
 - dotenv
 - uuid
 - regex
 - jest
-- cypress (fixtures, intercepts, implicit and explicit assertions, validating numerous child values at the collection level)
-- parcel
+- cypress (fixtures, intercepts, etc)
+- parcel v2
