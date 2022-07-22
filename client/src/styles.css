@@ -112,12 +112,13 @@ body {
   filter: blur(8px);
 }
 
+/* page container to drive responsive design */
 .page-grid-container {
   display: grid;
 }
 
 .page-grid-frame {
-  /* mobile: center container within parent using margin auto with specified width */
+  /* center responsively within page container using combo of margin auto and specified width */
   width: 94%;
   margin: 0 auto;
   display: grid;
