@@ -425,7 +425,7 @@ function newPlace() {
   }
 
   setStorage(g.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
-  console.log('new places: ', places)
+  // console.log('new places: ', places)
 }
 
 //hide delete place button when tabbing to new place button
