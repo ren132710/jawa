@@ -203,6 +203,10 @@ body[data-theme='dark'] .place-card:focus {
   background-color: hsla(0, 0%, 95%, 0.3);
 }
 
+body[data-theme='dark'] footer > a:visited {
+  color: var(--blue-65);
+}
+
 /*
  * header
  */
