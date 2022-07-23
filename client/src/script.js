@@ -67,9 +67,9 @@ async function getPlacesWeather() {
 
 function setTranslations(lang) {
   qs('[data-place-search]').placeholder = getTranslation(1, lang)
-  qs('[data-dictionary="Current"]').textContent = getTranslation(2, lang)
-  qs('[data-dictionary="Forecast"]').textContent = getTranslation(3, lang)
-  qs('[data-dictionary="Hourly"]').textContent = getTranslation(4, lang)
+  qs('[data-dictionary="2"]').textContent = getTranslation(2, lang)
+  qs('[data-dictionary="3"]').textContent = getTranslation(3, lang)
+  qs('[data-dictionary="4"]').textContent = getTranslation(4, lang)
 }
 
 /**
