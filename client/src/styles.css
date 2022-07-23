@@ -203,6 +203,7 @@ body[data-theme='dark'] .place-card:focus {
   background-color: hsla(0, 0%, 95%, 0.3);
 }
 
+body[data-theme='dark'] footer > a:link,
 body[data-theme='dark'] footer > a:visited {
   color: var(--blue-65);
 }
@@ -720,7 +721,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   height: 30px;
   margin: 2rem 1rem;
 }
@@ -730,8 +731,9 @@ footer > a:focus {
   text-decoration: none;
 }
 
+footer > a:link,
 footer > a:visited {
-  color: var(--blue-35);
+  color: var(--color-value);
 }
 
 /*
