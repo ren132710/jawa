@@ -3,7 +3,7 @@ const SERVER = process.env.JAWA_SERVER || 'localhost'
 const PORT = process.env.JAWA_PORT || '3001'
 const HTTP_PROTOCOL = process.env.HTTP_PROTOCOL || 'http'
 const AXIOS_TIMEOUT = process.env.AXIOS_TIMEOUT || 10000 //allow time for server container to wake up
-console.log('SERVER: ', SERVER)
+
 /**
  * OpenWeather
  * @param {string} lat: latitude, required by OpenWeather
