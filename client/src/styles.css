@@ -743,7 +743,7 @@ footer > a:visited {
 @media screen and (min-width: 360px) {
   /* Galaxy S20 */
   .current-temp {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
   }
 
   .current-feels-like {
@@ -753,19 +753,19 @@ footer > a:visited {
 
 @media screen and (min-width: 375px) {
   .current-temp {
-    font-size: 2.6rem;
+    font-size: 2.5rem;
   }
 }
 
 @media screen and (min-width: 380px) {
   .current-temp {
-    font-size: 2.75rem;
+    font-size: 2.7rem;
   }
 }
 
 @media screen and (min-width: 391px) {
   .current-temp {
-    font-size: 3rem;
+    font-size: 2.85rem;
   }
 }
 
