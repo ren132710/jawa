@@ -1,7 +1,9 @@
 import axios from 'axios'
 const SERVER = process.env.JAWA_SERVER || 'localhost'
 const PORT = process.env.JAWA_PORT || '3001'
+const HTTP_PROTOCOL = process.env.HTTP_PROTOCOL || 'http'
 const AXIOS_TIMEOUT = process.env.AXIOS_TIMEOUT || 10000 //allow time for server container to wake up
+console.log('SERVER: ', SERVER)
 /**
  * OpenWeather
  * @param {string} lat: latitude, required by OpenWeather
@@ -19,7 +21,7 @@ const AXIOS_TIMEOUT = process.env.AXIOS_TIMEOUT || 10000 //allow time for server
 export async function getWeather(params) {
   const { lat, long, units, lang, id, location } = params
   try {
-    const res = await axios.get(`http://${SERVER}:${PORT}/weather`, {
+    const res = await axios.get(`${HTTP_PROTOCOL}://${SERVER}:${PORT}/weather`, {
       params: { lat, long, units, lang, id, location },
       timeout: `${AXIOS_TIMEOUT}`,
     })
