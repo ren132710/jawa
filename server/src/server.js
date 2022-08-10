@@ -6,7 +6,7 @@ const cors = require('cors')
 const axios = require('axios')
 const app = express()
 const { getCardinalDirection, getUVIndexLevel } = require('./utils.js')
-const PORT = process.env.PORT_LISTEN || 3001
+const PORT = process.env.PORT || 3001
 const API_KEY = process.env.API_KEY
 const URL = 'https://api.openweathermap.org/data/3.0/onecall'
 
