@@ -1,4 +1,4 @@
-import { getUnitOfMeasure } from './units.js'
+import { getUnitOfMeasure } from './unitSelection.js'
 
 describe('#getUnitOfMeasure', () => {
   it('should return the correct uom for the given system and category', () => {
