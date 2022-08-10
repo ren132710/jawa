@@ -9,7 +9,8 @@
   "scripts": {
     "devStart": "nodemon ./src/server.js",
     "start": "node ./src/server.js",
-    "test:unit": "dotenv -v SERVER_UNIT_TEST=true jest \\.unit\\. --coverage --detectOpenHandles"
+    "test:unit": "dotenv -v SERVER_UNIT_TEST=true jest \\.unit\\. --coverage --detectOpenHandles",
+    "deploy:heroku": "cd ../ && git subtree push --prefix server heroku-server main || true"
   },
   "keywords": [],
   "author": "",
