@@ -4,7 +4,7 @@ const SERVER = process.env.JAWA_SERVER || 'localhost'
 const PORT = process.env.JAWA_PORT || '3001'
 //allow time for cloud server container to wake up
 const AXIOS_TIMEOUT = process.env.AXIOS_TIMEOUT || 10000
-// 'my-app.herokuapp.com' || 'http://localhost:3001'
+// 'my-app-server.herokuapp.com' || 'http://localhost:3001'
 const JAWA_SERVER = process.env.CLOUD_JAWA_SERVER || `${HTTP_PROTOCOL}://${SERVER}:${PORT}`
 
 /**
