@@ -17,3 +17,4 @@ Practice
 - jest
 - cypress (fixtures, intercepts, etc)
 - parcel v2
+- heroku deployment
