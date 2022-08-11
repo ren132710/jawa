@@ -99,7 +99,6 @@ body {
   padding: 0;
   color: var(--color);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: greyscale;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
   font-size: var(--font-size);
