@@ -173,7 +173,7 @@ body[data-theme='dark'] {
   transition: var(--transition-duration-theme) var(--transition-timing-function-theme);
 }
 
-[data-theme='dark'] .header-bg-active {
+body[data-theme='dark'] .header-bg-active {
   --color: var(--blue-10);
   --svg-fill-color: var(--blue-10);
 }
