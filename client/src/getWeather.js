@@ -1,8 +1,11 @@
 import axios from 'axios'
+const HTTP_PROTOCOL = process.env.HTTP_PROTOCOL || 'http'
 const SERVER = process.env.JAWA_SERVER || 'localhost'
 const PORT = process.env.JAWA_PORT || '3001'
-const HTTP_PROTOCOL = process.env.HTTP_PROTOCOL || 'http'
-const AXIOS_TIMEOUT = process.env.AXIOS_TIMEOUT || 10000 //allow time for server container to wake up
+//allow time for cloud server container to wake up
+const AXIOS_TIMEOUT = process.env.AXIOS_TIMEOUT || 10000
+// 'my-app.herokuapp.com' || 'http://localhost:3001'
+const JAWA_SERVER = process.env.CLOUD_JAWA_SERVER || `${HTTP_PROTOCOL}://${SERVER}:${PORT}`
 
 /**
  * OpenWeather
@@ -21,7 +24,7 @@ const AXIOS_TIMEOUT = process.env.AXIOS_TIMEOUT || 10000 //allow time for server
 export async function getWeather(params) {
   const { lat, long, units, lang, id, location } = params
   try {
-    const res = await axios.get(`${HTTP_PROTOCOL}://${SERVER}:${PORT}/weather`, {
+    const res = await axios.get(`${JAWA_SERVER}/weather`, {
       params: { lat, long, units, lang, id, location },
       timeout: `${AXIOS_TIMEOUT}`,
     })
