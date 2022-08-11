@@ -9,7 +9,6 @@ const JAWA_SERVER = process.env.CLOUD_JAWA_SERVER || `${HTTP_PROTOCOL}://${SERVE
 
 let url
 url = process.env.NODE_ENV === 'production' ? `https://${JAWA_SERVER}/weather` : `${JAWA_SERVER}/weather`
-console.log('getWeather url: ', url)
 
 /**
  * OpenWeather
@@ -32,8 +31,6 @@ export async function getWeather(params) {
       params: { lat, long, units, lang, id, location },
       timeout: `${AXIOS_TIMEOUT}`,
     })
-    console.log('res: ', res)
-    console.log('res.data: ', res.data)
     return res.data
   } catch (e) {
     console.error(`ERROR: ${e}`)
