@@ -6,7 +6,10 @@ const PORT = process.env.JAWA_PORT || '3001'
 const AXIOS_TIMEOUT = process.env.AXIOS_TIMEOUT || 10000
 // 'my-app-server.herokuapp.com' || 'http://localhost:3001'
 const JAWA_SERVER = process.env.CLOUD_JAWA_SERVER || `${HTTP_PROTOCOL}://${SERVER}:${PORT}`
-console.log('JAWA_SERVER: ', JAWA_SERVER)
+
+let url
+url = process.env.NODE_ENV === 'production' ? `https://${JAWA_SERVER}/weather` : `${JAWA_SERVER}/weather`
+console.log('getWeather url: ', url)
 
 /**
  * OpenWeather
@@ -25,7 +28,7 @@ console.log('JAWA_SERVER: ', JAWA_SERVER)
 export async function getWeather(params) {
   const { lat, long, units, lang, id, location } = params
   try {
-    const res = await axios.get(`${JAWA_SERVER}/weather`, {
+    const res = await axios.get(url, {
       params: { lat, long, units, lang, id, location },
       timeout: `${AXIOS_TIMEOUT}`,
     })
