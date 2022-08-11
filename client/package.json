@@ -14,7 +14,6 @@
     "test:e2e:browser": "start-server-and-test start http://localhost:1234 cy:open",
     "test:e2e:headless": "start-server-and-test start http://localhost:1234 cy:run",
     "test:all": "npm run test:unit && npm run test:e2e:headless",
-    "heroku-postbuild": "parcel build ./src/index.html",
     "deploy:heroku": "cd ../ && git subtree push --prefix client heroku-client main || true"
   },
   "keywords": [],
@@ -38,5 +37,10 @@
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "start-server-and-test": "^1.14.0"
-  }
+  },
+  "browserslist": [
+    ">1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
