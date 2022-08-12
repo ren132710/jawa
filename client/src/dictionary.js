@@ -7,7 +7,7 @@ const DICTIONARY = {
   1: { en: 'Weather at your places', fr: 'Météo à vos lieux', sv: 'Väder på dina platser' },
   2: { en: 'Current Weather', fr: 'Météo Actuelle', sv: 'Vädret Just Nu' },
   3: { en: 'Forecast', fr: 'Prévisions', sv: 'Prognos' },
-  4: { en: 'Hourly Weather', fr: 'Heure par Heure', sv: 'Timmar' },
+  4: { en: 'Hourly Weather', fr: 'Prévisions Horaires', sv: 'Timmar' },
   5: { en: 'New Place', fr: 'Noveau Lieu', sv: 'Ny Plats' },
   6: { en: 'Feels Like', fr: 'T. Ressentie', sv: 'Känns som' },
   7: { en: 'Precip', fr: 'Précip', sv: 'Nederbörd' },
