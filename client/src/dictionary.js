@@ -5,13 +5,8 @@ const DICTIONARY = {
   2: { en: 'Current Weather', fr: 'Météo Actuelle', sv: 'Vädret Just Nu' },
   3: { en: 'Forecast', fr: 'Prévisions', sv: 'Prognos' },
   4: { en: 'Hourly Weather', fr: 'Prévisions Horaires', sv: 'Timmar' },
-<<<<<<< HEAD
-  5: { en: 'New Place', fr: 'Noveau Lieu', sv: 'Ny Plats' },
-  6: { en: 'Feels Like', fr: 'Ressenti', sv: 'Känns som' },
-=======
   5: { en: 'New Place', fr: 'Nouveau Lieu', sv: 'Ny Plats' },
   6: { en: 'Feels like', fr: 'Ressenti', sv: 'Känns som' },
->>>>>>> develop
   7: { en: 'Precip', fr: 'Précip', sv: 'Nederbörd' },
   8: { en: 'Visibility', fr: 'Visibilité', sv: 'Sikt' },
   9: { en: 'UV Index', fr: 'Indice UV', sv: 'UV-index' },
