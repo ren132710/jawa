@@ -273,7 +273,7 @@ describe('#scenario: prefs', () => {
     cy.get('body').should('have.attr', 'data-theme', 'jawa')
   })
 
-  it.only('should allow user to successfully switch language', function () {
+  it('should allow user to successfully switch language', function () {
     //given: default language = 'en'
     const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
     expect(prefs[0].lang).to.eq('en')
