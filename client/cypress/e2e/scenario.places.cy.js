@@ -11,7 +11,7 @@ describe('#scenario: places', () => {
     },
   ]
 
-  const testPrefs = [{ units: 'imperial', theme: 'morning' }]
+  const testPrefs = [{ units: 'imperial', theme: 'morning', lang: 'en' }]
 
   function setTestDefaults() {
     localStorage.setItem('jawa-places', JSON.stringify(testPlace))
