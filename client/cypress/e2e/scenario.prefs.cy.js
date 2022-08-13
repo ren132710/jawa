@@ -273,7 +273,7 @@ describe('#scenario: prefs', () => {
     cy.get('body').should('have.attr', 'data-theme', 'jawa')
   })
 
-  it('should allow user to successfully switch language', function () {
+  it.only('should allow user to successfully switch language', function () {
     //given: default language = 'en'
     const prefs = JSON.parse(localStorage.getItem('jawa-prefs'))
     expect(prefs[0].lang).to.eq('en')
@@ -295,10 +295,53 @@ describe('#scenario: prefs', () => {
       })
 
     //then: language should be switched to fr
-    cy.get('[data-place-search]').should('have.attr', 'placeholder', 'Météo à vos places')
+    cy.get('[data-place-search]').should('have.attr', 'placeholder', 'Météo à vos lieux')
     cy.get('[data-dictionary="2"]').contains('Météo Actuelle')
     cy.get('[data-dictionary="3"]').contains('Prévisions')
-    cy.get('[data-dictionary="4"]').contains('Heure par Heure')
+    cy.get('[data-dictionary="4"]').contains('Prévisions Horaires')
+    cy.get('[data-dictionary="5"]').contains('Nouveau Lieu')
+    cy.get('[data-dictionary="6"]').contains('Ressenti')
+    cy.get('[data-dictionary="7"]').contains('Précip')
+    cy.get('[data-dictionary="8"]').contains('Visibilité')
+    cy.get('[data-dictionary="9"]').contains('Indice UV')
+    cy.get('[data-dictionary="10"]').contains('Humidité')
+    cy.get('[data-dictionary="11"]').contains('Vent')
+    cy.get('[data-dictionary="12"]').contains('Point de rosée')
+    cy.get('[data-dictionary="13"]').contains('Lever du soleil')
+    cy.get('[data-dictionary="14"]').contains('Coucher du soleil')
+
+    cy.get('.daily-container')
+      .children('div')
+      .should('have.length', 7) //shorter way to evaluate collection size
+      .then(() => {
+        cy.get('.daily-container [data-dictionary="10"]').should(
+          'have.text',
+          'HumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumidité'
+        )
+        cy.get('.daily-container [data-dictionary="11"]').should('have.text', 'VentVentVentVentVentVentVent')
+      })
+
+    cy.get('.hourly-container')
+      .children('div')
+      .should('have.length', 12) //shorter way to evaluate collection size
+      .then(() => {
+        cy.get('.hourly-container [data-dictionary="7"]').should(
+          'have.text',
+          'PrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécip'
+        )
+        cy.get('.hourly-container [data-dictionary="9"]').should(
+          'have.text',
+          'Indice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UV'
+        )
+        cy.get('.hourly-container [data-dictionary="10"]').should(
+          'have.text',
+          'HumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumidité'
+        )
+        cy.get('.hourly-container [data-dictionary="11"]').should(
+          'have.text',
+          'VentVentVentVentVentVentVentVentVentVentVentVent'
+        )
+      })
 
     //when: user switches to Swedish
     cy.get('.menu-toggle').click()
@@ -321,6 +364,49 @@ describe('#scenario: prefs', () => {
     cy.get('[data-dictionary="2"]').contains('Vädret Just Nu')
     cy.get('[data-dictionary="3"]').contains('Prognos')
     cy.get('[data-dictionary="4"]').contains('Timmar')
+    cy.get('[data-dictionary="5"]').contains('Ny Plats')
+    cy.get('[data-dictionary="6"]').contains('Känns som')
+    cy.get('[data-dictionary="7"]').contains('Nederbörd')
+    cy.get('[data-dictionary="8"]').contains('Sikt')
+    cy.get('[data-dictionary="9"]').contains('UV-index')
+    cy.get('[data-dictionary="10"]').contains('Luftfuktighet')
+    cy.get('[data-dictionary="11"]').contains('Vind')
+    cy.get('[data-dictionary="12"]').contains('Daggpunkt')
+    cy.get('[data-dictionary="13"]').contains('Soluppgång')
+    cy.get('[data-dictionary="14"]').contains('Solnedgång')
+
+    cy.get('.daily-container')
+      .children('div')
+      .should('have.length', 7)
+      .then(() => {
+        cy.get('.daily-container [data-dictionary="10"]').should(
+          'have.text',
+          'LuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighet'
+        )
+        cy.get('.daily-container [data-dictionary="11"]').should('have.text', 'VindVindVindVindVindVindVind')
+      })
+
+    cy.get('.hourly-container')
+      .children('div')
+      .should('have.length', 12)
+      .then(() => {
+        cy.get('.hourly-container [data-dictionary="7"]').should(
+          'have.text',
+          'NederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbörd'
+        )
+        cy.get('.hourly-container [data-dictionary="9"]').should(
+          'have.text',
+          'UV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-index'
+        )
+        cy.get('.hourly-container [data-dictionary="10"]').should(
+          'have.text',
+          'LuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighet'
+        )
+        cy.get('.hourly-container [data-dictionary="11"]').should(
+          'have.text',
+          'VindVindVindVindVindVindVindVindVindVindVindVind'
+        )
+      })
 
     //when: user switches back to the default English'
     cy.get('.menu-toggle').click()
@@ -343,5 +429,48 @@ describe('#scenario: prefs', () => {
     cy.get('[data-dictionary="2"]').contains('Current Weather')
     cy.get('[data-dictionary="3"]').contains('Forecast')
     cy.get('[data-dictionary="4"]').contains('Hourly Weather')
+    cy.get('[data-dictionary="5"]').contains('New Place')
+    cy.get('[data-dictionary="6"]').contains('Feels like')
+    cy.get('[data-dictionary="7"]').contains('Precip')
+    cy.get('[data-dictionary="8"]').contains('Visibility')
+    cy.get('[data-dictionary="9"]').contains('UV Index')
+    cy.get('[data-dictionary="10"]').contains('Humidity')
+    cy.get('[data-dictionary="11"]').contains('Wind')
+    cy.get('[data-dictionary="12"]').contains('Dew Point')
+    cy.get('[data-dictionary="13"]').contains('Sunrise')
+    cy.get('[data-dictionary="14"]').contains('Sunset')
+
+    cy.get('.daily-container')
+      .children('div')
+      .should('have.length', 7) //shorter way to evaluate collection size
+      .then(() => {
+        cy.get('.daily-container [data-dictionary="10"]').should(
+          'have.text',
+          'HumidityHumidityHumidityHumidityHumidityHumidityHumidity'
+        )
+        cy.get('.daily-container [data-dictionary="11"]').should('have.text', 'WindWindWindWindWindWindWind')
+      })
+
+    cy.get('.hourly-container')
+      .children('div')
+      .should('have.length', 12) //shorter way to evaluate collection size
+      .then(() => {
+        cy.get('.hourly-container [data-dictionary="7"]').should(
+          'have.text',
+          'PrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecip'
+        )
+        cy.get('.hourly-container [data-dictionary="9"]').should(
+          'have.text',
+          'UV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV Index'
+        )
+        cy.get('.hourly-container [data-dictionary="10"]').should(
+          'have.text',
+          'HumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidity'
+        )
+        cy.get('.hourly-container [data-dictionary="11"]').should(
+          'have.text',
+          'WindWindWindWindWindWindWindWindWindWindWindWind'
+        )
+      })
   })
 })

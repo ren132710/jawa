@@ -4,7 +4,7 @@ import { getLocalStorage, setLocalStorage } from './localStorage.js'
 import { newGlobalEventListener, qs } from './domUtils.js'
 import * as df from './dateUtils.js'
 import { getUnitOfMeasure } from './unitSelection.js'
-import { getTranslation } from './dictionary.js'
+import { setTranslations } from './dictionary.js'
 import { getIconUrl } from './parse.js'
 import * as g from './globals.js'
 const { v4 } = require('uuid')
@@ -21,14 +21,13 @@ let prefs = []
 getStorage(g.PREFS_STORAGE_KEY, g.DEFAULT_PREFS)
   .then((userPrefs) => {
     prefs = userPrefs
-    console.log('prefs from localStorage ', userPrefs)
+    // console.log('prefs from localStorage ', userPrefs)
     setTheme(prefs[0].theme)
-    setTranslations(prefs[0].lang)
   })
   .then(
     getStorage(g.PLACES_STORAGE_KEY, g.DEFAULT_PLACES).then((userPlaces) => {
       places = userPlaces
-      console.log('places from localStorage ', userPlaces)
+      // console.log('places from localStorage ', userPlaces)
     })
   )
   .then(getPlacesWeather)
@@ -39,7 +38,7 @@ getStorage(g.PREFS_STORAGE_KEY, g.DEFAULT_PREFS)
   })
 
 function initialize() {
-  console.log('placesWeather initialized: ', placesWeather)
+  // console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
   renderWeather(placesWeather[0])
 }
@@ -63,13 +62,6 @@ async function getPlacesWeather() {
   await Promise.all(promises).then((data) => {
     placesWeather = data
   })
-}
-
-function setTranslations(lang) {
-  qs('[data-place-search]').placeholder = getTranslation(1, lang)
-  qs('[data-dictionary="2"]').textContent = getTranslation(2, lang)
-  qs('[data-dictionary="3"]').textContent = getTranslation(3, lang)
-  qs('[data-dictionary="4"]').textContent = getTranslation(4, lang)
 }
 
 /**
@@ -131,7 +123,6 @@ function switchTheme(key, value) {
 
 function switchLang(key, value) {
   updatePrefs(key, value)
-  setTranslations(prefs[0][key])
   updateWeather()
 }
 
@@ -144,7 +135,7 @@ function updatePrefs(key, value) {
   setStorage(g.PREFS_STORAGE_KEY, prefs)
 }
 
-function updateWeather() {
+async function updateWeather() {
   const params = {
     lat: qs('[data-current-lat]').dataset.currentLat,
     long: qs('[data-current-long]').dataset.currentLong,
@@ -294,6 +285,7 @@ function renderWeather({ coordinates, current, daily, hourly }) {
   renderCurrentWeather({ coordinates, current })
   renderDailyWeather(daily)
   renderHourlyWeather(hourly, coordinates)
+  setTranslations(prefs[0].lang)
 }
 
 //render current weather
@@ -353,6 +345,7 @@ function renderDailyWeather(daily) {
     qs('[data-daily-description]', card).textContent = day.description
     qs('[data-hl] > [data-daily-high]', card).textContent = day.high
     qs('[data-hl] > [data-daily-low]', card).textContent = day.low
+    qs('[data-daily-humidity]', card).textContent = day.humidity
     qs('[data-daily-humidity]', card).textContent = day.humidity
     qs('[data-daily-wind-speed]', card).textContent = day.windSpeed
     qs('[data-wind-units]', card).dataset.windUnits = ` ${getUnitOfMeasure(prefs[0].units, 'velocity')} `

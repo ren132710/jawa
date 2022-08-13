@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles.css" />
     <script defer src="//code.iconify.design/1/1.0.6/iconify.min.js"></script>
     <script defer src="index.js" type="module"></script>
-    <title>JAWA | Just Another Weather App</title>
+    <title>jawa | just another weather app</title>
   </head>
   <body class="blurred">
     <header>
@@ -61,7 +61,7 @@
             <div class="current-container">
               <div class="current-top-left">
                 <div class="current-location" data-current-id data-current-location></div>
-                <button id="btnNewPlace" class="place-btn-new" data-new-place>New Place</button>
+                <button id="btnNewPlace" class="place-btn-new" data-new-place data-dictionary="5">New Place</button>
                 <img
                   class="weather-icon large"
                   src="http://openweathermap.org/img/wn/10d@4x.png"
@@ -79,41 +79,63 @@
                     <span data-current-high></span>/<span class="degrees" data-current-low></span>
                   </div>
                   <div class="current-temp" data-temp-units=" F"><span class="degrees" data-current-temp></span></div>
-                  <div class="current-feels-like">Feels Like:&nbsp;<span class="degrees" data-current-fl></span></div>
+                  <div class="current-feels-like">
+                    <span data-dictionary="6">Feels Like</span><span>:&nbsp;</span>
+                    <span class="degrees value" data-current-fl></span>
+                  </div>
                   <div class="current-description" data-current-description></div>
-                  <div class="label">Precip:&nbsp;<span class="value percent" data-current-precip></span></div>
-                  <div class="label visibility">
-                    Visibility:&nbsp;<span class="value" data-current-visibility data-visibility-units=" mi"></span>
+                  <div class="label">
+                    <span data-dictionary="7">Precip</span><span>:&nbsp;</span>
+                    <span class="value percent" data-current-precip></span>
+                  </div>
+                  <div class="label">
+                    <span data-dictionary="8">Visibility</span><span>:&nbsp;</span>
+                    <span class="value" data-current-visibility data-visibility-units=" mi"></span>
                   </div>
                 </div>
               </div>
               <div class="current-bottom-left">
                 <div class="label">
-                  UV Index:&nbsp;<span class="value" data-current-uv-index></span><span>&nbsp;</span
-                  ><span class="value" data-current-uv-level></span>
+                  <span data-dictionary="9">UV Index</span><span>:&nbsp;</span>
+                  <span class="value" data-current-uv-index></span>
+                  <span>&nbsp;</span>
+                  <span class="value" data-current-uv-level></span>
                 </div>
-                <div class="label">Humidity:&nbsp;<span class="value percent" data-current-humidity></span></div>
                 <div class="label">
-                  Wind:&nbsp;<span class="value" data-current-wind-speed data-wind-units=" mi/h "></span>
+                  <span data-dictionary="10">Humidity</span><span>:&nbsp;</span>
+                  <span class="value percent" data-current-humidity></span>
+                </div>
+                <div class="label">
+                  <span data-dictionary="11">Wind</span><span>:&nbsp;</span>
+                  <span class="value" data-current-wind-speed data-wind-units=" mi/h "></span>
                   <span class="value" data-current-wind-direction></span>
                 </div>
               </div>
               <div class="current-bottom-right">
-                <div class="label">Dew Point:&nbsp;<span class="value degrees" data-current-dew-point></span></div>
-                <div class="label">Sunrise:&nbsp;<span class="value" data-current-sunrise></span></div>
-                <div class="label">Sunset:&nbsp;<span class="value" data-current-sunset></span></div>
+                <div class="label">
+                  <span data-dictionary="12">Dew Point</span><span>:&nbsp;</span>
+                  <span class="value degrees" data-current-dew-point></span>
+                </div>
+                <div class="label">
+                  <span data-dictionary="13">Sunrise</span><span>:&nbsp;</span>
+                  <span class="value" data-current-sunrise></span>
+                </div>
+                <div class="label">
+                  <span data-dictionary="14">Sunset</span><span>:&nbsp;</span>
+                  <span class="value" data-current-sunset></span>
+                </div>
               </div>
             </div>
           </div>
           <div class="daily-section">
             <div class="section-title" data-dictionary="3">Forecast</div>
-            <div class="section-subtitle"><span>&nbsp</span></div>
-            <div class="daily-container"></div>
+            <div class="section-subtitle"><span>&nbsp;</span></div>
+            <div class="daily-container" data-daily-container></div>
           </div>
           <div class="hourly-section">
             <div class="section-title" data-dictionary="4">Hourly Weather</div>
             <div class="section-subtitle" data-hour-timezone></div>
-            <div class="hourly-container"></div>
+            <div class="hourly-container" data-hourly-container></div>
           </div>
         </main>
 
@@ -155,10 +177,14 @@
         <div class="daily-date" data-daily-date></div>
         <div data-hl><span data-daily-high></span>/<span class="degrees" data-daily-low></span></div>
         <div class="daily-description" data-daily-description></div>
-        <div class="label">Humidity:&nbsp;<span class="value percent" data-daily-humidity></span></div>
         <div class="label">
-          Wind:&nbsp;<span class="value" data-daily-wind-speed data-wind-units=" mi/h "></span
-          ><span class="value" data-daily-wind-direction></span>
+          <span data-dictionary="10">Humidity</span><span>:&nbsp;</span>
+          <span class="value percent" data-daily-humidity></span>
+        </div>
+        <div class="label">
+          <span data-dictionary="11">Wind</span><span>:&nbsp;</span>
+          <span class="value" data-daily-wind-speed data-wind-units=" mi/h "></span>
+          <span class="value" data-daily-wind-direction></span>
         </div>
       </div>
     </template>
@@ -188,26 +214,26 @@
           </div>
         </div>
         <div class="hour-data">
-          <div class="hour-label">Precip</div>
+          <div class="hour-label" data-dictionary="7">Precip</div>
           <div class="hour-value-margin">
             <span class="hour-value percent" data-hour-precip></span>
           </div>
         </div>
         <div class="hour-data">
-          <div class="hour-label">Wind</div>
+          <div class="hour-label" data-dictionary="11">Wind</div>
           <div class="hour-value-margin">
-            <span class="hour-value" data-hour-wind-speed data-wind-units=" mi/h "></span
-            ><span class="hour-value" data-hour-wind-direction></span>
+            <span class="hour-value" data-hour-wind-speed data-wind-units=" mi/h "></span>
+            <span class="hour-value" data-hour-wind-direction></span>
           </div>
         </div>
         <div class="hour-data">
-          <div class="hour-label">Humidity</div>
+          <div class="hour-label" data-dictionary="10">Humidity</div>
           <div class="hour-value-margin">
             <span class="hour-value percent" data-hour-humidity></span>
           </div>
         </div>
         <div class="hour-data">
-          <div class="hour-label">UV Index</div>
+          <div class="hour-label" data-dictionary="9">UV Index</div>
           <div class="hour-value-margin"><span class="hour-value" data-hour-uv-level></span></div>
         </div>
       </div>

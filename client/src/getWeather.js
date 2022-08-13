@@ -2,7 +2,7 @@ import axios from 'axios'
 const AXIOS_TIMEOUT = process.env.AXIOS_TIMEOUT || 10000 //allow time for cloud server container to wake up
 const SERVER = process.env.JAWA_SERVER || 'localhost'
 const PORT = process.env.JAWA_PORT || '3001'
-// 'jawa-server.herokuapp.com' || 'localhost:3001'
+// 'my-app-server.herokuapp.com' || 'localhost:3001'
 const JAWA_SERVER = process.env.CLOUD_JAWA_SERVER || `${SERVER}:${PORT}`
 const URL = process.env.NODE_ENV === 'production' ? `https://${JAWA_SERVER}/weather` : `http://${JAWA_SERVER}/weather`
 
