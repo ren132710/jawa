@@ -1,4 +1,4 @@
-# Just Another Weather App
+# just another weather app
 
 Practice
 
