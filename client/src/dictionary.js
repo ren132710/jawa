@@ -22,7 +22,6 @@ function getTranslation(index, lang) {
 }
 
 export function setTranslations(lang) {
-  console.log('setTranslations called')
   // set language for main page
   qs('[data-place-search]').placeholder = getTranslation(1, lang)
   qs('[data-dictionary="2"]').textContent = getTranslation(2, lang)

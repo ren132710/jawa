@@ -41,6 +41,7 @@ function initialize() {
   // console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
   renderWeather(placesWeather[0])
+  setTranslations(prefs[0].lang)
 }
 
 async function getPlacesWeather() {
@@ -121,13 +122,14 @@ function switchTheme(key, value) {
   setTheme(value)
 }
 
-function switchLang(key, value) {
-  updatePrefs(key, value)
-  updateWeather()
-}
-
 function setTheme(value) {
   qs('body').setAttribute('data-theme', value)
+}
+
+async function switchLang(key, value) {
+  updatePrefs(key, value)
+  await updateWeather()
+  setTranslations(prefs[0].lang)
 }
 
 function updatePrefs(key, value) {
@@ -145,10 +147,9 @@ async function updateWeather() {
     location: qs('[data-current-location]').dataset.currentLocation,
   }
 
-  const res = getWeather(params)
-  res.then((data) => {
-    renderWeather(data)
-  })
+  const res = await getWeather(params)
+  renderWeather(res)
+
   getPlacesWeather().then(renderPlacesWeather)
 }
 
@@ -285,7 +286,6 @@ function renderWeather({ coordinates, current, daily, hourly }) {
   renderCurrentWeather({ coordinates, current })
   renderDailyWeather(daily)
   renderHourlyWeather(hourly, coordinates)
-  setTranslations(prefs[0].lang)
 }
 
 //render current weather
@@ -418,7 +418,6 @@ function newPlace() {
   }
 
   setStorage(g.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
-  // console.log('new places: ', places)
 }
 
 //hide delete place button when tabbing to new place button
