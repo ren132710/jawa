@@ -41,7 +41,6 @@ function initialize() {
   // console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
   renderWeather(placesWeather[0])
-  setTranslations(prefs[0].lang)
 }
 
 async function getPlacesWeather() {
@@ -129,12 +128,6 @@ function setTheme(value) {
 async function switchLang(key, value) {
   updatePrefs(key, value)
   await updateWeather()
-  setTranslations(prefs[0].lang)
-}
-
-function updatePrefs(key, value) {
-  prefs[0][key] = value
-  setStorage(g.PREFS_STORAGE_KEY, prefs)
 }
 
 async function updateWeather() {
@@ -151,6 +144,11 @@ async function updateWeather() {
   renderWeather(res)
 
   getPlacesWeather().then(renderPlacesWeather)
+}
+
+function updatePrefs(key, value) {
+  prefs[0][key] = value
+  setStorage(g.PREFS_STORAGE_KEY, prefs)
 }
 
 /**
@@ -286,6 +284,7 @@ function renderWeather({ coordinates, current, daily, hourly }) {
   renderCurrentWeather({ coordinates, current })
   renderDailyWeather(daily)
   renderHourlyWeather(hourly, coordinates)
+  setTranslations(prefs[0].lang)
 }
 
 //render current weather
