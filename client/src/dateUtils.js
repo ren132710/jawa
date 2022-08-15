@@ -1,6 +1,6 @@
 //https://date-fns.org/v2.28.0/docs/format
-import { format, utcToZonedTime } from 'date-fns-tz'
-// import { format } from 'date-fns'
+import { utcToZonedTime } from 'date-fns-tz'
+import { format } from 'date-fns'
 import { en, fr, sv } from 'date-fns/locale'
 
 //Jan, Feb, Mar,...
