@@ -2,9 +2,6 @@
 import { format, utcToZonedTime } from 'date-fns-tz'
 // import { format } from 'date-fns'
 import { en, fr, sv } from 'date-fns/locale'
-console.log(en)
-console.log(fr)
-console.log(sv)
 
 //Jan, Feb, Mar,...
 export function formatMonth(timestamp, strLocale) {
