@@ -632,6 +632,10 @@ body[data-theme='dark'] footer > a:visited {
   display: none;
 }
 
+.daily-day {
+  text-transform: capitalize;
+}
+
 .daily-description {
   font-size: var(--font-size-small);
   color: var(--color-value);
@@ -664,6 +668,10 @@ body[data-theme='dark'] footer > a:visited {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.hour-day {
+  text-transform: capitalize;
 }
 
 .hour-data:nth-child(2) {

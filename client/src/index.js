@@ -38,7 +38,7 @@ getStorage(g.PREFS_STORAGE_KEY, g.DEFAULT_PREFS)
   })
 
 function initialize() {
-  // console.log('placesWeather initialized: ', placesWeather)
+  console.log('placesWeather initialized: ', placesWeather)
   renderPlacesWeather()
   renderWeather(placesWeather[0])
 }
@@ -290,9 +290,12 @@ function renderWeather({ coordinates, current, daily, hourly }) {
 //render current weather
 function renderCurrentWeather({ coordinates, current }) {
   //sub title
-  qs('[data-current-dt]').textContent = `${df.formatDayOfWeekShort(current.timestamp)} ${df.formatDayOfMonth(
+  qs('[data-current-dt]').textContent = `${df.formatDayOfWeekShort(
+    current.timestamp,
+    prefs[0].lang
+  )} ${df.formatDayOfMonth(current.timestamp)} ${df.formatMonth(current.timestamp, prefs[0].lang)} ${df.formatTime(
     current.timestamp
-  )} ${df.formatMonth(current.timestamp)} ${df.formatTime(current.timestamp)}`
+  )}`
 
   //top left quadrant
   qs('[data-current-id]').dataset.currentId = coordinates.id
@@ -340,7 +343,7 @@ function renderDailyWeather(daily) {
     const card = element.querySelector('.daily-card')
     qs('[data-daily-icon]', card).src = getIconUrl(day.icon)
     qs('[data-daily-icon]', card).alt = day.description
-    qs('[data-daily-date]', card).textContent = df.formatDayOfWeek(day.timestamp)
+    qs('[data-daily-date]', card).textContent = df.formatDayOfWeek(day.timestamp, prefs[0].lang)
     qs('[data-daily-description]', card).textContent = day.description
     qs('[data-hl] > [data-daily-high]', card).textContent = day.high
     qs('[data-hl] > [data-daily-low]', card).textContent = day.low
@@ -367,7 +370,7 @@ function renderHourlyWeather(hourly, coordinates) {
     .forEach((hour) => {
       const element = templateHourRow.content.cloneNode(true)
       const row = element.querySelector('.hour-row')
-      qs('[data-hour-date]', row).textContent = df.formatDayOfWeek(hour.timestamp)
+      qs('[data-hour-date]', row).textContent = df.formatDayOfWeek(hour.timestamp, prefs[0].lang)
       qs('[data-hour]', row).textContent = df.formatZonedHour(hour.timestamp, coordinates.timezone)
       qs('[data-hour-icon]', row).src = getIconUrl(hour.icon)
       qs('[data-hour-icon]', row).alt = hour.description

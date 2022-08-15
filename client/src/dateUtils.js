@@ -1,9 +1,15 @@
 //https://date-fns.org/v2.28.0/docs/format
 import { format, utcToZonedTime } from 'date-fns-tz'
+// import { format } from 'date-fns'
+import { en, fr, sv } from 'date-fns/locale'
+console.log(en)
+console.log(fr)
+console.log(sv)
 
 //Jan, Feb, Mar,...
-export function formatMonth(timestamp) {
-  return format(new Date(timestamp), 'MMM')
+export function formatMonth(timestamp, strLocale) {
+  locale = getLocale(strLocale)
+  return format(new Date(timestamp), 'MMM', { locale: locale })
 }
 
 //1, 2, ..., 31
@@ -12,13 +18,15 @@ export function formatDayOfMonth(timestamp) {
 }
 
 //Monday, Tuesday, Wednesday,...
-export function formatDayOfWeek(timestamp) {
-  return format(new Date(timestamp), 'EEEE')
+export function formatDayOfWeek(timestamp, strLocale) {
+  locale = getLocale(strLocale)
+  return format(new Date(timestamp), 'EEEE', { locale: locale })
 }
 
 //Mon, Tue,...
-export function formatDayOfWeekShort(timestamp) {
-  return format(new Date(timestamp), 'EEE')
+export function formatDayOfWeekShort(timestamp, strLocale) {
+  locale = getLocale(strLocale)
+  return format(new Date(timestamp), 'EEE', { locale: locale })
 }
 
 //5PM, 2AM
@@ -46,4 +54,21 @@ export function formatZonedTime(timestamp, timezone) {
 export function formatZonedHour(timestamp, timezone) {
   const zonedDate = utcToZonedTime(new Date(timestamp), timezone)
   return format(zonedDate, 'ha', { timezone })
+}
+
+/**
+ * helper functions
+ */
+
+function getLocale(strLocal) {
+  switch (strLocal) {
+    case 'en':
+      return en
+    case 'fr':
+      return fr
+    case 'sv':
+      return sv
+    default:
+      return en
+  }
 }
