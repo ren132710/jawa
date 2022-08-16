@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Practice",
   "engines": {
-    "node": "18.4.x",
+    "node": ">=16.x <=18.4.x",
     "npm": "8.12.x"
   },
   "scripts": {
@@ -14,8 +14,7 @@
     "cy:run": "cypress run -b chrome",
     "test:e2e:browser": "start-server-and-test start http://localhost:1234 cy:open",
     "test:e2e:headless": "start-server-and-test start http://localhost:1234 cy:run",
-    "test:all": "npm run test:unit && npm run test:e2e:headless",
-    "deploy:heroku": "cd ../ && git subtree push --prefix client heroku-client main || true"
+    "test:all": "npm run test:unit && npm run test:e2e:headless"
   },
   "keywords": [],
   "author": "",
