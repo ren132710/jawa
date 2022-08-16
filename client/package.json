@@ -14,7 +14,8 @@
     "cy:run": "cypress run -b chrome",
     "test:e2e:browser": "start-server-and-test start http://localhost:1234 cy:open",
     "test:e2e:headless": "start-server-and-test start http://localhost:1234 cy:run",
-    "test:all": "npm run test:unit && npm run test:e2e:headless"
+    "test:all": "npm run test:unit && npm run test:e2e:headless",
+    "deploy:heroku": "cd ../ && git subtree push --prefix client heroku-client main || true"
   },
   "keywords": [],
   "author": "",
