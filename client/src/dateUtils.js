@@ -1,7 +1,7 @@
 //https://date-fns.org/v2.28.0/docs/format
 import { utcToZonedTime } from 'date-fns-tz'
 import { format } from 'date-fns'
-import { en, fr, sv } from 'date-fns/locale'
+import { enUS, fr, sv } from 'date-fns/locale'
 
 //Jan, Feb, Mar,...
 export function formatMonth(timestamp, strLocale) {
@@ -60,12 +60,12 @@ export function formatZonedHour(timestamp, timezone) {
 function getLocale(strLocal) {
   switch (strLocal) {
     case 'en':
-      return en
+      return enUS
     case 'fr':
       return fr
     case 'sv':
       return sv
     default:
-      return en
+      return EventCounts
   }
 }
