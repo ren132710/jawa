@@ -363,8 +363,8 @@ function renderHourlyWeather(hourly, coordinates) {
   document.querySelector('[data-hour-timezone]').textContent = coordinates.timezone
   hourlyContainer.innerHTML = ''
   hourly
-    //only the first 24 hours
-    .slice(0, 24)
+    //only the first 36 hours
+    .slice(0, 36)
     //and every other hour
     .filter((h, i) => i % 2 === 1)
     .forEach((hour) => {

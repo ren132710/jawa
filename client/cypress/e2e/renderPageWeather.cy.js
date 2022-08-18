@@ -55,7 +55,7 @@ describe('#renderPageWeather', () => {
     cy.contains('Hourly Weather').should('exist')
     cy.contains('America/New_York').should('exist')
     cy.get('[data-hour-timezone]').should('have.text', 'America/New_York')
-    cy.get('.hourly-container').children('div').its('length').should('eq', 12)
+    cy.get('.hourly-container').children('div').its('length').should('eq', 18)
     //footer
     cy.contains('Powered By OpenWeather').should('exist')
     cy.get('a')
@@ -273,24 +273,27 @@ describe('#renderPageWeather', () => {
     cy.get('[data-hour-timezone]').should('have.text', 'America/New_York')
 
     //assert collection size
-    cy.get('.hourly-container').children('div').its('length').should('eq', 12)
+    cy.get('.hourly-container').children('div').its('length').should('eq', 18)
 
     //now, streamline testing by evaluating numerous child values at once at the collection level
     cy.get('.hourly-container')
       .children('div')
-      .should('have.length', 12) //shorter way to evaluate collection size
+      .should('have.length', 18) //shorter way to evaluate collection size
       .then(() => {
         cy.get('[data-hour-date]').should(
           'have.text',
-          'MondayMondayMondayMondayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayTuesday'
+          'MondayMondayMondayMondayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayTuesdayWednesdayWednesday'
         )
-        cy.get('[data-hour]').should('have.text', '6PM8PM10PM12AM2AM4AM6AM8AM10AM12PM2PM4PM')
-        cy.get('[data-hour-temp]').should('have.text', '777471686665646772757574')
-        cy.get('[data-hour-precip]').should('have.text', '000000000000')
-        cy.get('[data-hour-wind-speed]').should('have.text', '141312109871112162021')
-        cy.get('[data-hour-wind-direction]').should('have.text', 'SSSSWSWSWSWSWSSSS')
-        cy.get('[data-hour-humidity]').should('have.text', '384144464956636151495155')
-        cy.get('[data-hour-uv-level]').should('have.text', 'lowlowlowlowlowlowlowlowmediumhighhighmedium')
+        cy.get('[data-hour]').should('have.text', '6PM8PM10PM12AM2AM4AM6AM8AM10AM12PM2PM4PM6PM8PM10PM12AM2AM4AM')
+        cy.get('[data-hour-temp]').should('have.text', '777471686665646772757574727069686767')
+        cy.get('[data-hour-precip]').should('have.text', '000000000000003268784')
+        cy.get('[data-hour-wind-speed]').should('have.text', '141312109871112162021201716141210')
+        cy.get('[data-hour-wind-direction]').should('have.text', 'SSSSWSWSWSWSWSSSSSSSSSS')
+        cy.get('[data-hour-humidity]').should('have.text', '384144464956636151495155647276849294')
+        cy.get('[data-hour-uv-level]').should(
+          'have.text',
+          'lowlowlowlowlowlowlowlowmediumhighhighmediumlowlowlowlowlowlow'
+        )
       })
   })
 
@@ -309,6 +312,12 @@ describe('#renderPageWeather', () => {
       'http://openweathermap.org/img/wn/04d.png',
       'http://openweathermap.org/img/wn/04d.png',
       'http://openweathermap.org/img/wn/04d.png',
+      'http://openweathermap.org/img/wn/04d.png',
+      'http://openweathermap.org/img/wn/04d.png',
+      'http://openweathermap.org/img/wn/04n.png',
+      'http://openweathermap.org/img/wn/10n.png',
+      'http://openweathermap.org/img/wn/10n.png',
+      'http://openweathermap.org/img/wn/10n.png',
     ]
 
     const alts = [
@@ -324,10 +333,16 @@ describe('#renderPageWeather', () => {
       'overcast clouds',
       'overcast clouds',
       'broken clouds',
+      'broken clouds',
+      'overcast clouds',
+      'overcast clouds',
+      'light rain',
+      'moderate rain',
+      'light rain',
     ]
 
     cy.get('[data-hour-icon]')
-      .should('have.length', 12)
+      .should('have.length', 18)
       .each((img, index, arr) => {
         //cy.wrap the variable in order to call cypress commands
         cy.wrap(img).should('have.attr', 'src', icons[index])

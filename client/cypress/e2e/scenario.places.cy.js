@@ -49,7 +49,7 @@ describe('#scenario: places', () => {
     cy.get('.daily-container').children('div').its('length').should('eq', 7)
     //verify hourly section
     cy.get('[data-hour-timezone]').should('have.text', 'America/New_York')
-    cy.get('.hourly-container').children('div').its('length').should('eq', 12)
+    cy.get('.hourly-container').children('div').its('length').should('eq', 18)
     //and default units should be imperial
     cy.get('[data-temp-units]').should('have.attr', 'data-temp-units', ' F')
     cy.get('[data-visibility-units]').should('have.attr', 'data-visibility-units', ' mi')
@@ -79,7 +79,7 @@ describe('#scenario: places', () => {
     cy.get('.daily-container').children('div').its('length').should('eq', 7)
     //verify hourly section
     cy.get('[data-hour-timezone]').should('have.text', 'America/Chicago')
-    cy.get('.hourly-container').children('div').its('length').should('eq', 12)
+    cy.get('.hourly-container').children('div').its('length').should('eq', 18)
 
     //when user add austin to places
     cy.get('#btnNewPlace').click()
@@ -166,7 +166,7 @@ describe('#scenario: places', () => {
       cy.get('.daily-container').children('div').its('length').should('eq', 7)
       //verify hourly section
       cy.get('[data-hour-timezone]').should('have.text', 'America/Chicago')
-      cy.get('.hourly-container').children('div').its('length').should('eq', 12)
+      cy.get('.hourly-container').children('div').its('length').should('eq', 18)
     })
   })
 })

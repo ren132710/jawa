@@ -41,7 +41,7 @@ describe('#scenario: prefs', () => {
     cy.get('.daily-container').children('div').its('length').should('eq', 7)
     //verify hourly section
     cy.get('[data-hour-timezone]').should('have.text', 'America/New_York')
-    cy.get('.hourly-container').children('div').its('length').should('eq', 12)
+    cy.get('.hourly-container').children('div').its('length').should('eq', 18)
   })
 
   it('should allow user to successfully switch to metric units', function () {
@@ -323,23 +323,23 @@ describe('#scenario: prefs', () => {
 
     cy.get('.hourly-container')
       .children('div')
-      .should('have.length', 12) //shorter way to evaluate collection size
+      .should('have.length', 18) //shorter way to evaluate collection size
       .then(() => {
         cy.get('.hourly-container [data-dictionary="7"]').should(
           'have.text',
-          'PrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécip'
+          'PrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécipPrécip'
         )
         cy.get('.hourly-container [data-dictionary="9"]').should(
           'have.text',
-          'Indice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UV'
+          'Indice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UVIndice UV'
         )
         cy.get('.hourly-container [data-dictionary="10"]').should(
           'have.text',
-          'HumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumidité'
+          'HumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumiditéHumidité'
         )
         cy.get('.hourly-container [data-dictionary="11"]').should(
           'have.text',
-          'VentVentVentVentVentVentVentVentVentVentVentVent'
+          'VentVentVentVentVentVentVentVentVentVentVentVentVentVentVentVentVentVent'
         )
       })
 
@@ -388,23 +388,23 @@ describe('#scenario: prefs', () => {
 
     cy.get('.hourly-container')
       .children('div')
-      .should('have.length', 12)
+      .should('have.length', 18)
       .then(() => {
         cy.get('.hourly-container [data-dictionary="7"]').should(
           'have.text',
-          'NederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbörd'
+          'NederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbördNederbörd'
         )
         cy.get('.hourly-container [data-dictionary="9"]').should(
           'have.text',
-          'UV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-index'
+          'UV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-indexUV-index'
         )
         cy.get('.hourly-container [data-dictionary="10"]').should(
           'have.text',
-          'LuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighet'
+          'LuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighetLuftfuktighet'
         )
         cy.get('.hourly-container [data-dictionary="11"]').should(
           'have.text',
-          'VindVindVindVindVindVindVindVindVindVindVindVind'
+          'VindVindVindVindVindVindVindVindVindVindVindVindVindVindVindVindVindVind'
         )
       })
 
@@ -453,23 +453,23 @@ describe('#scenario: prefs', () => {
 
     cy.get('.hourly-container')
       .children('div')
-      .should('have.length', 12) //shorter way to evaluate collection size
+      .should('have.length', 18) //shorter way to evaluate collection size
       .then(() => {
         cy.get('.hourly-container [data-dictionary="7"]').should(
           'have.text',
-          'PrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecip'
+          'PrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecipPrecip'
         )
         cy.get('.hourly-container [data-dictionary="9"]').should(
           'have.text',
-          'UV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV Index'
+          'UV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV IndexUV Index'
         )
         cy.get('.hourly-container [data-dictionary="10"]').should(
           'have.text',
-          'HumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidity'
+          'HumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidityHumidity'
         )
         cy.get('.hourly-container [data-dictionary="11"]').should(
           'have.text',
-          'WindWindWindWindWindWindWindWindWindWindWindWind'
+          'WindWindWindWindWindWindWindWindWindWindWindWindWindWindWindWindWindWind'
         )
       })
   })
