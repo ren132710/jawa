@@ -421,7 +421,7 @@ body[data-theme='dark'] footer > a:visited {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(-50%, -55%);
+  transform: translate(-50%, -50%);
   background-color: transparent;
   border: 1px solid var(--border-color);
   border-radius: 50%;
