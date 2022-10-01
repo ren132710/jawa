@@ -189,6 +189,13 @@ loader.load().then((google) => {
   })
 })
 
+//clear the search box if the user clicks away
+document.addEventListener('click', (e) => {
+  if (qs('[data-place-search]').value !== '') {
+    qs('[data-place-search]').value = ''
+  }
+})
+
 //hide btnDeletePlace when reverse tabbing to search box
 newGlobalEventListener('focusin', '[data-place-search]', (e) => {
   if (e.relatedTarget == null) return
@@ -259,7 +266,10 @@ function renderPlacesWeather() {
 
       //hide delete button when place card loses focus
       if (e.relatedTarget == null) return
-      if (e.target.hasAttribute('data-place-card') && e.relatedTarget.hasAttribute('data-place-card')) {
+      if (
+        e.target.hasAttribute('data-place-card') &&
+        e.relatedTarget.hasAttribute('data-place-card')
+      ) {
         qs('#btnDeletePlace', e.relatedTarget).hidden = true
       }
     })
@@ -293,9 +303,10 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-dt]').textContent = `${df.formatDayOfWeekShort(
     current.timestamp,
     prefs[0].lang
-  )} ${df.formatDayOfMonth(current.timestamp)} ${df.formatMonth(current.timestamp, prefs[0].lang)} ${df.formatTime(
-    current.timestamp
-  )}`
+  )} ${df.formatDayOfMonth(current.timestamp)} ${df.formatMonth(
+    current.timestamp,
+    prefs[0].lang
+  )} ${df.formatTime(current.timestamp)}`
 
   //top left quadrant
   qs('[data-current-id]').dataset.currentId = coordinates.id
@@ -312,25 +323,40 @@ function renderCurrentWeather({ coordinates, current }) {
   qs('[data-current-high]').textContent = current.high
   qs('[data-current-low]').textContent = current.low
   qs('[data-current-temp]').textContent = current.temp
-  qs('[data-temp-units]').dataset.tempUnits = ` ${getUnitOfMeasure(prefs[0].units, 'temp')}`
+  qs('[data-temp-units]').dataset.tempUnits = ` ${getUnitOfMeasure(
+    prefs[0].units,
+    'temp'
+  )}`
   qs('[data-current-fl]').textContent = current.feelsLike
   qs('[data-current-description]').textContent = current.description
   qs('[data-current-precip]').textContent = current.precip
   qs('[data-current-visibility').textContent = current.visibility
-  qs('[data-visibility-units]').dataset.visibilityUnits = ` ${getUnitOfMeasure(prefs[0].units, 'distance')}`
+  qs('[data-visibility-units]').dataset.visibilityUnits = ` ${getUnitOfMeasure(
+    prefs[0].units,
+    'distance'
+  )}`
 
   //bottom left quadrant
   qs('[data-current-uv-index]').textContent = current.uvIndex
   qs('[data-current-uv-level]').textContent = current.uvLevel
   qs('[data-current-humidity]').textContent = current.humidity
   qs('[data-current-wind-speed]').textContent = current.windSpeed
-  qs('[data-wind-units]').dataset.windUnits = ` ${getUnitOfMeasure(prefs[0].units, 'velocity')} `
+  qs('[data-wind-units]').dataset.windUnits = ` ${getUnitOfMeasure(
+    prefs[0].units,
+    'velocity'
+  )} `
   qs('[data-current-wind-direction]').textContent = current.windDirection
 
   //bottom right quadrant
   qs('[data-current-dew-point]').textContent = current.dewPoint
-  qs('[data-current-sunrise]').textContent = df.formatZonedTime(current.sunrise, coordinates.timezone)
-  qs('[data-current-sunset]').textContent = df.formatZonedTime(current.sunset, coordinates.timezone)
+  qs('[data-current-sunrise]').textContent = df.formatZonedTime(
+    current.sunrise,
+    coordinates.timezone
+  )
+  qs('[data-current-sunset]').textContent = df.formatZonedTime(
+    current.sunset,
+    coordinates.timezone
+  )
 }
 
 //render daily weather
@@ -343,14 +369,20 @@ function renderDailyWeather(daily) {
     const card = element.querySelector('.daily-card')
     qs('[data-daily-icon]', card).src = getIconUrl(day.icon)
     qs('[data-daily-icon]', card).alt = day.description
-    qs('[data-daily-date]', card).textContent = df.formatDayOfWeek(day.timestamp, prefs[0].lang)
+    qs('[data-daily-date]', card).textContent = df.formatDayOfWeek(
+      day.timestamp,
+      prefs[0].lang
+    )
     qs('[data-daily-description]', card).textContent = day.description
     qs('[data-hl] > [data-daily-high]', card).textContent = day.high
     qs('[data-hl] > [data-daily-low]', card).textContent = day.low
     qs('[data-daily-humidity]', card).textContent = day.humidity
     qs('[data-daily-humidity]', card).textContent = day.humidity
     qs('[data-daily-wind-speed]', card).textContent = day.windSpeed
-    qs('[data-wind-units]', card).dataset.windUnits = ` ${getUnitOfMeasure(prefs[0].units, 'velocity')} `
+    qs('[data-wind-units]', card).dataset.windUnits = ` ${getUnitOfMeasure(
+      prefs[0].units,
+      'velocity'
+    )} `
     qs('[data-daily-wind-direction]', card).textContent = day.windDirection
     dailyContainer.append(card)
   })
@@ -360,7 +392,8 @@ function renderDailyWeather(daily) {
 const hourlyContainer = document.querySelector('.hourly-container')
 const templateHourRow = document.querySelector('#template-hour-row')
 function renderHourlyWeather(hourly, coordinates) {
-  document.querySelector('[data-hour-timezone]').textContent = coordinates.timezone
+  document.querySelector('[data-hour-timezone]').textContent =
+    coordinates.timezone
   hourlyContainer.innerHTML = ''
   hourly
     //only the first 36 hours
@@ -370,14 +403,23 @@ function renderHourlyWeather(hourly, coordinates) {
     .forEach((hour) => {
       const element = templateHourRow.content.cloneNode(true)
       const row = element.querySelector('.hour-row')
-      qs('[data-hour-date]', row).textContent = df.formatDayOfWeek(hour.timestamp, prefs[0].lang)
-      qs('[data-hour]', row).textContent = df.formatZonedHour(hour.timestamp, coordinates.timezone)
+      qs('[data-hour-date]', row).textContent = df.formatDayOfWeek(
+        hour.timestamp,
+        prefs[0].lang
+      )
+      qs('[data-hour]', row).textContent = df.formatZonedHour(
+        hour.timestamp,
+        coordinates.timezone
+      )
       qs('[data-hour-icon]', row).src = getIconUrl(hour.icon)
       qs('[data-hour-icon]', row).alt = hour.description
       qs('[data-hour-temp]', row).textContent = hour.temp
       qs('[data-hour-precip]', row).textContent = hour.precip
       qs('[data-hour-wind-speed]', row).textContent = hour.windSpeed
-      qs('[data-wind-units]', row).dataset.windUnits = ` ${getUnitOfMeasure(prefs[0].units, 'velocity')} `
+      qs('[data-wind-units]', row).dataset.windUnits = ` ${getUnitOfMeasure(
+        prefs[0].units,
+        'velocity'
+      )} `
       qs('[data-hour-wind-direction]', row).textContent = hour.windDirection
       qs('[data-hour-humidity]', row).textContent = hour.humidity
       qs('[data-hour-uv-level]', row).textContent = hour.uvLevel
@@ -391,7 +433,8 @@ function renderHourlyWeather(hourly, coordinates) {
 
 async function getStorage(key, value) {
   const isStorageEmpty = await getLocalStorage(key)
-  if (isStorageEmpty == null || isStorageEmpty.length < 1) setStorage(key, value)
+  if (isStorageEmpty == null || isStorageEmpty.length < 1)
+    setStorage(key, value)
   const data = await getLocalStorage(key)
   return data
 }
@@ -419,7 +462,9 @@ function newPlace() {
     qs('[data-new-place]').classList.add('btn-new-place-disabled')
   }
 
-  setStorage(g.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
+  setStorage(g.PLACES_STORAGE_KEY, places)
+    .then(getPlacesWeather)
+    .then(renderPlacesWeather)
 }
 
 //hide delete place button when tabbing to new place button
@@ -445,5 +490,7 @@ function deletePlace(cardId) {
     qs('[data-new-place]').classList.remove('btn-new-place-disabled')
   }
 
-  setStorage(g.PLACES_STORAGE_KEY, places).then(getPlacesWeather).then(renderPlacesWeather)
+  setStorage(g.PLACES_STORAGE_KEY, places)
+    .then(getPlacesWeather)
+    .then(renderPlacesWeather)
 }
