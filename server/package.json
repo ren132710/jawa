@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/server.js",
-  "engines": {
-    "node": ">=16.x <=18.4.x",
-    "npm": "8.12.x"
-  },
   "scripts": {
     "devStart": "nodemon ./src/server.js",
     "start": "node ./src/server.js",

@@ -2,10 +2,6 @@
   "name": "client",
   "version": "1.0.0",
   "description": "Practice",
-  "engines": {
-    "node": ">=16.x <=18.4.x",
-    "npm": "8.12.x"
-  },
   "scripts": {
     "start": "parcel ./src/index.html",
     "build": "parcel build ./src/index.html",
