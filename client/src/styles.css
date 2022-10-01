@@ -70,7 +70,12 @@
   --background-place-hover: hsla(0, 0%, 96%, 0.3);
   --background-place-btn-hover: hsla(0, 0%, 96%, 0.9);
   --hour-nth-child-background-from: hsla(203, 92%, 75%, 0);
-  --hour-nth-child-background-to: hsla(203, 92%, 75%, 1); /* var(--skyblue-75); */
+  --hour-nth-child-background-to: hsla(
+    203,
+    92%,
+    75%,
+    1
+  ); /* var(--skyblue-75); */
   /* borders */
   --border-color: var(--white);
   --border-color-search-input: var(--grey-80);
@@ -88,6 +93,8 @@
 *::after,
 *::before {
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   font-family: 'Lato', sans-serif;
@@ -98,11 +105,14 @@ body {
   margin: 0;
   padding: 0;
   color: var(--color);
-  -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
   font-size: var(--font-size);
-  background: linear-gradient(to right, var(--background-linear-from), var(--background-linear-to));
+  background: linear-gradient(
+    to right,
+    var(--background-linear-from),
+    var(--background-linear-to)
+  );
 }
 
 .blurred {
@@ -129,7 +139,8 @@ body {
  */
 
 [data-theme='jawa'] {
-  transition: var(--transition-duration-theme) var(--transition-timing-function-theme);
+  transition: var(--transition-duration-theme)
+    var(--transition-timing-function-theme);
 }
 
 /* light mode */
@@ -140,7 +151,8 @@ body[data-theme='light'] {
   --border-color-search-input: var(--border-color);
   --hour-nth-child-background-to: var(--skyblue-90);
   --border-thickness: 1.5px;
-  transition: var(--transition-duration-theme) var(--transition-timing-function-theme);
+  transition: var(--transition-duration-theme)
+    var(--transition-timing-function-theme);
 }
 
 body[data-theme='light'] .menu {
@@ -169,7 +181,8 @@ body[data-theme='dark'] {
   --hour-nth-child-background-from: var(--grey-15);
   --hour-nth-child-background-to: var(--black);
   --border-thickness: 1px;
-  transition: var(--transition-duration-theme) var(--transition-timing-function-theme);
+  transition: var(--transition-duration-theme)
+    var(--transition-timing-function-theme);
 }
 
 body[data-theme='dark'] .header-bg-active {
@@ -227,8 +240,13 @@ body[data-theme='dark'] footer > a:visited {
 
 .header-bg-active {
   background-color: var(--background-linear-from);
-  background: linear-gradient(to right, var(--header-background-linear-from), var(--header-background-linear-to));
-  transition: var(--transition-duration-btn) var(--transition-timing-function-btn);
+  background: linear-gradient(
+    to right,
+    var(--header-background-linear-from),
+    var(--header-background-linear-to)
+  );
+  transition: var(--transition-duration-btn)
+    var(--transition-timing-function-btn);
 }
 
 .jawa-container {
@@ -432,7 +450,8 @@ body[data-theme='dark'] footer > a:visited {
   text-align: center;
   color: var(--blue-30);
   background-color: var(--background-place-btn-hover);
-  transition: var(--transition-duration-btn) var(--transition-timing-function-btn);
+  transition: var(--transition-duration-btn)
+    var(--transition-timing-function-btn);
 }
 
 .place-btn-delete:hover {
@@ -456,7 +475,8 @@ body[data-theme='dark'] footer > a:visited {
   color: var(--blue-30);
   text-decoration: underline;
   padding: 0 0.2rem;
-  transition: var(--transition-duration-btn) var(--transition-timing-function-btn);
+  transition: var(--transition-duration-btn)
+    var(--transition-timing-function-btn);
 }
 
 .place-btn-new:hover {
@@ -465,7 +485,8 @@ body[data-theme='dark'] footer > a:visited {
 }
 
 .place-btn-new:focus {
-  animation: flash var(--transition-duration-btn) var(--transition-timing-function-btn) backwards;
+  animation: flash var(--transition-duration-btn)
+    var(--transition-timing-function-btn) backwards;
 }
 
 @keyframes flash {
@@ -660,7 +681,11 @@ body[data-theme='dark'] footer > a:visited {
 }
 
 .hour-row:nth-child(2n) {
-  background: linear-gradient(to right, var(--hour-nth-child-background-from), var(--hour-nth-child-background-to));
+  background: linear-gradient(
+    to right,
+    var(--hour-nth-child-background-from),
+    var(--hour-nth-child-background-to)
+  );
 }
 
 .hour-data {
