@@ -8,7 +8,7 @@ export default function Header() {
   const headerRef = useRef(null);
 
   useEffect(() => {
-    const handleBackgroundChange = () => {
+    const handleBackgroundActive = () => {
       if (window.scrollY > 0) {
         headerRef.current.classList.add(styles.headerScrolled);
       } else {
@@ -16,11 +16,11 @@ export default function Header() {
       }
     };
 
-    window.addEventListener('scroll', handleBackgroundChange);
+    window.addEventListener('scroll', handleBackgroundActive);
 
-    // remove event listener when component unmount
+    // remove event listener when component unmounts
     return () => {
-      window.removeEventListener('scroll', handleBackgroundChange);
+      window.removeEventListener('scroll', handleBackgroundActive);
     };
   }, []);
 
