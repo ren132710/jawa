@@ -10,9 +10,9 @@ export default function Header() {
   useEffect(() => {
     const handleBackgroundActive = () => {
       if (window.scrollY > 0) {
-        headerRef.current.classList.add(styles.headerScrolled);
+        headerRef.current.classList.add(styles.headerActive);
       } else {
-        headerRef.current.classList.remove(styles.headerScrolled);
+        headerRef.current.classList.remove(styles.headerActive);
       }
     };
 

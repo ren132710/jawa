@@ -8,7 +8,7 @@
   padding: 0.5rem 1rem 0.2rem;
 }
 
-.header-scrolled {
+.header-active {
   background: linear-gradient(to right, var(--off-white), var(--skyblue-85));
   transition: 100ms linear;
 }
