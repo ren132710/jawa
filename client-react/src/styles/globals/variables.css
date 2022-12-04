@@ -1,0 +1,32 @@
+:root {
+  /* variable font size */
+  --fs-normal: 1rem;
+  --fs-small: 0.75rem; /* place text, daily description */
+  --fs-large: clamp(1.25rem, 1.2vw, 1.5rem); /* section title */
+
+  /* color and fills */
+  --color: var(--blue-10);
+  --svg-fill-color: var(--blue-10);
+  --color-value: var(--blue-30);
+  --color-disabled: var(--grey-50);
+
+  /* backgrounds */
+  --background-place-hover: hsla(0, 0%, 96%, 0.3);
+  --background-place-btn-hover: hsla(0, 0%, 96%, 0.9);
+  --hour-nth-child-background-from: hsla(203, 92%, 75%, 0);
+  --hour-nth-child-background-to: hsla(203, 92%, 75%, 1);
+
+  /* borders */
+  --border-color-card: var(--white);
+  --border-color-input: var(--grey-80);
+  --border-thickness: 1px;
+  --border-radius: 0.3em;
+  --border-radius-input: 0.2em;
+
+  /* TODO: remove */
+  /* transitions */
+  --transition-duration-btn: 100ms;
+  --transition-timing-function-btn: linear;
+  --transition-duration-theme: 500ms;
+  --transition-timing-function-theme: ease;
+}

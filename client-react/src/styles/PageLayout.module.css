@@ -1,0 +1,16 @@
+.page-container {
+  width: 94%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: 2rem minmax(120px, auto) 1fr 80px 1rem;
+}
+
+main {
+  min-height: 600px;
+}
+
+@media screen and (min-width: 766px) {
+  .page-container {
+    width: 90%;
+  }
+}

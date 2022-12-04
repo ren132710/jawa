@@ -1,0 +1,31 @@
+:root {
+  font-family: 'Lato', sans-serif;
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-size: var(--fs-normal);
+  color: var(--color);
+  background: linear-gradient(to right, var(--off-white), var(--skyblue-75));
+}
+
+.blurred {
+  background: var(--snow);
+  filter: blur(8px);
+  /* filter: opacity(30%); */
+}

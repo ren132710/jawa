@@ -1,0 +1,21 @@
+.jawa-container {
+  display: flex;
+  align-items: center;
+  gap: 10%;
+}
+
+.jawa {
+  color: var(--color);
+  font-style: oblique;
+  font-weight: 700;
+}
+
+.jawa::first-letter {
+  font-size: 125%;
+}
+
+.jawa-logo {
+  width: 30px;
+  height: 30px;
+  fill: var(--svg-fill-color);
+}

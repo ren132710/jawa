@@ -1,0 +1,39 @@
+.menu {
+  position: absolute;
+  top: 105%;
+  right: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+  border-radius: var(--border-radius);
+  background: var(--blue-99);
+  box-shadow: 0 0 5px 0 var(--blue-80);
+  padding: 1em;
+  clip-path: circle(0px at top right);
+  transition: clip-path ease-in-out 300ms;
+}
+
+:global(.open) .menu {
+  clip-path: circle(200% at top right);
+}
+
+.sub-menu {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.3rem;
+}
+
+.units::before {
+  content: 'Units';
+  color: inherit;
+}
+
+.theme::before {
+  content: 'Theme';
+  color: inherit;
+}
+
+.lang::before {
+  content: 'Language';
+  color: inherit;
+}

@@ -1,0 +1,16 @@
+.btn {
+  color: inherit;
+  outline: none;
+  cursor: pointer;
+  padding: 1em 3em;
+  font-size: 80%;
+  border: 1px solid var(--grey-90);
+  border-radius: 0.3em;
+  background-color: hsla(0, 0%, 95%, 0.3);
+}
+
+.btn:hover,
+.btn:focus {
+  /* h-offset v-offset blur spread color */
+  box-shadow: 0 0 5px 0 var(--skyblue-85);
+}
