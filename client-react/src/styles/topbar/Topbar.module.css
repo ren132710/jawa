@@ -1,4 +1,4 @@
-.header-container {
+.topbar-container {
   position: fixed;
   z-index: 10;
   display: flex;
@@ -8,13 +8,13 @@
   padding: 0.5rem 1rem 0.2rem;
 }
 
-.header-active {
+.topbar-active {
   background: linear-gradient(to right, var(--off-white), var(--skyblue-85));
   transition: 100ms linear;
 }
 
 @media screen and (min-width: 766px) {
-  .header-container {
+  .topbar-container {
     padding: 0.5rem 1.5rem 0.2rem;
   }
 }

@@ -1,4 +1,4 @@
-import Header from './components/header/Header';
+import Topbar from './components/topbar/Topbar';
 import PageLayout from './components/PageLayout';
 
 export default function App() {
@@ -6,7 +6,7 @@ export default function App() {
 
   return (
     <>
-      <Header />
+      <Topbar />
       <PageLayout />
     </>
   );

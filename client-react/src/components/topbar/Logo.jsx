@@ -1,4 +1,4 @@
-import styles from '../../styles/header/Logo.module.css';
+import styles from '../../styles/topbar/Logo.module.css';
 
 export default function Logo() {
   console.log('Logo rendered!');

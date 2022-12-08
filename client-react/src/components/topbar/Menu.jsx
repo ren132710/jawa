@@ -1,5 +1,5 @@
 import Button from './Button';
-import styles from '../../styles/header/Menu.module.css';
+import styles from '../../styles/topbar/Menu.module.css';
 
 function handleClick(value) {
   console.log('clicked', value);
