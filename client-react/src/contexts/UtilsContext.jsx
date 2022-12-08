@@ -16,6 +16,8 @@ export function useUtils() {
 }
 
 export function UtilsProvider({ children }) {
+  console.log('UtilsProvider rendered!');
+
   const contextValue = useMemo(() => {
     console.log('UtilsProvider useMemo is called');
     return { getUnitOfMeasure, getTranslation };

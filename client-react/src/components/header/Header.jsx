@@ -7,6 +7,8 @@ import styles from '../../styles/header/Header.module.css';
 export default function Header() {
   const headerRef = useRef(null);
 
+  console.log('Header rendered!');
+
   useEffect(() => {
     const handleHeaderActive = () => {
       if (window.scrollY > 0) {

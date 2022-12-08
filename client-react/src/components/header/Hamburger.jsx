@@ -1,6 +1,8 @@
 import styles from '../../styles/header/Hamburger.module.css';
 
 export default function Hamburger() {
+  console.log('Hamburger rendered!');
+
   function handleClick() {
     const body = document.querySelector('body');
     body.classList.toggle('open');

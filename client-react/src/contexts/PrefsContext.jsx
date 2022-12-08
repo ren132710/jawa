@@ -22,6 +22,8 @@ export function PrefsProvider({ children }) {
   const [theme, setTheme] = useState(DEFAULT_PREFS.theme);
   const [lang, setLang] = useState(DEFAULT_PREFS.lang);
 
+  console.log('PrefsProvider rendered!');
+
   // fires every time there is a state change to prefs.theme
   useEffect(() => {
     console.log('useEffect called');

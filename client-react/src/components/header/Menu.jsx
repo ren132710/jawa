@@ -6,6 +6,8 @@ function handleClick(value) {
 }
 
 export default function Menu() {
+  console.log('Menu rendered!');
+
   return (
     <div className={styles.menu}>
       <div className={[styles.subMenu, styles.units].join(' ')}>
