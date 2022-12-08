@@ -9,18 +9,18 @@ export default function Menu() {
   return (
     <div className={styles.menu}>
       <div className={[styles.subMenu, styles.units].join(' ')}>
-        <Button onClick={() => handleClick('Metric')}>Metric</Button>
-        <Button onClick={() => handleClick('Imperial')}>Imperial</Button>
+        <Button title="Metric" onClick={() => handleClick('Metric')} />
+        <Button title="Imperial" onClick={() => handleClick('Imperial')} />
       </div>
       <div className={[styles.subMenu, styles.theme].join(' ')}>
-        <Button onClick={() => handleClick('Light')}>Light</Button>
-        <Button onClick={() => handleClick('Jawa')}>Jawa</Button>
-        <Button onClick={() => handleClick('Dark')}>Dark</Button>
+        <Button title="Light" onClick={() => handleClick('Light')} />
+        <Button title="Jawa" onClick={() => handleClick('Jawa')} />
+        <Button title="Dark" onClick={() => handleClick('Dark')} />
       </div>
       <div className={[styles.subMenu, styles.lang].join(' ')}>
-        <Button onClick={() => handleClick('English')}>English</Button>
-        <Button onClick={() => handleClick('French')}>French</Button>
-        <Button onClick={() => handleClick('Swedish')}>Swedish</Button>
+        <Button title="English" onClick={() => handleClick('en')} />
+        <Button title="French" onClick={() => handleClick('fr')} />
+        <Button title="Swedish" onClick={() => handleClick('sv')} />
       </div>
     </div>
   );
