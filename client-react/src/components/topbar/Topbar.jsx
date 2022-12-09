@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Logo from './Logo';
 import Hamburger from './Hamburger';
-import Menu from './Menu';
 import styles from '../../styles/topbar/Topbar.module.css';
 
 export default function Topbar() {
@@ -30,7 +29,6 @@ export default function Topbar() {
     <header ref={topbarRef} className={[styles.topbarContainer].join(' ')}>
       <Logo />
       <Hamburger />
-      <Menu />
     </header>
   );
 }

@@ -9,12 +9,25 @@
   background: var(--blue-99);
   box-shadow: 0 0 5px 0 var(--blue-80);
   padding: 1em;
-  clip-path: circle(0px at top right);
-  transition: clip-path ease-in-out 300ms;
+  /* clip-path: circle(0px at top right); */
+  clip-path: circle(200% at top right);
+  /* transition: clip-path ease-in-out 300ms; */
+  z-index: 999;
 }
 
-:global(.open) .menu {
+.menu.visible {
   clip-path: circle(200% at top right);
+}
+
+.menu-blanket {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  /* background: rgb(255, 0, 0, 0.5); */
+  z-index: 900;
 }
 
 .sub-menu {
