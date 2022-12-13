@@ -9,14 +9,16 @@
   background: var(--blue-99);
   box-shadow: 0 0 5px 0 var(--blue-80);
   padding: 1em;
+  opacity: 1;
   /* clip-path: circle(0px at top right); */
-  clip-path: circle(200% at top right);
+  /* clip-path: circle(200% at top right); */
   /* transition: clip-path ease-in-out 300ms; */
   z-index: 999;
 }
 
-.menu.visible {
-  clip-path: circle(200% at top right);
+:global(.open) .menu {
+  /* clip-path: circle(200% at top right); */
+  opacity: 1;
 }
 
 .menu-blanket {
@@ -26,7 +28,7 @@
   width: 100vw;
   height: 100vh;
   background: transparent;
-  /* background: rgb(255, 0, 0, 0.5); */
+  /* background: rgb(0, 0, 0, 0.1); */
   z-index: 900;
 }
 

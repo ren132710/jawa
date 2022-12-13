@@ -12,15 +12,6 @@ export default function Menu({ onClose }) {
 
   return (
     <>
-      <div
-        className={styles.menuBlanket}
-        onClick={onClose}
-        // close menu when user tabs away
-        role="button"
-        tabIndex={0}
-        onKeyDown={onClose}
-        aria-label="close menu"
-      />
       <div className={styles.menu}>
         <div className={[styles.subMenu, styles.units].join(' ')}>
           <Button title="Metric" onClick={() => handleClick('Metric')} />
@@ -37,6 +28,15 @@ export default function Menu({ onClose }) {
           <Button title="Swedish" onClick={() => handleClick('sv')} />
         </div>
       </div>
+      <div
+        className={styles.menuBlanket}
+        onClick={onClose}
+        // close menu when user tabs away
+        role="button"
+        tabIndex={0}
+        onKeyDown={onClose}
+        aria-label="close menu"
+      />
     </>
   );
 }
