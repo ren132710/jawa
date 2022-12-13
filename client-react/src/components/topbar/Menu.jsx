@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import styles from '../../styles/topbar/Menu.module.css';
@@ -8,11 +8,22 @@ function handleClick(value) {
 }
 
 export default function Menu({ onClose }) {
+  const [applyTransition, setApplyTransition] = useState(false);
   console.log('Menu rendered!');
+  const delay = 100;
+
+  useEffect(() => {
+    // pause before applying transition
+    const timeoutId = setTimeout(() => setApplyTransition(true), delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   return (
     <>
-      <div className={styles.menu}>
+      <div className={`${styles.menu} ${applyTransition ? 'visible' : ''}`}>
         <div className={[styles.subMenu, styles.units].join(' ')}>
           <Button title="Metric" onClick={() => handleClick('Metric')} />
           <Button title="Imperial" onClick={() => handleClick('Imperial')} />
@@ -28,6 +39,7 @@ export default function Menu({ onClose }) {
           <Button title="Swedish" onClick={() => handleClick('sv')} />
         </div>
       </div>
+      {/* blanket placed below menu so menu is tabbable */}
       <div
         className={styles.menuBlanket}
         onClick={onClose}
