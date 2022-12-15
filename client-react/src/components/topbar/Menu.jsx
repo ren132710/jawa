@@ -6,24 +6,30 @@ import styles from '../../styles/topbar/Menu.module.css';
 function handleClick(value) {
   console.log('clicked', value);
 }
-
-export default function Menu({ onClose }) {
+export default function Menu({ showMenu, onClose }) {
   const [applyTransition, setApplyTransition] = useState(false);
-  console.log('Menu rendered!');
   const delay = 100;
 
+  console.log('Menu rendered!');
+
   useEffect(() => {
-    // pause before applying transition
+    if (!showMenu) return;
+
+    // pause before applying css transition
     const timeoutId = setTimeout(() => setApplyTransition(true), delay);
 
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [showMenu]);
 
   return (
     <>
-      <div className={`${styles.menu} ${applyTransition ? 'visible' : ''}`}>
+      <div
+        className={`${styles.menu} ${
+          showMenu && applyTransition ? 'visible' : ''
+        }`}
+      >
         <div className={[styles.subMenu, styles.units].join(' ')}>
           <Button title="Metric" onClick={() => handleClick('Metric')} />
           <Button title="Imperial" onClick={() => handleClick('Imperial')} />
@@ -54,5 +60,6 @@ export default function Menu({ onClose }) {
 }
 
 Menu.propTypes = {
+  showMenu: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
