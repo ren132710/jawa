@@ -5,7 +5,7 @@ import styles from '../../styles/topbar/Hamburger.module.css';
 export default function Hamburger() {
   const [showMenu, setShowMenu] = useState(false);
   const [showComponent, setShowComponent] = useState(false);
-  const delay = 100;
+  const delay = 200;
   console.log('Hamburger rendered!');
 
   useEffect(() => {
@@ -34,7 +34,11 @@ export default function Hamburger() {
         <span className={styles.hamburgerBottom} />
       </button>
       {showComponent && (
-        <Menu showMenu={showMenu} onClose={() => setShowMenu(false)} />
+        <Menu
+          showMenu={showMenu}
+          delay={delay}
+          onClose={() => setShowMenu(false)}
+        />
       )}
     </>
   );

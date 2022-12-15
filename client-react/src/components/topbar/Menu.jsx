@@ -6,9 +6,8 @@ import styles from '../../styles/topbar/Menu.module.css';
 function handleClick(value) {
   console.log('clicked', value);
 }
-export default function Menu({ showMenu, onClose }) {
+export default function Menu({ showMenu, delay, onClose }) {
   const [applyTransition, setApplyTransition] = useState(false);
-  const delay = 100;
 
   console.log('Menu rendered!');
 
@@ -21,7 +20,7 @@ export default function Menu({ showMenu, onClose }) {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [showMenu]);
+  }, [showMenu, delay]);
 
   return (
     <>
@@ -61,5 +60,6 @@ export default function Menu({ showMenu, onClose }) {
 
 Menu.propTypes = {
   showMenu: PropTypes.bool.isRequired,
+  delay: PropTypes.number.isRequired,
   onClose: PropTypes.func.isRequired,
 };
