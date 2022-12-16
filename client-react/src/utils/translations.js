@@ -22,6 +22,5 @@ const TRANSLATIONS = {
 function getTranslation(index, lang) {
   return TRANSLATIONS[index][lang];
 }
-q;
 
 console.log(getTranslation(1, 'en')); // Weather at your places
