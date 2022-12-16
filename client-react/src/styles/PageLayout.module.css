@@ -5,13 +5,41 @@
   grid-template-rows: 2rem minmax(120px, auto) 1fr 80px 1rem;
 }
 
+.places-section {
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-areas:
+    'search'
+    'places';
+  width: 100%;
+  margin: 2rem auto;
+}
+
 /* TODO: temporary */
 main {
   min-height: 600px;
 }
 
-@media screen and (min-width: 766px) {
+/*
+Tailwind breakpoints:
+  sm: '480px',
+  md: '768px',
+  lg: '976px',
+  xl: '1440px',
+
+my old breakpoint:
+1022px
+*/
+
+@media screen and (min-width: 768px) {
   .page-container {
     width: 90%;
+  }
+}
+
+@media screen and (min-width: 976px) {
+  .places-section {
+    grid-template-columns: 1fr 1.618fr;
+    grid-template-areas: 'search places';
   }
 }

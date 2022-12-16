@@ -5,7 +5,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.7rem;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-card);
   background: var(--blue-99);
   box-shadow: 0 0 5px 0 var(--blue-80);
   padding: 1em;
