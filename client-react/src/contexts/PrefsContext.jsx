@@ -31,7 +31,7 @@ export function PrefsProvider({ children }) {
   }, [theme]);
 
   // memoize otherwise consumers will be forced to re-render if the parent of the provider re-renders
-  const contextValue = useMemo(() => {
+  const memoValue = useMemo(() => {
     console.log('PrefsProvider useMemo is called');
     return { lang, units, theme, setLang, setUnits, setTheme };
 
@@ -39,9 +39,7 @@ export function PrefsProvider({ children }) {
   }, [lang, units, theme]);
 
   return (
-    <PrefsContext.Provider value={contextValue}>
-      {children}
-    </PrefsContext.Provider>
+    <PrefsContext.Provider value={memoValue}>{children}</PrefsContext.Provider>
   );
 }
 
