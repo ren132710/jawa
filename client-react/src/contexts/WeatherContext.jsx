@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import useJawaWeather from '../hooks/useJawaWeather';
+import { useWeatherPrefs } from './PrefsContext';
 
 // 1. create the contexts
 const WeatherDataContext = React.createContext();
@@ -29,7 +30,9 @@ export function useWeatherAPI() {
 
 // 3. define the provider and delegate value props to the contexts
 export default function WeatherProvider({ children }) {
-  const { isLoading, isError, weatherData, setPlaces } = useJawaWeather();
+  const options = useWeatherPrefs();
+  const { isLoading, isError, weatherData, setPlaces } =
+    useJawaWeather(options);
 
   console.log('WeatherProvider rendered!');
 

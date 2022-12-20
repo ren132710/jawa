@@ -1,60 +1,71 @@
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { PREFS_STORAGE_KEY } from '../constants/defaults';
 
-const PrefsContext = React.createContext();
+// 1. create the contexts
+const ThemeContext = React.createContext();
+const WeatherPrefsContext = React.createContext();
 
-export function usePrefs() {
-  const context = useContext(PrefsContext);
+// 2. make the contexts to subscribers via custom hooks
+export function useTheme() {
+  const context = useContext(ThemeContext);
 
   if (context === undefined) {
-    throw new Error('usePrefs is being called outside of its Provider');
+    throw new Error('useTheme is being called outside of its Provider');
   }
 
   return context;
 }
 
-// TODO: fetch from local storage
-// TODO: use/create local storage hook
-const DEFAULT_PREFS = [{ units: 'imperial', theme: 'jawa', lang: 'en' }];
+export function useWeatherPrefs() {
+  const context = useContext(WeatherPrefsContext);
 
-export function PrefsProvider({ children }) {
-  const [units, setUnits] = useState(DEFAULT_PREFS.units);
-  const [theme, setTheme] = useState(DEFAULT_PREFS.theme);
-  const [lang, setLang] = useState(DEFAULT_PREFS.lang);
+  if (context === undefined) {
+    throw new Error('useWeatherPrefs is being called outside of its Provider');
+  }
+
+  return context;
+}
+
+// 3. define the provider and delegate value props to the contexts
+const prefs = JSON.parse(localStorage.getItem(PREFS_STORAGE_KEY));
+export default function PrefsProvider({ children }) {
+  const [theme, setTheme] = useState(prefs[0].theme);
+  const [units, setUnits] = useState(prefs[0].units);
+  const [lang, setLang] = useState(prefs[0].lang);
 
   console.log('PrefsProvider rendered!');
 
-  // fires every time there is a state change to prefs.theme
+  // update local storage
   useEffect(() => {
-    console.log('useEffect called');
+    localStorage.setItem(
+      PREFS_STORAGE_KEY,
+      JSON.stringify([{ theme, units, lang }])
+    );
+  }, [theme, units, lang]);
+
+  // update app theme
+  useEffect(() => {
     document.querySelector('body').setAttribute('data-theme', theme);
   }, [theme]);
 
-  // memoize otherwise consumers will be forced to re-render if the parent of the provider re-renders
-  const memoValue = useMemo(() => {
-    console.log('PrefsProvider useMemo is called');
-    return { lang, units, theme, setLang, setUnits, setTheme };
+  const themeContextValue = useMemo(() => {
+    return { theme, setTheme };
+  }, [theme]);
 
-    // React memoizes the built-in set functions by default, so don't need to include as dependency
-  }, [lang, units, theme]);
+  const weatherPrefsContextValue = useMemo(() => {
+    return { units, setUnits, lang, setLang };
+  }, [units, lang]);
 
   return (
-    <PrefsContext.Provider value={memoValue}>{children}</PrefsContext.Provider>
+    <ThemeContext.Provider value={themeContextValue}>
+      <WeatherPrefsContext.Provider value={weatherPrefsContextValue}>
+        {children}
+      </WeatherPrefsContext.Provider>
+    </ThemeContext.Provider>
   );
 }
 
 PrefsProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-// function onLangChange(value) {
-//   setPrefs({ ...prefs, lang: value });
-// }
-
-// function onUnitsChange(value) {
-//   setPrefs({ ...prefs, units: value });
-// }
-
-// function onThemeChange(value) {
-//   setPrefs({ ...prefs, theme: value });
-// }

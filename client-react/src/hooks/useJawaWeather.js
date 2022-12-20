@@ -5,11 +5,12 @@ const TIMEOUT = import.meta.env.VITE_AXIOS_TIMEOUT;
 const WEATHER_SERVER = import.meta.env.VITE_JAWA_SERVER;
 const URL = `https://${WEATHER_SERVER}/weather`;
 
-export default function useJawaWeather() {
+export default function useJawaWeather(options) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [places, setPlaces] = useState([]);
   const [weatherData, setWeatherData] = useState([]);
+  const { units, lang } = options;
 
   console.log('useJawaHook called!');
 
@@ -63,8 +64,8 @@ export default function useJawaWeather() {
       const params = {
         lat: place.lat,
         long: place.long,
-        units: place.units,
-        lang: place.lang,
+        units,
+        lang,
         id: place.id,
         location: place.location,
         favorite: place.favorite,

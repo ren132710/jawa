@@ -27,7 +27,7 @@ export default function PageLayout() {
         <Search />
         <Places />
       </section>
-      <Main isLoading={isLoading} isError={isError} weather={weatherData[3]} />
+      <Main isLoading={isLoading} isError={isError} weather={weatherData[0]} />
       <footer>Footer</footer>
       <div>Gutter</div>
     </div>

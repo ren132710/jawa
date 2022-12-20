@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Topbar from './components/topbar/Topbar';
 import Layout from './components/Layout';
 import WeatherProvider from './contexts/WeatherContext';
+import PrefsProvider from './contexts/PrefsContext';
 import * as c from './constants/defaults';
 
 export default function App() {
@@ -9,6 +10,7 @@ export default function App() {
 
   // initialize defaults on initial render
   useEffect(() => {
+    // TODO: if return is empty or null, set default prefs
     // if local storage is empty, set default prefs
     if (!localStorage.getItem(c.PREFS_STORAGE_KEY)) {
       localStorage.setItem(
@@ -17,6 +19,7 @@ export default function App() {
       );
     }
 
+    // TODO: if return is empty or null, set default prefs
     // if local storage is empty, set default places
     if (!localStorage.getItem(c.PLACES_STORAGE_KEY)) {
       localStorage.setItem(
@@ -27,9 +30,11 @@ export default function App() {
   }, []);
 
   return (
-    <WeatherProvider>
-      <Topbar />
-      <Layout />
-    </WeatherProvider>
+    <PrefsProvider>
+      <WeatherProvider>
+        <Topbar />
+        <Layout />
+      </WeatherProvider>
+    </PrefsProvider>
   );
 }
