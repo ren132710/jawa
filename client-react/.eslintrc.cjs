@@ -21,6 +21,7 @@ module.exports = {
     'consistent-return': 'off',
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
+    'no-use-before-define': ['error', { functions: false }],
     // 'no-shadowed-variable': 'off',
     // 'control-has-associated-label': 'off',
   },
