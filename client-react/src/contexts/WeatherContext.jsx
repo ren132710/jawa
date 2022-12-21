@@ -33,11 +33,11 @@ export default function WeatherProvider({ children }) {
   console.log('WeatherProvider rendered!');
 
   const dataContextValue = useMemo(() => {
-    return [weatherData, isLoading, isError];
+    return { weatherData, isLoading, isError };
   }, [weatherData, isLoading, isError]);
 
   const apiContextValue = useMemo(() => {
-    return [setPlaces];
+    return { setPlaces };
   }, [setPlaces]);
 
   return (

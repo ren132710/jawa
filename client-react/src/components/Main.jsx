@@ -1,11 +1,7 @@
-import { useWeatherData, useWeatherAPI } from '../contexts/WeatherContext';
+import { useWeatherData } from '../contexts/WeatherContext';
 
 export default function Main() {
-  const [weatherData, isLoading, isError] = useWeatherData();
-  console.log('isLoading:', isLoading);
-  console.log('isError:', isError);
-  const [fetchWeather] = useWeatherAPI();
-  if (fetchWeather) console.log('fetchWeather is defined');
+  const { weatherData, isLoading, isError } = useWeatherData();
 
   // TODO: if isLoading=true, blur the page
   // TODO: decompose Main into Current, Daily, Hourly

@@ -9,21 +9,17 @@ const WeatherPrefsContext = React.createContext();
 // 2. make the contexts to subscribers via custom hooks
 export function useTheme() {
   const context = useContext(ThemeContext);
-
   if (context === undefined) {
     throw new Error('useTheme is being called outside of its Provider');
   }
-
   return context;
 }
 
 export function useWeatherPrefs() {
   const context = useContext(WeatherPrefsContext);
-
   if (context === undefined) {
     throw new Error('useWeatherPrefs is being called outside of its Provider');
   }
-
   return context;
 }
 
@@ -35,7 +31,7 @@ export default function PrefsProvider({ children }) {
 
   console.log('PrefsProvider rendered!');
 
-  // update local storage
+  // keep localStorage in sync with state
   useEffect(() => {
     localStorage.setItem(
       PREFS_STORAGE_KEY,
@@ -49,11 +45,11 @@ export default function PrefsProvider({ children }) {
   }, [theme]);
 
   const themeContextValue = useMemo(() => {
-    return [theme, setTheme];
+    return { theme, setTheme };
   }, [theme]);
 
   const weatherPrefsContextValue = useMemo(() => {
-    return [units, setUnits, lang, setLang];
+    return { units, setUnits, lang, setLang };
   }, [units, lang]);
 
   return (

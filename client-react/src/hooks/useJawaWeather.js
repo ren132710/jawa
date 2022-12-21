@@ -40,7 +40,7 @@ export default function useJawaWeather(options) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [places]);
 
-  // update local storage
+  // keep localStorage in sync with state
   useEffect(() => {
     localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places));
   }, [places]);
@@ -58,6 +58,7 @@ export default function useJawaWeather(options) {
    * @param {string} location:
    *   - client defined
    *   - pass to server so server can include in the response object
+   * TODO:
    * @param {boolean} favorite:
    *   - client defined
    *   - used for filtering places before saving to localStorage
