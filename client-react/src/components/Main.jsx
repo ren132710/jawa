@@ -1,7 +1,7 @@
 import { useWeatherData, useWeatherAPI } from '../contexts/WeatherContext';
 
 export default function Main() {
-  const [isLoading, isError, weatherData] = useWeatherData();
+  const [weatherData, isLoading, isError] = useWeatherData();
   console.log('isLoading:', isLoading);
   console.log('isError:', isError);
   const [fetchWeather] = useWeatherAPI();
