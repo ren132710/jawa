@@ -31,17 +31,16 @@ export function useWeatherAPI() {
 // 3. define the provider and delegate value props to the contexts
 export default function WeatherProvider({ children }) {
   const options = useWeatherPrefs();
-  const { isLoading, isError, weatherData, setPlaces } =
-    useJawaWeather(options);
+  const [isLoading, isError, weatherData, setPlaces] = useJawaWeather(options);
 
   console.log('WeatherProvider rendered!');
 
   const dataContextValue = useMemo(() => {
-    return { isLoading, isError, weatherData };
+    return [isLoading, isError, weatherData];
   }, [isLoading, isError, weatherData]);
 
   const apiContextValue = useMemo(() => {
-    return { setPlaces };
+    return [setPlaces];
   }, [setPlaces]);
 
   return (

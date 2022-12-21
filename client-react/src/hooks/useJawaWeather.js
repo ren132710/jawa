@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '../constants/defaults';
+
+// unless local storage is places exists and is non-empty, set default places
+// const localPlaces = localStorage.getItem(c.PLACES_STORAGE_KEY);
+// if (!localPlaces?.length) {
+//   localStorage.setItem(c.PLACES_STORAGE_KEY, JSON.stringify(c.DEFAULT_PLACES));
+// }
 
 const TIMEOUT = import.meta.env.VITE_AXIOS_TIMEOUT;
 const WEATHER_SERVER = import.meta.env.VITE_JAWA_SERVER;
@@ -8,7 +15,7 @@ const URL = `https://${WEATHER_SERVER}/weather`;
 export default function useJawaWeather(options) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState(DEFAULT_PLACES);
   const [weatherData, setWeatherData] = useState([]);
   const { units, lang } = options;
 
@@ -16,7 +23,7 @@ export default function useJawaWeather(options) {
 
   useEffect(() => {
     // on page initialization, wait until places state is set before initial render
-    if (!places) return;
+    // if (!places) return;
 
     let ignore = false;
 
@@ -37,6 +44,11 @@ export default function useJawaWeather(options) {
 
     // only need to run useEffect when places changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [places]);
+
+  // update local storage
+  useEffect(() => {
+    localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places));
   }, [places]);
 
   /**
@@ -93,5 +105,5 @@ export default function useJawaWeather(options) {
       console.log('ERROR:', error);
     }
   }
-  return { isLoading, isError, weatherData, setPlaces };
+  return [isLoading, isError, weatherData, setPlaces];
 }

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 export default function Main(props) {
   // TODO: if isLoading=true, blur the page
+  console.log('props: ', props);
 
   const { isLoading, isError, weather } = props;
 

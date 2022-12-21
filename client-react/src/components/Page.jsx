@@ -1,24 +1,15 @@
-import React, { useEffect } from 'react';
 import Search from './places/Search';
 import Places from './places/Places';
 import Main from './Main';
 import { useWeatherData, useWeatherAPI } from '../contexts/WeatherContext';
 import styles from '../styles/PageLayout.module.css';
-import { PLACES_STORAGE_KEY } from '../constants/defaults';
 
 export default function Page() {
-  const { isLoading, isError, weatherData } = useWeatherData();
-  const { setPlaces } = useWeatherAPI();
+  const [isLoading, isError, weatherData] = useWeatherData();
+  const [fetchWeather] = useWeatherAPI();
+  console.log('fetchWeather: ', fetchWeather);
 
-  console.log('Layout rendered!');
-
-  // initialize weather on initial render
-  useEffect(() => {
-    const places = JSON.parse(localStorage.getItem(PLACES_STORAGE_KEY));
-    setPlaces(places);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  console.log('Page rendered!');
 
   return (
     <div className={styles.pageContainer}>
