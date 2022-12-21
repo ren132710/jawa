@@ -2,12 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '../constants/defaults';
 
-// unless local storage is places exists and is non-empty, set default places
-// const localPlaces = localStorage.getItem(c.PLACES_STORAGE_KEY);
-// if (!localPlaces?.length) {
-//   localStorage.setItem(c.PLACES_STORAGE_KEY, JSON.stringify(c.DEFAULT_PLACES));
-// }
-
 const TIMEOUT = import.meta.env.VITE_AXIOS_TIMEOUT;
 const WEATHER_SERVER = import.meta.env.VITE_JAWA_SERVER;
 const URL = `https://${WEATHER_SERVER}/weather`;
@@ -105,5 +99,5 @@ export default function useJawaWeather(options) {
       console.log('ERROR:', error);
     }
   }
-  return [isLoading, isError, weatherData, setPlaces];
+  return [{ weatherData, isLoading, isError }, setPlaces];
 }
