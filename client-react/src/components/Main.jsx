@@ -1,10 +1,16 @@
-import PropTypes from 'prop-types';
+import { useWeatherData, useWeatherAPI } from '../contexts/WeatherContext';
 
-export default function Main(props) {
+export default function Main() {
+  const [isLoading, isError, weatherData] = useWeatherData();
+  console.log('isLoading:', isLoading);
+  console.log('isError:', isError);
+  const [fetchWeather] = useWeatherAPI();
+  if (fetchWeather) console.log('fetchWeather is defined');
+
   // TODO: if isLoading=true, blur the page
-  console.log('props: ', props);
+  // TODO: decompose Main into Current, Daily, Hourly
 
-  const { isLoading, isError, weather } = props;
+  const weather = weatherData[0];
 
   return (
     <div>
@@ -34,24 +40,3 @@ export default function Main(props) {
     </div>
   );
 }
-
-Main.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  isError: PropTypes.bool.isRequired,
-  weather: PropTypes.shape({
-    coordinates: PropTypes.shape({
-      location: PropTypes.string.isRequired,
-    }).isRequired,
-    current: PropTypes.shape({
-      description: PropTypes.string.isRequired,
-      temp: PropTypes.number.isRequired,
-      feelsLike: PropTypes.number.isRequired,
-      high: PropTypes.number.isRequired,
-      low: PropTypes.number.isRequired,
-      humidity: PropTypes.number.isRequired,
-      windSpeed: PropTypes.number.isRequired,
-      windDirection: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};

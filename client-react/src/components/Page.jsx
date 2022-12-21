@@ -1,14 +1,10 @@
 import Search from './places/Search';
 import Places from './places/Places';
 import Main from './Main';
-import { useWeatherData, useWeatherAPI } from '../contexts/WeatherContext';
+
 import styles from '../styles/PageLayout.module.css';
 
 export default function Page() {
-  const [isLoading, isError, weatherData] = useWeatherData();
-  const [fetchWeather] = useWeatherAPI();
-  console.log('fetchWeather: ', fetchWeather);
-
   console.log('Page rendered!');
 
   return (
@@ -18,7 +14,7 @@ export default function Page() {
         <Search />
         <Places />
       </section>
-      <Main isLoading={isLoading} isError={isError} weather={weatherData[0]} />
+      <Main />
       <footer>Footer</footer>
       <div>Gutter</div>
     </div>
