@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import PropTypes from 'prop-types';
 import styles from '../../styles/places/Place.module.css';
 
@@ -22,7 +21,7 @@ export default function Place(props) {
       role="button"
       tabIndex={0}
       onClick={(e) => handleClick(e)}
-      // onKeyDown={() => handleClick('place card keydown')}
+      onKeyDown={(e) => handleClick(e)}
       aria-label="tap to view weather"
       data-id={place.coordinates.id}
       data-location={place.coordinates.location}
@@ -36,7 +35,7 @@ export default function Place(props) {
         className={styles.placeBtnDelete}
         tabIndex="-1"
         onClick={() => handleClick('delete place clicked')}
-        hidden
+        // hidden
       >
         {/* try &times; in lieu of '✕' ✕ */}✕
       </button>
