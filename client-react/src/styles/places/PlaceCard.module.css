@@ -1,0 +1,58 @@
+.place-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: var(--border-thickness-card) solid var(--border-color-card);
+  border-radius: var(--border-radius-card);
+  padding: 0.3em;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.place-card:hover,
+.place-card:focus {
+  outline: none;
+  background-color: hsla(0, 0%, 96%, 0.3);
+}
+
+.place-text {
+  /* font-size: 0.75rem; */
+  text-transform: capitalize;
+  font-size: var(--fs-small);
+}
+
+.place-card-item {
+  pointer-events: none;
+}
+
+.place-btn-delete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  border: 1px solid var(--white);
+  border-radius: 50%;
+  outline: none;
+  padding: 0.25em 0.5em;
+  font-size: 0.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--blue-30);
+  background-color: hsla(0, 0%, 96%, 0.9);
+  transition: 100ms linear;
+}
+
+.place-btn-delete:hover {
+  box-shadow: 0 0 5px 0 var(--white);
+}
+
+.place-btn-delete:focus {
+  background-color: var(--blue-10);
+  box-shadow: 0 0 5px 0 var(--white);
+  color: var(--grey-95);
+}
