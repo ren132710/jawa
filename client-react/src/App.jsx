@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Topbar from './components/topbar/Topbar';
-import Layout from './components/Layout';
+import Page from './components/Page';
 import WeatherProvider from './contexts/WeatherContext';
 import PrefsProvider from './contexts/PrefsContext';
 import * as c from './constants/defaults';
@@ -33,7 +33,7 @@ export default function App() {
     <PrefsProvider>
       <WeatherProvider>
         <Topbar />
-        <Layout />
+        <Page />
       </WeatherProvider>
     </PrefsProvider>
   );

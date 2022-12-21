@@ -6,7 +6,7 @@ import { useWeatherData, useWeatherAPI } from '../contexts/WeatherContext';
 import styles from '../styles/PageLayout.module.css';
 import { PLACES_STORAGE_KEY } from '../constants/defaults';
 
-export default function PageLayout() {
+export default function Page() {
   const { isLoading, isError, weatherData } = useWeatherData();
   const { setPlaces } = useWeatherAPI();
 
