@@ -1,6 +1,18 @@
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { PREFS_STORAGE_KEY } from '../constants/defaults';
+import * as c from '../constants/defaults';
+
+// unless local storage prefs exists and is non-empty, set default prefs
+const localPrefs = localStorage.getItem(c.PREFS_STORAGE_KEY);
+if (!localPrefs?.length) {
+  localStorage.setItem(c.PREFS_STORAGE_KEY, JSON.stringify(c.DEFAULT_PREFS));
+}
+
+// unless local storage is places exists and is non-empty, set default places
+const localPlaces = localStorage.getItem(c.PLACES_STORAGE_KEY);
+if (!localPlaces?.length) {
+  localStorage.setItem(c.PLACES_STORAGE_KEY, JSON.stringify(c.DEFAULT_PLACES));
+}
 
 // 1. create the contexts
 const ThemeContext = React.createContext();
@@ -28,7 +40,7 @@ export function useWeatherPrefs() {
 }
 
 // 3. define the provider and delegate value props to the contexts
-const prefs = JSON.parse(localStorage.getItem(PREFS_STORAGE_KEY));
+const prefs = JSON.parse(localStorage.getItem(c.PREFS_STORAGE_KEY));
 export default function PrefsProvider({ children }) {
   const [theme, setTheme] = useState(prefs[0].theme);
   const [units, setUnits] = useState(prefs[0].units);
@@ -39,7 +51,7 @@ export default function PrefsProvider({ children }) {
   // update local storage
   useEffect(() => {
     localStorage.setItem(
-      PREFS_STORAGE_KEY,
+      c.PREFS_STORAGE_KEY,
       JSON.stringify([{ theme, units, lang }])
     );
   }, [theme, units, lang]);
