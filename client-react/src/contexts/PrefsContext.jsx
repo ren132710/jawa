@@ -49,11 +49,11 @@ export default function PrefsProvider({ children }) {
   }, [theme]);
 
   const themeContextValue = useMemo(() => {
-    return { theme, setTheme };
+    return [theme, setTheme];
   }, [theme]);
 
   const weatherPrefsContextValue = useMemo(() => {
-    return { units, setUnits, lang, setLang };
+    return [units, setUnits, lang, setLang];
   }, [units, lang]);
 
   return (

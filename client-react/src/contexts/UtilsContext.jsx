@@ -20,7 +20,7 @@ export function UtilsProvider({ children }) {
 
   const memoValue = useMemo(() => {
     console.log('UtilsProvider useMemo is called');
-    return { getUnitOfMeasure, getTranslation };
+    return [getUnitOfMeasure, getTranslation];
   }, []);
 
   return (
