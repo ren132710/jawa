@@ -2,6 +2,10 @@ import React, { useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import * as c from '../constants/defaults';
 
+/**
+ * initialize local storage with default prefs and places
+ */
+
 // unless local storage prefs exists and is non-empty, set default prefs
 const localPrefs = localStorage.getItem(c.PREFS_STORAGE_KEY);
 if (!localPrefs?.length) {
@@ -13,6 +17,10 @@ const localPlaces = localStorage.getItem(c.PLACES_STORAGE_KEY);
 if (!localPlaces?.length) {
   localStorage.setItem(c.PLACES_STORAGE_KEY, JSON.stringify(c.DEFAULT_PLACES));
 }
+
+/**
+ * create the provider and contexts
+ */
 
 // 1. create the contexts
 const ThemeContext = React.createContext();
