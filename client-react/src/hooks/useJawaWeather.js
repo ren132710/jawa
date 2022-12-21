@@ -46,15 +46,16 @@ export default function useJawaWeather(options) {
    * @param {string} units: (imperial | metric ), required by OpenWeather
    * @param {string} lang: (en | fr | sv ), OpenWeather option
    * @param {string} id:
+   *   - client defined
    *   - used for adding/deleting places from localStorage
    *   - pass to server so server can include in the response object
    * @param {string} location:
-   *  - location is not provided by OpenWeather
-   *  - pass to server so server can include in the response object
+   *   - client defined
+   *   - pass to server so server can include in the response object
    * @param {boolean} favorite:
-   * - favorite is not provided by OpenWeather
-   * - used to filtering places before saving to localStorage
-   * - pass to server so server can include in the response object
+   *   - client defined
+   *   - used for filtering places before saving to localStorage
+   *   - pass to server so server can include in the response object
    */
 
   async function getPlacesWeather() {
