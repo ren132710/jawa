@@ -6,7 +6,7 @@ const TIMEOUT = import.meta.env.VITE_AXIOS_TIMEOUT;
 const WEATHER_SERVER = import.meta.env.VITE_JAWA_SERVER;
 const URL = `https://${WEATHER_SERVER}/weather`;
 
-// if localStorage is empty, use default places, otherwise use localStorage
+// if localStorage, otherwise use default places
 const getPlaces = () => {
   const places = localStorage.getItem(PLACES_STORAGE_KEY);
   return places ? JSON.parse(places) : DEFAULT_PLACES;
