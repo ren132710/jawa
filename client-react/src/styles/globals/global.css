@@ -24,10 +24,9 @@ body {
   background: linear-gradient(to right, var(--off-white), var(--skyblue-75));
 }
 
-.blurred {
+.blur {
   background: var(--snow);
-  filter: blur(8px);
-  /* filter: opacity(30%); */
+  filter: blur(5px);
 }
 
 /*
