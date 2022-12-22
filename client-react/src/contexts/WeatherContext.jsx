@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useJawaWeather from '../hooks/useJawaWeather';
 import { useWeatherPrefs } from './PrefsContext';
@@ -31,6 +31,15 @@ export default function WeatherProvider({ children }) {
     useJawaWeather(options);
 
   console.log('WeatherProvider rendered!');
+
+  // blur page when loading
+  useEffect(() => {
+    if (isLoading) {
+      document.body.classList.add('blur');
+    } else {
+      document.body.classList.remove('blur');
+    }
+  }, [isLoading]);
 
   const dataContextValue = useMemo(() => {
     return { weatherData, isLoading, isError };
