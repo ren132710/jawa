@@ -10,20 +10,28 @@ function handleClick(value) {
 // TODO: where should handleClick be defined?
 
 export default function Places() {
-  const { weatherData } = useWeatherData();
+  const { weatherData, isError } = useWeatherData();
 
   console.log('Places container rendered!');
 
   return (
     <div className={styles.placesContainer}>
-      {/* render weather for each favorite place */}
-      {weatherData.map((placeWeather) => (
-        <Place
-          key={placeWeather.coordinates.id}
-          place={placeWeather}
-          handleClick={handleClick}
-        />
-      ))}
+      {isError ? (
+        <div className="error-container">
+          <div className="error">
+            That was weird. Something went wrong fetching your weather. Refresh
+            the page and try again.
+          </div>
+        </div>
+      ) : (
+        weatherData.map((placeWeather) => (
+          <Place
+            key={placeWeather.coordinates.id}
+            place={placeWeather}
+            handleClick={handleClick}
+          />
+        ))
+      )}
     </div>
   );
 }
