@@ -6,19 +6,22 @@ const TIMEOUT = import.meta.env.VITE_AXIOS_TIMEOUT;
 const WEATHER_SERVER = import.meta.env.VITE_JAWA_SERVER;
 const URL = `https://${WEATHER_SERVER}/weather`;
 
+// if localStorage is empty, use default places, otherwise use localStorage
+const getPlaces = () => {
+  const places = localStorage.getItem(PLACES_STORAGE_KEY);
+  return places ? JSON.parse(places) : DEFAULT_PLACES;
+};
+
 export default function useJawaWeather(options) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [places, setPlaces] = useState(DEFAULT_PLACES);
+  const [places, setPlaces] = useState(getPlaces());
   const [weatherData, setWeatherData] = useState([]);
   const { units, lang } = options;
 
   console.log('useJawaHook called!');
 
   useEffect(() => {
-    // on page initialization, wait until places state is set before initial render
-    // if (!places) return;
-
     let ignore = false;
 
     const fetchWeather = async () => {
