@@ -24,6 +24,8 @@ export function useWeatherPrefs() {
 }
 
 // 3. define the provider and delegate value props to the contexts
+
+// if localStorage, otherwise use default prefs
 const getPrefs = () => {
   const prefs = localStorage.getItem(PREFS_STORAGE_KEY);
   return prefs ? JSON.parse(prefs) : DEFAULT_PREFS;
