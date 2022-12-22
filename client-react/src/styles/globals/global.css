@@ -29,6 +29,25 @@ body {
   filter: blur(5px);
 }
 
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 1/-1;
+}
+
+.error {
+  width: 90%;
+  border: var(--border-thickness-input) solid hsl(0, 65%, 50%);
+  border-radius: var(--border-radius-input);
+  padding: 0.5em 1em;
+  outline: none;
+  font-size: 1.1rem;
+  /* color: hsl(0, 90%, 10%); */
+  color: hsl(0, 65%, 20%);
+  text-align: center;
+}
+
 /*
  * pseudo elements
  */
