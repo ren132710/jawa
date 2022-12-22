@@ -58,7 +58,7 @@ export default function Place(props) {
         data-test="place-card-hl"
       >
         <span data-test="place-card-high">{place.current.high}</span>/
-        <span className={styles.degrees} data-test="place-card-low">
+        <span className="degrees" data-test="place-card-low">
           {place.current.low}
         </span>
       </div>
