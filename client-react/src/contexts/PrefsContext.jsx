@@ -24,10 +24,15 @@ export function useWeatherPrefs() {
 }
 
 // 3. define the provider and delegate value props to the contexts
+const getPrefs = () => {
+  const prefs = localStorage.getItem(PREFS_STORAGE_KEY);
+  return prefs ? JSON.parse(prefs) : DEFAULT_PREFS;
+};
+
 export default function PrefsProvider({ children }) {
-  const [theme, setTheme] = useState(DEFAULT_PREFS[0].theme);
-  const [units, setUnits] = useState(DEFAULT_PREFS[0].units);
-  const [lang, setLang] = useState(DEFAULT_PREFS[0].lang);
+  const [theme, setTheme] = useState(getPrefs()[0].theme);
+  const [units, setUnits] = useState(getPrefs()[0].units);
+  const [lang, setLang] = useState(getPrefs()[0].lang);
 
   console.log('PrefsProvider rendered!');
 
