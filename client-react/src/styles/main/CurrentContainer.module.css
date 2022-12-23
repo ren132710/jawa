@@ -1,0 +1,8 @@
+.current-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  border: var(--border-thickness) solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 0.75em;
+}

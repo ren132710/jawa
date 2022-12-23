@@ -1,7 +1,8 @@
 import Search from './places/Search';
-import Places from './places/Places';
-import Main from './Main';
-import styles from '../styles/PageLayout.module.css';
+import PlacesContainer from './places/PlacesContainer';
+import Main from './main/Main';
+import Footer from './Footer';
+import styles from '../styles/Page.module.css';
 
 export default function Page() {
   console.log('Page rendered!');
@@ -11,11 +12,11 @@ export default function Page() {
       <div className="spacer" />
       <div className={styles.placesSection}>
         <Search />
-        <Places />
+        <PlacesContainer />
       </div>
       <Main />
-      <footer>Footer</footer>
-      <div>Gutter</div>
+      <Footer />
+      <div className="gutter" />
     </div>
   );
 }

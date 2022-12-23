@@ -1,0 +1,18 @@
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.85rem;
+  height: 30px;
+  margin: 2rem 1rem;
+}
+
+footer > a:hover,
+footer > a:focus {
+  text-decoration: none;
+}
+
+footer > a:link,
+footer > a:visited {
+  color: var(--color-value);
+}

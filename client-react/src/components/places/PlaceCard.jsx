@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
-import styles from '../../styles/places/Place.module.css';
+import styles from '../../styles/places/PlaceCard.module.css';
 
 /**
  * TODO:
- *  - style degrees
+ *  -  debug when weatherData is empty, do not render until there is weatherData
  *  - where should handleClick be defined?
+ *  - implement handleClick -> update main weather data
+ *  - onkeydown, execute only for enter key, key: "Enter", keyCode: 13
  *  - break out delete button into its own component
  *  - test/fix iOS double tap issue
  *  - test tabbing sequence
  */
 
-export default function Place(props) {
-  const { place, handleClick } = props;
-
+export default function Place({ place, handleClick }) {
   console.log('Place rendered!');
 
   return (

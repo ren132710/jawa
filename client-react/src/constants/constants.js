@@ -36,3 +36,5 @@ export const DEFAULT_PLACES = [
 ];
 
 export const DEFAULT_PREFS = [{ units: 'imperial', theme: 'jawa', lang: 'en' }];
+
+export const ERROR_MESSAGE = `That was weird. Something went wrong fetching your weather. <br /> Please refresh the page and try again.`;

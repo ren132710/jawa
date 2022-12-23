@@ -1,0 +1,18 @@
+.daily-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .daily-container {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media screen and (min-width: 976px) {
+  .daily-container {
+    grid-template-columns: repeat(auto-fit, 120px);
+    justify-content: center;
+  }
+}

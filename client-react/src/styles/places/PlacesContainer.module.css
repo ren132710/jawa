@@ -1,0 +1,20 @@
+.places-container {
+  grid-area: places;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(75px, max-content));
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+@media screen and (min-width: 480px) {
+  .places-container {
+    /* fit columns into the available space */
+    grid-template-columns: repeat(auto-fit, minmax(75px, max-content));
+  }
+}
+
+@media screen and (min-width: 976px) {
+  .places-container {
+    justify-content: end;
+  }
+}

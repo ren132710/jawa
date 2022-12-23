@@ -1,0 +1,98 @@
+.current-top-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.current-top-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.current-top-right-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 15%;
+}
+
+.current-bottom-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.current-bottom-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.current-location {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.current-detail {
+  font-size: 0.5rem;
+  font-style: oblique;
+  padding-top: 1px;
+}
+
+.current-high-low {
+  font-size: 0.75rem;
+}
+
+/* size for Galaxy Fold, then grow */
+.current-temp {
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.current-feels-like {
+  font-size: 0.75rem;
+}
+
+.current-description {
+  color: var(--color-value);
+  text-transform: capitalize;
+}
+
+@media screen and (min-width: 360px) {
+  /* Galaxy S20 */
+  .current-temp {
+    font-size: 2.2rem;
+  }
+
+  .current-feels-like {
+    font-size: 0.85rem;
+  }
+}
+
+@media screen and (min-width: 375px) {
+  .current-temp {
+    font-size: 2.5rem;
+  }
+}
+
+@media screen and (min-width: 380px) {
+  .current-temp {
+    font-size: 2.7rem;
+  }
+}
+
+@media screen and (min-width: 391px) {
+  .current-temp {
+    font-size: 2.85rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .current-top-right-block {
+    padding-top: 12%;
+  }
+}

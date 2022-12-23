@@ -1,0 +1,72 @@
+.hour-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.hour-row:nth-child(2n) {
+  background: linear-gradient(
+    to right,
+    var(--hour-nth-child-background-from),
+    var(--hour-nth-child-background-to)
+  );
+}
+
+.hour-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hour-day {
+  text-transform: capitalize;
+}
+
+.hour-data:nth-child(2) {
+  grid-column: 2/4;
+}
+
+.hour-data:nth-child(5) {
+  justify-content: flex-start;
+}
+
+.hour-data:nth-child(6) {
+  justify-content: flex-start;
+}
+
+.hour-label {
+  font-size: 0.65rem;
+}
+
+.hour-value {
+  color: var(--color-value);
+  font-size: 0.65rem;
+}
+
+.hour-value-margin {
+  line-height: 0;
+  margin-top: 0.33rem;
+}
+
+@media screen and (min-width: 766px) {
+  /* flatten hour rows */
+  .hour-row {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(60px, 1fr));
+    grid-template-rows: auto;
+    gap: 0.4rem;
+  }
+
+  .hour-data:nth-child(2) {
+    grid-column: 2/3;
+  }
+
+  .hour-data:nth-child(5) {
+    justify-content: center;
+  }
+
+  .hour-data:nth-child(6) {
+    justify-content: center;
+  }
+}

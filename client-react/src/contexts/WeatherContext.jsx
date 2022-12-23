@@ -31,6 +31,7 @@ export default function WeatherProvider({ children }) {
     useJawaWeather(options);
 
   console.log('WeatherProvider rendered!');
+  console.log('WeatherProvider weatherData: ', weatherData);
 
   // blur page when loading
   useEffect(() => {
@@ -48,6 +49,11 @@ export default function WeatherProvider({ children }) {
   const apiContextValue = useMemo(() => {
     return { setPlaces };
   }, [setPlaces]);
+
+  // if (!weatherData) return;
+
+  // unless there is weather data, don't render anything
+  // if (!weatherData) return;
 
   return (
     <WeatherDataContext.Provider value={dataContextValue}>

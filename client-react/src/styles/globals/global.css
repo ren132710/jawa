@@ -44,8 +44,10 @@ body {
   outline: none;
   font-size: 1.1rem;
   /* color: hsl(0, 90%, 10%); */
-  color: hsl(0, 65%, 20%);
+  color: hsl(0, 65%, 50%);
   text-align: center;
+  white-space: pre-wrap;
+  font-style: oblique;
 }
 
 /*
