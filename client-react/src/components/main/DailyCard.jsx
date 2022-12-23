@@ -11,15 +11,6 @@ export default function DailyCard({ day }) {
 
   console.log('DailyCard rendered!');
 
-  /**
-   * TODO: add the following:
-   * - convert timestamp to date
-   * - theme
-   * - unit conversion
-   * - language conversion
-   *
-   */
-
   return (
     <div className={styles.dailyCard}>
       <img
