@@ -32,15 +32,19 @@ export default function DailyCard({ day }) {
         {day.description}
       </div>
       <div className="label">
-        <span data-translation="10">{getTranslation(10, lang)}</span>
-        <span>:&nbsp;</span>
+        <span data-translation="10">
+          {getTranslation(10, lang)}
+          {': '}
+        </span>
         <span className="value percent" data-daily-humidity>
           {day.humidity}
         </span>
       </div>
       <div className="label">
-        <span data-translation="11">{getTranslation(11, lang)}</span>
-        <span>:&nbsp;</span>
+        <span data-translation="11">
+          {getTranslation(11, lang)}
+          {': '}
+        </span>
         <span
           className="value"
           data-daily-wind-speed
