@@ -1,6 +1,6 @@
 import PlaceCard from './PlaceCard';
-import { useWeatherData } from '../../contexts/WeatherContext';
 import styles from '../../styles/places/PlacesContainer.module.css';
+import { useWeatherData } from '../../contexts/WeatherContext';
 import { ERROR_MESSAGE } from '../../constants/constants';
 
 // TODO: where should handleClick be defined?
