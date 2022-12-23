@@ -30,7 +30,10 @@ export default function Main() {
         <DailyContainer daily={weather.daily} />
       </div>
       <div className={styles.hourlySection}>
-        <HourlyContainer hourly={weather.hourly} />
+        <HourlyContainer
+          coordinates={weather.coordinates}
+          hourly={weather.hourly}
+        />
       </div>
     </main>
   );
