@@ -8,7 +8,7 @@ import getIconUrl from '../utils/iconUtils';
 // 1. create the contexts
 const UtilsContext = React.createContext();
 
-// 2. make the contexts to subscribers via custom hooks
+// 2. make the contexts available to subscribers via custom hooks
 export function useUtils() {
   const context = useContext(UtilsContext);
   if (context === undefined) {
