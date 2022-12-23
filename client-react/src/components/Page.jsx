@@ -10,10 +10,10 @@ export default function Page() {
   return (
     <div className={styles.pageContainer}>
       <div className="spacer" />
-      <div className={styles.placesSection}>
+      <section className={styles.placesSection}>
         <Search />
         <PlacesContainer />
-      </div>
+      </section>
       <Main />
       <Footer />
       <div className="gutter" />
