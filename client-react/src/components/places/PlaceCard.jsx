@@ -43,7 +43,7 @@ export default function Place({ place, handleClick }) {
         src={`http://openweathermap.org/img/wn/${place.current.icon}.png`}
         width="50"
         height="50"
-        alt={`${place.current.description}`}
+        alt={place.current.description}
         data-card-icon
       />
       <div
