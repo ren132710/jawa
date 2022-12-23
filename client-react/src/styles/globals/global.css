@@ -50,6 +50,15 @@ body {
   font-style: oblique;
 }
 
+.label {
+  font-size: 0.6rem;
+  padding-top: 0.1rem;
+}
+
+.value {
+  color: var(--color-value);
+}
+
 /*
  * pseudo elements
  */
