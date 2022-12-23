@@ -2,17 +2,17 @@ import PropTypes from 'prop-types';
 import HourlyRow from './HourlyRow';
 import styles from '../../styles/main/HourlyContainer.module.css';
 
-export default function HourlyContainer({ hourly, coordinates }) {
+export default function HourlyContainer({ coordinates, hourly }) {
   if (!hourly.length) return;
   console.log('Hourly container rendered!');
 
-  // show every other hour
+  // only show every other hour
   const hourlyReduced = hourly.filter((hour, index) => index % 2 === 0);
 
   return (
     <div className={styles.hourlyContainer}>
       {hourlyReduced.map((hour) => (
-        <HourlyRow key={hour.timestamp} hour={hour} coordinates={coordinates} />
+        <HourlyRow key={hour.timestamp} coordinates={coordinates} hour={hour} />
       ))}
     </div>
   );
