@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import styles from '../../styles/main/HourlyRow.module.css';
-import { useUtils } from '../../contexts/UtilsContext';
 import { usePrefsData } from '../../contexts/PrefsContext';
+import { useUtils } from '../../contexts/UtilsContext';
 
-export default function HourlyRow({ hour, coordinates }) {
+export default function HourlyRow({ coordinates, hour }) {
   const { units, lang } = usePrefsData();
   const { getUnitOfMeasure, getTranslation, df, getIconUrl } = useUtils();
   console.log('HourlyRow rendered!');
