@@ -24,7 +24,7 @@ HourlyContainer.propTypes = {
       uvIndex: PropTypes.number.isRequired,
       uvLevel: PropTypes.string.isRequired,
       windDeg: PropTypes.number.isRequired,
-      windDirection: PropTypes.number.isRequired,
+      windDirection: PropTypes.string.isRequired,
       windSpeed: PropTypes.number.isRequired,
     })
   ).isRequired,

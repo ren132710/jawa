@@ -3,11 +3,14 @@ import DailyCard from './DailyCard';
 import styles from '../../styles/main/DailyContainer.module.css';
 
 export default function DailyContainer({ daily }) {
+  if (!daily.length) return;
   console.log('Daily container rendered!');
 
   return (
     <div className={styles.dailyContainer}>
-      <DailyCard daily={daily} />
+      {daily.map((day) => (
+        <DailyCard key={day.timestamp} day={day} />
+      ))}
     </div>
   );
 }
@@ -23,7 +26,7 @@ DailyContainer.propTypes = {
       precip: PropTypes.number.isRequired,
       timestamp: PropTypes.number.isRequired,
       windDeg: PropTypes.number.isRequired,
-      windDirection: PropTypes.number.isRequired,
+      windDirection: PropTypes.string.isRequired,
       windSpeed: PropTypes.number.isRequired,
     })
   ).isRequired,

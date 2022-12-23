@@ -35,14 +35,7 @@
   padding-bottom: 0.7rem;
 }
 
-.label {
-  font-size: 0.6rem;
-  padding-top: 0.1rem;
-}
 
-.value {
-  color: var(--color-value);
-}
 
 @media screen and (min-width: 976px) {
   .main {

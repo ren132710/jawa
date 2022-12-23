@@ -19,8 +19,6 @@ const TRANSLATIONS = {
   14: { en: 'Sunset', fr: 'Coucher du soleil', sv: 'Solnedgång' },
 };
 
-function getTranslation(index, lang) {
+export default function getTranslation(index, lang) {
   return TRANSLATIONS[index][lang];
 }
-
-console.log(getTranslation(1, 'en')); // Weather at your places

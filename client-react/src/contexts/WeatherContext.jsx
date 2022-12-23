@@ -1,10 +1,12 @@
 import React, { useContext, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useJawaWeather from '../hooks/useJawaWeather';
-import { useWeatherPrefs } from './PrefsContext';
+import { usePrefsData } from './PrefsContext';
 
 // 1. create the contexts
 const WeatherDataContext = React.createContext();
+
+// consumers that only use the api setters won't re-render when weather data changes
 const WeatherAPIContext = React.createContext();
 
 // 2. make the contexts to subscribers via custom hooks
@@ -26,7 +28,7 @@ export function useWeatherAPI() {
 
 // 3. define the provider and delegate value props to the contexts
 export default function WeatherProvider({ children }) {
-  const options = useWeatherPrefs();
+  const options = usePrefsData();
   const [{ weatherData, isLoading, isError }, setPlaces] =
     useJawaWeather(options);
 
@@ -42,22 +44,20 @@ export default function WeatherProvider({ children }) {
     }
   }, [isLoading]);
 
-  const dataContextValue = useMemo(() => {
+  const memoDataContext = useMemo(() => {
     return { weatherData, isLoading, isError };
   }, [weatherData, isLoading, isError]);
 
-  const apiContextValue = useMemo(() => {
+  const memoApiContext = useMemo(() => {
     return { setPlaces };
-  }, [setPlaces]);
 
-  // if (!weatherData) return;
-
-  // unless there is weather data, don't render anything
-  // if (!weatherData) return;
+    // setPlaces never changes, so we can disable the exhaustive-deps rule
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <WeatherDataContext.Provider value={dataContextValue}>
-      <WeatherAPIContext.Provider value={apiContextValue}>
+    <WeatherDataContext.Provider value={memoDataContext}>
+      <WeatherAPIContext.Provider value={memoApiContext}>
         {children}
       </WeatherAPIContext.Provider>
     </WeatherDataContext.Provider>

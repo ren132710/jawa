@@ -6,6 +6,11 @@ import { useWeatherData } from '../../contexts/WeatherContext';
 
 export default function Main() {
   const { weatherData, isLoading, isError } = useWeatherData();
+  // TODOs:
+  // import prefs context, change units, language
+  // import theme context, change theme
+  // import utility context - do translations, wind direction conversion
+  // add section titles
 
   console.log('Main rendered!');
 

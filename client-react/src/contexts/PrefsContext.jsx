@@ -3,22 +3,24 @@ import PropTypes from 'prop-types';
 import { PREFS_STORAGE_KEY, DEFAULT_PREFS } from '../constants/constants';
 
 // 1. create the contexts
-const ThemeContext = React.createContext();
-const WeatherPrefsContext = React.createContext();
+const PrefsDataContext = React.createContext();
+
+// consumers that only use the api setters won't re-render when prefs data changes
+const PrefsAPIContext = React.createContext();
 
 // 2. make the contexts to subscribers via custom hooks
-export function useTheme() {
-  const context = useContext(ThemeContext);
+export function usePrefsData() {
+  const context = useContext(PrefsDataContext);
   if (context === undefined) {
-    throw new Error('useTheme is being called outside of its Provider');
+    throw new Error('usePrefsData is being called outside of its Provider');
   }
   return context;
 }
 
-export function useWeatherPrefs() {
-  const context = useContext(WeatherPrefsContext);
+export function usePrefsAPI() {
+  const context = useContext(PrefsAPIContext);
   if (context === undefined) {
-    throw new Error('useWeatherPrefs is being called outside of its Provider');
+    throw new Error('usePrefsAPI is being called outside of its Provider');
   }
   return context;
 }
@@ -51,20 +53,20 @@ export default function PrefsProvider({ children }) {
     document.querySelector('body').setAttribute('data-theme', theme);
   }, [theme]);
 
-  const themeContextValue = useMemo(() => {
-    return { theme, setTheme };
-  }, [theme]);
+  const memoPrefsDataContext = useMemo(() => {
+    return { theme, units, lang };
+  }, [theme, units, lang]);
 
-  const weatherPrefsContextValue = useMemo(() => {
-    return { units, setUnits, lang, setLang };
-  }, [units, lang]);
+  const memoPrefsAPIContext = useMemo(() => {
+    return { setTheme, setUnits, setLang };
+  }, []);
 
   return (
-    <ThemeContext.Provider value={themeContextValue}>
-      <WeatherPrefsContext.Provider value={weatherPrefsContextValue}>
+    <PrefsDataContext.Provider value={memoPrefsDataContext}>
+      <PrefsAPIContext.Provider value={memoPrefsAPIContext}>
         {children}
-      </WeatherPrefsContext.Provider>
-    </ThemeContext.Provider>
+      </PrefsAPIContext.Provider>
+    </PrefsDataContext.Provider>
   );
 }
 

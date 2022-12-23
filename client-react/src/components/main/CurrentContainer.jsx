@@ -39,7 +39,7 @@ CurrentContainer.propTypes = {
     uvLevel: PropTypes.string.isRequired,
     visibility: PropTypes.number.isRequired,
     windDeg: PropTypes.number.isRequired,
-    windDirection: PropTypes.number.isRequired,
+    windDirection: PropTypes.string.isRequired,
     windSpeed: PropTypes.number.isRequired,
   }).isRequired,
 };

@@ -3,8 +3,8 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  border: var(--border-thickness) solid var(--border-color);
-  border-radius: var(--border-radius);
+  border: var(--border-thickness-card) solid var(--border-color-card);
+  border-radius: var(--border-radius-card);
   padding: 0.5em;
 }
 
@@ -26,9 +26,9 @@
 }
 
 @media screen and (min-width: 976px) {
-  .daily-card:nth-child(6) {
+  /* .daily-card:nth-child(6) {
     display: flex;
-  }
+  } */
 
   .daily-card:nth-child(7) {
     display: flex;

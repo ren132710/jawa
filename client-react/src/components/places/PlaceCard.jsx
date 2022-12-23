@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import styles from '../../styles/places/PlaceCard.module.css';
+import { useUtils } from '../../contexts/UtilsContext';
 
 /**
  * TODO:
@@ -12,6 +13,7 @@ import styles from '../../styles/places/PlaceCard.module.css';
  */
 
 export default function Place({ place, handleClick }) {
+  const { getIconUrl } = useUtils();
   console.log('Place rendered!');
 
   return (
@@ -40,7 +42,7 @@ export default function Place({ place, handleClick }) {
       </button>
       <img
         className={styles.placeCardItem}
-        src={`http://openweathermap.org/img/wn/${place.current.icon}.png`}
+        src={getIconUrl(place.current.icon)}
         width="50"
         height="50"
         alt={place.current.description}
