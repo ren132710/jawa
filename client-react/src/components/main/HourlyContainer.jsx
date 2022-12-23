@@ -3,6 +3,7 @@ import HourlyRow from './HourlyRow';
 import styles from '../../styles/main/HourlyContainer.module.css';
 
 export default function HourlyContainer({ hourly }) {
+  if (!hourly.length) return;
   console.log('Hourly container rendered!');
 
   return (

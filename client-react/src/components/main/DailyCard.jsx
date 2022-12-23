@@ -3,8 +3,6 @@ import styles from '../../styles/main/DailyCard.module.css';
 import { useUtils } from '../../contexts/UtilsContext';
 import { usePrefsData } from '../../contexts/PrefsContext';
 
-// console.log('styles.dailyCard: ', styles.dailyCard);
-
 export default function DailyCard({ day }) {
   const { units, lang } = usePrefsData();
   const { getUnitOfMeasure, getTranslation, df, getIconUrl } = useUtils();
