@@ -17,7 +17,7 @@
 }
 
 .daily-description {
-  font-size: var(--font-size-small);
+  font-size: var(--fs-small);
   color: var(--color-value);
   padding-top: 0.1em;
   padding-bottom: 0.1em;
