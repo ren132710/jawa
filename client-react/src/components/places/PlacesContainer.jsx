@@ -10,7 +10,7 @@ function handleClick(value) {
 
 export default function Places() {
   const { weatherData, isError } = useWeatherData();
-  if (!weatherData) return;
+  if (!weatherData.length) return;
 
   console.log('Places container rendered!');
 
