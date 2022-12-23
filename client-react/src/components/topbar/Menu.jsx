@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 import styles from '../../styles/topbar/Menu.module.css';
 
+/**
+ * TODO:
+ *  - change theme
+ *  - change units
+ *  - change language
+ */
+
 function handleClick(value) {
   console.log('clicked', value);
 }
