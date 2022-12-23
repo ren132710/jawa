@@ -48,7 +48,7 @@ export default function PrefsProvider({ children }) {
     );
   }, [theme, units, lang]);
 
-  // update app theme
+  // apply theme change application wide
   useEffect(() => {
     document.querySelector('body').setAttribute('data-theme', theme);
   }, [theme]);
