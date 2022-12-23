@@ -3,7 +3,6 @@ import styles from '../../styles/places/PlaceCard.module.css';
 
 /**
  * TODO:
- *  -  debug when weatherData is empty, do not render until there is weatherData
  *  - where should handleClick be defined?
  *  - implement handleClick -> update main weather data
  *  - onkeydown, execute only for enter key, key: "Enter", keyCode: 13
@@ -27,7 +26,7 @@ export default function Place({ place, handleClick }) {
       data-location={place.coordinates.location}
       data-lat={place.coordinates.lat}
       data-long={place.coordinates.long}
-      data-test="place-card"
+      data-place-card
     >
       <button
         type="button"
@@ -45,20 +44,20 @@ export default function Place({ place, handleClick }) {
         width="50"
         height="50"
         alt={`${place.current.description}`}
-        data-test="place-card-icon"
+        data-card-icon
       />
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
-        data-test="place-card-location"
+        data-card-location
       >
         {place.coordinates.location}
       </div>
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
-        data-test="place-card-hl"
+        data-card-hl
       >
-        <span data-test="place-card-high">{place.current.high}</span>/
-        <span className="degrees" data-test="place-card-low">
+        <span data-card-high>{place.current.high}</span>/
+        <span className="degrees" data-card-low>
           {place.current.low}
         </span>
       </div>
