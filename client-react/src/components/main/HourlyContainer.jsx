@@ -12,7 +12,11 @@ export default function HourlyContainer({ coordinates, hourly }) {
   return (
     <div className={styles.hourlyContainer}>
       {hourlyReduced.map((hour) => (
-        <HourlyRow key={hour.timestamp} coordinates={coordinates} hour={hour} />
+        <HourlyRow
+          key={hour.timestamp}
+          timezone={coordinates.timezone}
+          hour={hour}
+        />
       ))}
     </div>
   );

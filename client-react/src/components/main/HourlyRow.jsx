@@ -3,7 +3,7 @@ import styles from '../../styles/main/HourlyRow.module.css';
 import { usePrefsData } from '../../contexts/PrefsContext';
 import { useUtils } from '../../contexts/UtilsContext';
 
-export default function HourlyRow({ coordinates, hour }) {
+export default function HourlyRow({ timezone, hour }) {
   const { units, lang } = usePrefsData();
   const { getUnitOfMeasure, getTranslation, df, getIconUrl } = useUtils();
   console.log('HourlyRow rendered!');
@@ -19,7 +19,7 @@ export default function HourlyRow({ coordinates, hour }) {
         </div>
         <div className={styles.hourValueMargin}>
           <span className={styles.hourValue} data-hour>
-            {df.formatZonedHour(hour.timestamp, coordinates.timezone)}
+            {df.formatZonedHour(hour.timestamp, timezone)}
           </span>
         </div>
       </div>
@@ -36,11 +36,8 @@ export default function HourlyRow({ coordinates, hour }) {
       <div className={styles.hourData}>
         <div className={styles.hourLabel}>Temp</div>
         <div className={styles.hourValueMargin}>
-          <span
-            className={[styles.hourValue, 'degrees'].join(' ')}
-            data-hour-temp
-          >
-            {hour.temp}
+          <span className={styles.hourValue} data-hour-temp>
+            {hour.temp}°
           </span>
         </div>
       </div>
@@ -49,11 +46,8 @@ export default function HourlyRow({ coordinates, hour }) {
           {getTranslation(7, lang)}
         </div>
         <div className={styles.hourValueMargin}>
-          <span
-            className={[styles.hourValue, 'percent'].join(' ')}
-            data-hour-precip
-          >
-            {hour.precip}
+          <span className={styles.hourValue} data-hour-precip>
+            {hour.precip}%
           </span>
         </div>
       </div>
@@ -62,14 +56,8 @@ export default function HourlyRow({ coordinates, hour }) {
           {getTranslation(11, lang)}
         </div>
         <div className={styles.hourValueMargin}>
-          <span
-            className={styles.hourValue}
-            data-hour-wind-speed
-            data-wind-units={` ${getUnitOfMeasure(units, 'velocity')} `}
-          >
-            {hour.windSpeed}
-          </span>
-          <span className={styles.hourValue} data-hour-wind-direction>
+          <span className={styles.hourValue} data-hour-wind>
+            {hour.windSpeed} {getUnitOfMeasure(units, 'velocity')}{' '}
             {hour.windDirection}
           </span>
         </div>
@@ -79,11 +67,8 @@ export default function HourlyRow({ coordinates, hour }) {
           {getTranslation(10, lang)}
         </div>
         <div className={styles.hourValueMargin}>
-          <span
-            className={[styles.hourValue, 'percent'].join(' ')}
-            data-hour-humidity
-          >
-            {hour.humidity}
+          <span className={styles.hourValue} data-hour-humidity>
+            {hour.humidity}%
           </span>
         </div>
       </div>
@@ -102,16 +87,7 @@ export default function HourlyRow({ coordinates, hour }) {
 }
 
 HourlyRow.propTypes = {
-  coordinates: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    lang: PropTypes.string.isRequired,
-    lat: PropTypes.number.isRequired,
-    location: PropTypes.string.isRequired,
-    long: PropTypes.number.isRequired,
-    timezone: PropTypes.string.isRequired,
-    timezone_offset: PropTypes.number.isRequired,
-    units: PropTypes.string.isRequired,
-  }).isRequired,
+  timezone: PropTypes.string.isRequired,
   hour: PropTypes.shape({
     description: PropTypes.string.isRequired,
     humidity: PropTypes.number.isRequired,
