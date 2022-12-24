@@ -12,7 +12,7 @@ import { useUtils } from '../../contexts/UtilsContext';
  *  - test tabbing sequence
  */
 
-export default function Place({ place, handleClick }) {
+export default function Place({ coordinates, current, handleClick }) {
   const { getIconUrl } = useUtils();
   console.log('Place rendered!');
 
@@ -24,10 +24,10 @@ export default function Place({ place, handleClick }) {
       onClick={(e) => handleClick(e)}
       onKeyDown={(e) => handleClick(e)}
       aria-label="tap to view weather"
-      data-id={place.coordinates.id}
-      data-location={place.coordinates.location}
-      data-lat={place.coordinates.lat}
-      data-long={place.coordinates.long}
+      data-id={coordinates.id}
+      data-location={coordinates.location}
+      data-lat={coordinates.lat}
+      data-long={coordinates.long}
       data-place-card
     >
       <button
@@ -42,45 +42,41 @@ export default function Place({ place, handleClick }) {
       </button>
       <img
         className={styles.placeCardItem}
-        src={getIconUrl(place.current.icon)}
+        src={getIconUrl(current.icon)}
         width="50"
         height="50"
-        alt={place.current.description}
+        alt={current.description}
         data-card-icon
       />
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
         data-card-location
       >
-        {place.coordinates.location}
+        {coordinates.location}
       </div>
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
         data-card-hl
       >
-        <span data-card-high>{place.current.high}</span>/
-        <span className="degrees" data-card-low>
-          {place.current.low}
-        </span>
+        <span data-card-high>{current.high}</span>/
+        <span data-card-low>{current.low}°</span>
       </div>
     </div>
   );
 }
 
 Place.propTypes = {
-  place: PropTypes.shape({
-    coordinates: PropTypes.shape({
-      id: PropTypes.string,
-      location: PropTypes.string,
-      lat: PropTypes.number,
-      long: PropTypes.number,
-    }),
-    current: PropTypes.shape({
-      description: PropTypes.string,
-      high: PropTypes.number,
-      low: PropTypes.number,
-      icon: PropTypes.string,
-    }),
+  coordinates: PropTypes.shape({
+    id: PropTypes.string,
+    location: PropTypes.string,
+    lat: PropTypes.number,
+    long: PropTypes.number,
+  }).isRequired,
+  current: PropTypes.shape({
+    description: PropTypes.string,
+    high: PropTypes.number,
+    low: PropTypes.number,
+    icon: PropTypes.string,
   }).isRequired,
   handleClick: PropTypes.func.isRequired,
 };

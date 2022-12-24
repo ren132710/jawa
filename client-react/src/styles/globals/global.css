@@ -63,22 +63,22 @@ body {
  * pseudo elements
  */
 
-[data-temp-units]::after {
+/* [data-temp-units]::after {
   content: attr(data-temp-units);
 }
 
 [data-visibility-units]::after {
   content: attr(data-visibility-units);
-}
+} */
 
 /* [data-wind-units]::after {
   content: attr(data-wind-units);
 } */
-
+/* 
 .degrees::after {
   content: '°';
 }
 
 .percent::after {
   content: '%';
-}
+} */

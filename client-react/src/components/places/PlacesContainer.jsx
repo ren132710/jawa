@@ -5,14 +5,14 @@ import { ERROR_MESSAGE } from '../../constants/constants';
 
 /**
  * TODO: handleClick
- *  - set index of clicked place for Main.jsx
+ *  - set index of clicked place for Main.jsx to cascade weather data
  */
 
 function handleClick(value) {
   console.log(value);
 }
 
-export default function Places() {
+export default function PlacesContainer() {
   const { weatherData, isError } = useWeatherData();
   if (!weatherData.length) return;
 
@@ -28,7 +28,8 @@ export default function Places() {
         weatherData.map((place) => (
           <PlaceCard
             key={place.coordinates.id}
-            place={place}
+            coordinates={place.coordinates}
+            current={place.current}
             handleClick={handleClick}
           />
         ))
