@@ -3,7 +3,11 @@ import styles from '../../styles/places/PlacesContainer.module.css';
 import { useWeatherData } from '../../contexts/WeatherContext';
 import { ERROR_MESSAGE } from '../../constants/constants';
 
-// TODO: where should handleClick be defined?
+/**
+ * TODO: handleClick
+ *  - set index of clicked place for Main.jsx
+ */
+
 function handleClick(value) {
   console.log(value);
 }
