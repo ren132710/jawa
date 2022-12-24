@@ -24,9 +24,7 @@ export default function DailyCard({ day }) {
       </div>
       <div data-hl>
         <span data-daily-high>{day.high}</span>/
-        <span className="degrees" data-daily-low>
-          {day.low}
-        </span>
+        <span data-daily-low>{day.low}°</span>
       </div>
       <div className={styles.dailyDescription} data-daily-description>
         {day.description}
@@ -36,8 +34,8 @@ export default function DailyCard({ day }) {
           {getTranslation(10, lang)}
           {': '}
         </span>
-        <span className="value percent" data-daily-humidity>
-          {day.humidity}
+        <span className="value" data-daily-humidity>
+          {day.humidity}%
         </span>
       </div>
       <div className="label">
@@ -45,14 +43,8 @@ export default function DailyCard({ day }) {
           {getTranslation(11, lang)}
           {': '}
         </span>
-        <span
-          className="value"
-          data-daily-wind-speed
-          data-wind-units={` ${getUnitOfMeasure(units, 'velocity')} `}
-        >
-          {day.windSpeed}
-        </span>
-        <span className="value" data-daily-wind-direction>
+        <span className="value" data-daily-wind>
+          {day.windSpeed} {getUnitOfMeasure(units, 'velocity')}{' '}
           {day.windDirection}
         </span>
       </div>
