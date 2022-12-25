@@ -42,7 +42,7 @@ export default function HourlyRow({ timezone, hour }) {
         </div>
       </div>
       <div className={styles.hourData}>
-        <div className={styles.hourLabel} data-dictionary="7">
+        <div className={styles.hourLabel} data-translation="7">
           {getTranslation(7, lang)}
         </div>
         <div className={styles.hourValueMargin}>
@@ -52,7 +52,7 @@ export default function HourlyRow({ timezone, hour }) {
         </div>
       </div>
       <div className={styles.hourData}>
-        <div className={styles.hourLabel} data-dictionary="11">
+        <div className={styles.hourLabel} data-translation="11">
           {getTranslation(11, lang)}
         </div>
         <div className={styles.hourValueMargin}>
@@ -63,7 +63,7 @@ export default function HourlyRow({ timezone, hour }) {
         </div>
       </div>
       <div className={styles.hourData}>
-        <div className={styles.hourLabel} data-dictionary="10">
+        <div className={styles.hourLabel} data-translation="10">
           {getTranslation(10, lang)}
         </div>
         <div className={styles.hourValueMargin}>
@@ -73,7 +73,7 @@ export default function HourlyRow({ timezone, hour }) {
         </div>
       </div>
       <div className={styles.hourData}>
-        <div className={styles.hourLabel} data-dictionary="9">
+        <div className={styles.hourLabel} data-translation="9">
           {getTranslation(9, lang)}
         </div>
         <div className={styles.hourValueMargin}>
