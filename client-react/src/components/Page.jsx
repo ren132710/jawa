@@ -9,14 +9,14 @@ export default function Page() {
 
   return (
     <div className={styles.pageContainer}>
-      <div className="spacer" />
+      <div id="spacer" />
       <section className={styles.placesSection}>
         <Search />
         <PlacesContainer />
       </section>
       <Main />
       <Footer />
-      <div className="gutter" />
+      <div id="gutter" />
     </div>
   );
 }

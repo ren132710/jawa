@@ -13,7 +13,7 @@
   }
 }
 
-@media screen and (min-width: 976px) {
+@media screen and (min-width: 1022px) {
   .places-container {
     justify-content: end;
   }

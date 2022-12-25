@@ -10,7 +10,7 @@
   }
 }
 
-@media screen and (min-width: 976px) {
+@media screen and (min-width: 1022px) {
   .daily-container {
     grid-template-columns: repeat(auto-fit, 120px);
     justify-content: center;

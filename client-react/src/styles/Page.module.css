@@ -32,7 +32,7 @@ my old breakpoint:
   }
 }
 
-@media screen and (min-width: 976px) {
+@media screen and (min-width: 1022px) {
   .places-section {
     grid-template-columns: 1fr 1.618fr;
     grid-template-areas: 'search places';

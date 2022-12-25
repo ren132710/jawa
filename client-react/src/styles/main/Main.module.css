@@ -35,9 +35,7 @@
   padding-bottom: 0.7rem;
 }
 
-
-
-@media screen and (min-width: 976px) {
+@media screen and (min-width: 1022px) {
   .main {
     /* grid-template-columns: 1fr 1.618fr; */
     grid-template-columns: minmax(375px, 1fr) 1.5fr;
