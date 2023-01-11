@@ -16,6 +16,7 @@ export default function DailyCard({ day }) {
         weatherIcon={day.icon}
         weatherDescription={day.description}
         getIconUrl={getIconUrl}
+        iconHandle="day"
       />
       <div className={styles.dailyDay} data-daily-date>
         {df.formatDayOfWeek(day.timestamp, lang)}

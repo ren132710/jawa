@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import WeatherIcon from './WeatherIcon';
 import styles from '../../styles/main/HourlyRow.module.css';
 import { usePrefsData } from '../../contexts/PrefsContext';
 import { useUtils } from '../../contexts/UtilsContext';
@@ -24,13 +25,11 @@ export default function HourlyRow({ timezone, hour }) {
         </div>
       </div>
       <div className={styles.hourData}>
-        <img
-          className="weather-icon"
-          src={getIconUrl(hour.icon)}
-          width="50"
-          height="50"
-          alt={hour.description}
-          data-hour-icon
+        <WeatherIcon
+          weatherIcon={hour.icon}
+          weatherDescription={hour.description}
+          getIconUrl={getIconUrl}
+          iconHandle="hour"
         />
       </div>
       <div className={styles.hourData}>
