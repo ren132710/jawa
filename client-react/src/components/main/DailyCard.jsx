@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import WeatherIcon from './WeatherIcon';
 import styles from '../../styles/main/DailyCard.module.css';
 import { useUtils } from '../../contexts/UtilsContext';
 import { usePrefsData } from '../../contexts/PrefsContext';
@@ -11,13 +12,10 @@ export default function DailyCard({ day }) {
 
   return (
     <div className={styles.dailyCard}>
-      <img
-        className="weatherIcon"
-        src={getIconUrl(day.icon)}
-        width="50"
-        height="50"
-        alt={day.description}
-        data-daily-icon
+      <WeatherIcon
+        weatherIcon={day.icon}
+        weatherDescription={day.description}
+        getIconUrl={getIconUrl}
       />
       <div className={styles.dailyDay} data-daily-date>
         {df.formatDayOfWeek(day.timestamp, lang)}
