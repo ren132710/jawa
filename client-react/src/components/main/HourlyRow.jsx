@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import WeatherIcon from './WeatherIcon';
+import WeatherIcon from '../WeatherIcon';
 import styles from '../../styles/main/HourlyRow.module.css';
 import { usePrefsData } from '../../contexts/PrefsContext';
 import { useUtils } from '../../contexts/UtilsContext';

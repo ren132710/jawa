@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import WeatherIcon from './WeatherIcon';
+import WeatherIcon from '../WeatherIcon';
 import styles from '../../styles/main/DailyCard.module.css';
 import { useUtils } from '../../contexts/UtilsContext';
 import { usePrefsData } from '../../contexts/PrefsContext';

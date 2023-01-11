@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import WeatherIcon from '../WeatherIcon';
 import styles from '../../styles/places/PlaceCard.module.css';
 import { useUtils } from '../../contexts/UtilsContext';
 
@@ -40,13 +41,11 @@ export default function Place({ coordinates, current, handleClick }) {
       >
         {/* try &times; in lieu of '✕' ✕ */}✕
       </button>
-      <img
-        className={styles.placeCardItem}
-        src={getIconUrl(current.icon)}
-        width="50"
-        height="50"
-        alt={current.description}
-        data-card-icon
+      <WeatherIcon
+        weatherIcon={current.icon}
+        weatherDescription={current.description}
+        getIconUrl={getIconUrl}
+        iconHandle="place"
       />
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
