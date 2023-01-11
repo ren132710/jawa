@@ -61,7 +61,7 @@ export default function useJawaWeather(options) {
    * @param {string} location:
    *   - client defined
    *   - pass to server so server can include in the response object
-   * TODO:
+   * TODO: Add to server
    * @param {boolean} favorite:
    *   - client defined
    *   - used for filtering places before saving to localStorage
