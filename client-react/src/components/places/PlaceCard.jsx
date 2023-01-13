@@ -43,9 +43,12 @@ export default function Place({ coordinates, current, handleClick }) {
       </button>
       <WeatherIcon
         weatherIcon={current.icon}
+        weatherIconSize="small"
         weatherDescription={current.description}
         getIconUrl={getIconUrl}
-        iconHandle="place"
+        testHandle="place"
+        imgWidth="50"
+        imgHeight="50"
       />
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}

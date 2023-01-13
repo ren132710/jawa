@@ -26,7 +26,7 @@ export default function Topbar() {
   }, []);
 
   return (
-    <header ref={topbarRef} className={[styles.topbarContainer].join(' ')}>
+    <header ref={topbarRef} className={styles.topbarContainer}>
       <Logo />
       <Hamburger />
     </header>

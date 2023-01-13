@@ -1,12 +1,45 @@
 import PropTypes from 'prop-types';
-import Current from './Current';
+import CurrentTopLeft from './CurrentTopLeft';
+import CurrentTopRight from './CurrentTopRight';
+import CurrentBottomRight from './CurrentBottomRight';
+import CurrentBottomLeft from './CurrentBottomLeft';
 import styles from '../../styles/main/CurrentContainer.module.css';
 
 export default function CurrentContainer({ coordinates, current }) {
   console.log('Current container rendered!');
+
   return (
     <div className={styles.currentContainer}>
-      <Current coordinates={coordinates} current={current} />
+      <CurrentTopLeft
+        location={coordinates.location}
+        id={coordinates.id}
+        icon={current.icon}
+        description={current.description}
+      />
+      <CurrentTopRight
+        lat={coordinates.lat}
+        long={coordinates.long}
+        high={current.high}
+        low={current.low}
+        temp={current.temp}
+        feelsLike={current.feelsLike}
+        description={current.description}
+        precip={current.precip}
+        visibility={current.visibility}
+      />
+      <CurrentBottomLeft
+        uvIndex={current.uvIndex}
+        uvLevel={current.uvLevel}
+        humidity={current.humidity}
+        windSpeed={current.windSpeed}
+        windDirection={current.windDirection}
+      />
+      <CurrentBottomRight
+        dewPoint={current.dewPoint}
+        sunrise={current.sunrise}
+        sunset={current.sunset}
+        timezone={coordinates.timezone}
+      />
     </div>
   );
 }

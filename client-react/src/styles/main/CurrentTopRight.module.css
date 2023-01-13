@@ -1,10 +1,3 @@
-.current-top-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
 .current-top-right {
   display: flex;
   flex-direction: column;
@@ -18,26 +11,7 @@
   padding-top: 15%;
 }
 
-.current-bottom-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-}
-
-.current-bottom-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
-
-.current-location {
-  font-size: 2rem;
-  text-transform: uppercase;
-}
-
-.current-detail {
+.current-lat-long {
   font-size: 0.5rem;
   font-style: oblique;
   padding-top: 1px;

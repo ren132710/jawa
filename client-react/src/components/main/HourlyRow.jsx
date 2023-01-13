@@ -27,9 +27,12 @@ export default function HourlyRow({ timezone, hour }) {
       <div className={styles.hourData}>
         <WeatherIcon
           weatherIcon={hour.icon}
+          weatherIconSize="small"
           weatherDescription={hour.description}
           getIconUrl={getIconUrl}
-          iconHandle="hour"
+          testHandle="hour"
+          imgWidth="50"
+          imgHeight="50"
         />
       </div>
       <div className={styles.hourData}>

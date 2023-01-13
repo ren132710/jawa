@@ -2,7 +2,7 @@
   width: 94%;
   margin: 0 auto;
   display: grid;
-  grid-template-rows: 2rem minmax(120px, auto) 1fr 80px 1rem;
+  grid-template-rows: 2rem minmax(120px, auto) 1fr 100px;
 }
 
 .places-section {

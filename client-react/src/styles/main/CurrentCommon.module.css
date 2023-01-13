@@ -1,0 +1,8 @@
+.current-item {
+  font-size: 0.6rem;
+  padding-top: 0.1rem;
+}
+
+.current-value {
+  color: var(--color-value);
+}

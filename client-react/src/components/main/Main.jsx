@@ -7,12 +7,14 @@ import { useWeatherData } from '../../contexts/WeatherContext';
 export default function Main() {
   const { weatherData, isLoading, isError } = useWeatherData();
 
-  // TODOs:add section titles
+  // TODO: add section titles
 
   console.log('Main rendered!');
 
   if (isError || isLoading) return;
   if (!weatherData.length) return;
+
+  // TODO: render weather for selected place, search
   const weather = weatherData[0];
 
   return (

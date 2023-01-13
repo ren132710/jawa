@@ -49,36 +49,3 @@ body {
   white-space: pre-wrap;
   font-style: oblique;
 }
-
-.label {
-  font-size: 0.6rem;
-  padding-top: 0.1rem;
-}
-
-.value {
-  color: var(--color-value);
-}
-
-/*
- * pseudo elements
- */
-
-/* [data-temp-units]::after {
-  content: attr(data-temp-units);
-}
-
-[data-visibility-units]::after {
-  content: attr(data-visibility-units);
-} */
-
-/* [data-wind-units]::after {
-  content: attr(data-wind-units);
-} */
-/* 
-.degrees::after {
-  content: '°';
-}
-
-.percent::after {
-  content: '%';
-} */
