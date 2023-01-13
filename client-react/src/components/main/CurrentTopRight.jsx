@@ -15,6 +15,7 @@ export default function CurrentTopRight({
   precip,
   visibility,
 }) {
+  console.log('CurrentTopRight rendered!');
   const { units, lang } = usePrefsData();
   const { getUnitOfMeasure, getTranslation } = useUtils();
 

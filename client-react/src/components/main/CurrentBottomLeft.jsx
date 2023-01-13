@@ -11,6 +11,7 @@ export default function CurrentBottomLeft({
   windSpeed,
   windDirection,
 }) {
+  console.log('CurrentBottomLeft rendered!');
   const { units, lang } = usePrefsData();
   const { getUnitOfMeasure, getTranslation } = useUtils();
 
