@@ -25,6 +25,15 @@
   text-align: center;
 }
 
+.day-label {
+  font-size: 0.6rem;
+  padding-top: 0.1rem;
+}
+
+.day-value {
+  color: var(--color-value);
+}
+
 @media screen and (min-width: 1022px) {
   /* .daily-card:nth-child(6) {
     display: flex;

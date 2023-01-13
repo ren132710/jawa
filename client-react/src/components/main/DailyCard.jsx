@@ -28,21 +28,21 @@ export default function DailyCard({ day }) {
       <div className={styles.dailyDescription} data-daily-description>
         {day.description}
       </div>
-      <div className="label">
+      <div className={styles.dayLabel}>
         <span data-translation="10">
           {getTranslation(10, lang)}
           {': '}
         </span>
-        <span className="value" data-daily-humidity>
+        <span className={styles.dayValue} data-daily-humidity>
           {day.humidity}%
         </span>
       </div>
-      <div className="label">
+      <div className={styles.dayLabel}>
         <span data-translation="11">
           {getTranslation(11, lang)}
           {': '}
         </span>
-        <span className="value" data-daily-wind>
+        <span className={styles.dayValue} data-daily-wind>
           {day.windSpeed} {getUnitOfMeasure(units, 'velocity')}{' '}
           {day.windDirection}
         </span>
