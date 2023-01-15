@@ -5,7 +5,7 @@ import { PREFS_STORAGE_KEY, DEFAULT_PREFS } from '../constants/constants';
 // 1. create the contexts
 const PrefsDataContext = React.createContext();
 
-// consumers that strictly use context setters won't re-render when context state changes
+// so consumers that strictly use context setters won't re-render when context state changes
 const PrefsAPIContext = React.createContext();
 
 // 2. make the contexts available to subscribers via custom hooks

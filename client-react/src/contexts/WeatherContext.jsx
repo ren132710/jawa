@@ -6,7 +6,7 @@ import { usePrefsData } from './PrefsContext';
 // 1. create the contexts
 const WeatherDataContext = React.createContext();
 
-// consumers that strictly use context setters won't re-render when context state changes
+// so consumers that strictly use context setters won't re-render when context state changes
 const WeatherAPIContext = React.createContext();
 
 // 2. make the contexts available to subscribers via custom hooks
