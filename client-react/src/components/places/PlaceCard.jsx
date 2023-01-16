@@ -37,7 +37,7 @@ export default function Place({ coordinates, current, handleClick }) {
         className={styles.placeBtnDelete}
         tabIndex="-1"
         onClick={() => handleClick('delete place clicked')}
-        // hidden
+        hidden
       >
         {/* try &times; in lieu of '✕' ✕ */}✕
       </button>
