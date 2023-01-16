@@ -32,12 +32,11 @@ export default function SectionHeading({
   timezone,
   subtitleTestHandle,
 }) {
-  console.log('SectionHeading rendered!');
+  console.log(`SectionHeading ${section} rendered!`);
   const { lang } = usePrefsData();
   const { getTranslation, df } = useUtils();
 
   const subtitle = getSubTitle(section, timestamp, timezone, df, lang);
-  console.log('subtitle', subtitle);
 
   return (
     <>
