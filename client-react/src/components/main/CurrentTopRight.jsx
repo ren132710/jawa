@@ -28,10 +28,10 @@ export default function CurrentTopRight({
         {'long: '}&nbsp; {long}
       </div>
       <div className={styles.currentTopRightBlock}>
-        <div className={styles.currentHighLow} data-current-hl>
+        <div className={styles.currentHighLow} data-test="current-hl">
           {high}/{low}°
         </div>
-        <div className={styles.currentTemp} data-current-temp>
+        <div className={styles.currentTemp} data-test="current-temp">
           {temp}° {getUnitOfMeasure(units, 'temp')}
         </div>
         <div className={styles.currentFeelsLike}>
@@ -39,11 +39,14 @@ export default function CurrentTopRight({
             {getTranslation(6, lang)}
             {': '}&nbsp;
           </span>
-          <span className={common.currentValue} data-current-fl>
+          <span className={common.currentValue} data-test="current-fl">
             {feelsLike}°
           </span>
         </div>
-        <div className={styles.currentDescription} data-current-description>
+        <div
+          className={styles.currentDescription}
+          data-test="current-description"
+        >
           {description}
         </div>
         <div className={common.currentItem}>
@@ -51,7 +54,7 @@ export default function CurrentTopRight({
             {getTranslation(7, lang)}
             {': '}&nbsp;
           </span>
-          <span className={common.currentValue} data-current-precip>
+          <span className={common.currentValue} data-test="current-precip">
             {precip}%
           </span>
         </div>
@@ -60,7 +63,7 @@ export default function CurrentTopRight({
             {getTranslation(8, lang)}
             {': '}&nbsp;
           </span>
-          <span className={common.currentValue} data-current-visibility>
+          <span className={common.currentValue} data-test="current-visibility">
             {visibility} {getUnitOfMeasure(units, 'distance')}
           </span>
         </div>

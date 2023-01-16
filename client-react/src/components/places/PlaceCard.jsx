@@ -46,7 +46,7 @@ export default function Place({ coordinates, current, handleClick }) {
         weatherIconSize="small"
         weatherDescription={current.description}
         getIconUrl={getIconUrl}
-        testHandle="place"
+        testHandle="place-weather-icon"
         imgWidth="50"
         imgHeight="50"
       />

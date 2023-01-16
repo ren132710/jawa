@@ -21,7 +21,7 @@ export default function CurrentTopLeft({ location, id, icon, description }) {
         weatherIconSize="large"
         weatherDescription={description}
         getIconUrl={getIconUrl}
-        testHandle="place"
+        testHandle="current-weather-icon"
         imgWidth="200"
         imgHeight="200"
       />

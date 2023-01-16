@@ -21,7 +21,7 @@ export default function CurrentBottomRight({
           {getTranslation(12, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-current-dew-point>
+        <span className={common.currentValue} data-test="current-dew-point">
           {dewPoint}°
         </span>
       </div>
@@ -30,7 +30,7 @@ export default function CurrentBottomRight({
           {getTranslation(13, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-current-sunrise>
+        <span className={common.currentValue} data-test="current-sunrise">
           {df.formatZonedTime(sunrise, timezone)}
         </span>
       </div>
@@ -39,7 +39,7 @@ export default function CurrentBottomRight({
           {getTranslation(11, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-current-sunset>
+        <span className={common.currentValue} data-test="current-sunset">
           {df.formatZonedTime(sunset, timezone)}
         </span>
       </div>

@@ -17,7 +17,7 @@ export default function WeatherIcon({
       height={imgHeight}
       alt={weatherDescription}
       // add a handle for cypress testing
-      data-weather-icon={testHandle}
+      data-test={testHandle}
     />
   );
 }

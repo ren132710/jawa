@@ -17,18 +17,18 @@ export default function DailyCard({ day }) {
         weatherIconSize="small"
         weatherDescription={day.description}
         getIconUrl={getIconUrl}
-        testHandle="day"
+        testHandle="day-weather-icon"
         imgWidth="50"
         imgHeight="50"
       />
-      <div className={styles.dailyDay} data-daily-date>
+      <div className={styles.dailyDay} data-test="day-date">
         {df.formatDayOfWeek(day.timestamp, lang)}
       </div>
       <div data-hl>
         <span data-daily-high>{day.high}</span>/
         <span data-daily-low>{day.low}°</span>
       </div>
-      <div className={styles.dailyDescription} data-daily-description>
+      <div className={styles.dailyDescription} data-test="day-description">
         {day.description}
       </div>
       <div className={styles.dayLabel}>
@@ -36,7 +36,7 @@ export default function DailyCard({ day }) {
           {getTranslation(10, lang)}
           {': '}&nbsp;
         </span>
-        <span className={styles.dayValue} data-daily-humidity>
+        <span className={styles.dayValue} data-test="day-humidity">
           {day.humidity}%
         </span>
       </div>
@@ -45,7 +45,7 @@ export default function DailyCard({ day }) {
           {getTranslation(11, lang)}
           {': '}&nbsp;
         </span>
-        <span className={styles.dayValue} data-daily-wind>
+        <span className={styles.dayValue} data-test="day-wind">
           {day.windSpeed} {getUnitOfMeasure(units, 'velocity')}{' '}
           {day.windDirection}
         </span>

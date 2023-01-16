@@ -14,12 +14,12 @@ export default function HourlyRow({ timezone, hour }) {
       <div className={styles.hourData}>
         <div
           className={[styles.hourLabel, styles.hourDay].join(' ')}
-          data-hour-date
+          data-test="hour-day"
         >
           {df.formatDayOfWeek(hour.timestamp, lang)}
         </div>
         <div className={styles.hourValueMargin}>
-          <span className={styles.hourValue} data-hour>
+          <span className={styles.hourValue} data-test="hour-hour">
             {df.formatZonedHour(hour.timestamp, timezone)}
           </span>
         </div>
@@ -30,7 +30,7 @@ export default function HourlyRow({ timezone, hour }) {
           weatherIconSize="small"
           weatherDescription={hour.description}
           getIconUrl={getIconUrl}
-          testHandle="hour"
+          testHandle="hour-weather-icon"
           imgWidth="50"
           imgHeight="50"
         />
@@ -38,7 +38,7 @@ export default function HourlyRow({ timezone, hour }) {
       <div className={styles.hourData}>
         <div className={styles.hourLabel}>Temp</div>
         <div className={styles.hourValueMargin}>
-          <span className={styles.hourValue} data-hour-temp>
+          <span className={styles.hourValue} data-test="hour-temp">
             {hour.temp}°
           </span>
         </div>
@@ -48,7 +48,7 @@ export default function HourlyRow({ timezone, hour }) {
           {getTranslation(7, lang)}
         </div>
         <div className={styles.hourValueMargin}>
-          <span className={styles.hourValue} data-hour-precip>
+          <span className={styles.hourValue} data-test="hour-precip">
             {hour.precip}%
           </span>
         </div>
@@ -58,7 +58,7 @@ export default function HourlyRow({ timezone, hour }) {
           {getTranslation(11, lang)}
         </div>
         <div className={styles.hourValueMargin}>
-          <span className={styles.hourValue} data-hour-wind>
+          <span className={styles.hourValue} data-test="hour-wind">
             {hour.windSpeed} {getUnitOfMeasure(units, 'velocity')}{' '}
             {hour.windDirection}
           </span>
@@ -69,7 +69,7 @@ export default function HourlyRow({ timezone, hour }) {
           {getTranslation(10, lang)}
         </div>
         <div className={styles.hourValueMargin}>
-          <span className={styles.hourValue} data-hour-humidity>
+          <span className={styles.hourValue} data-test="hour-humidity">
             {hour.humidity}%
           </span>
         </div>
@@ -79,7 +79,7 @@ export default function HourlyRow({ timezone, hour }) {
           {getTranslation(9, lang)}
         </div>
         <div className={styles.hourValueMargin}>
-          <span className={styles.hourValue} data-hour-uv-level>
+          <span className={styles.hourValue} data-test="hour-uv-level">
             {hour.uvLevel}
           </span>
         </div>

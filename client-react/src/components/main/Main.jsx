@@ -1,3 +1,4 @@
+import SectionHeading from './SectionHeading';
 import CurrentContainer from './CurrentContainer';
 import DailyContainer from './DailyContainer';
 import HourlyContainer from './HourlyContainer';
@@ -6,29 +7,54 @@ import { useWeatherData } from '../../contexts/WeatherContext';
 
 export default function Main() {
   const { weatherData, isLoading, isError } = useWeatherData();
-
-  // TODO: add section titles
-
   console.log('Main rendered!');
 
+  // wait until the weather data is loaded
   if (isError || isLoading) return;
   if (!weatherData.length) return;
 
   // TODO: render weather for selected place, search
   const weather = weatherData[0];
 
+  //   titleTranslationId,
+  // timeUnit,
+  // timestamp,
+  // timezone,
+  // subtitleTestHandle,
+
   return (
     <main className={styles.main}>
       <div className={styles.currentSection}>
+        <SectionHeading
+          section="current"
+          titleTranslationId={2}
+          timestamp={weather.current.timestamp}
+          timezone={weather.coordinates.timezone}
+          subtitleTestHandle="subtitle-dmt"
+        />
         <CurrentContainer
           coordinates={weather.coordinates}
           current={weather.current}
         />
       </div>
       <div className={styles.dailySection}>
+        <SectionHeading
+          section="forecast"
+          titleTranslationId={3}
+          timestamp={weather.current.timestamp}
+          timezone={weather.coordinates.timezone}
+          subtitleTestHandle="subtitle-none"
+        />
         <DailyContainer daily={weather.daily} />
       </div>
       <div className={styles.hourlySection}>
+        <SectionHeading
+          section="hourly"
+          titleTranslationId={4}
+          timestamp={weather.current.timestamp}
+          timezone={weather.coordinates.timezone}
+          subtitleTestHandle="subtitle-timezone"
+        />
         <HourlyContainer
           coordinates={weather.coordinates}
           hourly={weather.hourly}

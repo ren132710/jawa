@@ -1,0 +1,13 @@
+.section-title {
+  font-size: var(--fs-large);
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.section-subtitle {
+  font-size: 0.7rem;
+  font-style: oblique;
+  text-align: center;
+  color: var(--color-value);
+  padding-bottom: 0.7rem;
+}

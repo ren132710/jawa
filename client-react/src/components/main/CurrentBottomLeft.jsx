@@ -22,7 +22,7 @@ export default function CurrentBottomLeft({
           {getTranslation(9, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-current-uv>
+        <span className={common.currentValue} data-test="current-uv">
           {uvIndex} {uvLevel}
         </span>
       </div>
@@ -31,7 +31,7 @@ export default function CurrentBottomLeft({
           {getTranslation(10, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-current-humidity>
+        <span className={common.currentValue} data-test="current-humidity">
           {humidity}%
         </span>
       </div>
@@ -40,7 +40,7 @@ export default function CurrentBottomLeft({
           {getTranslation(11, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-current-wind>
+        <span className={common.currentValue} data-test="current-wind">
           {windSpeed} {getUnitOfMeasure(units, 'velocity')} {windDirection}
         </span>
       </div>
