@@ -47,8 +47,8 @@ export default function Menu({ showMenu, delay, onClose }) {
         </div>
         <div className={[styles.subMenu, styles.lang].join(' ')}>
           <Button title="English" onClick={() => handleClick('en')} />
-          <Button title="French" onClick={() => handleClick('fr')} />
-          <Button title="Swedish" onClick={() => handleClick('sv')} />
+          <Button title="Français" onClick={() => handleClick('fr')} />
+          <Button title="Svenska" onClick={() => handleClick('sv')} />
         </div>
       </div>
       {/* blanket placed below menu so menu is tabbable */}
