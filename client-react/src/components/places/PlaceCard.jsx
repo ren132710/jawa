@@ -29,7 +29,7 @@ export default function Place({ coordinates, current, handleClick }) {
       data-location={coordinates.location}
       data-lat={coordinates.lat}
       data-long={coordinates.long}
-      data-place-card
+      data-test="place-card"
     >
       <button
         type="button"
@@ -52,16 +52,16 @@ export default function Place({ coordinates, current, handleClick }) {
       />
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
-        data-card-location
+        data-test="place-location"
       >
         {coordinates.location}
       </div>
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
-        data-card-hl
+        data-test="place-hl"
       >
-        <span data-card-high>{current.high}</span>/
-        <span data-card-low>{current.low}°</span>
+        <span data-test="place-high">{current.high}</span>/
+        <span data-test="place-low">{current.low}°</span>
       </div>
     </div>
   );
