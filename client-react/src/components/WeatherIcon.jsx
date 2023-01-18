@@ -12,7 +12,7 @@ export default function WeatherIcon({
   return (
     <img
       className="weatherIcon"
-      src={getIconUrl(weatherIcon, weatherIconSize)}
+      src={getIconUrl(weatherIcon, { size: weatherIconSize })}
       width={imgWidth}
       height={imgHeight}
       alt={weatherDescription}

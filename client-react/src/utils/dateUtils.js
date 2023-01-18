@@ -47,7 +47,7 @@ export function formatZonedTime(timestamp, timezone) {
   return format(zonedDate, 'p', { timezone });
 }
 
-// 5PM, 2AM (for the given timezone)
+// 7AM, 6AM, 1PM (for the given timezone)
 export function formatZonedHour(timestamp, timezone) {
   const zonedDate = utcToZonedTime(new Date(timestamp), timezone);
   return format(zonedDate, 'ha', { timezone });
