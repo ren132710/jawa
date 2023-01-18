@@ -18,7 +18,7 @@ export default defineConfig({
   },
   test: {
     // use global to avoid globals imports (describe, test, expect)
-    globals: true,
+    // globals: true,
     coverage: {
       provider: 'c8', // or 'istanbul'
     },
