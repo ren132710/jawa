@@ -7,6 +7,7 @@ module.exports = {
     'airbnb',
     'airbnb/hooks',
     'plugin:react/recommended',
+    'plugin:cypress/recommended',
     'plugin:prettier/recommended', // list prettier plugin last to avoid conflicts
   ],
   overrides: [],
@@ -22,6 +23,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     'no-use-before-define': ['error', { functions: false }],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     // 'no-shadowed-variable': 'off',
     // 'control-has-associated-label': 'off',
   },

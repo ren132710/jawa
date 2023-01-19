@@ -28,6 +28,7 @@ export default function Hamburger() {
         type="button"
         className={`${styles.hamburger} ${showMenu ? ' open' : ''}`}
         onClick={() => setShowMenu(!showMenu)}
+        data-test="hamburger"
       >
         <span className={styles.hamburgerTop} />
         <span className={styles.hamburgerMiddle} />

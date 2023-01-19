@@ -35,6 +35,7 @@ export default function Menu({ showMenu, delay, onClose }) {
         className={`${styles.menu} ${
           showMenu && applyTransition ? 'visible' : ''
         }`}
+        data-test="menu"
       >
         <div className={[styles.subMenu, styles.units].join(' ')}>
           <Button title="Metric" onClick={() => handleClick('Metric')} />
@@ -60,6 +61,7 @@ export default function Menu({ showMenu, delay, onClose }) {
         tabIndex={0}
         onKeyDown={onClose}
         aria-label="close menu"
+        data-test="menu-blanket"
       />
     </>
   );
