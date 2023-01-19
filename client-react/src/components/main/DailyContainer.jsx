@@ -7,7 +7,7 @@ export default function DailyContainer({ daily }) {
   console.log('Daily container rendered!');
 
   return (
-    <div className={styles.dailyContainer}>
+    <div className={styles.dailyContainer} data-test="daily-container">
       {daily.map((day) => (
         <DailyCard key={day.timestamp} day={day} />
       ))}

@@ -9,7 +9,7 @@ export default function CurrentContainer({ coordinates, current }) {
   console.log('Current container rendered!');
 
   return (
-    <div className={styles.currentContainer}>
+    <div className={styles.currentContainer} data-test="current-container">
       <CurrentTopLeft
         location={coordinates.location}
         id={coordinates.id}

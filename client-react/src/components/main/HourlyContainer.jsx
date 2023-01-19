@@ -10,7 +10,7 @@ export default function HourlyContainer({ coordinates, hourly }) {
   const hourlyReduced = hourly.filter((hour, index) => index % 2 === 0);
 
   return (
-    <div className={styles.hourlyContainer}>
+    <div className={styles.hourlyContainer} data-test="hourly-container">
       {hourlyReduced.map((hour) => (
         <HourlyRow
           key={hour.timestamp}

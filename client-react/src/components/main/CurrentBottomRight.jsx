@@ -15,7 +15,7 @@ export default function CurrentBottomRight({
   const { getTranslation, df } = useUtils();
 
   return (
-    <div className={styles.currentBottomRight}>
+    <div className={styles.currentBottomRight} data-test="current-bottom-right">
       <div className={common.currentItem}>
         <span data-translation="12">
           {getTranslation(12, lang)}

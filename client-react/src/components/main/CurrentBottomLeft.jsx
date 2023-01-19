@@ -16,7 +16,7 @@ export default function CurrentBottomLeft({
   const { getUnitOfMeasure, getTranslation } = useUtils();
 
   return (
-    <div className={styles.currentBottomLeft}>
+    <div className={styles.currentBottomLeft} data-test="current-bottom-left">
       <div className={common.currentItem}>
         <span data-translation="9">
           {getTranslation(9, lang)}

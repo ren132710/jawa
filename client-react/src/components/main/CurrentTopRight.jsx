@@ -20,7 +20,7 @@ export default function CurrentTopRight({
   const { getUnitOfMeasure, getTranslation } = useUtils();
 
   return (
-    <div className={styles.currentTopRight}>
+    <div className={styles.currentTopRight} data-test="current-top-right">
       <div className={styles.currentLatLong} data-current-lat={lat}>
         {'lat: '}&nbsp; {lat}
       </div>
