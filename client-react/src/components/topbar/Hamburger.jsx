@@ -33,13 +33,13 @@ export default function Hamburger() {
         <span className={styles.hamburgerMiddle} />
         <span className={styles.hamburgerBottom} />
       </button>
-      {showComponent && (
+      {showComponent ? (
         <Menu
           showMenu={showMenu}
           delay={delay}
           onClose={() => setShowMenu(false)}
         />
-      )}
+      ) : null}
     </>
   );
 }
