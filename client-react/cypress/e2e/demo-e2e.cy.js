@@ -2,6 +2,8 @@
 describe('smoke test vite and cypress', () => {
   it('should visit and count should be zero', () => {
     cy.visit('/');
+
+    // two ways to test an element attr
     cy.get('[data-test="place-search"]')
       .invoke('attr', 'placeholder')
       .should('eq', 'Weather at your places');
@@ -10,7 +12,7 @@ describe('smoke test vite and cypress', () => {
       'placeholder',
       'Weather at your places'
     );
-    // button should open menu
+    // open menu
     cy.get('[data-test="hamburger"]').click();
 
     // menu should be open
