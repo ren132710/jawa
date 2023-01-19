@@ -12,7 +12,6 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json,yml,yaml}' --config ./.prettierrc.cjs",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
