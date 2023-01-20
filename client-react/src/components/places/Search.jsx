@@ -1,4 +1,4 @@
-import styles from '../../styles/places/Search.module.css';
+import styles from '@/styles/places/Search.module.css';
 
 export default function Search() {
   /**

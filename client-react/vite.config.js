@@ -1,15 +1,20 @@
 // add reference to Vitest types if you are importing defineConfig from Vite
 /// <reference types="vitest" />
 
-/* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 // Configure Vite: https://vitejs.dev/config/
 // Configure Vitest: https://vitest.dev/config/
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   css: {
     modules: {
       localsConvention: 'camelCase',
@@ -17,8 +22,6 @@ export default defineConfig({
     },
   },
   test: {
-    // use global to avoid globals imports (describe, test, expect)
-    // globals: true,
     coverage: {
       provider: 'c8', // or 'istanbul'
     },

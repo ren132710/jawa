@@ -1,9 +1,9 @@
-import SectionHeading from './SectionHeading';
-import CurrentContainer from './CurrentContainer';
-import DailyContainer from './DailyContainer';
-import HourlyContainer from './HourlyContainer';
-import styles from '../../styles/main/Main.module.css';
-import { useWeatherData } from '../../contexts/WeatherContext';
+import SectionHeading from '@/components/main/SectionHeading';
+import CurrentContainer from '@/components/main/CurrentContainer';
+import DailyContainer from '@/components/main/DailyContainer';
+import HourlyContainer from '@/components/main/HourlyContainer';
+import styles from '@/styles/main/Main.module.css';
+import { useWeatherData } from '@/contexts/WeatherContext';
 
 export default function Main() {
   const { weatherData, isLoading, isError } = useWeatherData();

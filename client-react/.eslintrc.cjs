@@ -20,10 +20,21 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'no-console': 'off',
     'consistent-return': 'off',
-    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
-    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     'no-use-before-define': ['error', { functions: false }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-unresolved': 'off', // getting false positives with vite and @ alias
+    'import/extensions': [
+      'error',
+      'never',
+      {
+        ignorePackages: true,
+        pattern: {
+          css: 'always',
+        },
+      },
+    ],
     // 'no-shadowed-variable': 'off',
     // 'control-has-associated-label': 'off',
   },

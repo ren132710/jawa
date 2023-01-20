@@ -1,10 +1,15 @@
+// https://code.visualstudio.com/docs/languages/jsconfig
+
 {
   "compilerOptions": {
     "target": "ES6",
-    "baseUrl": ".",
+    // allow absolute paths
+    "baseUrl": "src",
+    // configure module path aliases
     "paths": {
       "@/*": ["src/*"]
     }
   },
-  "exclude": ["node_modules", "**/node_modules/*"]
+  "exclude": ["coverage", "dist", "node_modules"],
+  "include": ["src/**/*", "node_modules/cypress", "./cypress/**/*.js"]
 }

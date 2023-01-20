@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
-import DailyCard from './DailyCard';
-import styles from '../../styles/main/DailyContainer.module.css';
+import DailyCard from '@/components/main/DailyCard';
+import styles from '@/styles/main/DailyContainer.module.css';
 
 export default function DailyContainer({ daily }) {
   if (!daily.length) return;
   console.log('Daily container rendered!');
 
   return (
-    <div className={styles.dailyContainer}>
+    <div className={styles.dailyContainer} data-test="daily-container">
       {daily.map((day) => (
         <DailyCard key={day.timestamp} day={day} />
       ))}

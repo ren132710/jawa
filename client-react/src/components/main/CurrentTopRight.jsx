@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import styles from '../../styles/main/CurrentTopRight.module.css';
-import common from '../../styles/main/CurrentCommon.module.css';
-import { useUtils } from '../../contexts/UtilsContext';
-import { usePrefsData } from '../../contexts/PrefsContext';
+import common from '@/styles/main/CurrentCommon.module.css';
+import styles from '@/styles/main/CurrentTopRight.module.css';
+import { useUtils } from '@/contexts/UtilsContext';
+import { usePrefsData } from '@/contexts/PrefsContext';
 
 export default function CurrentTopRight({
   lat,
@@ -20,7 +20,7 @@ export default function CurrentTopRight({
   const { getUnitOfMeasure, getTranslation } = useUtils();
 
   return (
-    <div className={styles.currentTopRight}>
+    <div className={styles.currentTopRight} data-test="current-top-right">
       <div className={styles.currentLatLong} data-current-lat={lat}>
         {'lat: '}&nbsp; {lat}
       </div>

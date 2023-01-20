@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import Menu from './Menu';
-import styles from '../../styles/topbar/Hamburger.module.css';
+import Menu from '@/components/topbar/Menu';
+import styles from '@/styles/topbar/Hamburger.module.css';
 
 export default function Hamburger() {
   const [showMenu, setShowMenu] = useState(false);

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import styles from '../../styles/main/CurrentBottomLeft.module.css';
-import common from '../../styles/main/CurrentCommon.module.css';
-import { useUtils } from '../../contexts/UtilsContext';
-import { usePrefsData } from '../../contexts/PrefsContext';
+import common from '@/styles/main/CurrentCommon.module.css';
+import styles from '@/styles/main/CurrentBottomLeft.module.css';
+import { useUtils } from '@/contexts/UtilsContext';
+import { usePrefsData } from '@/contexts/PrefsContext';
 
 export default function CurrentBottomLeft({
   uvIndex,
@@ -16,7 +16,7 @@ export default function CurrentBottomLeft({
   const { getUnitOfMeasure, getTranslation } = useUtils();
 
   return (
-    <div className={styles.currentBottomLeft}>
+    <div className={styles.currentBottomLeft} data-test="current-bottom-left">
       <div className={common.currentItem}>
         <span data-translation="9">
           {getTranslation(9, lang)}

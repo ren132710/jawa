@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import styles from '../../styles/main/SectionHeading.module.css';
-import { useUtils } from '../../contexts/UtilsContext';
-import { usePrefsData } from '../../contexts/PrefsContext';
+import styles from '@/styles/main/SectionHeading.module.css';
+import { useUtils } from '@/contexts/UtilsContext';
+import { usePrefsData } from '@/contexts/PrefsContext';
 
 function getSubTitle(section, timestamp, timezone, df, lang) {
   let subtitle = '';

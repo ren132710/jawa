@@ -1,7 +1,7 @@
-import PlaceCard from './PlaceCard';
-import styles from '../../styles/places/PlacesContainer.module.css';
-import { useWeatherData } from '../../contexts/WeatherContext';
-import { ERROR_MESSAGE } from '../../constants/constants';
+import PlaceCard from '@/components/places/PlaceCard';
+import styles from '@/styles/places/PlacesContainer.module.css';
+import { useWeatherData } from '@/contexts/WeatherContext';
+import { ERROR_MESSAGE } from '@/constants/constants';
 
 /**
  * TODO: handleClick
@@ -19,7 +19,7 @@ export default function PlacesContainer() {
   console.log('Places container rendered!');
 
   return (
-    <div className={styles.placesContainer}>
+    <div className={styles.placesContainer} data-test="places-container">
       {isError ? (
         <div className="error-container">
           <div className="error">{ERROR_MESSAGE}</div>
