@@ -38,7 +38,7 @@ describe('#renderPageWeather', () => {
     });
   });
 
-  it('should pass smoke test of page layout', () => {
+  it('should pass smoke test of page layout before proceeding', () => {
     // place search input should have default placeholder text
     cy.get('[data-test="place-search"]').should(
       'have.attr',
@@ -106,25 +106,6 @@ describe('#renderPageWeather', () => {
     // );
     // cy.get('[data-wind-units]').should('have.attr', 'data-wind-units', ' mph ');
 
-    // and pseudo elements are working
-    // use the window object to fetch the computed values of the pseudo elements
-    // cy.window().then((win) => {
-    //   // current section
-    //   cy.get('.current-temp').then((elem) => {
-    //     // jQuery embeds elem in an array, so fetch using index
-    //     const after = win.getComputedStyle(elem[0], '::after');
-    //     // pseudo content is a string so surround in quotes
-    //     expect(after.getPropertyValue('content')).to.eq('" F"');
-    //   });
-    //   cy.get('[data-current-visibility]').then((elem) => {
-    //     const after = win.getComputedStyle(elem[0], '::after');
-    //     expect(after.getPropertyValue('content')).to.eq('" mi"');
-    //   });
-    //   cy.get('[data-current-wind-speed]').then((elem) => {
-    //     const after = win.getComputedStyle(elem[0], '::after');
-    //     expect(after.getPropertyValue('content')).to.eq('" mph "');
-    //   });
-
     // daily section, wind units only
     // cy.get('.daily-container')
     //   .find('[data-daily-wind-speed]')
@@ -140,5 +121,7 @@ describe('#renderPageWeather', () => {
     //     const after = win.getComputedStyle(elem[0], '::after');
     //     expect(after.getPropertyValue('content')).to.eq('" mph "');
     //   });
+
+    // TODO: continue with tests from original renderPageWeather.cy.js
   });
 });
