@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import getUnitOfMeasure from './units';
+import getUnitOfMeasure from '@/utils/units';
 
 describe('#getUnitOfMeasure', () => {
   it('should return the correct uom for the given system and category', () => {

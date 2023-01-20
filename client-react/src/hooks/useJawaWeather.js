@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '../constants/constants';
+import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '@/constants/constants';
 
 const TIMEOUT = import.meta.env.VITE_AXIOS_TIMEOUT;
 const WEATHER_SERVER = import.meta.env.VITE_JAWA_SERVER;

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { PREFS_STORAGE_KEY, DEFAULT_PREFS } from '../constants/constants';
+import { PREFS_STORAGE_KEY, DEFAULT_PREFS } from '@/constants/constants';
 
 // 1. create the contexts
 const PrefsDataContext = React.createContext();

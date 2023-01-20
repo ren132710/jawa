@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import getTranslation from './translations';
+import getTranslation from '@/utils/translations';
 
 describe('#getTranslation', () => {
   it('should return the correct translation', () => {

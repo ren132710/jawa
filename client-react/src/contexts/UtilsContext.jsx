@@ -1,9 +1,9 @@
 import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import getUnitOfMeasure from '../utils/units';
-import getTranslation from '../utils/translations';
-import * as df from '../utils/dateUtils';
-import getIconUrl from '../utils/iconUtils';
+import getUnitOfMeasure from '@/utils/units';
+import getTranslation from '@/utils/translations';
+import * as df from '@/utils/dateUtils';
+import getIconUrl from '@/utils/iconUtils';
 
 // 1. create the contexts
 const UtilsContext = React.createContext();

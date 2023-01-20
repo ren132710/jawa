@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import getIconUrl from './iconUtils';
+import getIconUrl from '@/utils/iconUtils';
 
 describe('#getIconUrl', () => {
   const iconKeys = [

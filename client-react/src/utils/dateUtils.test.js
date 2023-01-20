@@ -9,7 +9,7 @@ import {
   formatTime,
   // formatZonedTime,
   // formatZonedHour,
-} from './dateUtils';
+} from '@/utils/dateUtils';
 
 const timestamp = 1674044194000; // Wednesday, January 18, 2023 7:16:34 AM GMT-05:00
 

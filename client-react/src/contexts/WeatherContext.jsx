@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useJawaWeather from '../hooks/useJawaWeather';
-import { usePrefsData } from './PrefsContext';
+import useJawaWeather from '@/hooks/useJawaWeather';
+import { usePrefsData } from '@/contexts/PrefsContext';
 
 // 1. create the contexts
 const WeatherDataContext = React.createContext();
