@@ -1,7 +1,7 @@
-import PlaceCard from './PlaceCard';
-import styles from '../../styles/places/PlacesContainer.module.css';
-import { useWeatherData } from '../../contexts/WeatherContext';
-import { ERROR_MESSAGE } from '../../constants/constants';
+import PlaceCard from '@/components/places/PlaceCard';
+import styles from '@/styles/places/PlacesContainer.module.css';
+import { useWeatherData } from '@/contexts/WeatherContext';
+import { ERROR_MESSAGE } from '@/constants/constants';
 
 /**
  * TODO: handleClick

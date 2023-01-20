@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import CurrentTopLeft from './CurrentTopLeft';
-import CurrentTopRight from './CurrentTopRight';
-import CurrentBottomRight from './CurrentBottomRight';
-import CurrentBottomLeft from './CurrentBottomLeft';
-import styles from '../../styles/main/CurrentContainer.module.css';
+import CurrentTopLeft from '@/components/main/CurrentTopLeft';
+import CurrentTopRight from '@/components/main/CurrentTopRight';
+import CurrentBottomLeft from '@/components/main/CurrentBottomLeft';
+import CurrentBottomRight from '@/components/main/CurrentBottomRight';
+import styles from '@/styles/main/CurrentContainer.module.css';
 
 export default function CurrentContainer({ coordinates, current }) {
   console.log('Current container rendered!');

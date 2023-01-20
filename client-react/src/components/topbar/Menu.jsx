@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Button from './Button';
-import styles from '../../styles/topbar/Menu.module.css';
+import Button from '@/components/topbar/Button';
+import styles from '@/styles/topbar/Menu.module.css';
 
 /**
  * TODO:

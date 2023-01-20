@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import DailyCard from './DailyCard';
-import styles from '../../styles/main/DailyContainer.module.css';
+import DailyCard from '@/components/main/DailyCard';
+import styles from '@/styles/main/DailyContainer.module.css';
 
 export default function DailyContainer({ daily }) {
   if (!daily.length) return;

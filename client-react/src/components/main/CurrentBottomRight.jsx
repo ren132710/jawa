@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import styles from '../../styles/main/CurrentBottomRight.module.css';
-import common from '../../styles/main/CurrentCommon.module.css';
-import { useUtils } from '../../contexts/UtilsContext';
-import { usePrefsData } from '../../contexts/PrefsContext';
+import common from '@/styles/main/CurrentCommon.module.css';
+import styles from '@/styles/main/CurrentBottomRight.module.css';
+import { useUtils } from '@/contexts/UtilsContext';
+import { usePrefsData } from '@/contexts/PrefsContext';
 
 export default function CurrentBottomRight({
   dewPoint,

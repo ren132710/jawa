@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import Logo from './Logo';
-import Hamburger from './Hamburger';
-import styles from '../../styles/topbar/Topbar.module.css';
+import Logo from '@/components/topbar/Logo';
+import Hamburger from '@/components/topbar/Hamburger';
+import styles from '@/styles/topbar/Topbar.module.css';
 
 export default function Topbar() {
   const topbarRef = useRef(null);

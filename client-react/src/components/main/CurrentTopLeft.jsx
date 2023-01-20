@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import WeatherIcon from '../WeatherIcon';
-import styles from '../../styles/main/CurrentTopLeft.module.css';
-import { useUtils } from '../../contexts/UtilsContext';
+import WeatherIcon from '@/components/WeatherIcon';
+import styles from '@/styles/main/CurrentTopLeft.module.css';
+import { useUtils } from '@/contexts/UtilsContext';
 
 export default function CurrentTopLeft({ location, id, icon, description }) {
   console.log('CurrentTopLeft rendered!');

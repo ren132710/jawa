@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import HourlyRow from './HourlyRow';
-import styles from '../../styles/main/HourlyContainer.module.css';
+import HourlyRow from '@/components/main/HourlyRow';
+import styles from '@/styles/main/HourlyContainer.module.css';
 
 export default function HourlyContainer({ coordinates, hourly }) {
   if (!hourly.length) return;

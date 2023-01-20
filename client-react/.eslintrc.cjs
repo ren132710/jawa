@@ -24,7 +24,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'no-use-before-define': ['error', { functions: false }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'import/no-unresolved': 'off',
+    'import/no-unresolved': 'off', // getting false positives with vite and @ alias
     'import/extensions': [
       'error',
       'never',
