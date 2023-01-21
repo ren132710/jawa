@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MenuButton from '@/components/topbar/MenuButton';
+import MenuBlanket from '@/components/topbar/MenuBlanket';
 import styles from '@/styles/topbar/Menu.module.css';
 
 /**
@@ -93,16 +94,7 @@ export default function Menu({ showMenu, delay, onClose }) {
         </div>
       </div>
       {/* blanket placed below menu so menu is tabbable */}
-      <div
-        className={styles.menuBlanket}
-        onClick={onClose}
-        // close menu when user tabs away
-        role="button"
-        tabIndex={0}
-        onKeyDown={onClose}
-        aria-label="close menu"
-        data-testid="menu-blanket"
-      />
+      <MenuBlanket onClose={onClose} />
     </>
   );
 }
