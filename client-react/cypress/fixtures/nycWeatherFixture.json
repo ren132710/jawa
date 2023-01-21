@@ -1,11 +1,13 @@
 {
   "coordinates": {
     "id": "c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87",
+    "lang": "en",
     "location": "new york",
     "lat": 40.7128,
     "long": -74.006,
     "timezone": "America/New_York",
-    "timezone_offset": -14400
+    "timezone_offset": -14400,
+    "units": "imperial"
   },
   "current": {
     "timestamp": 1654550390000,
