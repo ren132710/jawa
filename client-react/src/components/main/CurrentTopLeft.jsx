@@ -11,8 +11,8 @@ export default function CurrentTopLeft({ location, id, icon, description }) {
     <div className={styles.currentTopLeft} data-testid="current-top-left">
       <div
         className={styles.currentLocation}
-        data-current-location={location}
         data-current-id={id}
+        data-testid="current-location"
       >
         {location}
       </div>

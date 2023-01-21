@@ -19,7 +19,7 @@ export default function HourlyRow({ timezone, hour }) {
           {df.formatDayOfWeek(hour.timestamp, lang)}
         </div>
         <div className={styles.hourValueMargin}>
-          <span className={styles.hourValue} data-testid="hour-hour">
+          <span className={styles.hourValue} data-testid="hour-name">
             {df.formatZonedHour(hour.timestamp, timezone)}
           </span>
         </div>

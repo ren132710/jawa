@@ -21,12 +21,12 @@ export default function DailyCard({ day }) {
         imgWidth="50"
         imgHeight="50"
       />
-      <div className={styles.dailyDay} data-testid="day-date">
+      <div className={styles.dailyDay} data-testid="day-name">
         {df.formatDayOfWeek(day.timestamp, lang)}
       </div>
-      <div data-hl>
-        <span data-daily-high>{day.high}</span>/
-        <span data-daily-low>{day.low}°</span>
+      <div data-testid="day-hl">
+        <span data-testid="day-high">{day.high}</span>/
+        <span data-testid="day-low">{day.low}°</span>
       </div>
       <div className={styles.dailyDescription} data-testid="day-description">
         {day.description}
