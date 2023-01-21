@@ -8,7 +8,7 @@ export default function CurrentTopLeft({ location, id, icon, description }) {
   const { getIconUrl } = useUtils();
 
   return (
-    <div className={styles.currentTopLeft} data-test="current-top-left">
+    <div className={styles.currentTopLeft} data-testid="current-top-left">
       <div
         className={styles.currentLocation}
         data-current-location={location}
@@ -21,7 +21,7 @@ export default function CurrentTopLeft({ location, id, icon, description }) {
         weatherIconSize="large"
         weatherDescription={description}
         getIconUrl={getIconUrl}
-        testHandle="current-weather-icon"
+        testId="current-weather-icon"
         imgWidth="200"
         imgHeight="200"
       />

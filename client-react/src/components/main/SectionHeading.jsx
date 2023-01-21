@@ -30,7 +30,7 @@ export default function SectionHeading({
   titleTranslationId,
   timestamp,
   timezone,
-  subtitleTestHandle,
+  subtitleTestId,
 }) {
   console.log(`SectionHeading ${section} rendered!`);
   const { lang } = usePrefsData();
@@ -43,11 +43,11 @@ export default function SectionHeading({
       <div
         className={styles.sectionTitle}
         data-translation={titleTranslationId}
-        data-test="section-title"
+        data-testid="section-title"
       >
         {getTranslation(titleTranslationId, lang)}
       </div>
-      <div className={styles.sectionSubtitle} data-test={subtitleTestHandle}>
+      <div className={styles.sectionSubtitle} data-testid={subtitleTestId}>
         {subtitle}
       </div>
     </>
@@ -59,5 +59,5 @@ SectionHeading.propTypes = {
   titleTranslationId: PropTypes.number.isRequired,
   timestamp: PropTypes.number.isRequired,
   timezone: PropTypes.string.isRequired,
-  subtitleTestHandle: PropTypes.string.isRequired,
+  subtitleTestId: PropTypes.string.isRequired,
 };

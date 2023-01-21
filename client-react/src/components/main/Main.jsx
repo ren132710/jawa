@@ -30,7 +30,7 @@ export default function Main() {
           titleTranslationId={2}
           timestamp={weather.current.timestamp}
           timezone={weather.coordinates.timezone}
-          subtitleTestHandle="subtitle-dmt"
+          subtitleTestId="subtitle-dmt"
         />
         <CurrentContainer
           coordinates={weather.coordinates}
@@ -43,7 +43,7 @@ export default function Main() {
           titleTranslationId={3}
           timestamp={weather.current.timestamp}
           timezone={weather.coordinates.timezone}
-          subtitleTestHandle="subtitle-none"
+          subtitleTestId="subtitle-none"
         />
         <DailyContainer daily={weather.daily} />
       </div>
@@ -53,7 +53,7 @@ export default function Main() {
           titleTranslationId={4}
           timestamp={weather.current.timestamp}
           timezone={weather.coordinates.timezone}
-          subtitleTestHandle="subtitle-timezone"
+          subtitleTestId="subtitle-timezone"
         />
         <HourlyContainer
           coordinates={weather.coordinates}

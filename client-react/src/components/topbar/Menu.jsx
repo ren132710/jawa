@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Button from '@/components/topbar/Button';
+import MenuButton from '@/components/topbar/MenuButton';
 import styles from '@/styles/topbar/Menu.module.css';
 
 /**
@@ -35,21 +35,61 @@ export default function Menu({ showMenu, delay, onClose }) {
         className={`${styles.menu} ${
           showMenu && applyTransition ? 'visible' : ''
         }`}
-        data-test="menu"
+        data-testid="menu"
       >
         <div className={[styles.subMenu, styles.units].join(' ')}>
-          <Button title="Metric" onClick={() => handleClick('Metric')} />
-          <Button title="Imperial" onClick={() => handleClick('Imperial')} />
+          <MenuButton
+            title="Metric"
+            onClick={() => handleClick('Metric')}
+            ariaLabel="switch to metric"
+            testId="btnMetric"
+          />
+          <MenuButton
+            title="Imperial"
+            onClick={() => handleClick('Imperial')}
+            ariaLabel="switch to imperial"
+            testId="btnImperial"
+          />
         </div>
         <div className={[styles.subMenu, styles.theme].join(' ')}>
-          <Button title="Light" onClick={() => handleClick('Light')} />
-          <Button title="Jawa" onClick={() => handleClick('Jawa')} />
-          <Button title="Dark" onClick={() => handleClick('Dark')} />
+          <MenuButton
+            title="Light"
+            onClick={() => handleClick('Light')}
+            ariaLabel="switch to light mode"
+            testId="btnLightMode"
+          />
+          <MenuButton
+            title="Jawa"
+            onClick={() => handleClick('Jawa')}
+            ariaLabel="switch to jawa mode"
+            testId="btnJawaMode"
+          />
+          <MenuButton
+            title="Dark"
+            onClick={() => handleClick('Dark')}
+            ariaLabel="switch to dark mode"
+            testId="btnDarkMode"
+          />
         </div>
         <div className={[styles.subMenu, styles.lang].join(' ')}>
-          <Button title="English" onClick={() => handleClick('en')} />
-          <Button title="Français" onClick={() => handleClick('fr')} />
-          <Button title="Svenska" onClick={() => handleClick('sv')} />
+          <MenuButton
+            title="English"
+            onClick={() => handleClick('en')}
+            ariaLabel="switch to english"
+            testId="btnEnglish"
+          />
+          <MenuButton
+            title="Français"
+            onClick={() => handleClick('fr')}
+            ariaLabel="switch to french"
+            testId="btnFrench"
+          />
+          <MenuButton
+            title="Svenska"
+            onClick={() => handleClick('sv')}
+            ariaLabel="switch to swedish"
+            testId="btnSwedish"
+          />
         </div>
       </div>
       {/* blanket placed below menu so menu is tabbable */}
@@ -61,7 +101,7 @@ export default function Menu({ showMenu, delay, onClose }) {
         tabIndex={0}
         onKeyDown={onClose}
         aria-label="close menu"
-        data-test="menu-blanket"
+        data-testid="menu-blanket"
       />
     </>
   );

@@ -15,13 +15,16 @@ export default function CurrentBottomRight({
   const { getTranslation, df } = useUtils();
 
   return (
-    <div className={styles.currentBottomRight} data-test="current-bottom-right">
+    <div
+      className={styles.currentBottomRight}
+      data-testid="current-bottom-right"
+    >
       <div className={common.currentItem}>
         <span data-translation="12">
           {getTranslation(12, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-test="current-dew-point">
+        <span className={common.currentValue} data-testid="current-dew-point">
           {dewPoint}°
         </span>
       </div>
@@ -30,7 +33,7 @@ export default function CurrentBottomRight({
           {getTranslation(13, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-test="current-sunrise">
+        <span className={common.currentValue} data-testid="current-sunrise">
           {df.formatZonedTime(sunrise, timezone)}
         </span>
       </div>
@@ -39,7 +42,7 @@ export default function CurrentBottomRight({
           {getTranslation(11, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-test="current-sunset">
+        <span className={common.currentValue} data-testid="current-sunset">
           {df.formatZonedTime(sunset, timezone)}
         </span>
       </div>

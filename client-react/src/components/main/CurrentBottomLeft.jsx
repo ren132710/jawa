@@ -16,13 +16,13 @@ export default function CurrentBottomLeft({
   const { getUnitOfMeasure, getTranslation } = useUtils();
 
   return (
-    <div className={styles.currentBottomLeft} data-test="current-bottom-left">
+    <div className={styles.currentBottomLeft} data-testid="current-bottom-left">
       <div className={common.currentItem}>
         <span data-translation="9">
           {getTranslation(9, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-test="current-uv">
+        <span className={common.currentValue} data-testid="current-uv">
           {uvIndex} {uvLevel}
         </span>
       </div>
@@ -31,7 +31,7 @@ export default function CurrentBottomLeft({
           {getTranslation(10, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-test="current-humidity">
+        <span className={common.currentValue} data-testid="current-humidity">
           {humidity}%
         </span>
       </div>
@@ -40,7 +40,7 @@ export default function CurrentBottomLeft({
           {getTranslation(11, lang)}
           {': '}&nbsp;
         </span>
-        <span className={common.currentValue} data-test="current-wind">
+        <span className={common.currentValue} data-testid="current-wind">
           {windSpeed} {getUnitOfMeasure(units, 'velocity')} {windDirection}
         </span>
       </div>

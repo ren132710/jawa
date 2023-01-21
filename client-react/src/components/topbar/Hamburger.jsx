@@ -28,7 +28,8 @@ export default function Hamburger() {
         type="button"
         className={`${styles.hamburger} ${showMenu ? ' open' : ''}`}
         onClick={() => setShowMenu(!showMenu)}
-        data-test="hamburger"
+        aria-expanded={showMenu}
+        data-testid="hamburger"
       >
         <span className={styles.hamburgerTop} />
         <span className={styles.hamburgerMiddle} />
