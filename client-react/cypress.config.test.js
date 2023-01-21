@@ -8,5 +8,7 @@ export default defineConfig({
   e2e: {
     chromeWebSecurity: false,
     baseUrl: 'http://localhost:4173',
+    screenshotOnRunFailure: false,
+    video: false,
   },
 });
