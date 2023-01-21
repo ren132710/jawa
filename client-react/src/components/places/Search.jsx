@@ -21,7 +21,7 @@ export default function Search() {
         type="text"
         className={styles.search}
         placeholder="Weather at your places"
-        data-test="place-search"
+        data-testid="place-search"
       />
     </div>
   );

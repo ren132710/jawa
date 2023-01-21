@@ -29,7 +29,7 @@ export default function Place({ coordinates, current, handleClick }) {
       data-location={coordinates.location}
       data-lat={coordinates.lat}
       data-long={coordinates.long}
-      data-test="place-card"
+      data-testid="place-card"
     >
       <button
         type="button"
@@ -46,22 +46,22 @@ export default function Place({ coordinates, current, handleClick }) {
         weatherIconSize="small"
         weatherDescription={current.description}
         getIconUrl={getIconUrl}
-        testHandle="place-weather-icon"
+        testId="place-weather-icon"
         imgWidth="50"
         imgHeight="50"
       />
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
-        data-test="place-location"
+        data-testid="place-location"
       >
         {coordinates.location}
       </div>
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
-        data-test="place-hl"
+        data-testid="place-hl"
       >
-        <span data-test="place-high">{current.high}</span>/
-        <span data-test="place-low">{current.low}°</span>
+        <span data-testid="place-high">{current.high}</span>/
+        <span data-testid="place-low">{current.low}°</span>
       </div>
     </div>
   );

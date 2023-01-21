@@ -20,7 +20,7 @@ export default function CurrentTopRight({
   const { getUnitOfMeasure, getTranslation } = useUtils();
 
   return (
-    <div className={styles.currentTopRight} data-test="current-top-right">
+    <div className={styles.currentTopRight} data-testid="current-top-right">
       <div className={styles.currentLatLong} data-current-lat={lat}>
         {'lat: '}&nbsp; {lat}
       </div>
@@ -28,10 +28,10 @@ export default function CurrentTopRight({
         {'long: '}&nbsp; {long}
       </div>
       <div className={styles.currentTopRightBlock}>
-        <div className={styles.currentHighLow} data-test="current-hl">
+        <div className={styles.currentHighLow} data-testid="current-hl">
           {high}/{low}°
         </div>
-        <div className={styles.currentTemp} data-test="current-temp">
+        <div className={styles.currentTemp} data-testid="current-temp">
           {temp}° {getUnitOfMeasure(units, 'temp')}
         </div>
         <div className={styles.currentFeelsLike}>
@@ -39,13 +39,13 @@ export default function CurrentTopRight({
             {getTranslation(6, lang)}
             {': '}&nbsp;
           </span>
-          <span className={common.currentValue} data-test="current-fl">
+          <span className={common.currentValue} data-testid="current-fl">
             {feelsLike}°
           </span>
         </div>
         <div
           className={styles.currentDescription}
-          data-test="current-description"
+          data-testid="current-description"
         >
           {description}
         </div>
@@ -54,7 +54,7 @@ export default function CurrentTopRight({
             {getTranslation(7, lang)}
             {': '}&nbsp;
           </span>
-          <span className={common.currentValue} data-test="current-precip">
+          <span className={common.currentValue} data-testid="current-precip">
             {precip}%
           </span>
         </div>
@@ -63,7 +63,10 @@ export default function CurrentTopRight({
             {getTranslation(8, lang)}
             {': '}&nbsp;
           </span>
-          <span className={common.currentValue} data-test="current-visibility">
+          <span
+            className={common.currentValue}
+            data-testid="current-visibility"
+          >
             {visibility} {getUnitOfMeasure(units, 'distance')}
           </span>
         </div>

@@ -11,24 +11,24 @@ export default function DailyCard({ day }) {
   console.log('DailyCard rendered!');
 
   return (
-    <div className={styles.dailyCard}>
+    <div className={styles.dailyCard} data-testid="daily-card">
       <WeatherIcon
         weatherIcon={day.icon}
         weatherIconSize="small"
         weatherDescription={day.description}
         getIconUrl={getIconUrl}
-        testHandle="day-weather-icon"
+        testId="day-weather-icon"
         imgWidth="50"
         imgHeight="50"
       />
-      <div className={styles.dailyDay} data-test="day-date">
+      <div className={styles.dailyDay} data-testid="day-date">
         {df.formatDayOfWeek(day.timestamp, lang)}
       </div>
       <div data-hl>
         <span data-daily-high>{day.high}</span>/
         <span data-daily-low>{day.low}°</span>
       </div>
-      <div className={styles.dailyDescription} data-test="day-description">
+      <div className={styles.dailyDescription} data-testid="day-description">
         {day.description}
       </div>
       <div className={styles.dayLabel}>
@@ -36,7 +36,7 @@ export default function DailyCard({ day }) {
           {getTranslation(10, lang)}
           {': '}&nbsp;
         </span>
-        <span className={styles.dayValue} data-test="day-humidity">
+        <span className={styles.dayValue} data-testid="day-humidity">
           {day.humidity}%
         </span>
       </div>
@@ -45,7 +45,7 @@ export default function DailyCard({ day }) {
           {getTranslation(11, lang)}
           {': '}&nbsp;
         </span>
-        <span className={styles.dayValue} data-test="day-wind">
+        <span className={styles.dayValue} data-testid="day-wind">
           {day.windSpeed} {getUnitOfMeasure(units, 'velocity')}{' '}
           {day.windDirection}
         </span>

@@ -5,7 +5,7 @@ export default function WeatherIcon({
   weatherIconSize,
   weatherDescription,
   getIconUrl,
-  testHandle,
+  testId,
   imgWidth,
   imgHeight,
 }) {
@@ -17,7 +17,7 @@ export default function WeatherIcon({
       height={imgHeight}
       alt={weatherDescription}
       // add a handle for cypress testing
-      data-test={testHandle}
+      data-testid={testId}
     />
   );
 }
@@ -33,7 +33,7 @@ WeatherIcon.propTypes = {
   weatherIconSize: PropTypes.string,
   weatherDescription: PropTypes.string.isRequired,
   getIconUrl: PropTypes.func.isRequired,
-  testHandle: PropTypes.string.isRequired,
+  testId: PropTypes.string.isRequired,
   imgWidth: PropTypes.string,
   imgHeight: PropTypes.string,
 };

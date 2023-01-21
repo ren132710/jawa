@@ -6,11 +6,11 @@ export default function HourlyContainer({ coordinates, hourly }) {
   if (!hourly.length) return;
   console.log('Hourly container rendered!');
 
-  // only show every other hour
-  const hourlyReduced = hourly.filter((hour, index) => index % 2 === 0);
+  // starting with the next hour, only show every other hour
+  const hourlyReduced = hourly.filter((hour, index) => index % 2 === 1);
 
   return (
-    <div className={styles.hourlyContainer} data-test="hourly-container">
+    <div className={styles.hourlyContainer} data-testid="hourly-container">
       {hourlyReduced.map((hour) => (
         <HourlyRow
           key={hour.timestamp}

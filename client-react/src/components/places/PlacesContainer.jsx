@@ -19,7 +19,7 @@ export default function PlacesContainer() {
   console.log('Places container rendered!');
 
   return (
-    <div className={styles.placesContainer} data-test="places-container">
+    <div className={styles.placesContainer} data-testid="places-container">
       {isError ? (
         <div className="error-container">
           <div className="error">{ERROR_MESSAGE}</div>
