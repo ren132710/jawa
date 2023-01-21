@@ -5,6 +5,9 @@ export default defineConfig({
     chromeWebSecurity: false,
     baseUrl: 'http://localhost:5173',
     viewport: 'ipad-2',
-    slowTestThreshold: 1000, // default
+    setupNodeEvents(on, config) {
+      console.log('cypress config: ', config);
+      // implement node event listeners here
+    },
   },
 });
