@@ -1,32 +1,42 @@
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
+  require('dotenv').config();
 }
-const express = require('express')
-const cors = require('cors')
-const axios = require('axios')
-const app = express()
-const { getCardinalDirection, getUVIndexLevel } = require('./utils.js')
-const PORT = process.env.PORT || 8080 //when 3001 is blocked by local network, use 8080
-const API_KEY = process.env.API_KEY
-const URL = 'https://api.openweathermap.org/data/3.0/onecall'
+const express = require('express');
+const cors = require('cors');
+const axios = require('axios');
+const app = express();
+const {
+  getCardinalDirection,
+  getUVIndexLevel,
+} = require('./utils.js');
+const PORT = process.env.PORT || 8080; //when 3001 is blocked by local network, use 8080
+const API_KEY = process.env.API_KEY;
+const URL = 'https://api.openweathermap.org/data/3.0/onecall';
 
 //with no params, cors() allows requests from any url
-app.use(cors())
+app.use(cors());
 
 //enable the ability to parse req.query
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 
 //prevent open handles when running unit tests
 if (process.env.SERVER_UNIT_TEST !== 'true') {
-  app.listen(PORT, () => console.log(`Listening on ${PORT}`))
+  app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 }
 
 app.get('/weather', (req, res) => {
-  const { lat, long, units, lang, id, location } = req.query
+  const { lat, long, units, lang, id, location } = req.query;
 
   axios
     .get(URL, {
-      params: { lat: lat, lon: long, units: units, lang: lang, appid: API_KEY, exclude: 'minutely' },
+      params: {
+        lat: lat,
+        lon: long,
+        units: units,
+        lang: lang,
+        appid: API_KEY,
+        exclude: 'minutely',
+      },
       timeout: 5000,
     })
     .then(({ data }) => {
@@ -44,16 +54,16 @@ app.get('/weather', (req, res) => {
         current: parseCurrentWeather(data, units),
         daily: parseDailyWeather(data, units),
         hourly: parseHourlyWeather(data, units),
-      })
+      });
     })
     .catch((e) => {
-      console.log(e)
-      res.sendStatus(500)
-    })
-})
+      console.log(e);
+      res.sendStatus(500);
+    });
+});
 
 function parseCurrentWeather({ current, daily }, units) {
-  const { pop, temp } = daily[0]
+  const { pop, temp } = daily[0];
   return {
     timestamp: current.dt * 1000, //convert Unix (seconds) to JS (milliseconds)
     description: current.weather[0].description,
@@ -75,10 +85,13 @@ function parseCurrentWeather({ current, daily }, units) {
     uvLevel: getUVIndexLevel(current.uvi),
     humidity: Math.round(current.humidity),
     //metric wind speed is given in m/s, so convert to km/h (1 m/s = 3.6 km/h)
-    windSpeed: units === 'imperial' ? Math.round(current.wind_speed) : Math.round(current.wind_speed * 3.6),
+    windSpeed:
+      units === 'imperial'
+        ? Math.round(current.wind_speed)
+        : Math.round(current.wind_speed * 3.6),
     windDirection: getCardinalDirection(current.wind_deg),
     windDeg: Math.round(current.wind_deg),
-  }
+  };
 }
 
 function parseDailyWeather({ daily }, units) {
@@ -91,36 +104,45 @@ function parseDailyWeather({ daily }, units) {
       low: Math.round(day.temp.min),
       precip: Math.round(day.pop * 100),
       humidity: Math.round(day.humidity),
-      windSpeed: units === 'imperial' ? Math.round(day.wind_speed) : Math.round(day.wind_speed * 3.6),
+      windSpeed:
+        units === 'imperial'
+          ? Math.round(day.wind_speed)
+          : Math.round(day.wind_speed * 3.6),
       windDirection: getCardinalDirection(day.wind_deg),
       windDeg: Math.round(day.wind_deg),
-    }
-  })
+    };
+  });
 }
 
-const HOUR_IN_SECONDS = 3600
+const HOUR_IN_SECONDS = 3600;
 function parseHourlyWeather({ hourly, current }, units) {
-  return hourly
-    .filter((hour) => hour.dt > current.dt - HOUR_IN_SECONDS)
-    .map((hour) => {
-      return {
-        timestamp: hour.dt * 1000,
-        description: hour.weather[0].description,
-        icon: hour.weather[0].icon,
-        temp: Math.round(hour.temp),
-        precip: Math.round(hour.pop * 100),
-        humidity: Math.round(hour.humidity),
-        windSpeed: units === 'imperial' ? Math.round(hour.wind_speed) : Math.round(hour.wind_speed * 3.6),
-        windDirection: getCardinalDirection(hour.wind_deg),
-        windDeg: Math.round(hour.wind_deg),
-        uvIndex: hour.uvi,
-        uvLevel: getUVIndexLevel(hour.uvi),
-      }
-    })
+  return (
+    hourly
+      // include the current hour in the hourly forecast - e.g., if it's 3:30pm, include the 3pm hour
+      .filter((hour) => hour.dt > current.dt - HOUR_IN_SECONDS)
+      .map((hour) => {
+        return {
+          timestamp: hour.dt * 1000,
+          description: hour.weather[0].description,
+          icon: hour.weather[0].icon,
+          temp: Math.round(hour.temp),
+          precip: Math.round(hour.pop * 100),
+          humidity: Math.round(hour.humidity),
+          windSpeed:
+            units === 'imperial'
+              ? Math.round(hour.wind_speed)
+              : Math.round(hour.wind_speed * 3.6),
+          windDirection: getCardinalDirection(hour.wind_deg),
+          windDeg: Math.round(hour.wind_deg),
+          uvIndex: hour.uvi,
+          uvLevel: getUVIndexLevel(hour.uvi),
+        };
+      })
+  );
 }
 
 module.exports = {
   parseCurrentWeather,
   parseDailyWeather,
   parseHourlyWeather,
-}
+};
