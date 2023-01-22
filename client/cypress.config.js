@@ -6,7 +6,7 @@ module.exports = defineConfig({
     baseUrl: 'http://localhost:1234',
     viewport: 'ipad-2',
     screenshotOnRunFailure: false,
-    video: false,
+    // video: false,
     setupNodeEvents(on, config) {
       console.log('cypress config: ', config);
       // implement node event listeners here
