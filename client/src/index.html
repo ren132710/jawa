@@ -1,316 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Just another weather app." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <script defer src="//code.iconify.design/1/1.0.6/iconify.min.js"></script>
-    <script defer src="index.js" type="module"></script>
-    <title>jawa | just another weather app</title>
-  </head>
-  <body class="blurred">
-    <header>
-      <div class="header-container">
-        <div class="jawa-container">
-          <div class="jawa">jawa</div>
-          <!-- https://materialdesignicons.com/ -->
-          <svg class="jawa-logo" viewBox="0 0 24 24">
-            <path
-              d="M16.5 4.5L15.5 3.43L17.92 1H20L16.5 4.5M20.96 23C19.9 23 18.9 22.75 17.96 22.25C16.12 23.25 13.81 23.25 11.97 22.25C10.13 23.25 7.82 23.25 6 22.25C4.77 22.94 3.36 23.05 2 23V21C3.41 21.05 4.77 20.9 6 20C7.74 21.25 10.21 21.25 11.97 20C13.74 21.25 16.2 21.25 17.96 20C19.17 20.9 20.54 21.05 21.94 21V23H20.96M20.35 12.26C18.3 11.5 16.14 12.61 14.08 13.36L12.39 11.5H9.58V8C11.89 8.19 14.29 7.67 15.9 5.96L14.5 4.56C13.6 5.46 12.3 6 11 6H8C6.89 6 5.95 6.92 6 8C6.07 9.35 5.67 12.73 6.45 13.87L8 16.82C7.43 17.23 6.93 17.62 6.5 18C8.09 19.5 10.65 19.17 11.97 17.5C12.91 18.59 14.45 19.3 15.9 18.83C17.45 17.77 22.74 14 20.35 12.26M11.43 14.65C11 14.89 10.16 15.37 9.82 15.61L8.97 13.59L11.46 13.5L12.16 14.25L11.43 14.65M8 1C6.9 1 6 1.9 6 3S6.9 5 8 5 10 4.11 10 3 9.11 1 8 1Z"
-            />
-          </svg>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Just another weather app." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="//code.iconify.design/1/1.0.6/iconify.min.js"></script>
+  <script defer src="index.js" type="module"></script>
+  <title>jawa | just another weather app</title>
+</head>
+
+<body class="blurred">
+  <header>
+    <div class="header-container">
+      <div class="jawa-container">
+        <div class="jawa">jawa</div>
+        <!-- https://materialdesignicons.com/ -->
+        <svg class="jawa-logo" viewBox="0 0 24 24">
+          <path
+            d="M16.5 4.5L15.5 3.43L17.92 1H20L16.5 4.5M20.96 23C19.9 23 18.9 22.75 17.96 22.25C16.12 23.25 13.81 23.25 11.97 22.25C10.13 23.25 7.82 23.25 6 22.25C4.77 22.94 3.36 23.05 2 23V21C3.41 21.05 4.77 20.9 6 20C7.74 21.25 10.21 21.25 11.97 20C13.74 21.25 16.2 21.25 17.96 20C19.17 20.9 20.54 21.05 21.94 21V23H20.96M20.35 12.26C18.3 11.5 16.14 12.61 14.08 13.36L12.39 11.5H9.58V8C11.89 8.19 14.29 7.67 15.9 5.96L14.5 4.56C13.6 5.46 12.3 6 11 6H8C6.89 6 5.95 6.92 6 8C6.07 9.35 5.67 12.73 6.45 13.87L8 16.82C7.43 17.23 6.93 17.62 6.5 18C8.09 19.5 10.65 19.17 11.97 17.5C12.91 18.59 14.45 19.3 15.9 18.83C17.45 17.77 22.74 14 20.35 12.26M11.43 14.65C11 14.89 10.16 15.37 9.82 15.61L8.97 13.59L11.46 13.5L12.16 14.25L11.43 14.65M8 1C6.9 1 6 1.9 6 3S6.9 5 8 5 10 4.11 10 3 9.11 1 8 1Z" />
+        </svg>
+      </div>
+      <div class="menu-toggle">
+        <div class="hamburger"></div>
+      </div>
+      <div id="menu" class="menu">
+        <div class="sub-menu units">
+          <button class="menu-btn" data-action="metric">Metric</button>
+          <button class="menu-btn" data-action="imperial">Imperial</button>
         </div>
-        <div class="menu-toggle">
-          <div class="hamburger"></div>
+        <div class="sub-menu theme">
+          <button class="menu-btn" data-action="light">Light</button>
+          <button class="menu-btn" data-action="jawa">Jawa</button>
+          <button class="menu-btn" data-action="dark">Dark</button>
         </div>
-        <div id="menu" class="menu">
-          <div class="sub-menu units">
-            <button class="menu-btn" data-action="metric">Metric</button>
-            <button class="menu-btn" data-action="imperial">Imperial</button>
-          </div>
-          <div class="sub-menu theme">
-            <button class="menu-btn" data-action="light">Light</button>
-            <button class="menu-btn" data-action="jawa">Jawa</button>
-            <button class="menu-btn" data-action="dark">Dark</button>
-          </div>
-          <div class="sub-menu lang">
-            <button class="menu-btn" data-action="en">English</button>
-            <button class="menu-btn" data-action="fr">French</button>
-            <button class="menu-btn" data-action="sv">Swedish</button>
-          </div>
+        <div class="sub-menu lang">
+          <button class="menu-btn" data-action="en">English</button>
+          <button class="menu-btn" data-action="fr">French</button>
+          <button class="menu-btn" data-action="sv">Swedish</button>
         </div>
       </div>
-    </header>
-    <div class="page-grid-container">
-      <div class="page-grid-frame">
-        <div class="spacer"></div>
-        <div class="places-section">
-          <div class="place-search-container">
-            <input
-              type="text"
-              class="place-search"
-              data-place-search
-              placeholder="Weather at your places"
-            />
-          </div>
-          <div class="places-container"></div>
+    </div>
+  </header>
+  <div class="page-grid-container">
+    <div class="page-grid-frame">
+      <div class="spacer"></div>
+      <div class="places-section">
+        <div class="place-search-container">
+          <input type="text" class="place-search" data-place-search placeholder="Weather at your places" />
         </div>
-        <main class="main">
-          <div class="current-section">
-            <div class="section-title" data-dictionary="2">Current Weather</div>
-            <div class="section-subtitle"><span data-current-dt></span></div>
-            <div class="current-container">
-              <div class="current-top-left">
-                <div
-                  class="current-location"
-                  data-current-id
-                  data-current-location
-                ></div>
-                <button
-                  id="btnNewPlace"
-                  class="place-btn-new"
-                  data-new-place
-                  data-dictionary="5"
-                >
-                  New Place
-                </button>
-                <img
-                  class="weather-icon large"
-                  src="http://openweathermap.org/img/wn/10d@4x.png"
-                  width="200"
-                  height="200"
-                  alt="rain"
-                  data-current-icon
-                />
+        <div class="places-container"></div>
+      </div>
+      <main class="main">
+        <div class="current-section">
+          <div class="section-title" data-dictionary="2">Current Weather</div>
+          <div class="section-subtitle"><span data-current-dt></span></div>
+          <div class="current-container">
+            <div class="current-top-left">
+              <div class="current-location" data-current-id data-current-location></div>
+              <button id="btnNewPlace" class="place-btn-new" data-new-place data-dictionary="5">
+                New Place
+              </button>
+              <img class="weather-icon large" src="http://openweathermap.org/img/wn/10d@4x.png" width="200" height="200"
+                alt="rain" data-current-icon />
+            </div>
+            <div class="current-top-right">
+              <div class="current-detail">
+                lat:&nbsp;<span data-current-lat></span>
               </div>
-              <div class="current-top-right">
-                <div class="current-detail">
-                  lat:&nbsp;<span data-current-lat></span>
-                </div>
-                <div class="current-detail">
-                  long:&nbsp;<span data-current-long></span>
-                </div>
-                <div class="current-top-right-block">
-                  <div class="current-high-low">
-                    <span data-current-high></span>/<span
-                      class="degrees"
-                      data-current-low
-                    ></span>
-                  </div>
-                  <div class="current-temp" data-temp-units=" F">
-                    <span class="degrees" data-current-temp></span>
-                  </div>
-                  <div class="current-feels-like">
-                    <span data-dictionary="6">Feels Like</span
-                    ><span>:&nbsp;</span>
-                    <span class="degrees value" data-current-fl></span>
-                  </div>
-                  <div
-                    class="current-description"
-                    data-current-description
-                  ></div>
-                  <div class="label">
-                    <span data-dictionary="7">Precip</span><span>:&nbsp;</span>
-                    <span class="value percent" data-current-precip></span>
-                  </div>
-                  <div class="label">
-                    <span data-dictionary="8">Visibility</span
-                    ><span>:&nbsp;</span>
-                    <span
-                      class="value"
-                      data-current-visibility
-                      data-visibility-units=" mi"
-                    ></span>
-                  </div>
-                </div>
+              <div class="current-detail">
+                long:&nbsp;<span data-current-long></span>
               </div>
-              <div class="current-bottom-left">
+              <div class="current-top-right-block">
+                <div class="current-high-low">
+                  <span data-current-high></span>/<span class="degrees" data-current-low></span>
+                </div>
+                <div class="current-temp" data-temp-units=" F">
+                  <span class="degrees" data-current-temp></span>
+                </div>
+                <div class="current-feels-like">
+                  <span data-dictionary="6">Feels Like</span><span>:&nbsp;</span>
+                  <span class="degrees value" data-current-fl></span>
+                </div>
+                <div class="current-description" data-current-description></div>
                 <div class="label">
-                  <span data-dictionary="9">UV Index</span><span>:&nbsp;</span>
-                  <span class="value" data-current-uv-index></span>
-                  <span>&nbsp;</span>
-                  <span class="value" data-current-uv-level></span>
+                  <span data-dictionary="7">Precip</span><span>:&nbsp;</span>
+                  <span class="value percent" data-current-precip></span>
                 </div>
                 <div class="label">
-                  <span data-dictionary="10">Humidity</span><span>:&nbsp;</span>
-                  <span class="value percent" data-current-humidity></span>
-                </div>
-                <div class="label">
-                  <span data-dictionary="11">Wind</span><span>:&nbsp;</span>
-                  <span
-                    class="value"
-                    data-current-wind-speed
-                    data-wind-units=" mi/h "
-                  ></span>
-                  <span class="value" data-current-wind-direction></span>
-                </div>
-              </div>
-              <div class="current-bottom-right">
-                <div class="label">
-                  <span data-dictionary="12">Dew Point</span
-                  ><span>:&nbsp;</span>
-                  <span class="value degrees" data-current-dew-point></span>
-                </div>
-                <div class="label">
-                  <span data-dictionary="13">Sunrise</span><span>:&nbsp;</span>
-                  <span class="value" data-current-sunrise></span>
-                </div>
-                <div class="label">
-                  <span data-dictionary="14">Sunset</span><span>:&nbsp;</span>
-                  <span class="value" data-current-sunset></span>
+                  <span data-dictionary="8">Visibility</span><span>:&nbsp;</span>
+                  <span class="value" data-current-visibility data-visibility-units=" mi"></span>
                 </div>
               </div>
             </div>
+            <div class="current-bottom-left">
+              <div class="label">
+                <span data-dictionary="9">UV Index</span><span>:&nbsp;</span>
+                <span class="value" data-current-uv-index></span>
+                <span>&nbsp;</span>
+                <span class="value" data-current-uv-level></span>
+              </div>
+              <div class="label">
+                <span data-dictionary="10">Humidity</span><span>:&nbsp;</span>
+                <span class="value percent" data-current-humidity></span>
+              </div>
+              <div class="label">
+                <span data-dictionary="11">Wind</span><span>:&nbsp;</span>
+                <span class="value" data-current-wind-speed data-wind-units=" mi/h "></span>
+                <span class="value" data-current-wind-direction></span>
+              </div>
+            </div>
+            <div class="current-bottom-right">
+              <div class="label">
+                <span data-dictionary="12">Dew Point</span><span>:&nbsp;</span>
+                <span class="value degrees" data-current-dew-point></span>
+              </div>
+              <div class="label">
+                <span data-dictionary="13">Sunrise</span><span>:&nbsp;</span>
+                <span class="value" data-current-sunrise></span>
+              </div>
+              <div class="label">
+                <span data-dictionary="14">Sunset</span><span>:&nbsp;</span>
+                <span class="value" data-current-sunset></span>
+              </div>
+            </div>
           </div>
-          <div class="daily-section">
-            <div class="section-title" data-dictionary="3">Forecast</div>
-            <div class="section-subtitle"><span>&nbsp;</span></div>
-            <div class="daily-container" data-daily-container></div>
-          </div>
-          <div class="hourly-section">
-            <div class="section-title" data-dictionary="4">Hourly Weather</div>
-            <div class="section-subtitle" data-hour-timezone></div>
-            <div class="hourly-container" data-hourly-container></div>
-          </div>
-        </main>
+        </div>
+        <div class="daily-section">
+          <div class="section-title" data-dictionary="3">Forecast</div>
+          <div class="section-subtitle"><span>&nbsp;</span></div>
+          <div class="daily-container" data-daily-container></div>
+        </div>
+        <div class="hourly-section">
+          <div class="section-title" data-dictionary="4">Hourly Weather</div>
+          <div class="section-subtitle" data-hour-timezone></div>
+          <div class="hourly-container" data-hourly-container></div>
+        </div>
+      </main>
 
-        <footer>
-          <a
-            href="https://openweathermap.org/api"
-            class="openweather-logo"
-            target="_blank"
-            >Powered By OpenWeather</a
-          >
-        </footer>
+      <footer>
+        <a href="https://openweathermap.org/api" class="openweather-logo" target="_blank">Powered By OpenWeather</a>
+      </footer>
+    </div>
+  </div>
+
+  <!-- templates -->
+  <template id="template-place-card">
+    <div class="place-card" data-place-card tabindex="0">
+      <!-- try &times; in lieu of '✕' -->
+      <button id="btnDeletePlace" class="place-btn-delete" tabindex="-1" hidden>
+        ✕
+      </button>
+      <img class="weather-icon place-card-item" src="http://openweathermap.org/img/wn/01d.png" width="50" height="50"
+        alt="clear sky" data-card-icon />
+      <div class="place-text place-card-item" data-card-location></div>
+      <div class="place-text place-card-item" data-card-hl>
+        <span data-card-high></span>/<span class="degrees" data-card-low></span>
       </div>
     </div>
+  </template>
 
-    <!-- templates -->
-    <template id="template-place-card">
-      <div class="place-card" data-place-card tabindex="0">
-        <!-- try &times; in lieu of '✕' -->
-        <button
-          id="btnDeletePlace"
-          class="place-btn-delete"
-          tabindex="-1"
-          hidden
-        >
-          ✕
-        </button>
-        <img
-          class="weather-icon place-card-item"
-          src="http://openweathermap.org/img/wn/01d.png"
-          width="50"
-          height="50"
-          alt="clear sky"
-          data-card-icon
-        />
-        <div class="place-text place-card-item" data-card-location></div>
-        <div class="place-text place-card-item" data-card-hl>
-          <span data-card-high></span>/<span
-            class="degrees"
-            data-card-low
-          ></span>
+  <template id="template-daily-card">
+    <div class="daily-card">
+      <img class="weather-icon" src="http://openweathermap.org/img/wn/01d.png" width="50" height="50" alt="clear sky"
+        data-daily-icon />
+      <div class="daily-day" data-daily-date></div>
+      <div data-hl>
+        <span data-daily-high></span>/<span class="degrees" data-daily-low></span>
+      </div>
+      <div class="daily-description" data-daily-description></div>
+      <div class="label">
+        <span data-dictionary="10">Humidity</span><span>:&nbsp;</span>
+        <span class="value percent" data-daily-humidity></span>
+      </div>
+      <div class="label">
+        <span data-dictionary="11">Wind</span><span>:&nbsp;</span>
+        <span class="value" data-daily-wind-speed data-wind-units=" mi/h "></span>
+        <span class="value" data-daily-wind-direction></span>
+      </div>
+    </div>
+  </template>
+
+  <template id="template-hour-row">
+    <div class="hour-row">
+      <div class="hour-data">
+        <div class="hour-label hour-day" data-hour-date></div>
+        <div class="hour-value-margin">
+          <span class="hour-value" data-hour></span>
         </div>
       </div>
-    </template>
-
-    <template id="template-daily-card">
-      <div class="daily-card">
-        <img
-          class="weather-icon"
-          src="http://openweathermap.org/img/wn/01d.png"
-          width="50"
-          height="50"
-          alt="clear sky"
-          data-daily-icon
-        />
-        <div class="daily-day" data-daily-date></div>
-        <div data-hl>
-          <span data-daily-high></span>/<span
-            class="degrees"
-            data-daily-low
-          ></span>
-        </div>
-        <div class="daily-description" data-daily-description></div>
-        <div class="label">
-          <span data-dictionary="10">Humidity</span><span>:&nbsp;</span>
-          <span class="value percent" data-daily-humidity></span>
-        </div>
-        <div class="label">
-          <span data-dictionary="11">Wind</span><span>:&nbsp;</span>
-          <span
-            class="value"
-            data-daily-wind-speed
-            data-wind-units=" mi/h "
-          ></span>
-          <span class="value" data-daily-wind-direction></span>
+      <div class="hour-data">
+        <img class="weather-icon" src="http://openweathermap.org/img/wn/01d.png" width="50" height="50" alt="clear sky"
+          data-hour-icon />
+      </div>
+      <div class="hour-data">
+        <div class="hour-label">Temp</div>
+        <div class="hour-value-margin">
+          <span class="hour-value degrees" data-hour-temp></span>
         </div>
       </div>
-    </template>
-
-    <template id="template-hour-row">
-      <div class="hour-row">
-        <div class="hour-data">
-          <div class="hour-label hour-day" data-hour-date></div>
-          <div class="hour-value-margin">
-            <span class="hour-value" data-hour></span>
-          </div>
-        </div>
-        <div class="hour-data">
-          <img
-            class="weather-icon"
-            src="http://openweathermap.org/img/wn/01d.png"
-            width="50"
-            height="50"
-            alt="clear sky"
-            data-hour-icon
-          />
-        </div>
-        <div class="hour-data">
-          <div class="hour-label">Temp</div>
-          <div class="hour-value-margin">
-            <span class="hour-value degrees" data-hour-temp></span>
-          </div>
-        </div>
-        <div class="hour-data">
-          <div class="hour-label" data-dictionary="7">Precip</div>
-          <div class="hour-value-margin">
-            <span class="hour-value percent" data-hour-precip></span>
-          </div>
-        </div>
-        <div class="hour-data">
-          <div class="hour-label" data-dictionary="11">Wind</div>
-          <div class="hour-value-margin">
-            <span
-              class="hour-value"
-              data-hour-wind-speed
-              data-wind-units=" mi/h "
-            ></span>
-            <span class="hour-value" data-hour-wind-direction></span>
-          </div>
-        </div>
-        <div class="hour-data">
-          <div class="hour-label" data-dictionary="10">Humidity</div>
-          <div class="hour-value-margin">
-            <span class="hour-value percent" data-hour-humidity></span>
-          </div>
-        </div>
-        <div class="hour-data">
-          <div class="hour-label" data-dictionary="9">UV Index</div>
-          <div class="hour-value-margin">
-            <span class="hour-value" data-hour-uv-level></span>
-          </div>
+      <div class="hour-data">
+        <div class="hour-label" data-dictionary="7">Precip</div>
+        <div class="hour-value-margin">
+          <span class="hour-value percent" data-hour-precip></span>
         </div>
       </div>
-    </template>
-  </body>
+      <div class="hour-data">
+        <div class="hour-label" data-dictionary="11">Wind</div>
+        <div class="hour-value-margin">
+          <span class="hour-value" data-hour-wind-speed data-wind-units=" mi/h "></span>
+          <span class="hour-value" data-hour-wind-direction></span>
+        </div>
+      </div>
+      <div class="hour-data">
+        <div class="hour-label" data-dictionary="10">Humidity</div>
+        <div class="hour-value-margin">
+          <span class="hour-value percent" data-hour-humidity></span>
+        </div>
+      </div>
+      <div class="hour-data">
+        <div class="hour-label" data-dictionary="9">UV Index</div>
+        <div class="hour-value-margin">
+          <span class="hour-value" data-hour-uv-level></span>
+        </div>
+      </div>
+    </div>
+  </template>
+</body>
+
 </html>
