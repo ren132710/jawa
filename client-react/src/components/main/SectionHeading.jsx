@@ -17,7 +17,7 @@ function getSubTitle(section, timestamp, timezone, df, lang) {
       )} ${df.formatTime(timestamp)}`;
       return subtitle;
     case 'forecast':
-      return '';
+      return <span>&nbsp;</span>;
     case 'hourly':
       return timezone;
     default:
