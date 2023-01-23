@@ -63,7 +63,10 @@ describe('#renderPageWeather', () => {
     // and major page sections exist
     // current section
     cy.contains('Current Weather').should('exist');
-    cy.findByTestId('subtitle-dmt').should('have.text', 'Mon 6 Jun 5:19 PM');
+    cy.findByTestId('subtitle-current').should(
+      'have.text',
+      'Mon 6 Jun 5:19 PM'
+    );
     cy.findByTestId('current-top-left')
       .should('have.length', 1)
       .within(() => {
@@ -78,6 +81,10 @@ describe('#renderPageWeather', () => {
 
     // daily section
     cy.contains('Forecast').should('exist');
+
+    // If the HTML contains a non-breaking space entity &nbsp;
+    // use the jQuery:contains selector and the Unicode value \u00a0
+    cy.findByTestId('subtitle-forecast').filter(':contains("\u00a0")');
     cy.findAllByTestId('daily-card')
       .should('have.length', 7)
       .eq(0)
@@ -104,10 +111,7 @@ describe('#renderPageWeather', () => {
     // hourly section
     cy.contains('Hourly Weather').should('exist');
     cy.contains('America/New_York').should('exist');
-    cy.findByTestId('subtitle-timezone').should(
-      'have.text',
-      'America/New_York'
-    );
+    cy.findByTestId('subtitle-hourly').should('have.text', 'America/New_York');
     cy.findAllByTestId('hour-row')
       .should('have.length', 24)
       .eq(0)
