@@ -28,11 +28,11 @@ export function useWeatherAPI() {
 
 // 3. define the provider and delegate value props to the contexts
 export default function WeatherProvider({ children }) {
+  console.log('WeatherProvider rendered!');
   const options = usePrefsData();
   const [{ weatherData, isLoading, isError }, setPlaces] =
     useJawaWeather(options);
 
-  console.log('WeatherProvider rendered!');
   console.log('WeatherProvider weatherData: ', weatherData);
 
   // blur page when loading

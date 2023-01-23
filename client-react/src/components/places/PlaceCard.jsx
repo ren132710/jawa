@@ -14,8 +14,8 @@ import { useUtils } from '@/contexts/UtilsContext';
  */
 
 export default function Place({ coordinates, current, handleClick }) {
-  const { getIconUrl } = useUtils();
   console.log('Place rendered!');
+  const { getIconUrl } = useUtils();
 
   return (
     <div

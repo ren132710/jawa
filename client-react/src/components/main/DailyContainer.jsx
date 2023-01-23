@@ -3,8 +3,8 @@ import DailyCard from '@/components/main/DailyCard';
 import styles from '@/styles/main/DailyContainer.module.css';
 
 export default function DailyContainer({ daily }) {
-  if (!daily.length) return;
   console.log('Daily container rendered!');
+  if (!daily.length) return;
 
   return (
     <div className={styles.dailyContainer} data-testid="daily-container">

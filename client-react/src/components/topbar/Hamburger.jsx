@@ -3,10 +3,10 @@ import Menu from '@/components/topbar/Menu';
 import styles from '@/styles/topbar/Hamburger.module.css';
 
 export default function Hamburger() {
+  console.log('Hamburger rendered!');
   const [showMenu, setShowMenu] = useState(false);
   const [showComponent, setShowComponent] = useState(false);
   const delay = 200;
-  console.log('Hamburger rendered!');
 
   useEffect(() => {
     let timeoutId;

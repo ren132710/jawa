@@ -1,6 +1,7 @@
 import styles from '@/styles/places/Search.module.css';
 
 export default function Search() {
+  console.log('Search rendered!');
   /**
    * TODO: should Search refresh all weather data?
    *  - present weather data for a searched place, do not add to Places state

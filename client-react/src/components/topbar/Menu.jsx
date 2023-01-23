@@ -15,9 +15,8 @@ function handleClick(value) {
   console.log('clicked', value);
 }
 export default function Menu({ showMenu, delay, onClose }) {
-  const [applyTransition, setApplyTransition] = useState(false);
-
   console.log('Menu rendered!');
+  const [applyTransition, setApplyTransition] = useState(false);
 
   useEffect(() => {
     if (!showMenu) return;

@@ -5,9 +5,9 @@ import { usePrefsData } from '@/contexts/PrefsContext';
 import { useUtils } from '@/contexts/UtilsContext';
 
 export default function HourlyRow({ timezone, hour }) {
+  console.log('HourlyRow rendered!');
   const { units, lang } = usePrefsData();
   const { getUnitOfMeasure, getTranslation, df, getIconUrl } = useUtils();
-  console.log('HourlyRow rendered!');
 
   return (
     <div className={styles.hourRow} data-testid="hour-row">

@@ -13,10 +13,9 @@ function handleClick(value) {
 }
 
 export default function PlacesContainer() {
+  console.log('Places container rendered!');
   const { weatherData, isError } = useWeatherData();
   if (!weatherData.length) return;
-
-  console.log('Places container rendered!');
 
   return (
     <div className={styles.placesContainer} data-testid="places-container">

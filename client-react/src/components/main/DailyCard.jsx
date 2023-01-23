@@ -5,10 +5,9 @@ import { useUtils } from '@/contexts/UtilsContext';
 import { usePrefsData } from '@/contexts/PrefsContext';
 
 export default function DailyCard({ day }) {
+  console.log('DailyCard rendered!');
   const { units, lang } = usePrefsData();
   const { getUnitOfMeasure, getTranslation, df, getIconUrl } = useUtils();
-
-  console.log('DailyCard rendered!');
 
   return (
     <div className={styles.dailyCard} data-testid="daily-card">

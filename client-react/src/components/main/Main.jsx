@@ -6,8 +6,8 @@ import styles from '@/styles/main/Main.module.css';
 import { useWeatherData } from '@/contexts/WeatherContext';
 
 export default function Main() {
-  const { weatherData, isLoading, isError } = useWeatherData();
   console.log('Main rendered!');
+  const { weatherData, isLoading, isError } = useWeatherData();
 
   // wait until the weather data is loaded
   if (isError || isLoading) return;
@@ -30,7 +30,7 @@ export default function Main() {
           titleTranslationId={2}
           timestamp={weather.current.timestamp}
           timezone={weather.coordinates.timezone}
-          subtitleTestId="subtitle-dmt"
+          subtitleTestId="subtitle-current"
         />
         <CurrentContainer
           coordinates={weather.coordinates}
@@ -43,7 +43,7 @@ export default function Main() {
           titleTranslationId={3}
           timestamp={weather.current.timestamp}
           timezone={weather.coordinates.timezone}
-          subtitleTestId="subtitle-none"
+          subtitleTestId="subtitle-forecast"
         />
         <DailyContainer daily={weather.daily} />
       </div>
@@ -53,7 +53,7 @@ export default function Main() {
           titleTranslationId={4}
           timestamp={weather.current.timestamp}
           timezone={weather.coordinates.timezone}
-          subtitleTestId="subtitle-timezone"
+          subtitleTestId="subtitle-hourly"
         />
         <HourlyContainer
           coordinates={weather.coordinates}

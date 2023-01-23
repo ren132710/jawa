@@ -4,9 +4,8 @@ import Hamburger from '@/components/topbar/Hamburger';
 import styles from '@/styles/topbar/Topbar.module.css';
 
 export default function Topbar() {
-  const topbarRef = useRef(null);
-
   console.log('TopBar rendered!');
+  const topbarRef = useRef(null);
 
   useEffect(() => {
     const handleTopbarActive = () => {
