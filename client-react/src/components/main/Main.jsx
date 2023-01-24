@@ -7,20 +7,33 @@ import { useWeatherData } from '@/contexts/WeatherContext';
 
 export default function Main() {
   console.log('Main rendered!');
-  const { weatherData, isLoading, isError } = useWeatherData();
+  const {
+    selectedWeatherId,
+    placesWeatherData,
+    searchWeatherData,
+    isLoading,
+    isError,
+  } = useWeatherData();
+
+  console.log('selectedWeatherId: ', selectedWeatherId);
+  console.log('placesWeatherData: ', placesWeatherData);
+  console.log('searchWeatherData: ', searchWeatherData);
+  console.log('isLoading: ', isLoading);
+  console.log('isError: ', isError);
 
   // wait until the weather data is loaded
   if (isError || isLoading) return;
-  if (!weatherData.length) return;
+  if (!placesWeatherData.length && !searchWeatherData.length) return;
 
-  // TODO: render weather for selected place, search
-  const weather = weatherData[0];
+  // TODO: use WeatherContext isSearch flag instead??
+  const weather =
+    selectedWeatherId.belongsTo === 'places'
+      ? placesWeatherData.find(
+          (place) => place.coordinates.id === selectedWeatherId.id
+        )
+      : searchWeatherData[0];
 
-  //   titleTranslationId,
-  // timeUnit,
-  // timestamp,
-  // timezone,
-  // subtitleTestHandle,
+  console.log('weather from Main: ', weather);
 
   return (
     <main className={styles.main}>
