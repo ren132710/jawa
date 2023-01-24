@@ -11,11 +11,19 @@ export default function PlaceDeleteButton({
 }) {
   console.log('DeletePlaceButton rendered!');
 
-  const changeStyleOnPointerEnter = useCallback((e) => {
+  // const changeStyleOnPointerEnter = useCallback((e) => {
+  //   e.target.style.boxShadow = '0 0 5px 0 hsl(0, 0%, 100%)';
+  // }, []);
+
+  // const changeStyleOnPointerLeave = useCallback((e) => {
+  //   e.target.style.boxShadow = 'none';
+  // }, []);
+
+  const changeStyleOnMouseEnter = useCallback((e) => {
     e.target.style.boxShadow = '0 0 5px 0 hsl(0, 0%, 100%)';
   }, []);
 
-  const changeStyleOnPointerLeave = useCallback((e) => {
+  const changeStyleOnMouseLeave = useCallback((e) => {
     e.target.style.boxShadow = 'none';
   }, []);
 
@@ -41,8 +49,10 @@ export default function PlaceDeleteButton({
       aria-label={ariaLabel}
       data-id={dataId}
       data-testid={testId}
-      onPointerEnter={changeStyleOnPointerEnter}
-      onPointerLeave={changeStyleOnPointerLeave}
+      // onPointerEnter={changeStyleOnPointerEnter}
+      // onPointerLeave={changeStyleOnPointerLeave}
+      onMouseEnter={changeStyleOnMouseEnter}
+      onMouseLeave={changeStyleOnMouseLeave}
       onFocus={changeStyleOnFocus}
     >
       {/* TODO: use raw SVG */}
