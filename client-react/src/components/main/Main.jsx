@@ -19,7 +19,7 @@ export default function Main() {
   if (isError || isLoading) return;
   if (!placesWeatherData.length && !searchWeatherData.length) return;
 
-  // TODO: use WeatherContext isSearch flag instead??
+  // TODO: use WeatherContext isSearch flag instead?? Try after Search implementation
   const weather =
     selectedWeather.belongsTo === 'places'
       ? placesWeatherData.find(
