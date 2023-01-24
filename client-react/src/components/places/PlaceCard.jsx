@@ -6,13 +6,6 @@ import PlaceDeleteButton from '@/components/places/PlaceDeleteButton';
 import styles from '@/styles/places/PlaceCard.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
 
-/**
- * TODO:
- *  - use DuoLingo delete icon and styling
- *  - show delete button on hover, hide on mouseout
- *  - test tabbing sequence
- */
-
 export default function PlaceCard({
   coordinates,
   current,
