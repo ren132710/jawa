@@ -9,8 +9,6 @@ import { useUtils } from '@/contexts/UtilsContext';
 /**
  * TODO:
  *  - use DuoLingo delete icon and styling
- *  - figure out delete rules
- *  - break out delete button into its own component
  *  - show delete button on hover, hide on mouseout
  *  - test tabbing sequence
  */
@@ -22,7 +20,6 @@ export default function PlaceCard({
   onKeyDown,
   onDelete,
   placesLength,
-  // isPlaceDeleteButtonHidden,
 }) {
   console.log('Place rendered!');
   const [isHovered, setIsHovered] = useState(false);
@@ -42,10 +39,9 @@ export default function PlaceCard({
       data-lat={coordinates.lat}
       data-long={coordinates.long}
       data-testid="place-card"
-      onPointerEnter={() => setIsHovered(true)}
-      onPointerLeave={() => setIsHovered(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* {isPlaceDeleteButtonHidden ? null : isHovered ? ( */}
       {placesLength === 1 ? null : isHovered ? (
         <PlaceDeleteButton
           onDelete={onDelete}
@@ -98,5 +94,4 @@ PlaceCard.propTypes = {
   onKeyDown: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   placesLength: PropTypes.number.isRequired,
-  // isPlaceDeleteButtonHidden: PropTypes.bool.isRequired,
 };
