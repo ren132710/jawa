@@ -25,6 +25,10 @@ module.exports = {
     'no-use-before-define': ['error', { functions: false }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'import/no-unresolved': 'off', // getting false positives with vite and @ alias
+    'no-unused-expressions': [
+      'warn',
+      { allowShortCircuit: true, allowTernary: true },
+    ],
     'import/extensions': [
       'error',
       'never',
