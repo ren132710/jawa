@@ -8,18 +8,12 @@ import { useWeatherData } from '@/contexts/WeatherContext';
 export default function Main() {
   console.log('Main rendered!');
   const {
-    selectedWeatherId,
+    selectedWeather,
     placesWeatherData,
     searchWeatherData,
     isLoading,
     isError,
   } = useWeatherData();
-
-  console.log('selectedWeatherId: ', selectedWeatherId);
-  console.log('placesWeatherData: ', placesWeatherData);
-  console.log('searchWeatherData: ', searchWeatherData);
-  console.log('isLoading: ', isLoading);
-  console.log('isError: ', isError);
 
   // wait until the weather data is loaded
   if (isError || isLoading) return;
@@ -27,9 +21,9 @@ export default function Main() {
 
   // TODO: use WeatherContext isSearch flag instead??
   const weather =
-    selectedWeatherId.belongsTo === 'places'
+    selectedWeather.belongsTo === 'places'
       ? placesWeatherData.find(
-          (place) => place.coordinates.id === selectedWeatherId.id
+          (place) => place.coordinates.id === selectedWeather.id
         )
       : searchWeatherData[0];
 

@@ -1,5 +1,8 @@
+/* eslint-disable no-nested-ternary */
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import WeatherIcon from '@/components/WeatherIcon';
+import PlaceDeleteButton from '@/components/places/PlaceDeleteButton';
 import styles from '@/styles/places/PlaceCard.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
 
@@ -12,14 +15,17 @@ import { useUtils } from '@/contexts/UtilsContext';
  *  - test tabbing sequence
  */
 
-export default function Place({
+export default function PlaceCard({
   coordinates,
   current,
   onClick,
   onKeyDown,
   onDelete,
+  placesLength,
+  // isPlaceDeleteButtonHidden,
 }) {
   console.log('Place rendered!');
+  const [isHovered, setIsHovered] = useState(false);
   const { getIconUrl } = useUtils();
 
   return (
@@ -36,18 +42,18 @@ export default function Place({
       data-lat={coordinates.lat}
       data-long={coordinates.long}
       data-testid="place-card"
+      onPointerEnter={() => setIsHovered(true)}
+      onPointerLeave={() => setIsHovered(false)}
     >
-      <button
-        type="button"
-        id="btnDeletePlace"
-        className={styles.placeBtnDelete}
-        aria-label="tap to delete place"
-        tabIndex="-1"
-        onClick={onDelete}
-        // hidden
-      >
-        {/* try &times; in lieu of '✕' ✕ */}✕
-      </button>
+      {/* {isPlaceDeleteButtonHidden ? null : isHovered ? ( */}
+      {placesLength === 1 ? null : isHovered ? (
+        <PlaceDeleteButton
+          onDelete={onDelete}
+          ariaLabel="delete place from favorites"
+          dataId={coordinates.id}
+          testId="place-delete-button"
+        />
+      ) : null}
       <WeatherIcon
         weatherIcon={current.icon}
         weatherIconSize="small"
@@ -75,7 +81,7 @@ export default function Place({
   );
 }
 
-Place.propTypes = {
+PlaceCard.propTypes = {
   coordinates: PropTypes.shape({
     id: PropTypes.string,
     location: PropTypes.string,
@@ -91,4 +97,6 @@ Place.propTypes = {
   onClick: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  placesLength: PropTypes.number.isRequired,
+  // isPlaceDeleteButtonHidden: PropTypes.bool.isRequired,
 };
