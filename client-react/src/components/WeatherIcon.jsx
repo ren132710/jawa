@@ -5,9 +5,10 @@ export default function WeatherIcon({
   weatherIconSize,
   weatherDescription,
   getIconUrl,
-  testId,
+  customStyles,
   imgWidth,
   imgHeight,
+  testId,
 }) {
   return (
     <img
@@ -16,7 +17,7 @@ export default function WeatherIcon({
       width={imgWidth}
       height={imgHeight}
       alt={weatherDescription}
-      // add a handle for cypress testing
+      style={customStyles}
       data-testid={testId}
     />
   );
@@ -26,6 +27,7 @@ WeatherIcon.defaultProps = {
   weatherIconSize: 'small',
   imgWidth: '50',
   imgHeight: '50',
+  customStyles: {},
 };
 
 WeatherIcon.propTypes = {
@@ -33,7 +35,9 @@ WeatherIcon.propTypes = {
   weatherIconSize: PropTypes.string,
   weatherDescription: PropTypes.string.isRequired,
   getIconUrl: PropTypes.func.isRequired,
-  testId: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  customStyles: PropTypes.object,
   imgWidth: PropTypes.string,
   imgHeight: PropTypes.string,
+  testId: PropTypes.string.isRequired,
 };
