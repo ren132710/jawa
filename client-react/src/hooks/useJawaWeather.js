@@ -1,25 +1,17 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '@/constants/constants';
 
 const TIMEOUT = import.meta.env.VITE_AXIOS_TIMEOUT;
 const WEATHER_SERVER = import.meta.env.VITE_JAWA_SERVER;
 const URL = `https://${WEATHER_SERVER}/weather`;
 console.log('URL:', URL);
 
-// if localStorage, otherwise use default places
-const getPlaces = () => {
-  const places = localStorage.getItem(PLACES_STORAGE_KEY);
-  return places ? JSON.parse(places) : DEFAULT_PLACES;
-};
-
 export default function useJawaWeather(options) {
   console.log('useJawaHook called!');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [places, setPlaces] = useState(getPlaces());
   const [weatherData, setWeatherData] = useState([]);
-  const { units, lang } = options;
+  const { places, units, lang } = options;
 
   useEffect(() => {
     let ignore = false;
@@ -43,11 +35,6 @@ export default function useJawaWeather(options) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [places]);
 
-  // keep localStorage in sync with state
-  useEffect(() => {
-    localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places));
-  }, [places]);
-
   /**
    * The Jawa weather server uses the OpenWeather API
    * @param {string} lat: latitude, required by OpenWeather
@@ -60,11 +47,6 @@ export default function useJawaWeather(options) {
    *   - pass to server so server can include in the response object
    * @param {string} location:
    *   - client defined
-   *   - pass to server so server can include in the response object
-   * TODO: Add to server
-   * @param {boolean} favorite:
-   *   - client defined
-   *   - used for filtering places before saving to localStorage
    *   - pass to server so server can include in the response object
    */
 
@@ -79,7 +61,6 @@ export default function useJawaWeather(options) {
         lang,
         id: place.id,
         location: place.location,
-        favorite: place.favorite,
       };
       const promise = getWeather(params);
       promises.push(promise);
@@ -104,5 +85,5 @@ export default function useJawaWeather(options) {
     }
   }
 
-  return [{ weatherData, isLoading, isError }, setPlaces];
+  return [weatherData, isLoading, isError];
 }
