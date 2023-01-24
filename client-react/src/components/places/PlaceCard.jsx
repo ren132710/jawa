@@ -5,25 +5,31 @@ import { useUtils } from '@/contexts/UtilsContext';
 
 /**
  * TODO:
- *  - where should handleClick be defined?
- *  - implement handleClick -> update main weather data
- *  - onkeydown, execute only for enter key, key: "Enter", keyCode: 13
+ *  - use DuoLingo delete icon and styling
+ *  - figure out delete rules
  *  - break out delete button into its own component
- *  - test/fix iOS double tap issue
+ *  - show delete button on hover, hide on mouseout
  *  - test tabbing sequence
  */
 
-export default function Place({ coordinates, current, handleClick }) {
+export default function Place({
+  coordinates,
+  current,
+  onClick,
+  onKeyDown,
+  onDelete,
+}) {
   console.log('Place rendered!');
   const { getIconUrl } = useUtils();
 
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       className={styles.placeCard}
       role="button"
       tabIndex={0}
-      onClick={(e) => handleClick(e)}
-      onKeyDown={(e) => handleClick(e)}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
       aria-label="tap to view weather"
       data-id={coordinates.id}
       data-location={coordinates.location}
@@ -35,9 +41,10 @@ export default function Place({ coordinates, current, handleClick }) {
         type="button"
         id="btnDeletePlace"
         className={styles.placeBtnDelete}
+        aria-label="tap to delete place"
         tabIndex="-1"
-        onClick={() => handleClick('delete place clicked')}
-        hidden
+        onClick={onDelete}
+        // hidden
       >
         {/* try &times; in lieu of '✕' ✕ */}✕
       </button>
@@ -46,9 +53,10 @@ export default function Place({ coordinates, current, handleClick }) {
         weatherIconSize="small"
         weatherDescription={current.description}
         getIconUrl={getIconUrl}
-        testId="place-weather-icon"
+        customStyles={{ pointerEvents: 'none' }}
         imgWidth="50"
         imgHeight="50"
+        testId="place-weather-icon"
       />
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
@@ -80,5 +88,7 @@ Place.propTypes = {
     low: PropTypes.number,
     icon: PropTypes.string,
   }).isRequired,
-  handleClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onKeyDown: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
