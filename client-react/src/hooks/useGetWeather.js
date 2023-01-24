@@ -6,7 +6,7 @@ const WEATHER_SERVER = import.meta.env.VITE_JAWA_SERVER;
 const URL = `https://${WEATHER_SERVER}/weather`;
 console.log('URL:', URL);
 
-export default function useJawaWeather(options) {
+export default function useGetWeather(options) {
   console.log('useJawaHook called!');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);

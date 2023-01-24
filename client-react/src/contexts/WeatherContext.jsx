@@ -1,6 +1,6 @@
 import React, { useState, useContext, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useJawaWeather from '@/hooks/useJawaWeather';
+import useGetWeather from '@/hooks/useGetWeather';
 import { usePrefsData } from '@/contexts/PrefsContext';
 import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '@/constants/constants';
 
@@ -37,17 +37,17 @@ export default function WeatherProvider({ children }) {
   const [isSearch, setIsSearch] = useState(false);
   const [search, setSearch] = useState([]);
   const [searchWeatherData, setSearchWeatherData] = useState([]);
-  const [selectedWeatherId, setSelectedWeatherId] = useState({
+  const [selectedWeather, setSelectedWeather] = useState({
     id: places[0].id,
     belongsTo: 'places',
   });
-  console.log('WeatherProvider: selectedWeatherId: ', selectedWeatherId);
+  console.log('WeatherProvider: selectedWeather: ', selectedWeather);
 
   const { units, lang } = usePrefsData();
 
   // to minimize API calls, only fetch places weather when places change, not for search
   const options = isSearch ? { search, units, lang } : { places, units, lang };
-  const [weatherData, isLoading, isError] = useJawaWeather(options);
+  const [weatherData, isLoading, isError] = useGetWeather(options);
 
   // blur page when loading
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function WeatherProvider({ children }) {
       isSearch,
       search,
       searchWeatherData,
-      selectedWeatherId,
+      selectedWeather,
       isLoading,
       isError,
     };
@@ -91,14 +91,14 @@ export default function WeatherProvider({ children }) {
     isSearch,
     search,
     searchWeatherData,
-    selectedWeatherId,
+    selectedWeather,
     isLoading,
     isError,
   ]);
 
   const memoApiContext = useMemo(() => {
-    return { setPlaces, setIsSearch, setSearch, setSelectedWeatherId };
-  }, [setPlaces, setIsSearch, setSearch, setSelectedWeatherId]);
+    return { setPlaces, setIsSearch, setSearch, setSelectedWeather };
+  }, [setPlaces, setIsSearch, setSearch, setSelectedWeather]);
 
   return (
     <WeatherDataContext.Provider value={memoDataContext}>
