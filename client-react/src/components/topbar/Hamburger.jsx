@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
-import Menu from '@/components/topbar/Menu';
+import { useState, useEffect, lazy } from 'react';
 import styles from '@/styles/topbar/Hamburger.module.css';
+
+// wait to fetch Menu until it's needed
+const Menu = lazy(() => import('@/components/topbar/Menu'));
 
 export default function Hamburger() {
   console.log('Hamburger rendered!');
