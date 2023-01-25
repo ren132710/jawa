@@ -1,10 +1,14 @@
 /* eslint-disable no-nested-ternary */
-import { useState } from 'react';
+import { useState, lazy } from 'react';
 import PropTypes from 'prop-types';
 import WeatherIcon from '@/components/WeatherIcon';
-import PlaceDeleteButton from '@/components/places/PlaceDeleteButton';
 import styles from '@/styles/places/PlaceCard.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
+
+// wait to fetch PlaceDeleteButton until it's needed
+const PlaceDeleteButton = lazy(() =>
+  import('@/components/places/PlaceDeleteButton')
+);
 
 export default function PlaceCard({
   coordinates,
