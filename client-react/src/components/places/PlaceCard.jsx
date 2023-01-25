@@ -44,7 +44,7 @@ export default function PlaceCard({
         <PlaceDeleteButton
           onDelete={onDelete}
           ariaLabel="tap to delete place from favorites"
-          dataId={coordinates.id}
+          placeId={coordinates.id}
           testId="place-delete-button"
         />
       ) : null}

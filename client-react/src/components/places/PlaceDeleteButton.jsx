@@ -5,7 +5,7 @@ import styles from '@/styles/places/PlaceDeleteButton.module.css';
 export default function PlaceDeleteButton({
   onDelete,
   ariaLabel,
-  dataId,
+  placeId,
   testId,
 }) {
   console.log('DeletePlaceButton rendered!');
@@ -36,7 +36,7 @@ export default function PlaceDeleteButton({
       onMouseLeave={changeStyleOnMouseLeave}
       onFocus={changeStyleOnFocus}
       aria-label={ariaLabel}
-      data-id={dataId}
+      data-id={placeId}
       data-testid={testId}
     >
       <svg
@@ -58,6 +58,6 @@ PlaceDeleteButton.defaultProps = {
 PlaceDeleteButton.propTypes = {
   onDelete: PropTypes.func.isRequired,
   ariaLabel: PropTypes.string,
-  dataId: PropTypes.string.isRequired,
+  placeId: PropTypes.string.isRequired,
   testId: PropTypes.string.isRequired,
 };
