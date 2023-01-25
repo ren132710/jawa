@@ -13,6 +13,8 @@ export default function useGetWeather(options) {
   const [weatherData, setWeatherData] = useState([]);
   const { places, units, lang } = options;
 
+  // TODO: Also need to run useEffect when units or lang changes
+
   useEffect(() => {
     let ignore = false;
 

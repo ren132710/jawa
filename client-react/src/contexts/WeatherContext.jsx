@@ -43,6 +43,7 @@ export default function WeatherProvider({ children }) {
   });
   console.log('WeatherProvider: selectedWeather: ', selectedWeather);
 
+  // TODO: Also need to update weather when units or lang changes
   const { units, lang } = usePrefsData();
 
   // to minimize API calls, only fetch places weather when places change, not for search
