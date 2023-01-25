@@ -18,8 +18,11 @@
   z-index: 10;
 }
 
-.btn-image-delete {
+.btn-svg-delete {
   height: 8px;
   width: 8px;
+  stroke: hsl(0, 0%, 69%);
+  stroke-width: 3;
+  stroke-linecap: round;
   pointer-events: none;
 }

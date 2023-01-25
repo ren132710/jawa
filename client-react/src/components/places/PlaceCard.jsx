@@ -19,7 +19,6 @@ export default function PlaceCard({
   const { getIconUrl } = useUtils();
 
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       className={styles.placeCard}
       role="button"
@@ -35,10 +34,12 @@ export default function PlaceCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* do not show delete place button when there is only one place */}
+      {/* otherwise, show delete button with place is hovered or has focus */}
       {placesLength === 1 ? null : isHovered ? (
         <PlaceDeleteButton
           onDelete={onDelete}
-          ariaLabel="delete place from favorites"
+          ariaLabel="tap to delete place from favorites"
           dataId={coordinates.id}
           testId="place-delete-button"
         />
