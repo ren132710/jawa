@@ -11,7 +11,7 @@ export default function PlaceDeleteButton({
   console.log('DeletePlaceButton rendered!');
 
   const changeStyleOnMouseEnter = useCallback((e) => {
-    e.target.style.boxShadow = '0 0 5px 0 hsl(0, 0%, 100%)';
+    e.target.style.boxShadow = '0 0 5px 0 var(--white)';
   }, []);
 
   const changeStyleOnMouseLeave = useCallback((e) => {
@@ -19,8 +19,8 @@ export default function PlaceDeleteButton({
   }, []);
 
   const changeStyleOnFocus = useCallback((e) => {
-    e.target.style.background = 'hsl(200, 100%, 20%)';
-    e.target.style.boxShadow = '0 0 5px 0 hsl(0, 0%, 100%)';
+    e.target.style.background = 'var(--blue-20)';
+    e.target.style.boxShadow = '0 0 5px 0 var(--white)';
   }, []);
 
   return (
