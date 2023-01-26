@@ -12,7 +12,7 @@ const UtilsContext = React.createContext();
 export function useUtils() {
   const context = useContext(UtilsContext);
   if (context === undefined) {
-    throw new Error('useUtils is being called outside of its Provider');
+    throw new Error('useUtils was called outside of its Provider');
   }
   return context;
 }

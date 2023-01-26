@@ -12,7 +12,7 @@ const PrefsAPIContext = React.createContext();
 export function usePrefsData() {
   const context = useContext(PrefsDataContext);
   if (context === undefined) {
-    throw new Error('usePrefsData is being called outside of its Provider');
+    throw new Error('usePrefsData was called outside of its Provider');
   }
   return context;
 }
@@ -20,7 +20,7 @@ export function usePrefsData() {
 export function usePrefsAPI() {
   const context = useContext(PrefsAPIContext);
   if (context === undefined) {
-    throw new Error('usePrefsAPI is being called outside of its Provider');
+    throw new Error('usePrefsAPI was called outside of its Provider');
   }
   return context;
 }

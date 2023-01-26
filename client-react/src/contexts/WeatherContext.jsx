@@ -26,7 +26,7 @@ export function useWeatherData() {
 export function useWeatherAPI() {
   const context = useContext(WeatherAPIContext);
   if (context === undefined) {
-    throw new Error('useWeatherAPI is being called outside of its Provider');
+    throw new Error('useWeatherAPI was called outside of its Provider');
   }
   return context;
 }
@@ -37,16 +37,11 @@ export default function WeatherProvider({ children }) {
   const [isSearch, setIsSearch] = useState(false);
   const [search, setSearch] = useState([]);
   const [searchWeatherData, setSearchWeatherData] = useState([]);
-  const [selectedWeather, setSelectedWeather] = useState({
-    id: places[0].id,
-    belongsTo: 'places',
-  });
-  console.log('WeatherProvider: selectedWeather: ', selectedWeather);
 
-  // TODO: Also need to update weather when units or lang changes
   const { units, lang } = usePrefsData();
 
   // to minimize API calls, only fetch places weather when places change, not for search
+  // TODO: set id: 'search' for search query
   const options = isSearch ? { search, units, lang } : { places, units, lang };
   const [weatherData, isLoading, isError] = useGetWeather(options);
 
@@ -61,6 +56,7 @@ export default function WeatherProvider({ children }) {
 
   // update state when weatherData changes
   useEffect(() => {
+    console.log('WeatherProvider useEffect weatherData: ', weatherData);
     if (isSearch) {
       setSearchWeatherData(weatherData);
       // TODO: set isSearch to false here?
@@ -82,7 +78,6 @@ export default function WeatherProvider({ children }) {
       isSearch,
       search,
       searchWeatherData,
-      selectedWeather,
       isLoading,
       isError,
     };
@@ -92,14 +87,13 @@ export default function WeatherProvider({ children }) {
     isSearch,
     search,
     searchWeatherData,
-    selectedWeather,
     isLoading,
     isError,
   ]);
 
   const memoApiContext = useMemo(() => {
-    return { setPlaces, setIsSearch, setSearch, setSelectedWeather };
-  }, [setPlaces, setIsSearch, setSearch, setSelectedWeather]);
+    return { setPlaces, setIsSearch, setSearch };
+  }, [setPlaces, setIsSearch, setSearch]);
 
   return (
     <WeatherDataContext.Provider value={memoDataContext}>
