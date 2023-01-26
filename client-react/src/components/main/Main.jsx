@@ -26,8 +26,8 @@ export default function Main() {
     )
   )
     return;
-  if (selectedWeather.search === true && !searchWeatherData.length) return;
   if (places.length !== placesWeatherData.length) return;
+  if (selectedWeather.search === true && !searchWeatherData.length) return;
 
   // now we can render
   const weather =
