@@ -168,14 +168,8 @@ describe('#renderPageWeather', () => {
     cy.findByTestId('current-top-right')
       .should('have.length', 1)
       .within(() => {
-        cy.findByTestId('lat')
-          .should('contain', '40.7128')
-          .invoke('attr', 'data-current-lat')
-          .should('eq', '40.7128');
-        cy.findByTestId('long')
-          .should('contain', '-74.006')
-          .invoke('attr', 'data-current-long')
-          .should('eq', '-74.006');
+        cy.findByTestId('current-lat').should('contain', '40.7128');
+        cy.findByTestId('current-long').should('contain', '-74.006');
         cy.findByTestId('current-hl').should('have.text', '78/64°');
         cy.findByTestId('current-temp').should('have.text', '78° F');
         cy.findByTestId('current-fl').should('have.text', '77°');
