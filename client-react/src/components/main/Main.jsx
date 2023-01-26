@@ -4,30 +4,37 @@ import DailyContainer from '@/components/main/DailyContainer';
 import HourlyContainer from '@/components/main/HourlyContainer';
 import styles from '@/styles/main/Main.module.css';
 import { useWeatherData } from '@/contexts/WeatherContext';
+import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
 
 export default function Main() {
   console.log('Main rendered!');
-  const {
-    selectedWeather,
-    placesWeatherData,
-    searchWeatherData,
-    isLoading,
-    isError,
-  } = useWeatherData();
+  const { placesWeatherData, searchWeatherData, isLoading, isError } =
+    useWeatherData();
+  const { selectedWeather } = useSelectedWeather();
 
-  // wait until the weather data is loaded
+  console.log('Main:searchWeatherData: ', searchWeatherData);
+  console.log('Main:placesWeatherData: ', placesWeatherData);
+
+  // prevent rendering until weather data is loaded
   if (isError || isLoading) return;
   if (!placesWeatherData.length && !searchWeatherData.length) return;
+  if (selectedWeather.search === false && !placesWeatherData.length) return;
+  if (
+    selectedWeather.search === false &&
+    !placesWeatherData.find(
+      (place) => place.coordinates.id === selectedWeather.id
+    )
+  )
+    return;
+  if (selectedWeather.search === true && !searchWeatherData.length) return;
 
-  // TODO: use WeatherContext isSearch flag instead?? Try after Search implementation
+  // now we can render
   const weather =
-    selectedWeather.belongsTo === 'places'
+    selectedWeather.search === false
       ? placesWeatherData.find(
           (place) => place.coordinates.id === selectedWeather.id
         )
       : searchWeatherData[0];
-
-  console.log('weather from Main: ', weather);
 
   return (
     <main className={styles.main}>

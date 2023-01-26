@@ -13,9 +13,8 @@ const PlaceDeleteButton = lazy(() =>
 export default function PlaceCard({
   coordinates,
   current,
-  onClick,
-  onKeyDown,
-  onDelete,
+  handleViewPlaceWeather,
+  handleDeletePlace,
   placesLength,
 }) {
   console.log('Place rendered!');
@@ -27,8 +26,8 @@ export default function PlaceCard({
       className={styles.placeCard}
       role="button"
       tabIndex={0}
-      onClick={onClick}
-      onKeyDown={onKeyDown}
+      onClick={handleViewPlaceWeather}
+      onKeyDown={handleViewPlaceWeather}
       aria-label="tap to view weather"
       data-id={coordinates.id}
       data-location={coordinates.location}
@@ -42,10 +41,8 @@ export default function PlaceCard({
       {/* otherwise, show delete button with place is hovered or has focus */}
       {placesLength === 1 ? null : isHovered ? (
         <PlaceDeleteButton
-          onDelete={onDelete}
-          ariaLabel="tap to delete place from favorites"
+          onDelete={handleDeletePlace}
           placeId={coordinates.id}
-          testId="place-delete-button"
         />
       ) : null}
       <WeatherIcon
@@ -88,8 +85,7 @@ PlaceCard.propTypes = {
     low: PropTypes.number,
     icon: PropTypes.string,
   }).isRequired,
-  onClick: PropTypes.func.isRequired,
-  onKeyDown: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  handleViewPlaceWeather: PropTypes.func.isRequired,
+  handleDeletePlace: PropTypes.func.isRequired,
   placesLength: PropTypes.number.isRequired,
 };

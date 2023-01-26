@@ -1,9 +1,17 @@
 import PropTypes from 'prop-types';
+import NewPlaceButton from '@/components/main/NewPlaceButton';
 import WeatherIcon from '@/components/WeatherIcon';
 import styles from '@/styles/main/CurrentTopLeft.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
 
-export default function CurrentTopLeft({ location, id, icon, description }) {
+export default function CurrentTopLeft({
+  id,
+  location,
+  lat,
+  long,
+  icon,
+  description,
+}) {
   console.log('CurrentTopLeft rendered!');
   const { getIconUrl } = useUtils();
 
@@ -12,10 +20,14 @@ export default function CurrentTopLeft({ location, id, icon, description }) {
       <div
         className={styles.currentLocation}
         data-current-id={id}
+        data-current-location={location}
+        data-current-lat={lat}
+        data-current-long={long}
         data-testid="current-location"
       >
         {location}
       </div>
+      <NewPlaceButton location={location} lat={lat} long={long} />
       <WeatherIcon
         weatherIcon={icon}
         weatherIconSize="large"
@@ -30,8 +42,10 @@ export default function CurrentTopLeft({ location, id, icon, description }) {
 }
 
 CurrentTopLeft.propTypes = {
-  location: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  lat: PropTypes.number.isRequired,
+  long: PropTypes.number.isRequired,
   icon: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
 };

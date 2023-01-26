@@ -2,36 +2,28 @@ import { useCallback } from 'react';
 import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
 import { useWeatherData, useWeatherAPI } from '@/contexts/WeatherContext';
+import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
 import { ERROR_MESSAGE } from '@/constants/constants';
 
 export default function PlacesContainer() {
   console.log('Places container rendered!');
-  const { places, placesWeatherData, selectedWeather, isError } =
-    useWeatherData();
-  const { setSelectedWeather, setPlaces } = useWeatherAPI();
-  console.log('places: ', places);
+  const { places, placesWeatherData, isLoading, isError } = useWeatherData();
+  const { setPlaces } = useWeatherAPI();
+  const { selectedWeather, setSelectedWeather } = useSelectedWeather();
 
-  const handleClick = useCallback(
+  const handleViewPlaceWeather = useCallback(
     (e) => {
-      setSelectedWeather({ id: e.target.dataset.id, belongsTo: 'places' });
-    },
-    [setSelectedWeather]
-  );
-
-  const handleKeyDown = useCallback(
-    (e) => {
-      if (!e.key === 'Enter') return;
-      if (e.key === 'Enter') {
-        setSelectedWeather({ id: e.target.dataset.id, belongsTo: 'places' });
-      }
+      // unless click or enter key, return
+      if (!(e.type === 'click' || e.key === 'Enter')) return;
+      setSelectedWeather({ id: e.target.dataset.id, search: false });
     },
     [setSelectedWeather]
   );
 
   // Note: delete button is hidden when there is only one place
-  const handleDelete = useCallback(
+  const handleDeletePlace = useCallback(
     (e) => {
-      // prevent delete click event from triggering handleClick
+      // prevent delete click event from triggering handleViewPlaceWeather
       e.stopPropagation();
 
       // if selectedWeather is the deleted place, shift selectedWeather appropriately
@@ -42,12 +34,12 @@ export default function PlacesContainer() {
         if (index === 0) {
           setSelectedWeather({
             id: places[1].id,
-            belongsTo: 'places',
+            search: false,
           });
         } else {
           setSelectedWeather({
             id: places[index - 1].id,
-            belongsTo: 'places',
+            search: false,
           });
         }
       }
@@ -57,7 +49,16 @@ export default function PlacesContainer() {
     [places, selectedWeather.id, setPlaces, setSelectedWeather]
   );
 
+  // prevent rendering until weather data is loaded
+  if (isLoading) return;
   if (!placesWeatherData.length) return;
+  if (
+    selectedWeather.search === false &&
+    !placesWeatherData.find(
+      (place) => place.coordinates.id === selectedWeather.id
+    )
+  )
+    return;
 
   return (
     <div className={styles.placesContainer} data-testid="places-container">
@@ -71,9 +72,8 @@ export default function PlacesContainer() {
             key={place.coordinates.id}
             coordinates={place.coordinates}
             current={place.current}
-            onClick={handleClick}
-            onKeyDown={handleKeyDown}
-            onDelete={handleDelete}
+            handleViewPlaceWeather={handleViewPlaceWeather}
+            handleDeletePlace={handleDeletePlace}
             placesLength={places.length}
           />
         ))

@@ -21,18 +21,10 @@ export default function CurrentTopRight({
 
   return (
     <div className={styles.currentTopRight} data-testid="current-top-right">
-      <div
-        className={styles.currentLatLong}
-        data-current-lat={lat}
-        data-testid="lat"
-      >
+      <div className={styles.currentLatLong} data-testid="current-lat">
         {'lat: '}&nbsp; {lat}
       </div>
-      <div
-        className={styles.currentLatLong}
-        data-current-long={long}
-        data-testid="long"
-      >
+      <div className={styles.currentLatLong} data-testid="current-long">
         {'long: '}&nbsp; {long}
       </div>
       <div className={styles.currentTopRightBlock}>

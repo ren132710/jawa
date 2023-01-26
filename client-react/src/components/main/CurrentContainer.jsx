@@ -11,8 +11,10 @@ export default function CurrentContainer({ coordinates, current }) {
   return (
     <div className={styles.currentContainer} data-testid="current-container">
       <CurrentTopLeft
-        location={coordinates.location}
         id={coordinates.id}
+        location={coordinates.location}
+        lat={coordinates.lat}
+        long={coordinates.long}
         icon={current.icon}
         description={current.description}
       />

@@ -28,31 +28,3 @@
 .place-card-item {
   pointer-events: none;
 }
-
-.place-btn-delete {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -50%);
-  background-color: transparent;
-  border: 1px solid var(--white);
-  border-radius: 50%;
-  outline: none;
-  padding: 0.25em 0.5em;
-  font-size: 0.5rem;
-  font-weight: 700;
-  text-align: center;
-  color: var(--blue-30);
-  background-color: hsla(0, 0%, 96%, 0.9);
-  transition: 100ms linear;
-}
-
-.place-btn-delete:hover {
-  box-shadow: 0 0 5px 0 var(--white);
-}
-
-.place-btn-delete:focus {
-  background-color: var(--blue-10);
-  box-shadow: 0 0 5px 0 var(--white);
-  color: var(--grey-95);
-}

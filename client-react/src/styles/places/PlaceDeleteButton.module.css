@@ -1,4 +1,4 @@
-.btn-place-delete {
+.place-btn-delete {
   -web-kit-backface-visibility: hidden;
   backface-visibility: hidden;
   display: flex;
@@ -9,16 +9,16 @@
   left: 0;
   transform: translateX(-50%) translateY(-50%);
   cursor: pointer;
-  background: hsl(0, 0%, 100%);
+  background: var(--white);
   height: 16px;
   width: 16px;
-  border: 1px solid hsl(0, 0%, 90%);
+  border: 1px solid var(--grey-90);
   /* border-radius: 50%; */
   border-radius: 98px;
   z-index: 10;
 }
 
-.btn-svg-delete {
+.svg-x {
   height: 8px;
   width: 8px;
   stroke: hsl(0, 0%, 69%);

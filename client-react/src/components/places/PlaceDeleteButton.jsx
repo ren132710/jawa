@@ -2,13 +2,8 @@ import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styles from '@/styles/places/PlaceDeleteButton.module.css';
 
-export default function PlaceDeleteButton({
-  onDelete,
-  ariaLabel,
-  placeId,
-  testId,
-}) {
-  console.log('DeletePlaceButton rendered!');
+export default function PlaceDeleteButton({ onDelete, placeId }) {
+  console.log('PlaceDeleteButton rendered!');
 
   const changeStyleOnMouseEnter = useCallback((e) => {
     e.target.style.boxShadow = '0 0 5px 0 var(--white)';
@@ -26,8 +21,7 @@ export default function PlaceDeleteButton({
   return (
     <div
       role="button"
-      id="btnDeletePlace"
-      className={styles.btnPlaceDelete}
+      className={styles.placeBtnDelete}
       // tabIndex="-1"
       tabIndex={0}
       onClick={onDelete}
@@ -35,12 +29,12 @@ export default function PlaceDeleteButton({
       onMouseEnter={changeStyleOnMouseEnter}
       onMouseLeave={changeStyleOnMouseLeave}
       onFocus={changeStyleOnFocus}
-      aria-label={ariaLabel}
+      aria-label="tap to delete place from favorites"
       data-id={placeId}
-      data-testid={testId}
+      data-testid="btnDeletePlace"
     >
       <svg
-        className={styles.btnSvgDelete}
+        className={styles.svgX}
         viewBox="0 0 16 16"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -51,13 +45,7 @@ export default function PlaceDeleteButton({
   );
 }
 
-PlaceDeleteButton.defaultProps = {
-  ariaLabel: 'delete associated entity',
-};
-
 PlaceDeleteButton.propTypes = {
   onDelete: PropTypes.func.isRequired,
-  ariaLabel: PropTypes.string,
   placeId: PropTypes.string.isRequired,
-  testId: PropTypes.string.isRequired,
 };
