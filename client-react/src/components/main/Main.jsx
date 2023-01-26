@@ -8,14 +8,14 @@ import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
 
 export default function Main() {
   console.log('Main rendered!');
-  const { placesWeatherData, searchWeatherData, isLoading, isError } =
+  const { places, placesWeatherData, searchWeatherData, isLoading, isError } =
     useWeatherData();
   const { selectedWeather } = useSelectedWeather();
 
   console.log('Main:searchWeatherData: ', searchWeatherData);
   console.log('Main:placesWeatherData: ', placesWeatherData);
 
-  // prevent rendering until weather data is loaded
+  // prevent rendering until weather data is updated and loaded
   if (isError || isLoading) return;
   if (!placesWeatherData.length && !searchWeatherData.length) return;
   if (selectedWeather.search === false && !placesWeatherData.length) return;
@@ -27,6 +27,7 @@ export default function Main() {
   )
     return;
   if (selectedWeather.search === true && !searchWeatherData.length) return;
+  if (places.length !== placesWeatherData.length) return;
 
   // now we can render
   const weather =
