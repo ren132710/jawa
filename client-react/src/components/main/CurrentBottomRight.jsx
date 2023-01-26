@@ -39,7 +39,7 @@ export default function CurrentBottomRight({
       </div>
       <div className={common.currentItem}>
         <span data-translation="14">
-          {getTranslation(11, lang)}
+          {getTranslation(14, lang)}
           {': '}&nbsp;
         </span>
         <span className={common.currentValue} data-testid="current-sunset">
