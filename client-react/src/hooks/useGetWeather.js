@@ -7,15 +7,14 @@ const URL = `https://${WEATHER_SERVER}/weather`;
 console.log('URL:', URL);
 
 export default function useGetWeather(options) {
-  console.log('useJawaHook called!');
+  console.log('useGetWeatherHook called!');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [weatherData, setWeatherData] = useState([]);
   const { places, units, lang } = options;
 
-  // TODO: Also need to run useEffect when units or lang changes
-
   useEffect(() => {
+    console.log('useGetWeatherHook useEffect called!');
     let ignore = false;
 
     const fetchWeather = async () => {
