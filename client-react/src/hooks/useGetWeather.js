@@ -12,6 +12,7 @@ export default function useGetWeather(options) {
   const [isError, setIsError] = useState(false);
   const [weatherData, setWeatherData] = useState([]);
   const { places, units, lang } = options;
+  console.log('useGetWeatherHook options:', options);
 
   useEffect(() => {
     console.log('useGetWeatherHook useEffect called!');

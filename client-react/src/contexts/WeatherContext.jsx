@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import useGetWeather from '@/hooks/useGetWeather';
 import { usePrefsData } from '@/contexts/PrefsContext';
 import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '@/constants/constants';
+import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
 
 // if localStorage, otherwise use default places
 const getPlaces = () => {
@@ -32,17 +33,19 @@ export function useWeatherAPI() {
 }
 export default function WeatherProvider({ children }) {
   console.log('WeatherProvider rendered!');
+  const { selectedWeather } = useSelectedWeather();
   const [places, setPlaces] = useState(getPlaces());
   const [placesWeatherData, setPlacesWeatherData] = useState([]);
-  const [isSearch, setIsSearch] = useState(false);
   const [search, setSearch] = useState([]);
   const [searchWeatherData, setSearchWeatherData] = useState([]);
 
   const { units, lang } = usePrefsData();
 
-  // to minimize API calls, only fetch places weather when places change, not for search
-  // TODO: set id: 'search' for search query
-  const options = isSearch ? { search, units, lang } : { places, units, lang };
+  // to minimize API calls, only fetch places weather when places change, not when performing a search
+  const options =
+    selectedWeather.search === true
+      ? { places: search, units, lang }
+      : { places, units, lang };
   const [weatherData, isLoading, isError] = useGetWeather(options);
 
   // blur page when loading
@@ -57,14 +60,14 @@ export default function WeatherProvider({ children }) {
   // update state when weatherData changes
   useEffect(() => {
     console.log('WeatherProvider useEffect weatherData: ', weatherData);
-    if (isSearch) {
+    if (selectedWeather.search === true) {
       setSearchWeatherData(weatherData);
-      // TODO: set isSearch to false here?
-      setIsSearch(false);
     } else {
       setPlacesWeatherData(weatherData);
     }
-  }, [weatherData, isSearch]);
+    // only fire the useEffect when weatherData changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weatherData]);
 
   // keep localStorage in sync with state
   useEffect(() => {
@@ -75,7 +78,6 @@ export default function WeatherProvider({ children }) {
     return {
       places,
       placesWeatherData,
-      isSearch,
       search,
       searchWeatherData,
       isLoading,
@@ -84,7 +86,6 @@ export default function WeatherProvider({ children }) {
   }, [
     places,
     placesWeatherData,
-    isSearch,
     search,
     searchWeatherData,
     isLoading,
@@ -92,8 +93,8 @@ export default function WeatherProvider({ children }) {
   ]);
 
   const memoApiContext = useMemo(() => {
-    return { setPlaces, setIsSearch, setSearch };
-  }, [setPlaces, setIsSearch, setSearch]);
+    return { setPlaces, setSearch };
+  }, [setPlaces, setSearch]);
 
   return (
     <WeatherDataContext.Provider value={memoDataContext}>

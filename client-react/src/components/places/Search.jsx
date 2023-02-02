@@ -2,6 +2,8 @@ import { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '@/styles/places/Search.module.css';
+import { useWeatherAPI } from '@/contexts/WeatherContext';
+import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
 
 const mapsOptions = {
   // types: ['(cities)'],
@@ -10,21 +12,12 @@ const mapsOptions = {
   fields: ['name', 'geometry.location'],
 };
 
-function handlePlaceSelection(place) {
-  console.log('place', place);
-  const param = {
-    id: uuidv4(),
-    location: place.name,
-    lat: place.geometry.location.lat(),
-    long: place.geometry.location.lng(),
-  };
-  console.log('getWeather params', param);
-}
-
 export default function Search({ loader }) {
   console.log('Search is rendered!');
   const autoCompleteRef = useRef(null);
   const inputRef = useRef(null);
+  const { setSelectedWeather } = useSelectedWeather();
+  const { setSearch } = useWeatherAPI();
 
   useEffect(() => {
     console.log('Search useEffect is called!');
@@ -41,10 +34,27 @@ export default function Search({ loader }) {
       autoCompleteRef.current.addListener('place_changed', () => {
         const place = autoCompleteRef.current.getPlace();
         if (!place.geometry) return;
-        handlePlaceSelection(place);
+        handleSearchPlaceWeather(place);
       });
     });
-  }, [loader]);
+
+    function handleSearchPlaceWeather(place) {
+      console.log('place', place);
+      const params = {
+        id: uuidv4(),
+        location: place.name,
+        lat: place.geometry.location.lat(),
+        long: place.geometry.location.lng(),
+      };
+
+      // remember, we store search in an array so it's iterable by useGetWeather
+      setSearch([params]);
+      setSelectedWeather({
+        id: params.id,
+        search: true,
+      });
+    }
+  }, [loader, setSearch, setSelectedWeather]);
 
   // clear the input field with the user clicks away
   useEffect(() => {
