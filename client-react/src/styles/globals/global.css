@@ -38,13 +38,12 @@ body {
 
 .error {
   width: 90%;
-  border: var(--border-thickness-input) solid hsl(0, 65%, 50%);
-  border-radius: var(--border-radius-input);
+  border: 1px solid hsl(0, 90%, 10%);
+  border-radius: 0.2em;
   padding: 0.5em 1em;
   outline: none;
-  font-size: 1.1rem;
-  /* color: hsl(0, 90%, 10%); */
-  color: hsl(0, 65%, 50%);
+  font-size: 1.1em;
+  color: hsl(0, 90%, 10%);
   text-align: center;
   white-space: pre-wrap;
   font-style: oblique;

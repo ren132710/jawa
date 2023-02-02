@@ -1,4 +1,4 @@
-import Search from '@/components/places/Search';
+import SearchContainer from '@/components/places/SearchContainer';
 import PlacesContainer from '@/components/places/PlacesContainer';
 import Main from '@/components/main/Main';
 import Footer from '@/components/Footer';
@@ -11,7 +11,7 @@ export default function Page() {
     <div className={styles.pageContainer}>
       <section id="spacer" />
       <section className={styles.placesSection}>
-        <Search />
+        <SearchContainer />
         <PlacesContainer />
       </section>
       <Main />

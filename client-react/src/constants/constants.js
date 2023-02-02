@@ -34,5 +34,7 @@ export const DEFAULT_PLACES = [
 export const DEFAULT_PREFS = [{ units: 'imperial', theme: 'jawa', lang: 'en' }];
 
 // embedded crlf is respected by css whitespace: pre-wrap
-export const ERROR_MESSAGE = `That was weird. Something went wrong fetching your weather.
+export const ERROR_MESSAGE_WEATHER = `Oops, something went wrong fetching your weather.
 Please refresh the page and try again.`;
+
+export const ERROR_MESSAGE_AUTOCOMPLETE = `Oops, something went wrong loading the places autocomplete box.`;
