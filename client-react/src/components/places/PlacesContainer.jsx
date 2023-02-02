@@ -3,7 +3,7 @@ import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
 import { useWeatherData, useWeatherAPI } from '@/contexts/WeatherContext';
 import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
-import { ERROR_MESSAGE } from '@/constants/constants';
+import { ERROR_MESSAGE_WEATHER } from '@/constants/constants';
 
 export default function PlacesContainer() {
   console.log('Places container rendered!');
@@ -64,7 +64,7 @@ export default function PlacesContainer() {
     <div className={styles.placesContainer} data-testid="places-container">
       {isError ? (
         <div className="error-container">
-          <div className="error">{ERROR_MESSAGE}</div>
+          <div className="error">{ERROR_MESSAGE_WEATHER}</div>
         </div>
       ) : (
         placesWeatherData.map((place) => (

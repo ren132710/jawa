@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-.search {
+.search-input {
   grid-area: search;
   width: 90%;
   border: var(--border-thickness-input) solid var(--border-color-input);
