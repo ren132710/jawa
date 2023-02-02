@@ -49,6 +49,7 @@ export default function NewPlaceButton({ location, lat, long }) {
       onMouseEnter={changeStyleOnMouseEnter}
       onMouseLeave={changeStyleOnMouseLeave}
       onFocus={changeStyleOnMouseEnter}
+      onBlur={changeStyleOnMouseLeave}
       aria-label="click to add a new place"
       data-location={location}
       data-lat={lat}
