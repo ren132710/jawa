@@ -38,6 +38,7 @@ export default function Search({ loader }) {
       });
     });
 
+    // TODO: move outside of useEffect with useCallback?
     function handleSearchPlaceWeather(place) {
       console.log('place', place);
       const params = {
