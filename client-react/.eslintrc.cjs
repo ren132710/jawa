@@ -6,6 +6,7 @@ module.exports = {
   extends: [
     'airbnb',
     'airbnb/hooks',
+    // 'eslint:recommended',
     'plugin:react/recommended',
     'plugin:cypress/recommended',
     'plugin:prettier/recommended', // list prettier plugin last to avoid conflicts
