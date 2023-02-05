@@ -48,15 +48,6 @@ export default function WeatherProvider({ children }) {
       : { places, units, lang };
   const [weatherData, isLoading, isError] = useGetWeather(options);
 
-  // blur page when loading
-  useEffect(() => {
-    if (isLoading) {
-      document.body.classList.add('blur');
-    } else {
-      document.body.classList.remove('blur');
-    }
-  }, [isLoading]);
-
   // update state when weatherData changes
   useEffect(() => {
     console.log('WeatherProvider useEffect weatherData: ', weatherData);
