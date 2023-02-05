@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CurrentTopLeft from '@/components/main/CurrentTopLeft';
 import CurrentTopRight from '@/components/main/CurrentTopRight';
@@ -7,6 +8,11 @@ import styles from '@/styles/main/CurrentContainer.module.css';
 
 export default function CurrentContainer({ coordinates, current }) {
   console.log('Current container rendered!');
+
+  // on initial page load, remove the blur when the app starts building the main section
+  useEffect(() => {
+    document.body.classList.remove('blur');
+  }, []);
 
   return (
     <div className={styles.currentContainer} data-testid="current-container">
