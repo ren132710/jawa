@@ -1,6 +1,5 @@
 import { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import styles from '@/styles/places/Search.module.css';
 import { useWeatherAPI } from '@/contexts/WeatherContext';
 import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
@@ -42,7 +41,7 @@ export default function Search({ loader }) {
     function handleSearchPlaceWeather(place) {
       console.log('place', place);
       const params = {
-        id: uuidv4(),
+        id: 'search',
         location: place.name,
         lat: place.geometry.location.lat(),
         long: place.geometry.location.lng(),

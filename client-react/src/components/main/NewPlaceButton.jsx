@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import styles from '@/styles/main/NewPlaceButton.module.css';
 import { useWeatherAPI } from '@/contexts/WeatherContext';
 import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
@@ -16,7 +17,7 @@ export default function NewPlaceButton({ location, lat, long }) {
   const handleNewPlace = useCallback(
     (e) => {
       const newPlace = {
-        id: e.target.dataset.id,
+        id: uuidv4(),
         location: e.target.dataset.location,
         lat: e.target.dataset.lat,
         long: e.target.dataset.long,
