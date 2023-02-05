@@ -53,9 +53,11 @@ describe('#renderPageWeather', () => {
           .then((src) => {
             cy.request(src).its('status').should('eq', 200);
           });
-        cy.findByTestId('place-weather-icon')
-          .invoke('attr', 'alt')
-          .should('eq', 'clear sky');
+        cy.findByTestId('place-weather-icon').should(
+          'have.attr',
+          'alt',
+          'clear sky'
+        );
         cy.findByTestId('place-location').should('have.text', 'new york');
         cy.findByTestId('place-hl').should('have.text', '78/64°');
       });
@@ -72,8 +74,11 @@ describe('#renderPageWeather', () => {
       .within(() => {
         cy.findByTestId('current-location')
           .should('have.text', 'new york')
-          .invoke('attr', 'data-current-id')
-          .should('eq', 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87');
+          .should(
+            'have.attr',
+            'data-current-id',
+            'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87'
+          );
       });
 
     // and default units should be imperial
@@ -95,9 +100,11 @@ describe('#renderPageWeather', () => {
           .then((src) => {
             cy.request(src).its('status').should('eq', 200);
           });
-        cy.findByTestId('day-weather-icon')
-          .invoke('attr', 'alt')
-          .should('eq', 'overcast clouds');
+        cy.findByTestId('day-weather-icon').should(
+          'have.attr',
+          'alt',
+          'overcast clouds'
+        );
         cy.findByTestId('day-name').should('have.text', 'Tuesday');
         cy.findByTestId('day-hl').should('have.text', '75/64°');
         cy.findByTestId('day-description').should(
@@ -124,9 +131,11 @@ describe('#renderPageWeather', () => {
           .then((src) => {
             cy.request(src).its('status').should('eq', 200);
           });
-        cy.findByTestId('hour-weather-icon')
-          .invoke('attr', 'alt')
-          .should('eq', 'clear sky');
+        cy.findByTestId('hour-weather-icon').should(
+          'have.attr',
+          'alt',
+          'clear sky'
+        );
         cy.findByTestId('hour-temp').should('have.text', '77°');
         cy.findByTestId('hour-precip').should('have.text', '0%');
         cy.findByTestId('hour-wind').should('have.text', '14 mph S');
@@ -151,17 +160,33 @@ describe('#renderPageWeather', () => {
       .within(() => {
         cy.findByTestId('current-location')
           .should('have.text', 'new york')
-          .invoke('attr', 'data-current-id')
-          .should('eq', 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87');
+          .should(
+            'have.attr',
+            'data-current-id',
+            'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87'
+          );
         cy.findByTestId('current-weather-icon')
           .invoke('attr', 'src')
           .should('eq', 'http://openweathermap.org/img/wn/01d@4x.png')
           .then((src) => {
             cy.request(src).its('status').should('eq', 200);
           });
-        cy.findByTestId('current-weather-icon')
-          .invoke('attr', 'alt')
-          .should('eq', 'clear sky');
+        cy.findByTestId('current-weather-icon').should(
+          'have.attr',
+          'alt',
+          'clear sky'
+        );
+        cy.findByTestId('new-place-button')
+          .should('exist')
+          .should('have.text', 'New Place')
+          .should('have.attr', 'data-location', 'new york')
+          .should('have.attr', 'data-lat', '40.7128')
+          .should('have.attr', 'data-long', '-74.006')
+          .should(
+            'have.css',
+            'text-decoration',
+            'underline solid rgb(0, 102, 153)'
+          );
       });
 
     // top right quadrant
