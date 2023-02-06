@@ -51,7 +51,7 @@ describe('#scenario: places', () => {
     cy.visit('/');
   });
 
-  it.skip('should pass smoke test before proceeding with other tests', () => {
+  it('should pass smoke test before proceeding with other tests', () => {
     // place search input should have default placeholder text
     cy.findByTestId('place-search').should('exist');
     cy.findByPlaceholderText('Weather at your places').should('exist');
@@ -112,7 +112,7 @@ describe('#scenario: places', () => {
     });
   });
 
-  it.skip('should allow user to view weather for a saved place', () => {
+  it('should allow user to view weather for a saved place', () => {
     // when the user hovers or tabs to the second place card
     cy.findAllByTestId('place-card').eq(1).as('place2').trigger('mouseover');
 
@@ -178,10 +178,19 @@ describe('#scenario: places', () => {
       .find('[data-testid="delete-place-button"]')
       .invoke('hide')
       .should('not.be.visible');
+
+    // and the current weather should not change
+    cy.findByTestId('current-location')
+      .should('have.text', 'san francisco')
+      .should(
+        'have.attr',
+        'data-current-id',
+        '90f3d018-bbd3-45be-9c11-debbff73fb6c'
+      );
   });
 
   // it should allow user to delete a saved place
-  it.skip('should allow user to delete a saved place', () => {
+  it('should allow user to delete a saved place', () => {
     // Given saved places
     cy.findAllByTestId('place-card').should((places) => {
       expect(places).to.have.length(4);
