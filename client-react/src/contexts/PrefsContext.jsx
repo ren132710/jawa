@@ -2,13 +2,9 @@ import React, { useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { PREFS_STORAGE_KEY, DEFAULT_PREFS } from '@/constants/constants';
 
-// 1. create the contexts
 const PrefsDataContext = React.createContext();
-
-// so consumers that strictly use context setters won't re-render when context state changes
 const PrefsAPIContext = React.createContext();
 
-// 2. make the contexts available to subscribers via custom hooks
 export function usePrefsData() {
   const context = useContext(PrefsDataContext);
   if (context === undefined) {
@@ -24,8 +20,6 @@ export function usePrefsAPI() {
   }
   return context;
 }
-
-// 3. define the provider and delegate value props to the contexts
 
 // if localStorage, otherwise use default prefs
 const getPrefs = () => {
