@@ -5,10 +5,8 @@ import getTranslation from '@/utils/translations';
 import * as df from '@/utils/dateUtils';
 import getIconUrl from '@/utils/iconUtils';
 
-// 1. create the contexts
 const UtilsContext = React.createContext();
 
-// 2. make the contexts available to subscribers via custom hooks
 export function useUtils() {
   const context = useContext(UtilsContext);
   if (context === undefined) {
@@ -17,7 +15,6 @@ export function useUtils() {
   return context;
 }
 
-// 3. define the provider and delegate value props to the contexts
 export default function UtilsProvider({ children }) {
   console.log('UtilsProvider rendered!');
 
