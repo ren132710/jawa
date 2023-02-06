@@ -219,6 +219,15 @@ describe('#scenario: places', () => {
     cy.findAllByTestId('place-card').should((places) => {
       expect(places).to.have.length(3);
     });
+
+    // and the current weather should still show san francisco
+    cy.findByTestId('current-location')
+      .should('have.text', 'san francisco')
+      .should(
+        'have.attr',
+        'data-current-id',
+        '90f3d018-bbd3-45be-9c11-debbff73fb6c'
+      );
   });
 
   // TODO: All current weather should remain the same, not changed
@@ -251,6 +260,15 @@ describe('#scenario: places', () => {
     cy.findAllByTestId('place-card').should((places) => {
       expect(places).to.have.length(4);
     });
+
+    // and the current weather should still show austin
+    cy.findByTestId('current-location')
+      .should('have.text', 'austin')
+      .should(
+        'have.attr',
+        'data-current-id',
+        '905e58e1-5510-4535-b4c8-2ed30045772d'
+      );
   });
 
   it.skip('should allow user to fetch weather for a searched place and save to places', () => {
