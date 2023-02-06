@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import useGetWeather from '@/hooks/useGetWeather';
 import { usePrefsData } from '@/contexts/PrefsContext';
 import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '@/constants/constants';
-import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
 
 // if localStorage, otherwise use default places
 const getPlaces = () => {
@@ -11,11 +10,11 @@ const getPlaces = () => {
   return places ? JSON.parse(places) : DEFAULT_PLACES;
 };
 
+// 1. create the contexts
 const WeatherDataContext = React.createContext();
-
-// break out API so consumers that strictly use context setters won't re-render when context state changes
 const WeatherAPIContext = React.createContext();
 
+// 2. make the contexts available to subscribers via custom hooks
 export function useWeatherData() {
   const context = useContext(WeatherDataContext);
   if (context === undefined) {
@@ -31,37 +30,25 @@ export function useWeatherAPI() {
   }
   return context;
 }
+// 3. define the provider and delegate value props to the contexts
 export default function WeatherProvider({ children }) {
   console.log('WeatherProvider rendered!');
-  const { selectedWeather } = useSelectedWeather();
   const [places, setPlaces] = useState(getPlaces());
   const [placesWeatherData, setPlacesWeatherData] = useState([]);
-  const [search, setSearch] = useState([]);
-  const [searchWeatherData, setSearchWeatherData] = useState([]);
-
   const { units, lang } = usePrefsData();
 
-  // to minimize API calls, only fetch places weather when places change, not when performing a search
-  const options =
-    selectedWeather.search === true
-      ? { places: search, units, lang }
-      : { places, units, lang };
+  const options = { places, units, lang };
   const [weatherData, isLoading, isError] = useGetWeather(options);
 
   // update state when weatherData changes
   useEffect(() => {
-    console.log('WeatherProvider useEffect weatherData: ', weatherData);
-    if (selectedWeather.search === true) {
-      setSearchWeatherData(weatherData);
-    } else {
-      setPlacesWeatherData(weatherData);
-    }
-    // only fire the useEffect when weatherData changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log('WeatherProvider useEffect, placesWeatherData: ', weatherData);
+    setPlacesWeatherData(weatherData);
   }, [weatherData]);
 
   // keep localStorage in sync with state
   useEffect(() => {
+    console.log('WeatherProvider useEffect, setLocalStorage: ', places);
     localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places));
   }, [places]);
 
@@ -69,23 +56,14 @@ export default function WeatherProvider({ children }) {
     return {
       places,
       placesWeatherData,
-      search,
-      searchWeatherData,
       isLoading,
       isError,
     };
-  }, [
-    places,
-    placesWeatherData,
-    search,
-    searchWeatherData,
-    isLoading,
-    isError,
-  ]);
+  }, [places, placesWeatherData, isLoading, isError]);
 
   const memoApiContext = useMemo(() => {
-    return { setPlaces, setSearch };
-  }, [setPlaces, setSearch]);
+    return { setPlaces };
+  }, [setPlaces]);
 
   return (
     <WeatherDataContext.Provider value={memoDataContext}>

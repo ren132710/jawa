@@ -1,8 +1,8 @@
 import { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from '@/styles/places/Search.module.css';
-import { useWeatherAPI } from '@/contexts/WeatherContext';
-import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
+// import { useWeatherAPI } from '@/contexts/WeatherContext';
+import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
 
 const mapsOptions = {
   // types: ['(cities)'],
@@ -11,12 +11,14 @@ const mapsOptions = {
   fields: ['name', 'geometry.location'],
 };
 
+// TODO: Refactor and pass cypress test
+
 export default function Search({ loader }) {
   console.log('Search is rendered!');
   const autoCompleteRef = useRef(null);
   const inputRef = useRef(null);
-  const { setSelectedWeather } = useSelectedWeather();
-  const { setSearch } = useWeatherAPI();
+  // eslint-disable-next-line no-unused-vars
+  const { setMainWeatherData } = useMainWeatherAPI();
 
   useEffect(() => {
     console.log('Search useEffect is called!');
@@ -39,24 +41,27 @@ export default function Search({ loader }) {
 
     // TODO: move outside of useEffect with useCallback?
     function handleSearchPlaceWeather(place) {
-      console.log('place', place);
-      const params = {
-        id: 'search',
-        location: place.name,
-        lat: place.geometry.location.lat(),
-        long: place.geometry.location.lng(),
-      };
-
-      // remember, we store search in an array so it's iterable by useGetWeather
-      setSearch([params]);
-      setSelectedWeather({
-        id: params.id,
-        search: true,
-      });
+      console.log('google place', place);
     }
-  }, [loader, setSearch, setSelectedWeather]);
 
-  // clear the input field with the user clicks away
+    // remember, we store search in an array so it's iterable by useGetWeather
+    // function handleSearchPlaceWeather(place) {
+    //   console.log('place', place);
+    //   const params = {
+    //     id: 'search',
+    //     location: place.name,
+    //     lat: place.geometry.location.lat(),
+    //     long: place.geometry.location.lng(),
+    //   };
+
+    // remember, we store search in an array so it's iterable by useGetWeather
+    // TODO:
+    // get weather for the searched place
+    // const { data } = await getWeather(params);
+    // setMainWeatherData(data);
+  }, [loader]);
+
+  // clear the input field when the user clicks away
   useEffect(() => {
     const clearInput = () => {
       inputRef.current.value = '';

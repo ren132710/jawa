@@ -3,39 +3,17 @@ import CurrentContainer from '@/components/main/CurrentContainer';
 import DailyContainer from '@/components/main/DailyContainer';
 import HourlyContainer from '@/components/main/HourlyContainer';
 import styles from '@/styles/main/Main.module.css';
-import { useWeatherData } from '@/contexts/WeatherContext';
-import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
+import { useMainWeatherData } from '@/contexts/MainWeatherContext';
 
 export default function Main() {
   console.log('Main rendered!');
-  const { places, placesWeatherData, searchWeatherData, isLoading, isError } =
-    useWeatherData();
-  const { selectedWeather } = useSelectedWeather();
+  const { mainWeather } = useMainWeatherData();
 
-  console.log('Main:searchWeatherData: ', searchWeatherData);
-  console.log('Main:placesWeatherData: ', placesWeatherData);
+  // prevent rendering until there main weather exists
+  if (!mainWeather.length) return;
+  console.log('Main MainWeather: ', mainWeather);
 
-  // prevent rendering until weather data is updated and loaded
-  if (isError || isLoading) return;
-  if (!placesWeatherData.length && !searchWeatherData.length) return;
-  if (selectedWeather.search === false && !placesWeatherData.length) return;
-  if (
-    selectedWeather.search === false &&
-    !placesWeatherData.find(
-      (place) => place.coordinates.id === selectedWeather.id
-    )
-  )
-    return;
-  if (selectedWeather.search === true && !searchWeatherData.length) return;
-  if (places.length !== placesWeatherData.length) return;
-
-  // now we can render
-  const weather =
-    selectedWeather.search === false
-      ? placesWeatherData.find(
-          (place) => place.coordinates.id === selectedWeather.id
-        )
-      : searchWeatherData[0];
+  const weather = mainWeather[0];
 
   return (
     <main className={styles.main}>

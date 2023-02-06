@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '@/styles/main/NewPlaceButton.module.css';
 import { useWeatherAPI } from '@/contexts/WeatherContext';
-import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
 import { useUtils } from '@/contexts/UtilsContext';
 import { usePrefsData } from '@/contexts/PrefsContext';
 
 export default function NewPlaceButton({ location, lat, long }) {
   console.log('NewPlace rendered!');
-  const { setSelectedWeather } = useSelectedWeather();
   const { setPlaces } = useWeatherAPI();
   const { lang } = usePrefsData();
   const { getTranslation } = useUtils();
@@ -22,14 +20,9 @@ export default function NewPlaceButton({ location, lat, long }) {
         lat: e.target.dataset.lat,
         long: e.target.dataset.long,
       };
-
       setPlaces((prevPlaces) => [...prevPlaces, newPlace]);
-      setSelectedWeather({
-        id: newPlace.id,
-        search: false,
-      });
     },
-    [setPlaces, setSelectedWeather]
+    [setPlaces]
   );
 
   const changeStyleOnMouseEnter = useCallback((e) => {

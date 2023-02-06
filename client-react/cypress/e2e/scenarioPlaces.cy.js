@@ -132,7 +132,7 @@ describe('#scenario: places', () => {
     // and when the user clicks on the second place card
     cy.get('@place2').click();
 
-    // then the current weather should update
+    // then the main weather should update
     cy.contains('Current Weather').should('exist');
     cy.findByTestId('current-location')
       .should('have.text', 'san francisco')
@@ -178,18 +178,8 @@ describe('#scenario: places', () => {
       .find('[data-testid="delete-place-button"]')
       .invoke('hide')
       .should('not.be.visible');
-
-    // and the current weather should not change
-    cy.findByTestId('current-location')
-      .should('have.text', 'san francisco')
-      .should(
-        'have.attr',
-        'data-current-id',
-        '90f3d018-bbd3-45be-9c11-debbff73fb6c'
-      );
   });
 
-  // it should allow user to delete a saved place
   it('should allow user to delete a saved place', () => {
     // Given saved places
     cy.findAllByTestId('place-card').should((places) => {
@@ -220,19 +210,17 @@ describe('#scenario: places', () => {
       expect(places).to.have.length(3);
     });
 
-    // and the current weather should still show san francisco
+    // and the main weather should remain unchanged
     cy.findByTestId('current-location')
-      .should('have.text', 'san francisco')
+      .should('have.text', 'austin')
       .should(
         'have.attr',
         'data-current-id',
-        '90f3d018-bbd3-45be-9c11-debbff73fb6c'
+        '905e58e1-5510-4535-b4c8-2ed30045772d'
       );
   });
 
-  // TODO: All current weather should remain the same, not changed
-  // TODO: Refactor Main and Places
-  it('should allow the user to delete all saved places', () => {
+  it('should prevent deletion if there is only one place', () => {
     // Given saved places
     cy.findAllByTestId('place-card').should((places) => {
       expect(places).to.have.length(4);
@@ -241,27 +229,29 @@ describe('#scenario: places', () => {
     // delete each place sequentially
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
     cy.get('@place').find('[data-testid="delete-place-button"]').click();
-    cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
-    cy.get('@place').find('[data-testid="delete-place-button"]').click();
-    cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
-    cy.get('@place').find('[data-testid="delete-place-button"]').click();
-    cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
-    cy.get('@place').find('[data-testid="delete-place-button"]').click();
-
-    // then the place cards should be removed
     cy.findAllByTestId('place-card').should((places) => {
-      expect(places).to.have.length(0);
+      expect(places).to.have.length(3);
     });
 
-    // when the user reloads the page
-    cy.reload();
-
-    // then the default places should be restored
+    cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
+    cy.get('@place').find('[data-testid="delete-place-button"]').click();
     cy.findAllByTestId('place-card').should((places) => {
-      expect(places).to.have.length(4);
+      expect(places).to.have.length(2);
     });
 
-    // and the current weather should still show austin
+    cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
+    cy.get('@place').find('[data-testid="delete-place-button"]').click();
+    cy.findAllByTestId('place-card').should((places) => {
+      expect(places).to.have.length(1);
+    });
+
+    // delete button should be hidden when there is only one place
+    cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
+    cy.get('@place')
+      .find('[data-testid="delete-place-button"]')
+      .should('not.exist');
+
+    // and the main weather should remain unchanged
     cy.findByTestId('current-location')
       .should('have.text', 'austin')
       .should(

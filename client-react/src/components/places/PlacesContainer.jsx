@@ -1,64 +1,56 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
 import { useWeatherData, useWeatherAPI } from '@/contexts/WeatherContext';
-import { useSelectedWeather } from '@/contexts/SelectedWeatherContext';
+import {
+  useMainWeatherData,
+  useMainWeatherAPI,
+} from '@/contexts/MainWeatherContext';
 import { ERROR_MESSAGE_WEATHER } from '@/constants/constants';
 
 export default function PlacesContainer() {
-  console.log('Places container rendered!');
+  console.log('PlacesContainer rendered!');
   const { places, placesWeatherData, isLoading, isError } = useWeatherData();
   const { setPlaces } = useWeatherAPI();
-  const { selectedWeather, setSelectedWeather } = useSelectedWeather();
+  const { setMainWeather } = useMainWeatherAPI();
+  const { mainWeather } = useMainWeatherData();
 
-  const handleViewPlaceWeather = useCallback(
+  // on startup, set the main weather to the first place
+  useEffect(() => {
+    if (!placesWeatherData.length) return;
+    if (mainWeather.length === 0) setMainWeather([placesWeatherData[0]]);
+  }, [mainWeather.length, placesWeatherData, setMainWeather]);
+
+  const handleViewPlace = useCallback(
     (e) => {
       // unless click or enter key, return
       if (!(e.type === 'click' || e.key === 'Enter')) return;
-      setSelectedWeather({ id: e.target.dataset.id, search: false });
+
+      // get the weather for the particular place
+      const placeWeather = placesWeatherData.find(
+        (place) => place.coordinates.id === e.target.dataset.id
+      );
+
+      // and pass it to the main weather context
+      setMainWeather([placeWeather]);
     },
-    [setSelectedWeather]
+    [placesWeatherData, setMainWeather]
   );
 
-  // Note: delete button is hidden when there is only one place
   const handleDeletePlace = useCallback(
     (e) => {
-      // prevent delete click event from triggering handleViewPlaceWeather
+      // prevent delete click event from triggering handleViewPlace
       e.stopPropagation();
-
-      // if selectedWeather is the deleted place, shift selectedWeather appropriately
-      if (selectedWeather.id === e.target.dataset.id) {
-        const index = places.findIndex(
-          (place) => place.id === e.target.dataset.id
-        );
-        if (index === 0) {
-          setSelectedWeather({
-            id: places[1].id,
-            search: false,
-          });
-        } else {
-          setSelectedWeather({
-            id: places[index - 1].id,
-            search: false,
-          });
-        }
-      }
 
       setPlaces(places.filter((place) => place.id !== e.target.dataset.id));
     },
-    [places, selectedWeather.id, setPlaces, setSelectedWeather]
+    [places, setPlaces]
   );
 
-  // prevent rendering until weather data is loaded
+  // prevent rendering until weather data is fully loaded
   if (isLoading) return;
   if (!placesWeatherData.length) return;
-  if (
-    selectedWeather.search === false &&
-    !placesWeatherData.find(
-      (place) => place.coordinates.id === selectedWeather.id
-    )
-  )
-    return;
+  if (places.length !== placesWeatherData.length) return;
 
   return (
     <div className={styles.placesContainer} data-testid="places-container">
@@ -72,7 +64,7 @@ export default function PlacesContainer() {
             key={place.coordinates.id}
             coordinates={place.coordinates}
             current={place.current}
-            handleViewPlaceWeather={handleViewPlaceWeather}
+            handleViewPlace={handleViewPlace}
             handleDeletePlace={handleDeletePlace}
             placesLength={places.length}
           />

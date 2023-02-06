@@ -13,32 +13,37 @@ const PlaceDeleteButton = lazy(() =>
 export default function PlaceCard({
   coordinates,
   current,
-  handleViewPlaceWeather,
+  handleViewPlace,
   handleDeletePlace,
   placesLength,
 }) {
-  console.log('Place rendered!');
+  console.log('PlaceCard rendered!');
   const [isHovered, setIsHovered] = useState(false);
   const { getIconUrl } = useUtils();
 
-  const changeStyleOnMouseEnter = useCallback((e) => {
-    setIsHovered(true);
-    // e.target.style.outline = 'none';
-    e.target.style.backgroundColor = 'hsla(0, 0%, 96%, 0.3)';
-  }, []);
+  const changeStyleOnMouseEnter = useCallback(
+    (e) => {
+      setIsHovered(true);
+      e.target.style.backgroundColor = 'hsla(0, 0%, 96%, 0.3)';
+    },
+    [setIsHovered]
+  );
 
-  const changeStyleOnMouseLeave = useCallback((e) => {
-    setIsHovered(false);
-    e.target.style.backgroundColor = 'transparent';
-  }, []);
+  const changeStyleOnMouseLeave = useCallback(
+    (e) => {
+      setIsHovered(false);
+      e.target.style.backgroundColor = 'transparent';
+    },
+    [setIsHovered]
+  );
 
   return (
     <div
       className={styles.placeCard}
       role="button"
       tabIndex={0}
-      onClick={handleViewPlaceWeather}
-      onKeyDown={handleViewPlaceWeather}
+      onClick={handleViewPlace}
+      onKeyDown={handleViewPlace}
       onMouseEnter={changeStyleOnMouseEnter}
       onMouseLeave={changeStyleOnMouseLeave}
       onFocus={changeStyleOnMouseEnter}
@@ -51,7 +56,7 @@ export default function PlaceCard({
       data-testid="place-card"
     >
       {/* do not show delete place button when there is only one place */}
-      {/* otherwise, show delete button with place is hovered or has focus */}
+      {/* otherwise, show delete button when place is hovered or has focus */}
       {placesLength === 1 ? null : isHovered ? (
         <PlaceDeleteButton
           onDelete={handleDeletePlace}
@@ -98,7 +103,7 @@ PlaceCard.propTypes = {
     low: PropTypes.number,
     icon: PropTypes.string,
   }).isRequired,
-  handleViewPlaceWeather: PropTypes.func.isRequired,
+  handleViewPlace: PropTypes.func.isRequired,
   handleDeletePlace: PropTypes.func.isRequired,
   placesLength: PropTypes.number.isRequired,
 };

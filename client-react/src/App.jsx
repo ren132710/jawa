@@ -3,7 +3,7 @@ import Page from '@/components/Page';
 import UtilsProvider from '@/contexts/UtilsContext';
 import PrefsProvider from '@/contexts/PrefsContext';
 import WeatherProvider from '@/contexts/WeatherContext';
-import SelectedWeatherProvider from '@/contexts/SelectedWeatherContext';
+import MainWeatherProvider from '@/contexts/MainWeatherContext';
 
 export default function App() {
   console.log('App rendered!');
@@ -11,12 +11,12 @@ export default function App() {
   return (
     <UtilsProvider>
       <PrefsProvider>
-        <SelectedWeatherProvider>
+        <MainWeatherProvider>
           <WeatherProvider>
             <Topbar />
             <Page />
           </WeatherProvider>
-        </SelectedWeatherProvider>
+        </MainWeatherProvider>
       </PrefsProvider>
     </UtilsProvider>
   );
