@@ -22,7 +22,8 @@ export default function PlaceDeleteButton({ onDelete, placeId }) {
     <div
       role="button"
       className={styles.placeBtnDelete}
-      tabIndex="-1"
+      tabIndex={-1}
+      // tabIndex={0}
       onClick={onDelete}
       onKeyDown={onDelete}
       onMouseEnter={changeStyleOnMouseEnter}
