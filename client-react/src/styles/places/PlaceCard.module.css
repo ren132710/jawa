@@ -11,12 +11,7 @@
   cursor: pointer;
   text-align: center;
   white-space: nowrap;
-}
-
-.place-card:hover,
-.place-card:focus {
   outline: none;
-  background-color: hsla(0, 0%, 96%, 0.3);
 }
 
 .place-text {

@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { useState, lazy } from 'react';
+import { useState, useCallback, lazy } from 'react';
 import PropTypes from 'prop-types';
 import WeatherIcon from '@/components/WeatherIcon';
 import styles from '@/styles/places/PlaceCard.module.css';
@@ -21,6 +21,17 @@ export default function PlaceCard({
   const [isHovered, setIsHovered] = useState(false);
   const { getIconUrl } = useUtils();
 
+  const changeStyleOnMouseEnter = useCallback((e) => {
+    setIsHovered(true);
+    // e.target.style.outline = 'none';
+    e.target.style.backgroundColor = 'hsla(0, 0%, 96%, 0.3)';
+  }, []);
+
+  const changeStyleOnMouseLeave = useCallback((e) => {
+    setIsHovered(false);
+    e.target.style.backgroundColor = 'transparent';
+  }, []);
+
   return (
     <div
       className={styles.placeCard}
@@ -28,14 +39,16 @@ export default function PlaceCard({
       tabIndex={0}
       onClick={handleViewPlaceWeather}
       onKeyDown={handleViewPlaceWeather}
+      onMouseEnter={changeStyleOnMouseEnter}
+      onMouseLeave={changeStyleOnMouseLeave}
+      onFocus={changeStyleOnMouseEnter}
+      onBlur={changeStyleOnMouseLeave}
       aria-label="tap to view weather"
       data-id={coordinates.id}
       data-location={coordinates.location}
       data-lat={coordinates.lat}
       data-long={coordinates.long}
       data-testid="place-card"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* do not show delete place button when there is only one place */}
       {/* otherwise, show delete button with place is hovered or has focus */}

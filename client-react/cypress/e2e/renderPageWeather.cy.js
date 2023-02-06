@@ -40,6 +40,7 @@ describe('#renderPageWeather', () => {
 
   it('should pass smoke test before proceeding with other tests', () => {
     // place search input should have default placeholder text
+    cy.findByTestId('place-search').should('exist');
     cy.findByPlaceholderText('Weather at your places').should('exist');
 
     // and places should be populated with default place
@@ -79,6 +80,14 @@ describe('#renderPageWeather', () => {
             'data-current-id',
             'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87'
           );
+        cy.findByTestId('current-weather-icon')
+          .should('have.attr', 'width', '200')
+          .should('have.attr', 'height', '200')
+          .invoke('attr', 'src')
+          .should('eq', 'http://openweathermap.org/img/wn/01d@4x.png')
+          .then((src) => {
+            cy.request(src).its('status').should('eq', 200);
+          });
       });
 
     // and default units should be imperial

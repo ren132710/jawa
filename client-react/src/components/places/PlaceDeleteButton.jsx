@@ -22,8 +22,7 @@ export default function PlaceDeleteButton({ onDelete, placeId }) {
     <div
       role="button"
       className={styles.placeBtnDelete}
-      // tabIndex="-1"
-      tabIndex={0}
+      tabIndex="-1"
       onClick={onDelete}
       onKeyDown={onDelete}
       onMouseEnter={changeStyleOnMouseEnter}
@@ -31,7 +30,7 @@ export default function PlaceDeleteButton({ onDelete, placeId }) {
       onFocus={changeStyleOnFocus}
       aria-label="tap to delete place from favorites"
       data-id={placeId}
-      data-testid="btnDeletePlace"
+      data-testid="delete-place-button"
     >
       <svg
         className={styles.svgX}
