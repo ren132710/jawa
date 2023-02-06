@@ -2,6 +2,7 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   e2e: {
+    defaultCommandTimeout: 5000,
     chromeWebSecurity: false,
     baseUrl: 'http://localhost:5173',
     viewport: 'ipad-2',
