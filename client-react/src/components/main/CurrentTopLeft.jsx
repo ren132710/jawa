@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import NewPlaceButton from '@/components/main/NewPlaceButton';
+import NewPlaceButton from '@/components/places/NewPlaceButton';
 import WeatherIcon from '@/components/WeatherIcon';
 import styles from '@/styles/main/CurrentTopLeft.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
