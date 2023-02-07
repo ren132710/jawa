@@ -17,7 +17,6 @@ export default function Search({ loader }) {
   const autoCompleteRef = useRef(null);
   const inputRef = useRef(null);
   const { setMainWeather } = useMainWeatherAPI();
-  console.log('Search setMainWeatherData: ', setMainWeather);
 
   useEffect(() => {
     console.log('Search useEffect is called!');
