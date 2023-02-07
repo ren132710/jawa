@@ -261,6 +261,48 @@ describe('#scenario: places', () => {
       );
   });
 
+  it('should allow user to save a new place', () => {
+    // Given saved places
+    cy.findAllByTestId('place-card').should((places) => {
+      expect(places).to.have.length(4);
+    });
+
+    // when the user clicks the New Place button
+    cy.findByTestId('new-place-button').click();
+
+    // then the place should be added to places
+    cy.findAllByTestId('place-card').should((places) => {
+      expect(places).to.have.length(5);
+    });
+
+    // and the place should have an id that is unique among the saved places
+    cy.findAllByTestId('place-card')
+      .eq(4)
+      .then((place) => {
+        cy.log(place);
+        cy.log(place.attr('data-id'));
+        expect(place).to.have.attr('data-id');
+
+        // get the id
+        const id = place.attr('data-id');
+
+        // ensure it is unique among the saved places
+        const ids = [];
+        cy.findAllByTestId('place-card').each((p) => {
+          cy.log(p.attr('data-id'));
+          if (p.attr('data-id') === id) {
+            ids.push(p.attr('data-id'));
+          }
+        });
+
+        // if there is more than one, fail
+        cy.wrap(ids).should('have.length', 1);
+      });
+
+    // and the main weather should remain unchanged
+    cy.findByTestId('current-location').should('have.text', 'austin');
+  });
+
   it.skip('should allow user to fetch weather for a searched place and save to places', () => {
     // when the user types in 'austin'
     cy.get('[data-testid="place-search"]').should('exist');
