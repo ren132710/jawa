@@ -1,9 +1,10 @@
 import { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from '@/styles/places/Search.module.css';
-// import { useWeatherAPI } from '@/contexts/WeatherContext';
 import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
+import getWeather from '@/utils/getWeather';
 
+// https://developers.google.com/maps/documentation/javascript/place-autocomplete#constraining-autocomplete
 const mapsOptions = {
   // types: ['(cities)'],
   types: ['geocode'],
@@ -11,14 +12,12 @@ const mapsOptions = {
   fields: ['name', 'geometry.location'],
 };
 
-// TODO: Refactor and pass cypress test
-
 export default function Search({ loader }) {
   console.log('Search is rendered!');
   const autoCompleteRef = useRef(null);
   const inputRef = useRef(null);
-  // eslint-disable-next-line no-unused-vars
-  const { setMainWeatherData } = useMainWeatherAPI();
+  const { setMainWeather } = useMainWeatherAPI();
+  console.log('Search setMainWeatherData: ', setMainWeather);
 
   useEffect(() => {
     console.log('Search useEffect is called!');
@@ -29,45 +28,54 @@ export default function Search({ loader }) {
         inputRef.current,
         mapsOptions
       );
-      console.log('autoCompleteRef.current', autoCompleteRef.current);
       if (!autoCompleteRef.current) return;
 
-      autoCompleteRef.current.addListener('place_changed', () => {
+      autoCompleteRef.current.addListener('place_changed', async () => {
         const place = autoCompleteRef.current.getPlace();
+        console.log('place: ', place);
+        if (!place) return;
         if (!place.geometry) return;
-        handleSearchPlaceWeather(place);
+
+        const weatherData = await handleSearchForWeather(place);
+        console.log('search weatherData: ', weatherData);
+        setMainWeather([weatherData]);
       });
     });
 
-    // TODO: move outside of useEffect with useCallback?
-    function handleSearchPlaceWeather(place) {
-      console.log('google place', place);
+    async function handleSearchForWeather(place) {
+      const params = {
+        id: 'search',
+        location: place.name,
+        lat: place.geometry.location.lat(),
+        long: place.geometry.location.lng(),
+      };
+
+      const res = getWeather(params);
+      const weather = res.then((data) => {
+        return data;
+      });
+
+      return weather;
     }
+  }, [loader, setMainWeather]);
 
-    // remember, we store search in an array so it's iterable by useGetWeather
-    // function handleSearchPlaceWeather(place) {
-    //   console.log('place', place);
-    //   const params = {
-    //     id: 'search',
-    //     location: place.name,
-    //     lat: place.geometry.location.lat(),
-    //     long: place.geometry.location.lng(),
-    //   };
-
-    // remember, we store search in an array so it's iterable by useGetWeather
-    // TODO:
-    // get weather for the searched place
-    // const { data } = await getWeather(params);
-    // setMainWeatherData(data);
-  }, [loader]);
-
-  // clear the input field when the user clicks away
+  // clear the Search box when the user clicks away
   useEffect(() => {
     const clearInput = () => {
       inputRef.current.value = '';
     };
     window.addEventListener('click', clearInput);
     return () => window.removeEventListener('click', clearInput);
+  }, []);
+
+  // clear the Search box when the user presses the escape key or tabs away
+  useEffect(() => {
+    const clearInput = (e) => {
+      if (e.key === 'Escape') inputRef.current.value = '';
+      if (e.key === 'Tab') inputRef.current.value = '';
+    };
+    window.addEventListener('keydown', clearInput);
+    return () => window.removeEventListener('keydown', clearInput);
   }, []);
 
   return (
