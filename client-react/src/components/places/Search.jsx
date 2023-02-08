@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from '@/styles/places/Search.module.css';
 import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
+import { usePrefsData } from '@/contexts/PrefsContext';
 import getWeather from '@/utils/getWeather';
 
 // https://developers.google.com/maps/documentation/javascript/place-autocomplete#constraining-autocomplete
@@ -17,6 +18,7 @@ export default function Search({ loader }) {
   const autoCompleteRef = useRef(null);
   const inputRef = useRef(null);
   const { setMainWeather } = useMainWeatherAPI();
+  const { units, lang } = usePrefsData();
 
   useEffect(() => {
     console.log('Search useEffect is called!');
@@ -47,6 +49,8 @@ export default function Search({ loader }) {
         location: place.name,
         lat: place.geometry.location.lat(),
         long: place.geometry.location.lng(),
+        units,
+        lang,
       };
 
       const res = getWeather(params);
@@ -56,7 +60,17 @@ export default function Search({ loader }) {
 
       return weather;
     }
-  }, [loader, setMainWeather]);
+
+    // clean up
+    return () => {
+      if (autoCompleteRef.current) {
+        autoCompleteRef.current.removeListener('place_changed');
+      }
+    };
+
+    // only run this effect when the loader changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loader]);
 
   // clear the Search box when the user clicks away
   useEffect(() => {

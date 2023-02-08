@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { useCallback, useEffect } from 'react';
 import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
@@ -47,10 +48,17 @@ export default function PlacesContainer() {
     [places, setPlaces]
   );
 
-  // prevent rendering until weather data is fully loaded
-  if (isLoading) return;
-  if (!placesWeatherData.length) return;
-  if (places.length !== placesWeatherData.length) return;
+  // wait until places weather is fully loaded
+  if (
+    isLoading ||
+    !placesWeatherData.length ||
+    places.length !== placesWeatherData.length
+  )
+    return (
+      <div className="loading-container">
+        <div className="loading">Loading...</div>
+      </div>
+    );
 
   return (
     <div className={styles.placesContainer} data-testid="places-container">

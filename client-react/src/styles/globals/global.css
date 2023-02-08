@@ -33,17 +33,33 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  grid-column: 1/-1;
 }
 
 .error {
   width: 90%;
-  border: 1px solid hsl(0, 90%, 10%);
-  border-radius: 0.2em;
+  /* border: 1px solid hsl(0, 90%, 10%); */
+  /* border-radius: 0.2em; */
   padding: 0.5em 1em;
   outline: none;
   font-size: 1.1em;
   color: hsl(0, 90%, 10%);
+  text-align: center;
+  white-space: pre-wrap;
+  font-style: oblique;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  width: 90%;
+  padding: 0.5em 1em;
+  outline: none;
+  font-size: 1.1em;
+  color: var(--grey-90);
   text-align: center;
   white-space: pre-wrap;
   font-style: oblique;
