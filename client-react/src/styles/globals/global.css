@@ -33,16 +33,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 89px;
 }
 
 .error {
-  width: 90%;
-  /* border: 1px solid hsl(0, 90%, 10%); */
-  /* border-radius: 0.2em; */
   padding: 0.5em 1em;
   outline: none;
   font-size: 1.1em;
-  color: hsl(0, 90%, 10%);
+  color: hsl(0, 90%, 50%);
   text-align: center;
   white-space: pre-wrap;
   font-style: oblique;
@@ -52,15 +50,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 89px;
 }
 
 .loading {
-  width: 90%;
   padding: 0.5em 1em;
   outline: none;
   font-size: 1.1em;
-  color: var(--grey-90);
-  text-align: center;
+  color: white;
   white-space: pre-wrap;
   font-style: oblique;
 }

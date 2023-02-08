@@ -48,7 +48,18 @@ export default function PlacesContainer() {
     [places, setPlaces]
   );
 
-  // wait until places weather is fully loaded
+  // if error, return error message
+  if (isError) {
+    return (
+      <div className={styles.placesContainer} data-testid="places-container">
+        <div className="error-container">
+          <div className="error">{ERROR_MESSAGE_WEATHER}</div>
+        </div>
+      </div>
+    );
+  }
+
+  // otherwise, wait until places weather is fully loaded
   if (
     isLoading ||
     !placesWeatherData.length ||
@@ -60,24 +71,19 @@ export default function PlacesContainer() {
       </div>
     );
 
+  // then return places
   return (
     <div className={styles.placesContainer} data-testid="places-container">
-      {isError ? (
-        <div className="error-container">
-          <div className="error">{ERROR_MESSAGE_WEATHER}</div>
-        </div>
-      ) : (
-        placesWeatherData.map((place) => (
-          <PlaceCard
-            key={place.coordinates.id}
-            coordinates={place.coordinates}
-            current={place.current}
-            handleViewPlace={handleViewPlace}
-            handleDeletePlace={handleDeletePlace}
-            placesLength={places.length}
-          />
-        ))
-      )}
+      {placesWeatherData.map((place) => (
+        <PlaceCard
+          key={place.coordinates.id}
+          coordinates={place.coordinates}
+          current={place.current}
+          handleViewPlace={handleViewPlace}
+          handleDeletePlace={handleDeletePlace}
+          placesLength={places.length}
+        />
+      ))}
     </div>
   );
 }

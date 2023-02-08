@@ -61,7 +61,7 @@ export default function Search({ loader }) {
       return weather;
     }
 
-    // clean up
+    // TODO: not sure if removeListener is actually a google maps method
     return () => {
       if (autoCompleteRef.current) {
         autoCompleteRef.current.removeListener('place_changed');
