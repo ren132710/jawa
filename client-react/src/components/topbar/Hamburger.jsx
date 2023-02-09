@@ -29,7 +29,7 @@ export default function Hamburger() {
       <button
         type="button"
         className={`${styles.hamburger} ${showMenu ? ' open' : ''}`}
-        onClick={() => setShowMenu(!showMenu)}
+        onPointerDown={() => setShowMenu(!showMenu)}
         aria-label="menu button"
         aria-expanded={showMenu}
         data-testid="hamburger"

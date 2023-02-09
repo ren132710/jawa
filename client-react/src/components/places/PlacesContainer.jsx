@@ -40,6 +40,7 @@ export default function PlacesContainer() {
 
   const handleDeletePlace = useCallback(
     (e) => {
+      console.log('delete button clicked!');
       // prevent delete click event from triggering handleViewPlace
       e.stopPropagation();
 

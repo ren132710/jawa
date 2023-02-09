@@ -8,7 +8,7 @@ export default function Button({ title, onClick, ariaLabel, testId }) {
     <button
       type="button"
       className={styles.btn}
-      onClick={onClick}
+      onPointerDown={onClick}
       aria-label={ariaLabel}
       data-testid={testId}
     >

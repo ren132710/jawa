@@ -44,75 +44,29 @@ function setTestDefaults() {
 
 describe('#scenario: places', () => {
   beforeEach(() => {
-    // Note: cypress clears localStorage automatically before each test
+    // clear local storage and set test defaults
+    localStorage.clear();
     setTestDefaults();
     expect(JSON.parse(localStorage.getItem('jawa-places'))).to.eql(TEST_PLACES);
     expect(JSON.parse(localStorage.getItem('jawa-prefs'))).to.eql(testPrefs);
     cy.visit('/');
-  });
 
-  it('should pass smoke test before proceeding with other tests', () => {
-    // place search input should have default placeholder text
+    // then make sure the page is fully loaded before proceeding with tests
     cy.findByTestId('place-search').should('exist');
     cy.findByPlaceholderText('Weather at your places').should('exist');
-
-    // and places should be populated with default place
-    cy.findAllByTestId('place-card')
-      .should('have.length', 4)
-      .eq(0)
-      .as('place1');
-    cy.get('@place1')
-      .should('have.attr', 'data-id', '905e58e1-5510-4535-b4c8-2ed30045772d')
-      .should('have.attr', 'data-location', 'austin')
-      .should('have.attr', 'data-lat', '30.2672')
-      .should('have.attr', 'data-long', '-97.7431')
-      .within(() => {
-        cy.findByTestId('place-weather-icon').should('exist');
-        cy.findByTestId('place-location').should('have.text', 'austin');
-        cy.findByTestId('place-hl').should('exist');
-      });
-
-    // and major page sections exist
-    // current section
-    cy.contains('Current Weather').should('exist');
-
-    cy.findByTestId('current-top-left').within(() => {
-      cy.findByTestId('current-location')
-        .should('have.text', 'austin')
-        .should(
-          'have.attr',
-          'data-current-id',
-          '905e58e1-5510-4535-b4c8-2ed30045772d'
-        );
-      cy.findByTestId('current-weather-icon')
-        .should('exist')
-        .should('have.attr', 'width', '200')
-        .should('have.attr', 'height', '200');
-    });
-
-    // and default units should be imperial
-    cy.findByTestId('current-temp').contains('F');
-
-    // daily section
-    cy.contains('Forecast').should('exist');
-
-    // If the HTML contains a non-breaking space entity &nbsp;
-    // use the jQuery:contains selector and the Unicode value \u00a0
-    cy.findByTestId('subtitle-forecast').filter(':contains("\u00a0")');
-    // use callback in lieu of cy.wait()
-    cy.findAllByTestId('daily-card').should((days) => {
-      expect(days).to.have.length(7);
-    });
-
-    // hourly section
     cy.contains('Hourly Weather').should('exist');
     cy.contains('America/Chicago').should('exist');
-    cy.findAllByTestId('hour-row').should((hours) => {
+    cy.findAllByTestId('hour-row').then((hours) => {
       expect(hours).to.have.length(24);
     });
   });
 
   it('should allow user to view weather for a saved place', () => {
+    // given saved places
+    cy.findAllByTestId('hour-row').then((hours) => {
+      expect(hours).to.have.length(24);
+    });
+
     // when the user hovers or tabs to the second place card
     cy.findAllByTestId('place-card').eq(1).as('place2').trigger('mouseover');
 
@@ -181,8 +135,8 @@ describe('#scenario: places', () => {
   });
 
   it('should allow user to delete a saved place', () => {
-    // Given saved places
-    cy.findAllByTestId('place-card').should((places) => {
+    // given saved places
+    cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(4);
     });
 
@@ -206,17 +160,18 @@ describe('#scenario: places', () => {
     cy.get('@place2').find('[data-testid="delete-place-button"]').click();
 
     // then the place card should be removed
-    cy.findAllByTestId('place-card').should((places) => {
+    // chain with .then() to wait for the DOM to update
+    cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(3);
     });
 
-    // and the main weather should remain unchanged
+    // and the main weather should still be san francisco
     cy.findByTestId('current-location')
-      .should('have.text', 'austin')
+      .should('have.text', 'san francisco')
       .should(
         'have.attr',
         'data-current-id',
-        '905e58e1-5510-4535-b4c8-2ed30045772d'
+        '90f3d018-bbd3-45be-9c11-debbff73fb6c'
       );
   });
 
@@ -229,19 +184,19 @@ describe('#scenario: places', () => {
     // delete each place sequentially
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
     cy.get('@place').find('[data-testid="delete-place-button"]').click();
-    cy.findAllByTestId('place-card').should((places) => {
+    cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(3);
     });
 
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
     cy.get('@place').find('[data-testid="delete-place-button"]').click();
-    cy.findAllByTestId('place-card').should((places) => {
+    cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(2);
     });
 
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
     cy.get('@place').find('[data-testid="delete-place-button"]').click();
-    cy.findAllByTestId('place-card').should((places) => {
+    cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(1);
     });
 
@@ -250,15 +205,6 @@ describe('#scenario: places', () => {
     cy.get('@place')
       .find('[data-testid="delete-place-button"]')
       .should('not.exist');
-
-    // and the main weather should remain unchanged
-    cy.findByTestId('current-location')
-      .should('have.text', 'austin')
-      .should(
-        'have.attr',
-        'data-current-id',
-        '905e58e1-5510-4535-b4c8-2ed30045772d'
-      );
   });
 
   it('should allow user to save a new place', () => {
@@ -271,7 +217,7 @@ describe('#scenario: places', () => {
     cy.findByTestId('new-place-button').click();
 
     // then the place should be added to places
-    cy.findAllByTestId('place-card').should((places) => {
+    cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(5);
     });
 

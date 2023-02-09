@@ -61,13 +61,6 @@ export default function Search({ loader }) {
       return weather;
     }
 
-    // TODO: not sure if removeListener is actually a google maps method
-    return () => {
-      if (autoCompleteRef.current) {
-        autoCompleteRef.current.removeListener('place_changed');
-      }
-    };
-
     // only run this effect when the loader changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loader]);

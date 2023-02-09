@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { useState, useCallback, lazy } from 'react';
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import PlaceDeleteButton from '@/components/places/PlaceDeleteButton';
 import WeatherIcon from '@/components/WeatherIcon';

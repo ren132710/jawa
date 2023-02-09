@@ -5,29 +5,30 @@ import styles from '@/styles/places/PlaceDeleteButton.module.css';
 export default function PlaceDeleteButton({ onDelete, placeId }) {
   console.log('PlaceDeleteButton rendered!');
 
-  const changeStyleOnMouseEnter = useCallback((e) => {
+  const changeStyleOnPointerEnter = useCallback((e) => {
     e.target.style.boxShadow = '0 0 5px 0 var(--white)';
   }, []);
 
-  const changeStyleOnMouseLeave = useCallback((e) => {
+  const changeStyleOnPointerLeave = useCallback((e) => {
     e.target.style.boxShadow = 'none';
   }, []);
 
   const changeStyleOnFocus = useCallback((e) => {
-    e.target.style.background = 'var(--blue-20)';
-    e.target.style.boxShadow = '0 0 5px 0 var(--white)';
+    e.target.style.backgroundColor = 'var(--blue-10)';
+    e.target.style.boxShadow = '0 0 8px 0 var(--blue-20)';
   }, []);
 
+  // mobile needs the onPointerDown event to see the delete button
   return (
     <div
       role="button"
       className={styles.placeBtnDelete}
       tabIndex={-1}
       // tabIndex={0}
-      onClick={onDelete}
+      onPointerDown={onDelete}
       onKeyDown={onDelete}
-      onMouseEnter={changeStyleOnMouseEnter}
-      onMouseLeave={changeStyleOnMouseLeave}
+      onPointerEnter={changeStyleOnPointerEnter}
+      onPointerLeave={changeStyleOnPointerLeave}
       onFocus={changeStyleOnFocus}
       aria-label="tap to delete place from favorites"
       data-id={placeId}
