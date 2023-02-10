@@ -18,7 +18,7 @@ export default function MenuBlanket({ onClose }) {
   return (
     <div
       style={styles.menuBlanket}
-      onPointerDown={onClose}
+      onClick={onClose}
       // close menu when user tabs away
       role="button"
       tabIndex={0}
