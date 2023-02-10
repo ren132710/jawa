@@ -18,7 +18,8 @@ function setTestDefaults() {
 
 describe('#renderPageWeather', () => {
   beforeEach(() => {
-    // Note: cypress clears localStorage automatically before each test
+    // clear local storage and set test defaults
+    localStorage.clear();
     setTestDefaults();
     expect(JSON.parse(localStorage.getItem('jawa-places'))).to.eql(testPlace);
     expect(JSON.parse(localStorage.getItem('jawa-prefs'))).to.eql(testPrefs);
