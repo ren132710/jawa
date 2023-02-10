@@ -34,7 +34,7 @@ export default function Search({ loader }) {
       autoCompleteRef.current.addListener('place_changed', async () => {
         const place = autoCompleteRef.current.getPlace();
         console.log('place: ', place);
-        if (!place?.geometry) return;
+        if (!place.geometry) return;
 
         const weatherData = await handleSearchForWeather(place);
         console.log('search weatherData: ', weatherData);
