@@ -72,17 +72,7 @@ describe('#scenario: places', () => {
       cy.log(elem.text());
     });
 
-    // and user selects "Boston MA, USA"
-    // cy.get('div.pac-item').each((elem) => {
-    //   if (elem.text().includes('MA')) {
-    //     cy.wrap(elem)
-    //       .should('have.text', 'BostonMA, USA')
-    //       .click({ force: true })
-    //       .then(() => {
-    //         cy.log('search item clicked');
-    //       });
-    //   }
-    // });
+    // and user selects "Boston MA, USA" from autocomplete
     cy.get('div.pac-container')
       .children('div')
       .contains('BostonMA, USA')
@@ -94,34 +84,46 @@ describe('#scenario: places', () => {
         cy.log('search item clicked');
       });
 
-    // TODO: Unable to get cypress click event to fire the 'boston' fetch request
-    // Search component returns 'undefined' early until fetch request is complete
-    // Cypress sees early return 'undefined' and does not wait for fetch request to complete
-
     // then the weather for boston should display
     // https://jawa-server-7odol.ondigitalocean.app/weather?lat=42.3600825&long=-71.0588801&units=imperial&lang=en&id=search&location=Boston
-    cy.findByTestId('current-location', { timeout: 1000 }).should(
-      'have.text',
-      'boston'
-    );
-    //   .should('have.attr', 'data-current-id', 'boston')
-    //   .should('have.attr', 'data-current-lat', '42.3601')
-    //   .should('have.attr', 'data-current-lon', '-71.0589');
+    cy.findByTestId('current-location', { timeout: 1000 })
+      .should('have.text', 'Boston')
+      .should('have.attr', 'data-current-id', 'search')
+      .should('have.attr', 'data-current-lat', '42.3601')
+      .should('have.attr', 'data-current-long', '-71.0589');
 
     // and units should be imperial
-    // cy.findByTestId('current-temp').contains('F');
+    cy.findByTestId('current-temp').contains('F');
 
     // and daily section should contain 7 days of weather
-    // cy.findAllByTestId('daily-card').should((days) => {
-    //   expect(days).to.have.length(7);
-    // });
+    cy.findAllByTestId('daily-card').then((days) => {
+      expect(days).to.have.length(7);
+    });
 
     // and hourly section should contain 24 hours of weather
-    // cy.findAllByTestId('hour-row').should((hours) => {
-    //   expect(hours).to.have.length(24);
-    // });
+    cy.findAllByTestId('hour-row').then((hours) => {
+      expect(hours).to.have.length(24);
+    });
 
-    // when the user adds austin to places
-    // cy.findByTestId('new-place').click();
+    // when the user adds boston to places
+    cy.findByTestId('new-place-button').click();
+
+    // then the new place should be added to places
+    // and there should be 5 places
+    cy.findAllByTestId('place-card').then((places) => {
+      expect(places).to.have.length(5);
+    });
+
+    // and the new place should be the last place and should be boston
+    cy.findAllByTestId('place-card')
+      .last()
+      .should('have.attr', 'data-location', 'Boston')
+      .should('have.attr', 'data-lat', '42.3601')
+      .should('have.attr', 'data-long', '-71.0589');
+
+    // and the card background should be transparent
+    cy.findAllByTestId('place-card')
+      .last()
+      .should('have.css', 'background-color', 'rgba(0, 0, 0, 0)');
   });
 });
