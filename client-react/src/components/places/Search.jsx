@@ -73,11 +73,10 @@ export default function Search({ loader }) {
     return () => window.removeEventListener('click', clearInput);
   }, []);
 
-  // clear the Search box when the user presses the escape key or tabs away
+  // clear the Search box when the user escapes or tabs away
   useEffect(() => {
     const clearInput = (e) => {
-      if (e.key === 'Escape') inputRef.current.value = '';
-      if (e.key === 'Tab') inputRef.current.value = '';
+      if (e.key === 'Escape' || e.key === 'Tab') inputRef.current.value = '';
     };
     window.addEventListener('keydown', clearInput);
     return () => window.removeEventListener('keydown', clearInput);
