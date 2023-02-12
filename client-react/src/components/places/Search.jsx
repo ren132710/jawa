@@ -60,7 +60,7 @@ export default function Search({ loader }) {
       return weather;
     }
 
-    // only run this effect when the loader changes
+    // run this effect if the loader changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loader]);
 
