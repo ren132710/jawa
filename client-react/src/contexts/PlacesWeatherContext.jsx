@@ -4,6 +4,15 @@ import useGetWeather from '@/hooks/useGetWeather';
 import { usePrefsData } from '@/contexts/PrefsContext';
 import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '@/constants/constants';
 
+// TODOs
+// rename to PlacesWeatherContext
+// rename contexts and provider appropriately
+// eliminate useGetWeather hook
+// incorporate getWeather.js
+// support promise.all for multiple places fetch
+// add isError, isLoading to context - update consumers of isError, isLoading (PlacesContainer, MainWeatherContainer)
+// add flag for isDelete, do not fetch weather if isDelete is true
+
 // if localStorage, otherwise use default places
 const getPlaces = () => {
   const places = localStorage.getItem(PLACES_STORAGE_KEY);
