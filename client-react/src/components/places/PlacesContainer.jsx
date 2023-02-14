@@ -16,7 +16,7 @@ export default function PlacesContainer() {
   const { setMainWeather } = useMainWeatherAPI();
   const { mainWeather } = useMainWeatherData();
 
-  // on startup, set the main weather to the first place
+  // on startup, set the first place as the main weather
   useEffect(() => {
     if (!placesWeatherData.length) return;
     if (mainWeather.length === 0) setMainWeather([placesWeatherData[0]]);
