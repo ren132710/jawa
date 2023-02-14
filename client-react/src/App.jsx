@@ -2,7 +2,7 @@ import Topbar from '@/components/topbar/Topbar';
 import Page from '@/components/Page';
 import UtilsProvider from '@/contexts/UtilsContext';
 import PrefsProvider from '@/contexts/PrefsContext';
-import WeatherProvider from '@/contexts/WeatherContext';
+import PlacesWeatherProvider from '@/contexts/PlacesWeatherContext';
 import MainWeatherProvider from '@/contexts/MainWeatherContext';
 
 export default function App() {
@@ -12,10 +12,10 @@ export default function App() {
     <UtilsProvider>
       <PrefsProvider>
         <MainWeatherProvider>
-          <WeatherProvider>
+          <PlacesWeatherProvider>
             <Topbar />
             <Page />
-          </WeatherProvider>
+          </PlacesWeatherProvider>
         </MainWeatherProvider>
       </PrefsProvider>
     </UtilsProvider>

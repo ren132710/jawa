@@ -2,7 +2,7 @@
 import { useCallback, useEffect } from 'react';
 import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
-import { useWeatherData, useWeatherAPI } from '@/contexts/WeatherContext';
+import { useWeatherData, useWeatherAPI } from '@/contexts/PlacesWeatherContext';
 import {
   useMainWeatherData,
   useMainWeatherAPI,
