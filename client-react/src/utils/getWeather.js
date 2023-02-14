@@ -6,6 +6,40 @@ const URL = `https://${WEATHER_SERVER}/weather`;
 console.log('URL:', URL);
 
 /**
+ * getWeather
+ * @param {array} places: array of place objects where each object contains lat, long, id, location
+ * @param {string} units: (imperial | metric )
+ * @param {string} lang: (en | fr | sv )
+ * @returns array of objects where each object contains the weather data for a place
+ */
+
+export default async function getWeather(options) {
+  const { places, units, lang } = options;
+  const placesWeather = await getPlacesWeather(places, units, lang);
+  return placesWeather;
+}
+
+async function getPlacesWeather(places, units, lang) {
+  const promises = [];
+
+  places.forEach((place) => {
+    const params = {
+      id: place.id,
+      location: place.location,
+      lat: place.lat,
+      long: place.long,
+      units,
+      lang,
+    };
+    const promise = getPlaceWeather(params);
+    promises.push(promise);
+  });
+
+  const results = await Promise.all(promises);
+  return results;
+}
+
+/**
  * OpenWeather
  * @param {string} lat: latitude, required by OpenWeather
  * @param {string} long: longitude, required by OpenWeather
@@ -19,7 +53,7 @@ console.log('URL:', URL);
  *  - pass to server so server can include in the response object
  */
 
-export default async function getWeather(params) {
+async function getPlaceWeather(params) {
   const { lat, long, units, lang, id, location } = params;
   try {
     const res = await axios.get(URL, {

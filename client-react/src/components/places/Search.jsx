@@ -38,21 +38,28 @@ export default function Search({ loader }) {
 
         const weatherData = await handleSearchForWeather(place);
         console.log('search weatherData: ', weatherData);
-        setMainWeather([weatherData]);
+        setMainWeather(weatherData);
       });
     });
 
     async function handleSearchForWeather(place) {
-      const params = {
-        id: 'search',
-        location: place.name,
-        lat: place.geometry.location.lat(),
-        long: place.geometry.location.lng(),
+      // getWeather expects an array of objects, even if there is only one object
+      const places = [
+        {
+          id: 'search',
+          location: place.name,
+          lat: place.geometry.location.lat(),
+          long: place.geometry.location.lng(),
+        },
+      ];
+
+      const options = {
+        places,
         units,
         lang,
       };
 
-      const res = getWeather(params);
+      const res = getWeather(options);
       const weather = res.then((data) => {
         return data;
       });
