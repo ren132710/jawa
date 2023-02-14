@@ -2,13 +2,13 @@ import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '@/styles/main/NewPlaceButton.module.css';
-import { useWeatherAPI } from '@/contexts/PlacesWeatherContext';
+import { usePlacesWeatherAPI } from '@/contexts/PlacesWeatherContext';
 import { useUtils } from '@/contexts/UtilsContext';
 import { usePrefsData } from '@/contexts/PrefsContext';
 
 export default function NewPlaceButton({ location, lat, long }) {
   console.log('NewPlace rendered!');
-  const { setPlaces } = useWeatherAPI();
+  const { setPlaces } = usePlacesWeatherAPI();
   const { lang } = usePrefsData();
   const { getTranslation } = useUtils();
 

@@ -2,7 +2,10 @@
 import { useCallback, useEffect } from 'react';
 import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
-import { useWeatherData, useWeatherAPI } from '@/contexts/PlacesWeatherContext';
+import {
+  usePlacesWeatherData,
+  usePlacesWeatherAPI,
+} from '@/contexts/PlacesWeatherContext';
 import {
   useMainWeatherData,
   useMainWeatherAPI,
@@ -11,13 +14,15 @@ import { ERROR_MESSAGE_WEATHER } from '@/constants/constants';
 
 export default function PlacesContainer() {
   console.log('PlacesContainer rendered!');
-  const { places, placesWeatherData, isLoading, isError } = useWeatherData();
-  const { setPlaces } = useWeatherAPI();
+  const { places, placesWeatherData, isLoading, isError } =
+    usePlacesWeatherData();
+  const { setPlaces } = usePlacesWeatherAPI();
   const { setMainWeather } = useMainWeatherAPI();
   const { mainWeather } = useMainWeatherData();
 
-  // on startup, set the first place as the main weather
+  // set the main weather to the first place on startup, or whenever mainWeather is empty
   useEffect(() => {
+    console.log('PlacesContainer useEffect called!');
     if (!placesWeatherData.length) return;
     if (mainWeather.length === 0) setMainWeather([placesWeatherData[0]]);
   }, [mainWeather.length, placesWeatherData, setMainWeather]);

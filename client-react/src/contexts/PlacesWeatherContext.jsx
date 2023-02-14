@@ -1,16 +1,11 @@
 import React, { useState, useContext, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useGetWeather from '@/hooks/useGetWeather';
 import { usePrefsData } from '@/contexts/PrefsContext';
 import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '@/constants/constants';
+import getWeather from '@/utils/getWeather';
 
 // TODOs
-// rename to PlacesWeatherContext
-// rename contexts and provider appropriately
-// eliminate useGetWeather hook
-// incorporate getWeather.js
-// support promise.all for multiple places fetch
-// add isError, isLoading to context - update consumers of isError, isLoading (PlacesContainer, MainWeatherContainer)
+// update consumers of isError, isLoading(PlacesContainer, MainWeatherContainer)
 // add flag for isDelete, do not fetch weather if isDelete is true
 
 // if localStorage, otherwise use default places
@@ -20,44 +15,57 @@ const getPlaces = () => {
 };
 
 // 1. create the contexts
-const WeatherDataContext = React.createContext();
-const WeatherAPIContext = React.createContext();
+const PlacesWeatherDataContext = React.createContext();
+const PlacesWeatherAPIContext = React.createContext();
 
 // 2. make the contexts available to subscribers via custom hooks
-export function useWeatherData() {
-  const context = useContext(WeatherDataContext);
+export function usePlacesWeatherData() {
+  const context = useContext(PlacesWeatherDataContext);
   if (context === undefined) {
-    throw new Error('useWeatherData is being called outside of its Provider');
+    throw new Error('usePlacesWeatherData was called outside of its Provider');
   }
   return context;
 }
 
-export function useWeatherAPI() {
-  const context = useContext(WeatherAPIContext);
+export function usePlacesWeatherAPI() {
+  const context = useContext(PlacesWeatherAPIContext);
   if (context === undefined) {
-    throw new Error('useWeatherAPI was called outside of its Provider');
+    throw new Error('usePlacesWeatherAPI was called outside of its Provider');
   }
   return context;
 }
 // 3. define the provider and delegate value props to the contexts
-export default function WeatherProvider({ children }) {
-  console.log('WeatherProvider rendered!');
+export default function PlacesWeatherProvider({ children }) {
+  console.log('PlacesWeatherProvider rendered!');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [places, setPlaces] = useState(getPlaces());
   const [placesWeatherData, setPlacesWeatherData] = useState([]);
   const { units, lang } = usePrefsData();
+  const options = useMemo(() => {
+    return { places, units, lang };
+  }, [places, units, lang]);
 
-  const options = { places, units, lang };
-  const [weatherData, isLoading, isError] = useGetWeather(options);
-
-  // update state when weatherData changes
+  // fetch weather data
   useEffect(() => {
-    console.log('WeatherProvider useEffect, placesWeatherData: ', weatherData);
-    setPlacesWeatherData(weatherData);
-  }, [weatherData]);
+    console.log('PlacesWeatherProvider useEffect, options: ', options);
+    setIsLoading(true);
+    getWeather(options)
+      .then((data) => {
+        console.log('PlacesWeatherProvider useEffect, weather: ', data);
+        setPlacesWeatherData(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setIsError(true);
+        console.log('PlacesWeatherProvider Error: ', err);
+      });
+  }, [options]);
 
   // keep localStorage in sync with state
   useEffect(() => {
-    console.log('WeatherProvider useEffect, setLocalStorage: ', places);
+    console.log('PlacesWeatherProvider useEffect, setLocalStorage: ', places);
     localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places));
   }, [places]);
 
@@ -75,14 +83,14 @@ export default function WeatherProvider({ children }) {
   }, [setPlaces]);
 
   return (
-    <WeatherDataContext.Provider value={memoDataContext}>
-      <WeatherAPIContext.Provider value={memoApiContext}>
+    <PlacesWeatherDataContext.Provider value={memoDataContext}>
+      <PlacesWeatherAPIContext.Provider value={memoApiContext}>
         {children}
-      </WeatherAPIContext.Provider>
-    </WeatherDataContext.Provider>
+      </PlacesWeatherAPIContext.Provider>
+    </PlacesWeatherDataContext.Provider>
   );
 }
 
-WeatherProvider.propTypes = {
+PlacesWeatherProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
