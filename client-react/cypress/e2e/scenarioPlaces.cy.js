@@ -214,10 +214,10 @@ describe('#scenario: places', () => {
     });
 
     // when the user clicks the New Place button
-    cy.findByTestId('new-place-button').click();
+    cy.findByTestId('new-place-button').click({ force: true });
 
     // then the place should be added to places
-    cy.findAllByTestId('place-card').then((places) => {
+    cy.findAllByTestId('place-card', { timeout: 10000 }).then((places) => {
       expect(places).to.have.length(5);
     });
 

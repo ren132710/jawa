@@ -44,7 +44,7 @@ export default function Search({ loader }) {
     });
 
     async function handleSearchForWeather(place) {
-      // getWeather expects an array of objects, even if there is only one object
+      // getWeather expects an array of place objects, even if there is only one place object
       const places = [
         {
           id: 'search',

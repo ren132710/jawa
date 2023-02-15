@@ -4,10 +4,6 @@ import { usePrefsData } from '@/contexts/PrefsContext';
 import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '@/constants/constants';
 import getWeather from '@/utils/getWeather';
 
-// TODOs
-// update consumers of isError, isLoading(PlacesContainer, MainWeatherContainer)
-// add flag for isDelete, do not fetch weather if isDelete is true
-
 // if localStorage, otherwise use default places
 const getPlaces = () => {
   const places = localStorage.getItem(PLACES_STORAGE_KEY);
@@ -46,26 +42,29 @@ export default function PlacesWeatherProvider({ children }) {
     return { places, units, lang };
   }, [places, units, lang]);
 
-  // fetch weather data
+  // minimize API calls, load places weather only on page load
+  // TODO: might have to add back doPlacesUpdate when we support lang and units changes
   useEffect(() => {
-    console.log('PlacesWeatherProvider useEffect, options: ', options);
-    setIsLoading(true);
+    console.log('PlacesWeatherProvider useEffect (options): ', options);
     getWeather(options)
       .then((data) => {
-        console.log('PlacesWeatherProvider useEffect, weather: ', data);
+        console.log('PlacesWeatherProvider useEffect (weather): ', data);
+        setIsLoading(true);
         setPlacesWeatherData(data);
         setIsLoading(false);
       })
       .catch((err) => {
         setIsLoading(false);
         setIsError(true);
-        console.log('PlacesWeatherProvider Error: ', err);
+        console.log('PlacesWeatherProvider useEffect (error): ', err);
       });
-  }, [options]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // keep localStorage in sync with state
   useEffect(() => {
-    console.log('PlacesWeatherProvider useEffect, setLocalStorage: ', places);
+    console.log('PlacesWeatherProvider useEffect (setLocalStorage): ', places);
     localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places));
   }, [places]);
 
@@ -79,8 +78,8 @@ export default function PlacesWeatherProvider({ children }) {
   }, [places, placesWeatherData, isLoading, isError]);
 
   const memoApiContext = useMemo(() => {
-    return { setPlaces };
-  }, [setPlaces]);
+    return { setPlaces, setPlacesWeatherData };
+  }, [setPlaces, setPlacesWeatherData]);
 
   return (
     <PlacesWeatherDataContext.Provider value={memoDataContext}>

@@ -3,20 +3,20 @@ import { useCallback, useEffect } from 'react';
 import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
 import {
-  usePlacesWeatherData,
-  usePlacesWeatherAPI,
-} from '@/contexts/PlacesWeatherContext';
-import {
   useMainWeatherData,
   useMainWeatherAPI,
 } from '@/contexts/MainWeatherContext';
+import {
+  usePlacesWeatherData,
+  usePlacesWeatherAPI,
+} from '@/contexts/PlacesWeatherContext';
 import { ERROR_MESSAGE_WEATHER } from '@/constants/constants';
 
 export default function PlacesContainer() {
   console.log('PlacesContainer rendered!');
   const { places, placesWeatherData, isLoading, isError } =
     usePlacesWeatherData();
-  const { setPlaces } = usePlacesWeatherAPI();
+  const { setPlaces, setPlacesWeatherData } = usePlacesWeatherAPI();
   const { setMainWeather } = useMainWeatherAPI();
   const { mainWeather } = useMainWeatherData();
 
@@ -45,13 +45,17 @@ export default function PlacesContainer() {
 
   const handleDeletePlace = useCallback(
     (e) => {
-      console.log('delete button clicked!');
       // prevent delete click event from triggering handleViewPlace
       e.stopPropagation();
 
       setPlaces(places.filter((place) => place.id !== e.target.dataset.id));
+      setPlacesWeatherData(
+        placesWeatherData.filter(
+          (place) => place.coordinates.id !== e.target.dataset.id
+        )
+      );
     },
-    [places, setPlaces]
+    [places, placesWeatherData, setPlaces, setPlacesWeatherData]
   );
 
   // if error, return error message
@@ -76,6 +80,8 @@ export default function PlacesContainer() {
         <div className="loading">Loading...</div>
       </div>
     );
+
+  console.log('PlacesContainer (placesWeatherData): ', placesWeatherData);
 
   // then return places
   return (

@@ -27,7 +27,7 @@ export default function CurrentTopLeft({
       >
         {location}
       </div>
-      <NewPlaceButton location={location} lat={lat} long={long} />
+      <NewPlaceButton id={id} location={location} lat={lat} long={long} />
       <WeatherIcon
         weatherIcon={icon}
         weatherIconSize="large"

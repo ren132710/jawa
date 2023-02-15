@@ -11,9 +11,9 @@ export default function Main() {
 
   // prevent rendering until there main weather exists
   if (!mainWeather.length) return;
-  console.log('Main MainWeather: ', mainWeather);
 
   const weather = mainWeather[0];
+  console.log('Main weather: ', weather);
 
   return (
     <main className={styles.main}>
