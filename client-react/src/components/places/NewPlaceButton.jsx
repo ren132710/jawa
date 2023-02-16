@@ -65,7 +65,7 @@ export default function NewPlaceButton({ id, location, lat, long }) {
       data-location={location}
       data-lat={lat}
       data-long={long}
-      data-testid="new-place-button"
+      data-testid="btnNewPlace"
     >
       {getTranslation(5, lang)}
     </button>

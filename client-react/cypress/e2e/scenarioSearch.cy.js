@@ -87,7 +87,7 @@ describe('#scenario: places', () => {
     });
 
     // when the user adds boston to places
-    cy.findByTestId('new-place-button').click();
+    cy.findByTestId('btnNewPlace').click();
 
     // then the new place should be added to places
     // and there should be 5 places

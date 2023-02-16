@@ -31,7 +31,7 @@ export default function PlaceDeleteButton({ onDelete, placeId }) {
       onFocus={changeStyleOnFocus}
       aria-label="tap to delete place from favorites"
       data-id={placeId}
-      data-testid="delete-place-button"
+      data-testid="btnDeletePlace"
     >
       <svg
         className={styles.svgX}

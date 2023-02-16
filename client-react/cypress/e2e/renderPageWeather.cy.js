@@ -186,7 +186,7 @@ describe('#renderPageWeather', () => {
           'alt',
           'clear sky'
         );
-        cy.findByTestId('new-place-button')
+        cy.findByTestId('btnNewPlace')
           .should('exist')
           .should('have.text', 'New Place')
           .should('have.attr', 'data-location', 'new york')

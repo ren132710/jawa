@@ -79,7 +79,7 @@ describe('#scenario: places', () => {
 
     // and the delete button should be visible
     cy.get('@place2')
-      .find('[data-testid="delete-place-button"]')
+      .find('[data-testid="btnDeletePlace"]')
       .invoke('show')
       .should('be.visible');
 
@@ -129,7 +129,7 @@ describe('#scenario: places', () => {
 
     // and the delete button should be hidden
     cy.get('@place2')
-      .find('[data-testid="delete-place-button"]')
+      .find('[data-testid="btnDeletePlace"]')
       .invoke('hide')
       .should('not.be.visible');
   });
@@ -152,12 +152,12 @@ describe('#scenario: places', () => {
 
     // and the delete button should be visible
     cy.get('@place2')
-      .find('[data-testid="delete-place-button"]')
+      .find('[data-testid="btnDeletePlace"]')
       .invoke('show')
       .should('be.visible');
 
     // and when the user clicks on the delete button
-    cy.get('@place2').find('[data-testid="delete-place-button"]').click();
+    cy.get('@place2').find('[data-testid="btnDeletePlace"]').click();
 
     // then the place card should be removed
     // chain with .then() to wait for the DOM to update
@@ -183,28 +183,26 @@ describe('#scenario: places', () => {
 
     // delete each place sequentially
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
-    cy.get('@place').find('[data-testid="delete-place-button"]').click();
+    cy.get('@place').find('[data-testid="btnDeletePlace"]').click();
     cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(3);
     });
 
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
-    cy.get('@place').find('[data-testid="delete-place-button"]').click();
+    cy.get('@place').find('[data-testid="btnDeletePlace"]').click();
     cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(2);
     });
 
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
-    cy.get('@place').find('[data-testid="delete-place-button"]').click();
+    cy.get('@place').find('[data-testid="btnDeletePlace"]').click();
     cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(1);
     });
 
     // delete button should be hidden when there is only one place
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
-    cy.get('@place')
-      .find('[data-testid="delete-place-button"]')
-      .should('not.exist');
+    cy.get('@place').find('[data-testid="btnDeletePlace"]').should('not.exist');
   });
 
   it('should allow user to save a new place', () => {
@@ -214,7 +212,7 @@ describe('#scenario: places', () => {
     });
 
     // when the user clicks the New Place button
-    cy.findByTestId('new-place-button').click({ force: true });
+    cy.findByTestId('btnNewPlace').click({ force: true });
 
     // then the place should be added to places
     cy.findAllByTestId('place-card', { timeout: 10000 }).then((places) => {
