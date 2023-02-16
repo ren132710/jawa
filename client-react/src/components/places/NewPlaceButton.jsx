@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '@/styles/main/NewPlaceButton.module.css';
@@ -42,15 +41,15 @@ export default function NewPlaceButton({ id, location, lat, long }) {
     ]);
   }
 
-  const changeStyleOnMouseEnter = useCallback((e) => {
+  function changeStyleOnMouseEnter(e) {
     e.target.style.textDecoration = 'none';
     e.target.style.color = 'var(--blue-40)';
-  }, []);
+  }
 
-  const changeStyleOnMouseLeave = useCallback((e) => {
+  function changeStyleOnMouseLeave(e) {
     e.target.style.textDecoration = 'underline';
     e.target.style.color = 'var(--blue-30)';
-  }, []);
+  }
 
   return (
     <button

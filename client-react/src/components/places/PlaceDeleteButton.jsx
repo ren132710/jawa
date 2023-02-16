@@ -1,22 +1,21 @@
-import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styles from '@/styles/places/PlaceDeleteButton.module.css';
 
 export default function PlaceDeleteButton({ onDelete, placeId }) {
   console.log('PlaceDeleteButton rendered!');
 
-  const changeStyleOnPointerEnter = useCallback((e) => {
+  function changeStyleOnPointerEnter(e) {
     e.target.style.boxShadow = '0 0 5px 0 var(--white)';
-  }, []);
+  }
 
-  const changeStyleOnPointerLeave = useCallback((e) => {
+  function changeStyleOnPointerLeave(e) {
     e.target.style.boxShadow = 'none';
-  }, []);
+  }
 
-  const changeStyleOnFocus = useCallback((e) => {
+  function changeStyleOnFocus(e) {
     e.target.style.backgroundColor = 'var(--blue-10)';
     e.target.style.boxShadow = '0 0 8px 0 var(--blue-20)';
-  }, []);
+  }
 
   // mobile needs the onPointerDown event to see the delete button
   return (

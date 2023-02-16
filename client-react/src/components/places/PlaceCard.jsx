@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import PlaceDeleteButton from '@/components/places/PlaceDeleteButton';
 import WeatherIcon from '@/components/WeatherIcon';
@@ -17,21 +17,15 @@ export default function PlaceCard({
   const [isHovered, setIsHovered] = useState(false);
   const { getIconUrl } = useUtils();
 
-  const changeStyleOnMouseEnter = useCallback(
-    (e) => {
-      setIsHovered(true);
-      e.target.style.backgroundColor = 'hsla(0, 0%, 96%, 0.3)';
-    },
-    [setIsHovered]
-  );
+  function changeStyleOnMouseEnter(e) {
+    setIsHovered(true);
+    e.target.style.backgroundColor = 'hsla(0, 0%, 96%, 0.3)';
+  }
 
-  const changeStyleOnMouseLeave = useCallback(
-    (e) => {
-      setIsHovered(false);
-      e.target.style.backgroundColor = 'transparent';
-    },
-    [setIsHovered]
-  );
+  function changeStyleOnMouseLeave(e) {
+    setIsHovered(false);
+    e.target.style.backgroundColor = 'transparent';
+  }
 
   return (
     <div

@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { useCallback, useEffect } from 'react';
 import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
@@ -27,6 +26,7 @@ export default function PlacesContainer() {
     if (mainWeather.length === 0) setMainWeather([placesWeatherData[0]]);
   }, [mainWeather.length, placesWeatherData, setMainWeather]);
 
+  // memoized these functions because they are passed as props
   const handleViewPlace = useCallback(
     (e) => {
       // unless click or enter key, return
