@@ -20,11 +20,15 @@ export default function PlaceCard({
   function changeStyleOnMouseEnter(e) {
     setIsHovered(true);
     e.target.style.backgroundColor = 'hsla(0, 0%, 96%, 0.3)';
+    if (document.body.dataset.theme === 'light') {
+      e.target.style.boxShadow = '0 0 2px 0 var(--skyblue-85)';
+    }
   }
 
   function changeStyleOnMouseLeave(e) {
     setIsHovered(false);
     e.target.style.backgroundColor = 'transparent';
+    e.target.style.boxShadow = 'none';
   }
 
   return (

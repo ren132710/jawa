@@ -11,8 +11,10 @@
   --color-disabled: var(--grey-50);
 
   /* backgrounds */
-  --hour-nth-child-background-from: hsla(203, 92%, 75%, 0);
-  --hour-nth-child-background-to: hsla(203, 92%, 75%, 1);
+  --background-linear-from: var(--off-white);
+  --background-linear-to: var(--skyblue-75);
+  --hour-nth-child-background-from: hsla(203, 92%, 75%, 0); /* --skyblue-75 */
+  --hour-nth-child-background-to: hsla(203, 92%, 75%, 1); /* --skyblue-75 */
 
   /* borders */
   --border-thickness-card: 1px;

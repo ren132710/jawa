@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import common from '@/styles/main/CurrentCommon.module.css';
 import styles from '@/styles/main/CurrentBottomRight.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
-import { usePrefsData } from '@/contexts/PrefsContext';
+import { useWeatherPrefs } from '@/contexts/PrefsContext';
 
 export default function CurrentBottomRight({
   dewPoint,
@@ -11,7 +11,7 @@ export default function CurrentBottomRight({
   timezone,
 }) {
   console.log('CurrentBottomRight rendered!');
-  const { lang } = usePrefsData();
+  const { lang } = useWeatherPrefs();
   const { getTranslation, df } = useUtils();
 
   return (

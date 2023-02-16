@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from '@/styles/places/Search.module.css';
 import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
-import { usePrefsData } from '@/contexts/PrefsContext';
+import { useWeatherPrefs } from '@/contexts/PrefsContext';
 import getWeather from '@/utils/getWeather';
 
 // https://developers.google.com/maps/documentation/javascript/place-autocomplete#constraining-autocomplete
@@ -18,7 +18,7 @@ export default function Search({ loader }) {
   const autoCompleteRef = useRef(null);
   const inputRef = useRef(null);
   const { setMainWeather } = useMainWeatherAPI();
-  const { units, lang } = usePrefsData();
+  const { units, lang } = useWeatherPrefs();
 
   useEffect(() => {
     console.log('Search useEffect is called!');

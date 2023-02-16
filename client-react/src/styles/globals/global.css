@@ -21,7 +21,13 @@ body {
   min-height: 100vh;
   font-size: var(--fs-normal);
   color: var(--color);
-  background: linear-gradient(to right, var(--off-white), var(--skyblue-75));
+  background: linear-gradient(
+    to right,
+    var(--background-linear-from),
+    var(--background-linear-to)
+  );
+  /* TODO: How to transition to themes? */
+  /* transition: 2s ease; */
 }
 
 .blur {
@@ -29,6 +35,18 @@ body {
   filter: blur(5px);
 }
 
+/* display modes */
+body[data-theme='light'] {
+  --background-linear-to: var(--white);
+  --color-value: var(--blue-35);
+  --border-color-card: hsla(200, 100%, 10%, 0.1); /* var(--blue-10); */
+  --border-color-input: var(--border-color-card);
+  --border-thickness-card: 1.5px;
+  --border-thickness-input: 1.5px;
+  --hour-nth-child-background-to: var(--skyblue-90);
+}
+
+/* user notification */
 .error-container {
   display: flex;
   justify-content: center;

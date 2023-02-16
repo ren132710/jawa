@@ -7,7 +7,7 @@ import {
 } from '@/contexts/MainWeatherContext';
 import { usePlacesWeatherAPI } from '@/contexts/PlacesWeatherContext';
 import { useUtils } from '@/contexts/UtilsContext';
-import { usePrefsData } from '@/contexts/PrefsContext';
+import { useWeatherPrefs } from '@/contexts/PrefsContext';
 
 function changeStyleOnMouseEnter(e) {
   e.target.style.textDecoration = 'none';
@@ -24,7 +24,7 @@ export default function NewPlaceButton({ id, location, lat, long }) {
   const { setPlaces, setPlacesWeatherData } = usePlacesWeatherAPI();
   const { mainWeather } = useMainWeatherData();
   const { setMainWeather } = useMainWeatherAPI();
-  const { lang } = usePrefsData();
+  const { lang } = useWeatherPrefs();
   const { getTranslation } = useUtils();
 
   function handleNewPlace(e) {

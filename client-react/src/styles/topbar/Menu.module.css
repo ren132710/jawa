@@ -11,7 +11,7 @@
   padding: 1em;
   /* opacity: 0; */
   clip-path: circle(0px at top right);
-  transition: all linear 150ms;
+  transition: linear 150ms;
   z-index: 999;
 }
 
@@ -50,4 +50,10 @@
 .lang::before {
   content: 'Language';
   color: inherit;
+}
+
+/* display modes */
+body[data-theme='light'] .menu {
+  background: var(--white);
+  box-shadow: 0 0 5px 0 var(--grey-90);
 }

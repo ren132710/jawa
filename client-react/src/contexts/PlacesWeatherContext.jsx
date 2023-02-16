@@ -1,6 +1,6 @@
 import React, { useState, useContext, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { usePrefsData } from '@/contexts/PrefsContext';
+import { useWeatherPrefs } from '@/contexts/PrefsContext';
 import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '@/constants/constants';
 import getWeather from '@/utils/getWeather';
 
@@ -37,7 +37,7 @@ export default function PlacesWeatherProvider({ children }) {
   const [isError, setIsError] = useState(false);
   const [places, setPlaces] = useState(getPlaces());
   const [placesWeatherData, setPlacesWeatherData] = useState([]);
-  const { units, lang } = usePrefsData();
+  const { units, lang } = useWeatherPrefs();
   const options = useMemo(() => {
     return { places, units, lang };
   }, [places, units, lang]);

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import common from '@/styles/main/CurrentCommon.module.css';
 import styles from '@/styles/main/CurrentTopRight.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
-import { usePrefsData } from '@/contexts/PrefsContext';
+import { useWeatherPrefs } from '@/contexts/PrefsContext';
 
 export default function CurrentTopRight({
   lat,
@@ -16,7 +16,7 @@ export default function CurrentTopRight({
   visibility,
 }) {
   console.log('CurrentTopRight rendered!');
-  const { units, lang } = usePrefsData();
+  const { units, lang } = useWeatherPrefs();
   const { getUnitOfMeasure, getTranslation } = useUtils();
 
   return (

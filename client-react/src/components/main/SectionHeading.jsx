@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styles from '@/styles/main/SectionHeading.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
-import { usePrefsData } from '@/contexts/PrefsContext';
+import { useWeatherPrefs } from '@/contexts/PrefsContext';
 
 function getSubTitle(section, timestamp, timezone, df, lang) {
   let subtitle = '';
@@ -33,7 +33,7 @@ export default function SectionHeading({
   subtitleTestId,
 }) {
   console.log(`SectionHeading ${section} rendered!`);
-  const { lang } = usePrefsData();
+  const { lang } = useWeatherPrefs();
   const { getTranslation, df } = useUtils();
 
   const subtitle = getSubTitle(section, timestamp, timezone, df, lang);
