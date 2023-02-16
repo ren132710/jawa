@@ -1,21 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import MenuButton from '@/components/topbar/MenuButton';
 import MenuBlanket from '@/components/topbar/MenuBlanket';
 import styles from '@/styles/topbar/Menu.module.css';
 import { usePrefsAPI } from '@/contexts/PrefsContext';
 
-/**
- * TODO:
- *  - change units
- *  - change language
- */
-
 export default function Menu({ showMenu, delay, onClose }) {
   console.log('Menu rendered!');
   const [applyTransition, setApplyTransition] = useState(false);
-  const { setTheme } = usePrefsAPI();
+  const { setTheme, setUnits, setLang } = usePrefsAPI();
 
+  // transition menu open and close
   useEffect(() => {
     if (!showMenu) return;
 
@@ -27,26 +22,27 @@ export default function Menu({ showMenu, delay, onClose }) {
     };
   }, [showMenu, delay]);
 
-  function handleClick(e) {
-    if (!e.target.dataset.setting) return;
+  const handleClick = useCallback(
+    (e) => {
+      if (!e.target.dataset.setting) return;
 
-    const { setting } = e.target.dataset;
-    if (['metric', 'imperial'].includes(setting)) switchUoM(setting);
-    if (['light', 'jawa', 'dark'].includes(setting)) switchTheme(setting);
-    if (['en', 'fr', 'sv'].includes(setting)) switchLang(setting);
-  }
+      const { setting } = e.target.dataset;
+      if (['light', 'jawa', 'dark'].includes(setting)) setTheme(setting);
 
-  function switchTheme(setting) {
-    setTheme(setting);
-  }
+      if (['metric', 'imperial'].includes(setting)) {
+        console.log('setUnits', setting);
+        setUnits(setting);
+        window.location.reload(true);
+      }
 
-  function switchUoM(value) {
-    console.log('switchUoM', value);
-  }
-
-  function switchLang(value) {
-    console.log('switchLang', value);
-  }
+      if (['en', 'fr', 'sv'].includes(setting)) {
+        console.log('setUnits', setting);
+        setLang(setting);
+        window.location.reload(true);
+      }
+    },
+    [setLang, setTheme, setUnits]
+  );
 
   return (
     <>
