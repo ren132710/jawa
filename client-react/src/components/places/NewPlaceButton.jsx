@@ -9,6 +9,16 @@ import { usePlacesWeatherAPI } from '@/contexts/PlacesWeatherContext';
 import { useUtils } from '@/contexts/UtilsContext';
 import { usePrefsData } from '@/contexts/PrefsContext';
 
+function changeStyleOnMouseEnter(e) {
+  e.target.style.textDecoration = 'none';
+  e.target.style.color = 'var(--blue-40)';
+}
+
+function changeStyleOnMouseLeave(e) {
+  e.target.style.textDecoration = 'underline';
+  e.target.style.color = 'var(--blue-30)';
+}
+
 export default function NewPlaceButton({ id, location, lat, long }) {
   console.log('NewPlace rendered!');
   const { setPlaces, setPlacesWeatherData } = usePlacesWeatherAPI();
@@ -39,16 +49,6 @@ export default function NewPlaceButton({ id, location, lat, long }) {
       ...prevPlacesWeatherData,
       newMainWeather[0],
     ]);
-  }
-
-  function changeStyleOnMouseEnter(e) {
-    e.target.style.textDecoration = 'none';
-    e.target.style.color = 'var(--blue-40)';
-  }
-
-  function changeStyleOnMouseLeave(e) {
-    e.target.style.textDecoration = 'underline';
-    e.target.style.color = 'var(--blue-30)';
   }
 
   return (

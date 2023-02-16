@@ -1,21 +1,21 @@
 import PropTypes from 'prop-types';
 import styles from '@/styles/places/PlaceDeleteButton.module.css';
 
+function changeStyleOnPointerEnter(e) {
+  e.target.style.boxShadow = '0 0 5px 0 var(--white)';
+}
+
+function changeStyleOnPointerLeave(e) {
+  e.target.style.boxShadow = 'none';
+}
+
+function changeStyleOnFocus(e) {
+  e.target.style.backgroundColor = 'var(--blue-10)';
+  e.target.style.boxShadow = '0 0 8px 0 var(--blue-20)';
+}
+
 export default function PlaceDeleteButton({ onDelete, placeId }) {
   console.log('PlaceDeleteButton rendered!');
-
-  function changeStyleOnPointerEnter(e) {
-    e.target.style.boxShadow = '0 0 5px 0 var(--white)';
-  }
-
-  function changeStyleOnPointerLeave(e) {
-    e.target.style.boxShadow = 'none';
-  }
-
-  function changeStyleOnFocus(e) {
-    e.target.style.backgroundColor = 'var(--blue-10)';
-    e.target.style.boxShadow = '0 0 8px 0 var(--blue-20)';
-  }
 
   // mobile needs the onPointerDown event to see the delete button
   return (
