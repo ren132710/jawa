@@ -21,7 +21,7 @@ export default function PlaceCard({
     setIsHovered(true);
     e.target.style.backgroundColor = 'hsla(0, 0%, 96%, 0.3)';
     if (document.body.dataset.theme === 'light') {
-      e.target.style.boxShadow = '0 0 5px 0 var(--skyblue-85)';
+      e.target.style.boxShadow = '0 0 3px 0 var(--skyblue-85)';
     }
     if (document.body.dataset.theme === 'dark') {
       e.target.style.backgroundColor = 'hsla(0, 0%, 93%, 0.3)';
