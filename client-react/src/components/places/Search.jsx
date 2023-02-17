@@ -23,7 +23,7 @@ export default function Search({ loader }) {
   const { getTranslation } = useUtils();
 
   useEffect(() => {
-    console.log('Search useEffect is called!');
+    console.log('Search useEffect is called (loading Autocomplete)!');
     if (!inputRef.current) return;
 
     loader.load().then((google) => {

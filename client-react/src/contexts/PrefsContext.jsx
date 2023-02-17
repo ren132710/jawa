@@ -46,7 +46,7 @@ export default function PrefsProvider({ children }) {
 
   // keep localStorage in sync with prefs state
   useEffect(() => {
-    console.log('PrefsProvider useEffect (localStorage) ran!');
+    console.log('PrefsProvider useEffect (setLocalStorage)!');
     localStorage.setItem(
       PREFS_STORAGE_KEY,
       JSON.stringify([{ theme, units, lang }])
