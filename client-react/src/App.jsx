@@ -11,12 +11,12 @@ export default function App() {
   return (
     <UtilsProvider>
       <PrefsProvider>
-        <MainWeatherProvider>
-          <PlacesWeatherProvider>
+        <PlacesWeatherProvider>
+          <MainWeatherProvider>
             <Topbar />
             <Page />
-          </PlacesWeatherProvider>
-        </MainWeatherProvider>
+          </MainWeatherProvider>
+        </PlacesWeatherProvider>
       </PrefsProvider>
     </UtilsProvider>
   );
