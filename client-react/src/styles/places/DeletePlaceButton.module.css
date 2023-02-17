@@ -10,7 +10,6 @@
   transform: translateX(-50%) translateY(-50%);
   cursor: pointer;
   background: var(--white);
-  /* background: hsla(0, 0%, 96%, 0.9); */
   height: 16px;
   width: 16px;
   border: 1px solid var(--grey-90);
@@ -28,7 +27,21 @@
   pointer-events: none;
 }
 
-/* dark mode */
-body[data-theme='dark'] .place-btn-delete {
-  background-color: hsla(0, 0%, 98%, 0.9);
+.place-btn-delete:hover {
+  box-shadow: 0 0 5px 0 var(--white);
 }
+
+.place-btn-delete:focus {
+  background-color: var(--blue-10);
+  box-shadow: 0 0 8px 0 var(--blue-20);
+}
+
+/* light mode */
+body[data-theme='light'] .place-btn-delete:hover {
+  box-shadow: 0 0 5px 0 var(--skyblue-85);
+}
+
+/* dark mode */
+/* body[data-theme='dark'] .place-btn-delete {
+  background-color: hsla(0, 0%, 98%, 0.9);
+} */

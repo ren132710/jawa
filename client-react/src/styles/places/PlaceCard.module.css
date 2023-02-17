@@ -26,8 +26,8 @@
 
 .place-card:hover,
 .place-card:focus {
-  outline: none;
   background-color: hsla(0, 0%, 96%, 0.3);
+  outline: none;
 }
 
 /* light mode */
@@ -35,10 +35,12 @@ body[data-theme='light'] .place-card:hover,
 body[data-theme='light'] .place-card:focus {
   background-color: hsla(0, 0%, 95%, 0.3);
   box-shadow: 0 0 3px 0 var(--skyblue-85);
+  outline: none;
 }
 
 /* dark mode */
 body[data-theme='dark'] .place-card:hover,
 body[data-theme='dark'] .place-card:focus {
   background-color: hsla(0, 0%, 93%, 0.3);
+  outline: none;
 }

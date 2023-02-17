@@ -1,32 +1,10 @@
 import PropTypes from 'prop-types';
 import styles from '@/styles/places/DeletePlaceButton.module.css';
 
-// TODO: Delete button not working on ipad
-
-function changeStyleOnPointerEnter(e) {
-  if (document.body.dataset.theme === 'light') {
-    e.target.style.boxShadow = '0 0 5px 0 var(--skyblue-85)';
-  } else {
-    e.target.style.boxShadow = '0 0 5px 0 var(--white)';
-  }
-}
-
-function changeStyleOnPointerLeave(e) {
-  e.target.style.boxShadow = 'none';
-}
-
-function changeStyleOnFocus(e) {
-  // TODO: This function is not called when button is clicked
-  // TODO: try setting style onPointerDown
-  console.log('Delete Place Button changed style on focus called!');
-  e.target.style.backgroundColor = 'var(--blue-10)';
-  e.target.style.boxShadow = '0 0 8px 0 var(--blue-20)';
-}
-
 export default function DeletePlaceButton({ onDelete, placeId }) {
   console.log('PlaceDeleteButton rendered!');
 
-  // mobile needs the onPointerDown event to see the delete button
+  // iOS needs the onPointerDown event to see the delete button
   return (
     <div
       role="button"
@@ -35,9 +13,6 @@ export default function DeletePlaceButton({ onDelete, placeId }) {
       // tabIndex={0}
       onPointerDown={onDelete}
       onKeyDown={onDelete}
-      onPointerEnter={changeStyleOnPointerEnter}
-      onPointerLeave={changeStyleOnPointerLeave}
-      onFocus={changeStyleOnFocus}
       aria-label="tap to delete place from favorites"
       data-id={placeId}
       data-testid="btnDeletePlace"
