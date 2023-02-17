@@ -72,6 +72,7 @@ body[data-theme='dark'] {
 /*
  * user notification
  */
+
 .error-container {
   display: flex;
   justify-content: center;
