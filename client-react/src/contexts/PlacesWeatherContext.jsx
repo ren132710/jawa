@@ -38,15 +38,14 @@ export default function PlacesWeatherProvider({ children }) {
   const [places, setPlaces] = useState(getPlaces());
   const [placesWeatherData, setPlacesWeatherData] = useState([]);
   const { units, lang } = useWeatherPrefs();
-  const options = useMemo(() => {
-    return { places, units, lang };
-  }, [places, units, lang]);
 
-  // minimize API calls, load places weather only on page load
-  // TODO: might have to add back doPlacesUpdate when we support lang and units changes
   useEffect(() => {
-    console.log('PlacesWeatherProvider useEffect (options): ', options);
-    getWeather(options)
+    console.log('PlacesWeatherProvider useEffect (options): ', {
+      places,
+      units,
+      lang,
+    });
+    getWeather({ places, units, lang })
       .then((data) => {
         console.log('PlacesWeatherProvider useEffect (weather): ', data);
         setIsLoading(true);
@@ -60,7 +59,7 @@ export default function PlacesWeatherProvider({ children }) {
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [units, lang]);
 
   // keep localStorage in sync with state
   useEffect(() => {

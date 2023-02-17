@@ -1,17 +1,25 @@
 import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import MenuButton from '@/components/topbar/MenuButton';
 import MenuBlanket from '@/components/topbar/MenuBlanket';
 import styles from '@/styles/topbar/Menu.module.css';
-import { usePrefsAPI } from '@/contexts/PrefsContext';
+import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
+import { usePrefsAPI, useWeatherPrefs } from '@/contexts/PrefsContext';
+import getWeather from '@/utils/getWeather';
+
+// TODO: memoize the Menu buttons
 
 export default function Menu({ showMenu, delay, onClose }) {
   console.log('Menu rendered!');
   const [applyTransition, setApplyTransition] = useState(false);
   const { setTheme, setUnits, setLang } = usePrefsAPI();
+  const { setMainWeather } = useMainWeatherAPI();
+  const { units, lang } = useWeatherPrefs();
 
   // transition menu open and close
   useEffect(() => {
+    console.log('Menu useEffect (showMenu)!');
     if (!showMenu) return;
 
     // pause before applying css transition
@@ -21,6 +29,34 @@ export default function Menu({ showMenu, delay, onClose }) {
       clearTimeout(timeoutId);
     };
   }, [showMenu, delay]);
+
+  useEffect(() => {
+    console.log('Menu useEffect (getWeather)!');
+
+    async function handleGetWeather() {
+      // getWeather expects an array of place objects, even if there is only one place object
+      const places = [
+        {
+          id: uuidv4(),
+          location: document
+            .querySelector('#btnNewPlace')
+            .getAttribute('data-location'),
+          lat: document.querySelector('#btnNewPlace').getAttribute('data-lat'),
+          long: document
+            .querySelector('#btnNewPlace')
+            .getAttribute('data-long'),
+        },
+      ];
+
+      const weather = await getWeather({ places, units, lang });
+      console.log('Menu main weather update: ', weather);
+      setMainWeather(weather);
+    }
+
+    handleGetWeather();
+    // run only when user switches units or lang
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [units, lang]);
 
   // memoize functions passed as props
   const handleClick = useCallback(
@@ -33,13 +69,13 @@ export default function Menu({ showMenu, delay, onClose }) {
       if (['metric', 'imperial'].includes(setting)) {
         console.log('setUnits', setting);
         setUnits(setting);
-        window.location.reload(true);
+        // window.location.reload(true);
       }
 
       if (['en', 'fr', 'sv'].includes(setting)) {
         console.log('setUnits', setting);
         setLang(setting);
-        window.location.reload(true);
+        // window.location.reload(true);
       }
     },
     [setLang, setTheme, setUnits]

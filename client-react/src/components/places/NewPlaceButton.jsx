@@ -44,6 +44,7 @@ export default function NewPlaceButton({ id, location, lat, long }) {
   return (
     <button
       type="button"
+      id="btnNewPlace"
       className={styles.placeBtnNew}
       onClick={handleNewPlace}
       aria-label="click to add a new place"
