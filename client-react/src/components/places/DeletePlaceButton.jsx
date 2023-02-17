@@ -1,8 +1,14 @@
 import PropTypes from 'prop-types';
-import styles from '@/styles/places/PlaceDeleteButton.module.css';
+import styles from '@/styles/places/DeletePlaceButton.module.css';
+
+// TODO: Delete button not working on ipad
 
 function changeStyleOnPointerEnter(e) {
-  e.target.style.boxShadow = '0 0 5px 0 var(--white)';
+  if (document.body.dataset.theme === 'light') {
+    e.target.style.boxShadow = '0 0 5px 0 var(--skyblue-85)';
+  } else {
+    e.target.style.boxShadow = '0 0 5px 0 var(--white)';
+  }
 }
 
 function changeStyleOnPointerLeave(e) {
@@ -10,11 +16,14 @@ function changeStyleOnPointerLeave(e) {
 }
 
 function changeStyleOnFocus(e) {
+  // TODO: This function is not called when button is clicked
+  // TODO: try setting style onPointerDown
+  console.log('Delete Place Button changed style on focus called!');
   e.target.style.backgroundColor = 'var(--blue-10)';
   e.target.style.boxShadow = '0 0 8px 0 var(--blue-20)';
 }
 
-export default function PlaceDeleteButton({ onDelete, placeId }) {
+export default function DeletePlaceButton({ onDelete, placeId }) {
   console.log('PlaceDeleteButton rendered!');
 
   // mobile needs the onPointerDown event to see the delete button
@@ -45,7 +54,7 @@ export default function PlaceDeleteButton({ onDelete, placeId }) {
   );
 }
 
-PlaceDeleteButton.propTypes = {
+DeletePlaceButton.propTypes = {
   onDelete: PropTypes.func.isRequired,
   placeId: PropTypes.string.isRequired,
 };

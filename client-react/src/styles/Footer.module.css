@@ -16,3 +16,9 @@ footer > a:link,
 footer > a:visited {
   color: var(--color-value);
 }
+
+/* dark mode */
+body[data-theme='dark'] footer > a:link,
+body[data-theme='dark'] footer > a:visited {
+  color: var(--blue-65);
+}

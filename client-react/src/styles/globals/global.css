@@ -26,8 +26,6 @@ body {
     var(--background-linear-from),
     var(--background-linear-to)
   );
-  /* TODO: How to transition to themes? */
-  /* transition: 2s ease; */
 }
 
 .blur {
@@ -35,7 +33,11 @@ body {
   filter: blur(5px);
 }
 
-/* display modes */
+/*
+ * display themes
+ */
+
+/* light mode */
 body[data-theme='light'] {
   --background-linear-to: var(--white);
   --color-value: var(--blue-35);
@@ -44,9 +46,32 @@ body[data-theme='light'] {
   --border-thickness-card: 1.5px;
   --border-thickness-input: 1.5px;
   --hour-nth-child-background-to: var(--skyblue-90);
+  transition: 200ms linear;
 }
 
-/* user notification */
+/* dark mode */
+body[data-theme='dark'].blur {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+body[data-theme='dark'] {
+  --color: var(--grey-85);
+  --svg-fill-color: var(--grey-85);
+  --color-value: var(--blue-65);
+  --background-linear-from: hsla(0, 0%, 0%, 0.8);
+  --background-linear-to: hsla(0, 0%, 0%, 1); /* var(--black); */
+  --border-color-card: var(--grey-80);
+  --border-color-input: var(--grey-96);
+  --border-thickness-card: 1px;
+  --border-thickness-input: 1px;
+  --hour-nth-child-background-from: var(--grey-15);
+  --hour-nth-child-background-to: var(--black);
+  transition: 200ms linear;
+}
+
+/*
+ * user notification
+ */
 .error-container {
   display: flex;
   justify-content: center;

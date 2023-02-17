@@ -26,7 +26,7 @@ export default function PlacesContainer() {
     if (mainWeather.length === 0) setMainWeather([placesWeatherData[0]]);
   }, [mainWeather.length, placesWeatherData, setMainWeather]);
 
-  // memoize as these functions are passed as props
+  // memoize functions passed as props
   const handleViewPlace = useCallback(
     (e) => {
       // unless click or enter key, return

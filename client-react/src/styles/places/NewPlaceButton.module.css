@@ -11,3 +11,13 @@
   padding: 0 0.2rem;
   transition: 100ms linear;
 }
+
+.place-btn-new:hover {
+  text-decoration: none;
+  color: var(--blue-40);
+}
+
+/* dark mode */
+body[data-theme='dark'] .place-btn-new {
+  color: var(--blue-65);
+}

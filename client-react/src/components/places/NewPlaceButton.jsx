@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import styles from '@/styles/main/NewPlaceButton.module.css';
+import styles from '@/styles/places/NewPlaceButton.module.css';
 import {
   useMainWeatherData,
   useMainWeatherAPI,
@@ -8,16 +8,6 @@ import {
 import { usePlacesWeatherAPI } from '@/contexts/PlacesWeatherContext';
 import { useUtils } from '@/contexts/UtilsContext';
 import { useWeatherPrefs } from '@/contexts/PrefsContext';
-
-function changeStyleOnMouseEnter(e) {
-  e.target.style.textDecoration = 'none';
-  e.target.style.color = 'var(--blue-40)';
-}
-
-function changeStyleOnMouseLeave(e) {
-  e.target.style.textDecoration = 'underline';
-  e.target.style.color = 'var(--blue-30)';
-}
 
 export default function NewPlaceButton({ id, location, lat, long }) {
   console.log('NewPlace rendered!');
@@ -56,10 +46,6 @@ export default function NewPlaceButton({ id, location, lat, long }) {
       type="button"
       className={styles.placeBtnNew}
       onClick={handleNewPlace}
-      onMouseEnter={changeStyleOnMouseEnter}
-      onMouseLeave={changeStyleOnMouseLeave}
-      onFocus={changeStyleOnMouseEnter}
-      onBlur={changeStyleOnMouseLeave}
       aria-label="click to add a new place"
       data-id={id}
       data-location={location}

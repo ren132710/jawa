@@ -7,7 +7,7 @@
   gap: 0.7rem;
   border-radius: var(--border-radius-card);
   background: var(--blue-99);
-  box-shadow: 0 0 5px 0 var(--blue-80);
+  box-shadow: 0 0 10px 0 var(--skyblue-85);
   padding: 1em;
   /* opacity: 0; */
   clip-path: circle(0px at top right);
@@ -52,8 +52,19 @@
   color: inherit;
 }
 
-/* display modes */
+/* light mode */
 body[data-theme='light'] .menu {
   background: var(--white);
+  box-shadow: 0 0 10px 0 var(--grey-90);
+}
+
+/* dark mode */
+body[data-theme='dark'] .menu {
+  background: hsla(0, 0%, 0%, 1);
+  border: var(--border-thickness-card) solid var(--grey-85);
   box-shadow: 0 0 5px 0 var(--grey-90);
+}
+
+body[data-theme='dark'] .sub-menu::before {
+  color: var(--grey-85);
 }

@@ -22,6 +22,7 @@ export default function Menu({ showMenu, delay, onClose }) {
     };
   }, [showMenu, delay]);
 
+  // memoize functions passed as props
   const handleClick = useCallback(
     (e) => {
       if (!e.target.dataset.setting) return;
