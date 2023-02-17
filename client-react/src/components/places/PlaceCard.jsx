@@ -17,23 +17,6 @@ export default function PlaceCard({
   const [isHovered, setIsHovered] = useState(false);
   const { getIconUrl } = useUtils();
 
-  function changeStyleOnMouseEnter(e) {
-    setIsHovered(true);
-    e.target.style.backgroundColor = 'hsla(0, 0%, 96%, 0.3)';
-    if (document.body.dataset.theme === 'light') {
-      e.target.style.boxShadow = '0 0 3px 0 var(--skyblue-85)';
-    }
-    if (document.body.dataset.theme === 'dark') {
-      e.target.style.backgroundColor = 'hsla(0, 0%, 93%, 0.3)';
-    }
-  }
-
-  function changeStyleOnMouseLeave(e) {
-    setIsHovered(false);
-    e.target.style.backgroundColor = 'transparent';
-    e.target.style.boxShadow = 'none';
-  }
-
   return (
     <div
       className={styles.placeCard}
@@ -41,10 +24,10 @@ export default function PlaceCard({
       tabIndex={0}
       onClick={handleViewPlace}
       onKeyDown={handleViewPlace}
-      onMouseEnter={changeStyleOnMouseEnter}
-      onMouseLeave={changeStyleOnMouseLeave}
-      onFocus={changeStyleOnMouseEnter}
-      onBlur={changeStyleOnMouseLeave}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
       aria-label="tap to view weather"
       data-id={coordinates.id}
       data-location={coordinates.location}
@@ -52,8 +35,8 @@ export default function PlaceCard({
       data-long={coordinates.long}
       data-testid="place-card"
     >
-      {/* do not show delete place button when there is only one place */}
-      {/* otherwise, show delete button when place is hovered or has focus */}
+      {/* do not reveal delete button when there is only one place */}
+      {/* otherwise, reveal delete button when place is hovered or has focus */}
       {placesLength === 1 ? null : isHovered ? (
         <PlaceDeleteButton
           onDelete={handleDeletePlace}

@@ -10,6 +10,7 @@
   transform: translateX(-50%) translateY(-50%);
   cursor: pointer;
   background: var(--white);
+  /* background: hsla(0, 0%, 96%, 0.9); */
   height: 16px;
   width: 16px;
   border: 1px solid var(--grey-90);
@@ -25,4 +26,9 @@
   stroke-width: 3;
   stroke-linecap: round;
   pointer-events: none;
+}
+
+/* dark mode */
+body[data-theme='dark'] .place-btn-delete {
+  background-color: hsla(0, 0%, 98%, 0.9);
 }
