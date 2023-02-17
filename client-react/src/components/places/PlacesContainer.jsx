@@ -19,15 +19,12 @@ export default function PlacesContainer() {
   const { setMainWeather } = useMainWeatherAPI();
   const { mainWeather } = useMainWeatherData();
 
-  // TODO: run this useEffect only once?
   // set the main weather to the first place on startup, or whenever mainWeather is empty
   useEffect(() => {
-    console.log('PlacesContainer useEffect called (setting MainWeather)!');
+    console.log('PlacesContainer useEffect called!');
     if (!placesWeatherData.length) return;
     if (mainWeather.length === 0) setMainWeather([placesWeatherData[0]]);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mainWeather.length]);
+  }, [mainWeather.length, placesWeatherData, setMainWeather]);
 
   // memoize functions passed as props
   const handleViewPlace = useCallback(
