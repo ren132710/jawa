@@ -21,7 +21,7 @@ export default function PlacesContainer() {
 
   // set the main weather to the first place on startup, or whenever mainWeather is empty
   useEffect(() => {
-    console.log('PlacesContainer useEffect called!');
+    console.log('PlacesContainer useEffect (set MainWeather)');
     if (!placesWeatherData.length) return;
     if (mainWeather.length === 0) setMainWeather([placesWeatherData[0]]);
   }, [mainWeather.length, placesWeatherData, setMainWeather]);
