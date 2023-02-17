@@ -215,7 +215,6 @@ describe('#scenarioPrefs', () => {
       });
 
     // and when the user switches to Swedish
-    cy.findByTestId('hamburger').click();
     cy.findByTestId('btnSwedish')
       .click()
       .then(() => {
@@ -255,7 +254,6 @@ describe('#scenarioPrefs', () => {
       });
 
     // and when the user switches back to English
-    cy.findByTestId('hamburger').click();
     cy.findByTestId('btnEnglish')
       .click()
       .then(() => {
