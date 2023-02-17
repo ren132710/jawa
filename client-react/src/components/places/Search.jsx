@@ -39,9 +39,7 @@ export default function Search({ loader }) {
         if (!place) return;
         if (!place.geometry) return;
 
-        const weatherData = await handleSearchForWeather(place);
-        console.log('search weatherData: ', weatherData);
-        setMainWeather(weatherData);
+        handleSearchForWeather(place);
       });
     });
 
@@ -56,18 +54,9 @@ export default function Search({ loader }) {
         },
       ];
 
-      const options = {
-        places,
-        units,
-        lang,
-      };
-
-      const res = getWeather(options);
-      const weather = res.then((data) => {
-        return data;
-      });
-
-      return weather;
+      const weather = await getWeather({ places, units, lang });
+      console.log('search weather: ', weather);
+      setMainWeather(weather);
     }
 
     // run this effect if the loader changes
