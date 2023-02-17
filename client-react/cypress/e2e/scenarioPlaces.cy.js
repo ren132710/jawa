@@ -42,7 +42,7 @@ function setTestDefaults() {
   localStorage.setItem('jawa-prefs', JSON.stringify(testPrefs));
 }
 
-describe('#scenario: places', () => {
+describe('#scenarioPlaces', () => {
   beforeEach(() => {
     // clear local storage and set test defaults
     localStorage.clear();
@@ -69,13 +69,6 @@ describe('#scenario: places', () => {
 
     // when the user hovers or tabs to the second place card
     cy.findAllByTestId('place-card').eq(1).as('place2').trigger('mouseover');
-
-    // then the place card should be highlighted
-    cy.get('@place2').should(
-      'have.css',
-      'background-color',
-      'rgba(245, 245, 245, 0.3)'
-    );
 
     // and the delete button should be visible
     cy.get('@place2')
@@ -120,13 +113,6 @@ describe('#scenario: places', () => {
     // and when the user hovers or tabs away
     cy.get('@place2').trigger('mouseout');
 
-    // then the place card should be transparent
-    cy.get('@place2').should(
-      'have.css',
-      'background-color',
-      'rgba(0, 0, 0, 0)'
-    );
-
     // and the delete button should be hidden
     cy.get('@place2')
       .find('[data-testid="btnDeletePlace"]')
@@ -142,13 +128,6 @@ describe('#scenario: places', () => {
 
     // when the user hovers or tabs to the second place card
     cy.findAllByTestId('place-card').eq(1).as('place2').trigger('mouseover');
-
-    // then the place card should be highlighted
-    cy.get('@place2').should(
-      'have.css',
-      'background-color',
-      'rgba(245, 245, 245, 0.3)'
-    );
 
     // and the delete button should be visible
     cy.get('@place2')

@@ -20,7 +20,7 @@ export default function Main() {
       <div className={styles.currentSection}>
         <SectionHeading
           section="current"
-          titleTranslationId={2}
+          translationId={2}
           timestamp={weather.current.timestamp}
           timezone={weather.coordinates.timezone}
           subtitleTestId="subtitle-current"
@@ -33,7 +33,7 @@ export default function Main() {
       <div className={styles.dailySection}>
         <SectionHeading
           section="forecast"
-          titleTranslationId={3}
+          translationId={3}
           timestamp={weather.current.timestamp}
           timezone={weather.coordinates.timezone}
           subtitleTestId="subtitle-forecast"
@@ -43,7 +43,7 @@ export default function Main() {
       <div className={styles.hourlySection}>
         <SectionHeading
           section="hourly"
-          titleTranslationId={4}
+          translationId={4}
           timestamp={weather.current.timestamp}
           timezone={weather.coordinates.timezone}
           subtitleTestId="subtitle-hourly"

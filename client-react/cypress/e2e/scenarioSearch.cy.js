@@ -24,7 +24,7 @@ function setTestDefaults() {
   localStorage.setItem('jawa-prefs', JSON.stringify(testPrefs));
 }
 
-describe('#scenario: places', () => {
+describe('#scenarioSearch', () => {
   beforeEach(() => {
     // clear local storage and set test defaults
     localStorage.clear();

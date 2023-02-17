@@ -27,7 +27,7 @@ function getSubTitle(section, timestamp, timezone, df, lang) {
 
 export default function SectionHeading({
   section,
-  titleTranslationId,
+  translationId,
   timestamp,
   timezone,
   subtitleTestId,
@@ -42,10 +42,10 @@ export default function SectionHeading({
     <>
       <div
         className={styles.sectionTitle}
-        data-translation={titleTranslationId}
+        data-translation={translationId}
         data-testid="section-title"
       >
-        {getTranslation(titleTranslationId, lang)}
+        {getTranslation(translationId, lang)}
       </div>
       <div className={styles.sectionSubtitle} data-testid={subtitleTestId}>
         {subtitle}
@@ -56,7 +56,7 @@ export default function SectionHeading({
 
 SectionHeading.propTypes = {
   section: PropTypes.oneOf(['current', 'forecast', 'hourly']).isRequired,
-  titleTranslationId: PropTypes.number.isRequired,
+  translationId: PropTypes.number.isRequired,
   timestamp: PropTypes.number.isRequired,
   timezone: PropTypes.string.isRequired,
   subtitleTestId: PropTypes.string.isRequired,
