@@ -78,8 +78,14 @@ export default function PlacesContainer() {
       {placesWeatherData.map((place) => (
         <PlaceCard
           key={place.coordinates.id}
-          coordinates={place.coordinates}
-          current={place.current}
+          id={place.coordinates.id}
+          location={place.coordinates.location}
+          lat={place.coordinates.lat}
+          long={place.coordinates.long}
+          weatherIcon={place.current.icon}
+          description={place.current.description}
+          high={place.current.high}
+          low={place.current.low}
           handleViewPlace={handleViewPlace}
           handleDeletePlace={handleDeletePlace}
           placesLength={places.length}

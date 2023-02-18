@@ -7,8 +7,14 @@ import styles from '@/styles/places/PlaceCard.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
 
 export default function PlaceCard({
-  coordinates,
-  current,
+  id,
+  location,
+  lat,
+  long,
+  weatherIcon,
+  description,
+  high,
+  low,
   handleViewPlace,
   handleDeletePlace,
   placesLength,
@@ -29,24 +35,21 @@ export default function PlaceCard({
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
       aria-label="tap to view weather"
-      data-id={coordinates.id}
-      data-location={coordinates.location}
-      data-lat={coordinates.lat}
-      data-long={coordinates.long}
+      data-id={id}
+      data-location={location}
+      data-lat={lat}
+      data-long={long}
       data-testid="place-card"
     >
       {/* do not reveal delete button when there is only one place */}
       {/* otherwise, reveal delete button when place is hovered or has focus */}
       {placesLength === 1 ? null : isHovered ? (
-        <PlaceDeleteButton
-          onDelete={handleDeletePlace}
-          placeId={coordinates.id}
-        />
+        <PlaceDeleteButton onDelete={handleDeletePlace} placeId={id} />
       ) : null}
       <WeatherIcon
-        weatherIcon={current.icon}
+        weatherIcon={weatherIcon}
         weatherIconSize="small"
-        weatherDescription={current.description}
+        weatherDescription={description}
         getIconUrl={getIconUrl}
         customStyles={{ pointerEvents: 'none' }}
         imgWidth="50"
@@ -57,32 +60,28 @@ export default function PlaceCard({
         className={[styles.placeText, styles.placeCardItem].join(' ')}
         data-testid="place-location"
       >
-        {coordinates.location}
+        {location}
       </div>
       <div
         className={[styles.placeText, styles.placeCardItem].join(' ')}
         data-testid="place-hl"
       >
-        <span data-testid="place-high">{current.high}</span>/
-        <span data-testid="place-low">{current.low}°</span>
+        <span data-testid="place-high">{high}</span>/
+        <span data-testid="place-low">{low}°</span>
       </div>
     </div>
   );
 }
 
 PlaceCard.propTypes = {
-  coordinates: PropTypes.shape({
-    id: PropTypes.string,
-    location: PropTypes.string,
-    lat: PropTypes.number,
-    long: PropTypes.number,
-  }).isRequired,
-  current: PropTypes.shape({
-    description: PropTypes.string,
-    high: PropTypes.number,
-    low: PropTypes.number,
-    icon: PropTypes.string,
-  }).isRequired,
+  id: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  lat: PropTypes.number.isRequired,
+  long: PropTypes.number.isRequired,
+  weatherIcon: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  high: PropTypes.number.isRequired,
+  low: PropTypes.number.isRequired,
   handleViewPlace: PropTypes.func.isRequired,
   handleDeletePlace: PropTypes.func.isRequired,
   placesLength: PropTypes.number.isRequired,
