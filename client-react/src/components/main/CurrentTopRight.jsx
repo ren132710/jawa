@@ -16,6 +16,7 @@ export default function CurrentTopRight({
   visibility,
 }) {
   console.log('CurrentTopRight rendered!');
+  console.log('Current description: ', description);
   const { units, lang } = useWeatherPrefs();
   const { getUnitOfMeasure, getTranslation } = useUtils();
 
