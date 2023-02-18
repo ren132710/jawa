@@ -28,34 +28,8 @@ export default function Menu({ showMenu, delay, onClose }) {
     };
   }, [showMenu, delay]);
 
-  useEffect(() => {
-    console.log('Menu useEffect (getWeather)!');
-    async function handleGetWeather() {
-      // getWeather expects an array of place objects, even if there is only one place object
-      const places = [
-        {
-          id: uuidv4(),
-          location: document
-            .querySelector('#btnNewPlace')
-            .getAttribute('data-location'),
-          lat: document.querySelector('#btnNewPlace').getAttribute('data-lat'),
-          long: document
-            .querySelector('#btnNewPlace')
-            .getAttribute('data-long'),
-        },
-      ];
-
-      const weather = await getWeather({ places, units, lang });
-      console.log('Menu main weather update: ', weather);
-      setMainWeather(weather);
-    }
-
-    handleGetWeather();
-    // run only when user switches units or lang
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [units, lang]);
-
-  // memoize functions passed as props
+  // a useEffect here causes MainWeather to re-render when Menu opens
+  // memoize functions passed as props to memoized components
   const handleClick = useCallback(
     (e) => {
       if (!e.target.dataset.setting) return;
@@ -66,13 +40,49 @@ export default function Menu({ showMenu, delay, onClose }) {
 
       if (['metric', 'imperial'].includes(setting)) {
         setUnits(setting);
+        handleGetWeather('units', setting);
       }
 
       if (['en', 'fr', 'sv'].includes(setting)) {
         setLang(setting);
+        handleGetWeather('lang', setting);
+      }
+
+      async function handleGetWeather(key, value) {
+        let options = {};
+
+        // getWeather expects an array of place objects, even if there is only one place object
+        const places = [
+          {
+            id: uuidv4(),
+            location: document
+              .querySelector('#btnNewPlace')
+              .getAttribute('data-location'),
+            lat: document
+              .querySelector('#btnNewPlace')
+              .getAttribute('data-lat'),
+            long: document
+              .querySelector('#btnNewPlace')
+              .getAttribute('data-long'),
+          },
+        ];
+
+        // since react setters are asynchronous, we must pass lang/unit settings explicitly to getWeather
+        if (key === 'units') {
+          options = { places, units: value, lang };
+        }
+
+        if (key === 'lang') {
+          options = { places, units, lang: value };
+        }
+
+        const weather = await getWeather(options);
+        console.log('Menu main weather update: ', weather);
+        setMainWeather(weather);
       }
     },
-    [setLang, setTheme, setUnits]
+
+    [lang, setLang, setMainWeather, setTheme, setUnits, units]
   );
 
   return (
