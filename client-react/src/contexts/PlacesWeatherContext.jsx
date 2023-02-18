@@ -1,14 +1,8 @@
 import React, { useState, useContext, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useWeatherPrefs } from '@/contexts/PrefsContext';
-import { PLACES_STORAGE_KEY, DEFAULT_PLACES } from '@/constants/constants';
 import getWeather from '@/utils/getWeather';
-
-// if localStorage, otherwise use default places
-const getPlaces = () => {
-  const places = localStorage.getItem(PLACES_STORAGE_KEY);
-  return places ? JSON.parse(places) : DEFAULT_PLACES;
-};
+import { getLocalPlaces, setLocalPlaces } from '@/utils/localStorage';
 
 // 1. create the contexts
 const PlacesWeatherDataContext = React.createContext();
@@ -35,7 +29,7 @@ export default function PlacesWeatherProvider({ children }) {
   console.log('PlacesWeatherProvider rendered!');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [places, setPlaces] = useState(getPlaces());
+  const [places, setPlaces] = useState(getLocalPlaces());
   const [placesWeatherData, setPlacesWeatherData] = useState([]);
   const { units, lang } = useWeatherPrefs();
 
@@ -64,7 +58,7 @@ export default function PlacesWeatherProvider({ children }) {
   // keep localStorage in sync with state
   useEffect(() => {
     console.log('PlacesWeatherProvider useEffect (setLocalStorage): ', places);
-    localStorage.setItem(PLACES_STORAGE_KEY, JSON.stringify(places));
+    setLocalPlaces(places);
   }, [places]);
 
   const memoDataContext = useMemo(() => {

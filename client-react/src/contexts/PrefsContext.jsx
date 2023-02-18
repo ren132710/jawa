@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { PREFS_STORAGE_KEY, DEFAULT_PREFS } from '@/constants/constants';
+import { getLocalPrefs, setLocalPrefs } from '@/utils/localStorage';
 
 const WeatherPrefsContext = React.createContext();
 const PrefsAPIContext = React.createContext();
 
-// separate theme context so components don't re-render when theme changes
+// separate out theme context so components don't re-render when theme changes
 const ThemeContext = React.createContext();
 
 export function useWeatherPrefs() {
@@ -32,25 +32,16 @@ export function useTheme() {
   return context;
 }
 
-// if localStorage, otherwise use default prefs
-const getPrefs = () => {
-  const prefs = localStorage.getItem(PREFS_STORAGE_KEY);
-  return prefs ? JSON.parse(prefs) : DEFAULT_PREFS;
-};
-
 export default function PrefsProvider({ children }) {
   console.log('PrefsProvider rendered!');
-  const [theme, setTheme] = useState(getPrefs()[0].theme);
-  const [units, setUnits] = useState(getPrefs()[0].units);
-  const [lang, setLang] = useState(getPrefs()[0].lang);
+  const [theme, setTheme] = useState(getLocalPrefs()[0].theme);
+  const [units, setUnits] = useState(getLocalPrefs()[0].units);
+  const [lang, setLang] = useState(getLocalPrefs()[0].lang);
 
   // keep localStorage in sync with prefs state
   useEffect(() => {
     console.log('PrefsProvider useEffect (setLocalStorage)!');
-    localStorage.setItem(
-      PREFS_STORAGE_KEY,
-      JSON.stringify([{ theme, units, lang }])
-    );
+    setLocalPrefs([{ theme, units, lang }]);
   }, [theme, units, lang]);
 
   // apply theme change application wide
