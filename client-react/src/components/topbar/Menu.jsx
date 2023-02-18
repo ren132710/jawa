@@ -30,7 +30,6 @@ export default function Menu({ showMenu, delay, onClose }) {
 
   useEffect(() => {
     console.log('Menu useEffect (getWeather)!');
-
     async function handleGetWeather() {
       // getWeather expects an array of place objects, even if there is only one place object
       const places = [
@@ -67,12 +66,10 @@ export default function Menu({ showMenu, delay, onClose }) {
 
       if (['metric', 'imperial'].includes(setting)) {
         setUnits(setting);
-        // window.location.reload(true);
       }
 
       if (['en', 'fr', 'sv'].includes(setting)) {
         setLang(setting);
-        // window.location.reload(true);
       }
     },
     [setLang, setTheme, setUnits]
