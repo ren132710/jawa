@@ -1,5 +1,6 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { usePlacesWeatherData } from '@/contexts/PlacesWeatherContext';
 
 // 1. create the contexts
 const MainWeatherDataContext = React.createContext();
@@ -25,6 +26,14 @@ export function useMainWeatherAPI() {
 export default function MainWeatherProvider({ children }) {
   console.log('MainWeatherProvider rendered!');
   const [mainWeather, setMainWeather] = useState([]);
+  const { placesWeatherData } = usePlacesWeatherData();
+
+  // set mainWeather to first default place on startup, or whenever mainWeather is empty
+  useEffect(() => {
+    console.log('MainWeatherProvider useEffect (setMainWeather)');
+    if (!placesWeatherData.length) return;
+    if (mainWeather.length === 0) setMainWeather([placesWeatherData[0]]);
+  }, [mainWeather.length, placesWeatherData, setMainWeather]);
 
   const memoDataContext = useMemo(() => {
     return { mainWeather };

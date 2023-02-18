@@ -1,10 +1,7 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
-import {
-  useMainWeatherData,
-  useMainWeatherAPI,
-} from '@/contexts/MainWeatherContext';
+import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
 import {
   usePlacesWeatherData,
   usePlacesWeatherAPI,
@@ -17,14 +14,6 @@ export default function PlacesContainer() {
     usePlacesWeatherData();
   const { setPlaces, setPlacesWeatherData } = usePlacesWeatherAPI();
   const { setMainWeather } = useMainWeatherAPI();
-  const { mainWeather } = useMainWeatherData();
-
-  // set the main weather to the first place on startup, or whenever mainWeather is empty
-  useEffect(() => {
-    console.log('PlacesContainer useEffect (set MainWeather)');
-    if (!placesWeatherData.length) return;
-    if (mainWeather.length === 0) setMainWeather([placesWeatherData[0]]);
-  }, [mainWeather.length, placesWeatherData, setMainWeather]);
 
   // memoize functions passed as props
   const handleViewPlace = useCallback(
