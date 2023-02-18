@@ -51,14 +51,13 @@ export default function Menu({ showMenu, delay, onClose }) {
       async function handleGetWeather(key, value) {
         let options = {};
 
-        // const checkId = document.querySelector('#btnNewPlace')?.dataset.id;
         // getWeather expects an array of place objects, even if there is only one place object
         const places = [
           {
             id: uuidv4(),
-            location: document.querySelector('#btnNewPlace').dataset.location,
-            lat: document.querySelector('#btnNewPlace').dataset.lat,
-            long: document.querySelector('#btnNewPlace').dataset.long,
+            location: document.querySelector('#btnNewPlace')?.dataset.location,
+            lat: document.querySelector('#btnNewPlace')?.dataset.lat,
+            long: document.querySelector('#btnNewPlace')?.dataset.long,
           },
         ];
 
