@@ -1,10 +1,7 @@
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '@/styles/places/NewPlaceButton.module.css';
-import {
-  useMainWeatherData,
-  useMainWeatherAPI,
-} from '@/contexts/MainWeatherContext';
+import { useMainWeatherData } from '@/contexts/MainWeatherContext';
 import { usePlacesWeatherAPI } from '@/contexts/PlacesWeatherContext';
 import { useUtils } from '@/contexts/UtilsContext';
 import { useWeatherPrefs } from '@/contexts/PrefsContext';
@@ -13,7 +10,7 @@ export default function NewPlaceButton({ id, location, lat, long }) {
   console.log('NewPlace rendered!');
   const { setPlaces, setPlacesWeatherData } = usePlacesWeatherAPI();
   const { mainWeather } = useMainWeatherData();
-  const { setMainWeather } = useMainWeatherAPI();
+  // const { setMainWeather } = useMainWeatherAPI();
   const { lang } = useWeatherPrefs();
   const { getTranslation } = useUtils();
 
@@ -31,8 +28,6 @@ export default function NewPlaceButton({ id, location, lat, long }) {
     const newMainWeather = JSON.parse(JSON.stringify(mainWeather));
     // then set mainWeather with the new id
     newMainWeather[0].coordinates.id = newId;
-    setMainWeather(newMainWeather);
-
     // then update places and placesWeatherData
     setPlaces((prevPlaces) => [...prevPlaces, newPlace]);
     setPlacesWeatherData((prevPlacesWeatherData) => [
