@@ -1,12 +1,12 @@
 /* eslint-disable no-nested-ternary */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import PlaceDeleteButton from '@/components/places/DeletePlaceButton';
 import WeatherIcon from '@/components/WeatherIcon';
 import styles from '@/styles/places/PlaceCard.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
 
-export default function PlaceCard({
+export function PlaceCard({
   id,
   location,
   lat,
@@ -72,6 +72,23 @@ export default function PlaceCard({
     </div>
   );
 }
+
+export const MemoizedPlaceCard = React.memo(
+  PlaceCard,
+  (prevProps, nextProps) => {
+    return (
+      prevProps.id === nextProps.id &&
+      prevProps.location === nextProps.location &&
+      prevProps.lat === nextProps.lat &&
+      prevProps.long === nextProps.long &&
+      prevProps.weatherIcon === nextProps.weatherIcon &&
+      prevProps.description === nextProps.description &&
+      prevProps.high === nextProps.high &&
+      prevProps.low === nextProps.low &&
+      prevProps.placesLength === nextProps.placesLength
+    );
+  }
+);
 
 PlaceCard.propTypes = {
   id: PropTypes.string.isRequired,

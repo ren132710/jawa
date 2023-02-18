@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import PlaceCard from '@/components/places/PlaceCard';
+import { MemoizedPlaceCard } from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
 import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
 import {
@@ -76,7 +76,7 @@ export default function PlacesContainer() {
   return (
     <div className={styles.placesContainer} data-testid="places-container">
       {placesWeatherData.map((place) => (
-        <PlaceCard
+        <MemoizedPlaceCard
           key={place.coordinates.id}
           id={place.coordinates.id}
           location={place.coordinates.location}
