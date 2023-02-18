@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { MemoizedMenuButton } from '@/components/topbar/MenuButton';
-import { MemoizedMenuBlanket } from '@/components/topbar/MenuBlanket';
+import MenuBlanket from '@/components/topbar/MenuBlanket';
 import styles from '@/styles/topbar/Menu.module.css';
 import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
 import { usePrefsAPI, useWeatherPrefs } from '@/contexts/PrefsContext';
@@ -150,7 +150,7 @@ export default function Menu({ showMenu, delay, onClose }) {
         </div>
       </div>
       {/* blanket placed below menu so menu is tabbable */}
-      <MemoizedMenuBlanket onClose={onClose} />
+      <MenuBlanket onClose={onClose} />
     </>
   );
 }
