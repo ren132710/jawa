@@ -63,7 +63,8 @@ export default function Menu({ showMenu, delay, onClose }) {
     (e) => {
       if (!e.target.dataset.setting) return;
 
-      const setting = e.target.dataset;
+      // extract setting from the DOMStringMap
+      const { setting } = e.target.dataset;
       if (['light', 'jawa', 'dark'].includes(setting)) setTheme(setting);
 
       if (['metric', 'imperial'].includes(setting)) {
