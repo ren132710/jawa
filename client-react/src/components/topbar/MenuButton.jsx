@@ -1,7 +1,8 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '@/styles/topbar/Button.module.css';
 
-export default function Button({ title, onClick, ariaLabel, setting, testId }) {
+export function MenuButton({ title, onClick, ariaLabel, setting, testId }) {
   console.log('Button rendered!');
 
   return (
@@ -18,7 +19,9 @@ export default function Button({ title, onClick, ariaLabel, setting, testId }) {
   );
 }
 
-Button.propTypes = {
+export const MemoizedMenuButton = React.memo(MenuButton);
+
+MenuButton.propTypes = {
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   ariaLabel: PropTypes.string.isRequired,

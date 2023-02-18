@@ -1,14 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import MenuButton from '@/components/topbar/MenuButton';
-import MenuBlanket from '@/components/topbar/MenuBlanket';
+import { MemoizedMenuButton } from '@/components/topbar/MenuButton';
+import { MemoizedMenuBlanket } from '@/components/topbar/MenuBlanket';
 import styles from '@/styles/topbar/Menu.module.css';
 import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
 import { usePrefsAPI, useWeatherPrefs } from '@/contexts/PrefsContext';
 import getWeather from '@/utils/getWeather';
-
-// TODO: memoize the Menu buttons
 
 export default function Menu({ showMenu, delay, onClose }) {
   console.log('Menu rendered!');
@@ -89,14 +87,14 @@ export default function Menu({ showMenu, delay, onClose }) {
         data-testid="menu"
       >
         <div className={[styles.subMenu, styles.units].join(' ')}>
-          <MenuButton
+          <MemoizedMenuButton
             title="Metric"
             onClick={handleClick}
             ariaLabel="switch to metric"
             setting="metric"
             testId="btnMetric"
           />
-          <MenuButton
+          <MemoizedMenuButton
             title="Imperial"
             onClick={handleClick}
             ariaLabel="switch to imperial"
@@ -105,21 +103,21 @@ export default function Menu({ showMenu, delay, onClose }) {
           />
         </div>
         <div className={[styles.subMenu, styles.theme].join(' ')}>
-          <MenuButton
+          <MemoizedMenuButton
             title="Light"
             onClick={handleClick}
             ariaLabel="switch to light mode"
             setting="light"
             testId="btnLightMode"
           />
-          <MenuButton
+          <MemoizedMenuButton
             title="Jawa"
             onClick={handleClick}
             ariaLabel="switch to jawa mode"
             setting="jawa"
             testId="btnJawaMode"
           />
-          <MenuButton
+          <MemoizedMenuButton
             title="Dark"
             onClick={handleClick}
             ariaLabel="switch to dark mode"
@@ -128,21 +126,21 @@ export default function Menu({ showMenu, delay, onClose }) {
           />
         </div>
         <div className={[styles.subMenu, styles.lang].join(' ')}>
-          <MenuButton
+          <MemoizedMenuButton
             title="English"
             onClick={handleClick}
             ariaLabel="switch to english"
             setting="en"
             testId="btnEnglish"
           />
-          <MenuButton
+          <MemoizedMenuButton
             title="Français"
             onClick={handleClick}
             ariaLabel="switch to french"
             setting="fr"
             testId="btnFrench"
           />
-          <MenuButton
+          <MemoizedMenuButton
             title="Svenska"
             onClick={handleClick}
             ariaLabel="switch to swedish"
@@ -152,7 +150,7 @@ export default function Menu({ showMenu, delay, onClose }) {
         </div>
       </div>
       {/* blanket placed below menu so menu is tabbable */}
-      <MenuBlanket onClose={onClose} />
+      <MemoizedMenuBlanket onClose={onClose} />
     </>
   );
 }

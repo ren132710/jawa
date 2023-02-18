@@ -1,6 +1,7 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function MenuBlanket({ onClose }) {
+export function MenuBlanket({ onClose }) {
   console.log('MenuBlanket rendered!');
   const styles = {
     menuBlanket: {
@@ -28,6 +29,8 @@ export default function MenuBlanket({ onClose }) {
     />
   );
 }
+
+export const MemoizedMenuBlanket = React.memo(MenuBlanket);
 
 MenuBlanket.propTypes = {
   onClose: PropTypes.func.isRequired,
