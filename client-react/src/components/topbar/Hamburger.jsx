@@ -42,7 +42,7 @@ export default function Hamburger() {
         <Menu
           showMenu={showMenu}
           delay={delay}
-          onClose={() => setShowMenu(false)}
+          onClose={() => setShowMenu(!showMenu)}
         />
       ) : null}
     </>
