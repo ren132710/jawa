@@ -9,6 +9,8 @@ export default function DailyCard({ day }) {
   const { units, lang } = useWeatherPrefs();
   const { getUnitOfMeasure, getTranslation, df, getIconUrl } = useUtils();
 
+  console.log('DailyCard description:', day.description);
+
   return (
     <div className={styles.dailyCard} data-testid="daily-card">
       <WeatherIcon
