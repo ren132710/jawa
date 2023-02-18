@@ -63,17 +63,15 @@ export default function Menu({ showMenu, delay, onClose }) {
     (e) => {
       if (!e.target.dataset.setting) return;
 
-      const { setting } = e.target.dataset;
+      const setting = e.target.dataset;
       if (['light', 'jawa', 'dark'].includes(setting)) setTheme(setting);
 
       if (['metric', 'imperial'].includes(setting)) {
-        console.log('setUnits', setting);
         setUnits(setting);
         // window.location.reload(true);
       }
 
       if (['en', 'fr', 'sv'].includes(setting)) {
-        console.log('setUnits', setting);
         setLang(setting);
         // window.location.reload(true);
       }
