@@ -10,16 +10,11 @@ console.log('URL:', URL);
  * @param {array} places: array of place objects where each object contains lat, long, id, location
  * @param {string} units: (imperial | metric )
  * @param {string} lang: (en | fr | sv )
- * @returns array of objects where each object contains the weather data for a place
+ * @returns array of objects where each object contains the weather data for a particular place
  */
 
 export default async function getWeather(options) {
   const { places, units, lang } = options;
-  const placesWeather = await getPlacesWeather(places, units, lang);
-  return placesWeather;
-}
-
-async function getPlacesWeather(places, units, lang) {
   const promises = [];
 
   places.forEach((place) => {
@@ -35,8 +30,8 @@ async function getPlacesWeather(places, units, lang) {
     promises.push(promise);
   });
 
-  const results = await Promise.all(promises);
-  return results;
+  const placesWeather = await Promise.all(promises);
+  return placesWeather;
 }
 
 /**
@@ -55,15 +50,10 @@ async function getPlacesWeather(places, units, lang) {
 
 async function getPlaceWeather(params) {
   const { lat, long, units, lang, id, location } = params;
-  try {
-    const res = await axios.get(URL, {
-      params: { lat, long, units, lang, id, location },
-      timeout: `${TIMEOUT}`,
-    });
-    return res.data;
-  } catch (e) {
-    console.error(
-      `Fetching weather using getWeather.js encountered an issue: ${e}`
-    );
-  }
+
+  const res = await axios.get(URL, {
+    params: { lat, long, units, lang, id, location },
+    timeout: `${TIMEOUT}`,
+  });
+  return res.data;
 }
