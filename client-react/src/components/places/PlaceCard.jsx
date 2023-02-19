@@ -84,8 +84,7 @@ export const MemoizedPlaceCard = React.memo(
       prevProps.weatherIcon === nextProps.weatherIcon &&
       prevProps.description === nextProps.description &&
       prevProps.high === nextProps.high &&
-      prevProps.low === nextProps.low &&
-      prevProps.placesLength === nextProps.placesLength
+      prevProps.low === nextProps.low
     );
   }
 );
