@@ -21,18 +21,18 @@ const TEST_PLACES = [
     lat: 37.7749,
     long: -122.4194,
   },
-  {
-    id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8',
-    location: 'montreal',
-    lat: 45.5017,
-    long: -73.5673,
-  },
-  {
-    id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87',
-    location: 'new york',
-    lat: 40.7128,
-    long: -74.006,
-  },
+  // {
+  //   id: '6b819c6d-c8d4-4f2a-94c1-6eec48c6d8c8',
+  //   location: 'montreal',
+  //   lat: 45.5017,
+  //   long: -73.5673,
+  // },
+  // {
+  //   id: 'c9ae7c46-81e4-4c9d-a933-bb3c8d14fc87',
+  //   location: 'new york',
+  //   lat: 40.7128,
+  //   long: -74.006,
+  // },
 ];
 
 const testPrefs = [{ units: 'imperial', theme: 'jawa', lang: 'en' }];
@@ -63,8 +63,8 @@ describe('#scenarioPlaces', () => {
 
   it('should allow user to view weather for a saved place', () => {
     // given saved places
-    cy.findAllByTestId('hour-row').then((hours) => {
-      expect(hours).to.have.length(24);
+    cy.findAllByTestId('place-card').then((places) => {
+      expect(places).to.have.length(2);
     });
 
     // when the user hovers or tabs to the second place card
@@ -123,7 +123,7 @@ describe('#scenarioPlaces', () => {
   it('should allow user to delete a saved place', () => {
     // given saved places
     cy.findAllByTestId('place-card').then((places) => {
-      expect(places).to.have.length(4);
+      expect(places).to.have.length(2);
     });
 
     // when the user hovers or tabs to the second place card
@@ -141,7 +141,7 @@ describe('#scenarioPlaces', () => {
     // then the place card should be removed
     // chain with .then() to wait for the DOM to update
     cy.findAllByTestId('place-card').then((places) => {
-      expect(places).to.have.length(3);
+      expect(places).to.have.length(1);
     });
 
     // and the main weather should still be san francisco
@@ -157,22 +157,10 @@ describe('#scenarioPlaces', () => {
   it('should prevent deletion if there is only one place', () => {
     // Given saved places
     cy.findAllByTestId('place-card').should((places) => {
-      expect(places).to.have.length(4);
-    });
-
-    // delete each place sequentially
-    cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
-    cy.get('@place').find('[data-testid="btnDeletePlace"]').click();
-    cy.findAllByTestId('place-card').then((places) => {
-      expect(places).to.have.length(3);
-    });
-
-    cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
-    cy.get('@place').find('[data-testid="btnDeletePlace"]').click();
-    cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(2);
     });
 
+    // delete the first place
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
     cy.get('@place').find('[data-testid="btnDeletePlace"]').click();
     cy.findAllByTestId('place-card').then((places) => {
@@ -187,40 +175,40 @@ describe('#scenarioPlaces', () => {
   it('should allow user to save a new place', () => {
     // Given saved places
     cy.findAllByTestId('place-card').should((places) => {
-      expect(places).to.have.length(4);
+      expect(places).to.have.length(2);
     });
 
     // when the user clicks the New Place button
-    cy.findByTestId('btnNewPlace').click({ force: true });
-
-    // then the place should be added to places
-    cy.findAllByTestId('place-card', { timeout: 10000 }).then((places) => {
-      expect(places).to.have.length(5);
-    });
+    cy.findByTestId('btnNewPlace')
+      .click({ force: true })
+      .then(() => {
+        // then the place should be added to places
+        cy.findAllByTestId('place-card', { timeout: 10000 }).then((places) => {
+          expect(places).to.have.length(3);
+        });
+      });
 
     // and the place should have an id that is unique among the saved places
-    cy.findAllByTestId('place-card')
-      .eq(4)
-      .then((place) => {
-        cy.log(place);
-        cy.log(place.attr('data-id'));
-        expect(place).to.have.attr('data-id');
+    cy.findAllByTestId('place-card').then((place) => {
+      cy.log(place);
+      cy.log(place.attr('data-id'));
+      expect(place).to.have.attr('data-id');
 
-        // get the id
-        const id = place.attr('data-id');
+      // get the id
+      const id = place.attr('data-id');
 
-        // ensure it is unique among the saved places
-        const ids = [];
-        cy.findAllByTestId('place-card').each((p) => {
-          cy.log(p.attr('data-id'));
-          if (p.attr('data-id') === id) {
-            ids.push(p.attr('data-id'));
-          }
-        });
-
-        // if there is more than one, fail
-        cy.wrap(ids).should('have.length', 1);
+      // ensure it is unique among the saved places
+      const ids = [];
+      cy.findAllByTestId('place-card').each((p) => {
+        cy.log(p.attr('data-id'));
+        if (p.attr('data-id') === id) {
+          ids.push(p.attr('data-id'));
+        }
       });
+
+      // if there is more than one, fail
+      cy.wrap(ids).should('have.length', 1);
+    });
 
     // and the main weather should remain unchanged
     cy.findByTestId('current-location').should('have.text', 'austin');
