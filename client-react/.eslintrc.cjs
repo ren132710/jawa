@@ -6,8 +6,9 @@ module.exports = {
   extends: [
     'airbnb',
     'airbnb/hooks',
-    // 'eslint:recommended',
+    'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:cypress/recommended',
     'plugin:prettier/recommended', // list prettier plugin last to avoid conflicts
   ],
@@ -16,7 +17,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', 'prettier'],
+  plugins: ['react', 'react-hooks', 'prettier'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'no-console': 'off',
