@@ -2,7 +2,6 @@ const LOCAL_STORAGE_PREFIX = 'jawa';
 
 export const PLACES_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-places`;
 export const PREFS_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-prefs`;
-export const PLACES_CAP = 9;
 
 export const DEFAULT_PLACES = [
   {
