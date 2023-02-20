@@ -89,27 +89,27 @@ export default function Menu({ showMenu, delay, onClose }) {
       >
         <div className={[styles.subMenu, styles.units].join(' ')}>
           <MemoizedMenuButton
-            title="Metric"
-            onClick={handleClick}
-            ariaLabel="switch to metric"
-            setting="metric"
-            testId="btnMetric"
-          />
-          <MemoizedMenuButton
             title="Imperial"
             onClick={handleClick}
             ariaLabel="switch to imperial"
             setting="imperial"
             testId="btnImperial"
           />
+          <MemoizedMenuButton
+            title="Metric"
+            onClick={handleClick}
+            ariaLabel="switch to metric"
+            setting="metric"
+            testId="btnMetric"
+          />
         </div>
         <div className={[styles.subMenu, styles.theme].join(' ')}>
           <MemoizedMenuButton
-            title="Light"
+            title="Dark"
             onClick={handleClick}
-            ariaLabel="switch to light mode"
-            setting="light"
-            testId="btnLightMode"
+            ariaLabel="switch to dark mode"
+            setting="dark"
+            testId="btnDarkMode"
           />
           <MemoizedMenuButton
             title="Jawa"
@@ -119,11 +119,11 @@ export default function Menu({ showMenu, delay, onClose }) {
             testId="btnJawaMode"
           />
           <MemoizedMenuButton
-            title="Dark"
+            title="Light"
             onClick={handleClick}
-            ariaLabel="switch to dark mode"
-            setting="dark"
-            testId="btnDarkMode"
+            ariaLabel="switch to light mode"
+            setting="light"
+            testId="btnLightMode"
           />
         </div>
         <div className={[styles.subMenu, styles.lang].join(' ')}>
