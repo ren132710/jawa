@@ -10,7 +10,7 @@ import { ERROR_MESSAGE_WEATHER } from '@/constants/constants';
 
 export default function PlacesContainer() {
   console.log('PlacesContainer rendered!');
-  const { places, placesWeatherData, isLoading, isError } =
+  const { places, placesWeatherData, isLoading, hasError } =
     usePlacesWeatherData();
   const { setPlaces, setPlacesWeatherData } = usePlacesWeatherAPI();
   const { setMainWeather } = useMainWeatherAPI();
@@ -48,7 +48,7 @@ export default function PlacesContainer() {
   );
 
   // if error, return error message
-  if (isError) {
+  if (hasError) {
     return (
       <div className={styles.placesContainer} data-testid="places-container">
         <div className="error-container">

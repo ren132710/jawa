@@ -28,7 +28,7 @@ export function usePlacesWeatherAPI() {
 export default function PlacesWeatherProvider({ children }) {
   console.log('PlacesWeatherProvider rendered!');
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const [places, setPlaces] = useState(getLocalPlaces());
   const [placesWeatherData, setPlacesWeatherData] = useState([]);
   const { units, lang } = useWeatherPrefs();
@@ -39,19 +39,22 @@ export default function PlacesWeatherProvider({ children }) {
       units,
       lang,
     });
+
+    setIsLoading(true);
+
     getWeather({ places, units, lang })
-      .then((data) => {
-        console.log('PlacesWeatherProvider useEffect (weather): ', data);
-        setIsLoading(true);
-        setPlacesWeatherData(data);
-        setIsLoading(false);
+      .then((weather) => {
+        console.log('PlacesWeatherProvider useEffect (weather): ', weather);
+        setPlacesWeatherData(weather);
       })
       .catch((err) => {
-        setIsLoading(false);
-        setIsError(true);
+        setHasError(true);
         console.log('PlacesWeatherProvider useEffect (error): ', err);
       });
 
+    setIsLoading(false);
+
+    // we want the user to be able to add/delete places without refreshing weather data
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [units, lang]);
 
@@ -66,9 +69,9 @@ export default function PlacesWeatherProvider({ children }) {
       places,
       placesWeatherData,
       isLoading,
-      isError,
+      hasError,
     };
-  }, [places, placesWeatherData, isLoading, isError]);
+  }, [places, placesWeatherData, isLoading, hasError]);
 
   const memoApiContext = useMemo(() => {
     return { setPlaces, setPlacesWeatherData };
