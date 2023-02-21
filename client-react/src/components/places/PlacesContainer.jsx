@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { MemoizedPlaceCard } from '@/components/places/PlaceCard';
+import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
 import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
 import {
@@ -14,6 +14,8 @@ export default function PlacesContainer() {
     usePlacesWeatherData();
   const { setPlaces, setPlacesWeatherData } = usePlacesWeatherAPI();
   const { setMainWeather } = useMainWeatherAPI();
+
+  console.log('hasError: ', hasError);
 
   // memoize functions passed as props
   const handleViewPlace = useCallback(
@@ -76,7 +78,7 @@ export default function PlacesContainer() {
   return (
     <div className={styles.placesContainer} data-testid="places-container">
       {placesWeatherData.map((place) => (
-        <MemoizedPlaceCard
+        <PlaceCard
           key={place.coordinates.id}
           id={place.coordinates.id}
           location={place.coordinates.location}

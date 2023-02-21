@@ -129,7 +129,7 @@ describe('#scenarioPlaces', () => {
     // when the user hovers or tabs to the second place card
     cy.findAllByTestId('place-card').eq(1).as('place2').trigger('mouseover');
 
-    // and the delete button should be visible
+    // then the delete button should be visible
     cy.get('@place2')
       .find('[data-testid="btnDeletePlace"]')
       .invoke('show')
@@ -138,13 +138,20 @@ describe('#scenarioPlaces', () => {
     // and when the user clicks on the delete button
     cy.get('@place2').find('[data-testid="btnDeletePlace"]').click();
 
-    // then the place card should be removed
+    // then there should be one remaining saved place
     // chain with .then() to wait for the DOM to update
     cy.findAllByTestId('place-card').then((places) => {
       expect(places).to.have.length(1);
     });
 
-    // and the main weather should still be san francisco
+    // and the one remaining place should be 'austin'
+    cy.findAllByTestId('place-card')
+      .eq(0)
+      .within(() => {
+        cy.findByTestId('place-location').should('have.text', 'austin');
+      });
+
+    // however main weather should still be san francisco
     cy.findByTestId('current-location')
       .should('have.text', 'san francisco')
       .should(
@@ -160,7 +167,7 @@ describe('#scenarioPlaces', () => {
       expect(places).to.have.length(2);
     });
 
-    // delete the first place
+    // delete the first place ('austin')
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
     cy.get('@place').find('[data-testid="btnDeletePlace"]').click();
     cy.findAllByTestId('place-card').then((places) => {
@@ -170,6 +177,13 @@ describe('#scenarioPlaces', () => {
     // delete button should be hidden when there is only one place
     cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
     cy.get('@place').find('[data-testid="btnDeletePlace"]').should('not.exist');
+
+    // and the place should be 'san francisco'
+    cy.findAllByTestId('place-card')
+      .eq(0)
+      .within(() => {
+        cy.findByTestId('place-location').should('have.text', 'san francisco');
+      });
   });
 
   it('should allow user to save a new place', () => {
@@ -212,5 +226,101 @@ describe('#scenarioPlaces', () => {
 
     // and the main weather should remain unchanged
     cy.findByTestId('current-location').should('have.text', 'austin');
+  });
+});
+
+describe('#Bugs', () => {
+  beforeEach(() => {
+    // clear local storage and set test defaults
+    localStorage.clear();
+    setTestDefaults();
+    expect(JSON.parse(localStorage.getItem('jawa-places'))).to.eql(TEST_PLACES);
+    expect(JSON.parse(localStorage.getItem('jawa-prefs'))).to.eql(testPrefs);
+    cy.visit('/');
+
+    // then make sure the page is fully loaded before proceeding with tests
+    cy.findByTestId('place-search').should('exist');
+    cy.findByPlaceholderText('Weather at your places').should('exist');
+    cy.contains('Hourly Weather').should('exist');
+    cy.contains('America/Chicago').should('exist');
+    cy.findAllByTestId('hour-row').then((hours) => {
+      expect(hours).to.have.length(24);
+    });
+  });
+
+  it('#MemoizedPlaceCard: adding/deleting numerous places should not cause erratic disappearing/reappearing places', () => {
+    // Given saved places
+    cy.findAllByTestId('place-card').should((places) => {
+      expect(places).to.have.length(2);
+    });
+
+    // when adding a number of places
+    cy.findByTestId('btnNewPlace')
+      .click({ force: true })
+      .then(() => {
+        // then the place should be added to places
+        cy.findAllByTestId('place-card', { timeout: 10000 }).then((places) => {
+          expect(places).to.have.length(3);
+        });
+      });
+
+    cy.findByTestId('btnNewPlace')
+      .click({ force: true })
+      .then(() => {
+        cy.findAllByTestId('place-card', { timeout: 10000 }).then((places) => {
+          expect(places).to.have.length(4);
+        });
+      });
+
+    cy.findByTestId('btnNewPlace')
+      .click({ force: true })
+      .then(() => {
+        cy.findAllByTestId('place-card', { timeout: 10000 }).then((places) => {
+          expect(places).to.have.length(5);
+        });
+      });
+
+    cy.findByTestId('btnNewPlace')
+      .click({ force: true })
+      .then(() => {
+        cy.findAllByTestId('place-card', { timeout: 10000 }).then((places) => {
+          expect(places).to.have.length(6);
+        });
+      });
+
+    // then each sequential deletion of the first place should result in the correct number of places
+    cy.findAllByTestId('place-card').eq(0).as('delete1').trigger('mouseover');
+    cy.get('@delete1').find('[data-testid="btnDeletePlace"]').click();
+    cy.findAllByTestId('place-card').then((places) => {
+      expect(places).to.have.length(5);
+    });
+
+    cy.findAllByTestId('place-card').eq(0).as('delete2').trigger('mouseover');
+    cy.get('@delete2').find('[data-testid="btnDeletePlace"]').click();
+    cy.findAllByTestId('place-card').then((places) => {
+      expect(places).to.have.length(4);
+    });
+
+    cy.findAllByTestId('place-card').eq(0).as('delete3').trigger('mouseover');
+    cy.get('@delete3').find('[data-testid="btnDeletePlace"]').click();
+    cy.findAllByTestId('place-card').then((places) => {
+      expect(places).to.have.length(3);
+    });
+
+    cy.findAllByTestId('place-card').eq(0).as('delete4').trigger('mouseover');
+    cy.get('@delete4').find('[data-testid="btnDeletePlace"]').click();
+    cy.findAllByTestId('place-card').then((places) => {
+      expect(places).to.have.length(2);
+    });
+
+    cy.findAllByTestId('place-card').eq(0).as('delete5').trigger('mouseover');
+    cy.get('@delete5').find('[data-testid="btnDeletePlace"]').click();
+    cy.findAllByTestId('place-card').then((places) => {
+      expect(places).to.have.length(1);
+    });
+
+    // and the delete button should be hidden when there is only one place
+    cy.findAllByTestId('place-card').eq(0).as('place').trigger('mouseover');
+    cy.get('@place').find('[data-testid="btnDeletePlace"]').should('not.exist');
   });
 });

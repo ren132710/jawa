@@ -73,21 +73,7 @@ export function PlaceCard({
   );
 }
 
-export const MemoizedPlaceCard = React.memo(
-  PlaceCard,
-  (prevProps, nextProps) => {
-    return (
-      prevProps.id === nextProps.id &&
-      prevProps.location === nextProps.location &&
-      prevProps.lat === nextProps.lat &&
-      prevProps.long === nextProps.long &&
-      prevProps.weatherIcon === nextProps.weatherIcon &&
-      prevProps.description === nextProps.description &&
-      prevProps.high === nextProps.high &&
-      prevProps.low === nextProps.low
-    );
-  }
-);
+export default PlaceCard;
 
 PlaceCard.propTypes = {
   id: PropTypes.string.isRequired,
@@ -102,3 +88,21 @@ PlaceCard.propTypes = {
   handleDeletePlace: PropTypes.func.isRequired,
   placesLength: PropTypes.number.isRequired,
 };
+
+// keeping for reference
+// export const MemoizedPlaceCard = React.memo(
+//   PlaceCard,
+//   (prevProps, nextProps) => {
+//     return (
+//       prevProps.id === nextProps.id &&
+//       prevProps.location === nextProps.location &&
+//       prevProps.lat === nextProps.lat &&
+//       prevProps.long === nextProps.long &&
+//       prevProps.weatherIcon === nextProps.weatherIcon &&
+//       prevProps.description === nextProps.description &&
+//       prevProps.high === nextProps.high &&
+//       prevProps.low === nextProps.low &&
+//       prevProps.placesLength === nextProps.placesLength
+//     );
+//   }
+// );
