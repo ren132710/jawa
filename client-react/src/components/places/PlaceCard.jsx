@@ -41,7 +41,7 @@ export function PlaceCard({
       data-long={long}
       data-testid="place-card"
     >
-      {/* do not reveal delete button when there is only one place */}
+      {/* when there is only one place, do not reveal delete button  */}
       {/* otherwise, reveal delete button when place is hovered or has focus */}
       {placesLength === 1 ? null : isHovered ? (
         <PlaceDeleteButton onDelete={handleDeletePlace} placeId={id} />
@@ -89,7 +89,7 @@ PlaceCard.propTypes = {
   placesLength: PropTypes.number.isRequired,
 };
 
-// keeping for reference
+// memoization - keep for reference
 // export const MemoizedPlaceCard = React.memo(
 //   PlaceCard,
 //   (prevProps, nextProps) => {
