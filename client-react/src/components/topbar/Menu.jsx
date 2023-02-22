@@ -72,7 +72,10 @@ export default function Menu({ showMenu, delay, onClose }) {
 
         const weather = await getWeather(options);
         console.log('Menu main weather update: ', weather);
-        setMainWeather(weather);
+        setMainWeather(weather).catch((err) => {
+          // TODO: setHasError(true) in ErrorContext? Research react error boundaries;
+          console.log(err);
+        });
       }
     },
 

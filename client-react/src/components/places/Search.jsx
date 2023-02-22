@@ -56,7 +56,10 @@ export default function Search({ loader }) {
 
       const weather = await getWeather({ places, units, lang });
       console.log('search weather: ', weather);
-      setMainWeather(weather);
+      setMainWeather(weather).catch((err) => {
+        // TODO: setHasError(true) in ErrorContext? Research react error boundaries;
+        console.log(err);
+      });
     }
 
     // run this effect if the loader changes
