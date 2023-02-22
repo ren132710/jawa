@@ -3,11 +3,12 @@ import axios from 'axios';
 const TIMEOUT = import.meta.env.VITE_AXIOS_TIMEOUT;
 const WEATHER_SERVER = import.meta.env.VITE_JAWA_SERVER;
 const URL = `https://${WEATHER_SERVER}/weather`;
+// const URL = `https:/httpstat.us/404`;
 console.log('URL:', URL);
 
 /**
  * getWeather
- * @param {array} places: array of place objects where each object contains lat, long, id, location
+ * @param {array} places: array of place objects where each object contains lat, long, id (optional), location (optional)
  * @param {string} units: (imperial | metric )
  * @param {string} lang: (en | fr | sv )
  * @returns array of objects where each object contains the weather data for a particular place
