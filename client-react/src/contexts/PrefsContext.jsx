@@ -38,16 +38,17 @@ export default function PrefsProvider({ children }) {
   const [units, setUnits] = useState(getLocalPrefs()[0].units);
   const [lang, setLang] = useState(getLocalPrefs()[0].lang);
 
+  // apply theme change application wide
+  useEffect(() => {
+    console.log('PrefsProvider useEffect (display theme)!', theme);
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
+
   // keep localStorage in sync with prefs state
   useEffect(() => {
     console.log('PrefsProvider useEffect (setLocalStorage)!');
     setLocalPrefs([{ theme, units, lang }]);
   }, [theme, units, lang]);
-
-  // apply theme change application wide
-  useEffect(() => {
-    document.body.setAttribute('data-theme', theme);
-  }, [theme]);
 
   const memoPrefsDataContext = useMemo(() => {
     return { units, lang };
