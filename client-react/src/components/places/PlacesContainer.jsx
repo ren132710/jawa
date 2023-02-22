@@ -61,7 +61,7 @@ export default function PlacesContainer() {
 
   console.log('PlacesContainer (placesWeatherData): ', placesWeatherData);
 
-  // then return places
+  // otherwise return places
   return (
     <div className={styles.placesContainer} data-testid="places-container">
       {placesWeatherData.map((place) => (
