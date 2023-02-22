@@ -10,8 +10,7 @@ import { ERROR_MESSAGE_WEATHER } from '@/constants/constants';
 
 export default function PlacesContainer() {
   console.log('PlacesContainer rendered!');
-  const { places, placesWeatherData, isLoading, hasError } =
-    usePlacesWeatherData();
+  const { places, placesWeatherData, hasError } = usePlacesWeatherData();
   const { setPlaces, setPlacesWeatherData } = usePlacesWeatherAPI();
   const { setMainWeather } = useMainWeatherAPI();
 
@@ -49,7 +48,7 @@ export default function PlacesContainer() {
     [places, placesWeatherData, setPlaces, setPlacesWeatherData]
   );
 
-  // if error, return error message
+  // if getWeather error, return error UI
   if (hasError) {
     return (
       <div className={styles.placesContainer} data-testid="places-container">
@@ -59,18 +58,6 @@ export default function PlacesContainer() {
       </div>
     );
   }
-
-  // otherwise, wait until places weather is fully loaded
-  if (
-    isLoading ||
-    !placesWeatherData.length ||
-    places.length !== placesWeatherData.length
-  )
-    return (
-      <div className="loading-container">
-        <div className="loading">Loading...</div>
-      </div>
-    );
 
   console.log('PlacesContainer (placesWeatherData): ', placesWeatherData);
 

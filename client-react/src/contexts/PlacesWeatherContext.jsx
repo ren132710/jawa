@@ -27,7 +27,6 @@ export function usePlacesWeatherAPI() {
 // 3. define the provider and delegate value props to the contexts
 export default function PlacesWeatherProvider({ children }) {
   console.log('PlacesWeatherProvider rendered!');
-  const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [places, setPlaces] = useState(getLocalPlaces());
   const [placesWeatherData, setPlacesWeatherData] = useState([]);
@@ -40,8 +39,6 @@ export default function PlacesWeatherProvider({ children }) {
       lang,
     });
 
-    setIsLoading(true);
-
     getWeather({ places, units, lang })
       .then((weather) => {
         console.log('PlacesWeatherProvider useEffect (weather): ', weather);
@@ -51,8 +48,6 @@ export default function PlacesWeatherProvider({ children }) {
         setHasError(true);
         console.log('PlacesWeatherProvider useEffect (error): ', err);
       });
-
-    setIsLoading(false);
 
     // we want the user to be able to add/delete places without refreshing weather data
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,10 +63,9 @@ export default function PlacesWeatherProvider({ children }) {
     return {
       places,
       placesWeatherData,
-      isLoading,
       hasError,
     };
-  }, [places, placesWeatherData, isLoading, hasError]);
+  }, [places, placesWeatherData, hasError]);
 
   const memoApiContext = useMemo(() => {
     return { setPlaces, setPlacesWeatherData };
