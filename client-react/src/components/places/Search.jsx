@@ -54,12 +54,16 @@ export default function Search({ loader }) {
         },
       ];
 
-      const weather = await getWeather({ places, units, lang });
-      console.log('search weather: ', weather);
-      setMainWeather(weather).catch((err) => {
-        // TODO: setHasError(true) in ErrorContext? Research react error boundaries;
-        console.log(err);
-      });
+      getWeather({ places, units, lang })
+        .then((weather) => {
+          console.log('Search (weather): ', weather);
+          setMainWeather(weather);
+        })
+        .catch((err) => {
+          // TODO: setHasError(true) in ErrorContext? Also research react error boundaries;
+          // setHasError(true);
+          console.log('Search (error): ', err);
+        });
     }
 
     // run this effect if the loader changes
