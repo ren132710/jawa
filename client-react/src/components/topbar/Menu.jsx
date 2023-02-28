@@ -48,7 +48,7 @@ export default function Menu({ showMenu, delay, onClose }) {
         handleGetWeather('lang', setting);
       }
 
-      async function handleGetWeather(key, value) {
+      function handleGetWeather(key, value) {
         let options = {};
 
         // getWeather expects an array of place objects, even if there is only one place object
@@ -76,7 +76,6 @@ export default function Menu({ showMenu, delay, onClose }) {
             setMainWeather(weather);
           })
           .catch((err) => {
-            // TODO: setHasError(true) in ErrorContext? Also research react error boundaries;
             // setHasError(true);
             console.log('Menu (error): ', err);
           });

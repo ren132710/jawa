@@ -43,7 +43,7 @@ export default function Search({ loader }) {
       });
     });
 
-    async function handleSearchForWeather(place) {
+    function handleSearchForWeather(place) {
       // getWeather expects an array of place objects, even if there is only one place object
       const places = [
         {
@@ -60,13 +60,12 @@ export default function Search({ loader }) {
           setMainWeather(weather);
         })
         .catch((err) => {
-          // TODO: setHasError(true) in ErrorContext? Also research react error boundaries;
           // setHasError(true);
           console.log('Search (error): ', err);
         });
     }
 
-    // run this effect if the loader changes
+    // run this effect only if the loader changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loader]);
 
