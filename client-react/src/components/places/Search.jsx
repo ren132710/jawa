@@ -1,9 +1,10 @@
 import { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from '@/styles/places/Search.module.css';
-import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
-import { useWeatherPrefs } from '@/contexts/PrefsContext';
 import { useUtils } from '@/contexts/UtilsContext';
+import { usePrefsWeather } from '@/contexts/PrefsContext';
+import { useHasError } from '@/contexts/HasErrorContext';
+import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
 import getWeather from '@/utils/getWeather';
 
 // https://developers.google.com/maps/documentation/javascript/place-autocomplete#constraining-autocomplete
@@ -18,8 +19,9 @@ export default function Search({ loader }) {
   console.log('Search is rendered!');
   const autoCompleteRef = useRef(null);
   const inputRef = useRef(null);
+  const { units, lang } = usePrefsWeather();
+  const { setHasError } = useHasError();
   const { setMainWeather } = useMainWeatherAPI();
-  const { units, lang } = useWeatherPrefs();
   const { getTranslation } = useUtils();
 
   useEffect(() => {
@@ -49,10 +51,14 @@ export default function Search({ loader }) {
         {
           id: 'search',
           location: place.name,
+          // lat: 'bad',
           lat: place.geometry.location.lat(),
           long: place.geometry.location.lng(),
         },
       ];
+
+      // reset hasError if it was previously set to true
+      setHasError(false);
 
       getWeather({ places, units, lang })
         .then((weather) => {
@@ -60,7 +66,7 @@ export default function Search({ loader }) {
           setMainWeather(weather);
         })
         .catch((err) => {
-          // setHasError(true);
+          setHasError(true);
           console.log('Search (error): ', err);
         });
     }

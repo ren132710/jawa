@@ -1,17 +1,16 @@
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '@/styles/places/NewPlaceButton.module.css';
-import { useMainWeatherData } from '@/contexts/MainWeatherContext';
-import { usePlacesWeatherAPI } from '@/contexts/PlacesWeatherContext';
 import { useUtils } from '@/contexts/UtilsContext';
-import { useWeatherPrefs } from '@/contexts/PrefsContext';
+import { usePrefsWeather } from '@/contexts/PrefsContext';
+import { usePlacesWeatherAPI } from '@/contexts/PlacesWeatherContext';
+import { useMainWeatherData } from '@/contexts/MainWeatherContext';
 
 export default function NewPlaceButton({ id, location, lat, long }) {
   console.log('NewPlace rendered!');
-  const { setPlaces, setPlacesWeatherData } = usePlacesWeatherAPI();
+  const { lang } = usePrefsWeather();
+  const { setPlaces, setPlacesWeather } = usePlacesWeatherAPI();
   const { mainWeather } = useMainWeatherData();
-  // const { setMainWeather } = useMainWeatherAPI();
-  const { lang } = useWeatherPrefs();
   const { getTranslation } = useUtils();
 
   function handleNewPlace(e) {
@@ -28,9 +27,9 @@ export default function NewPlaceButton({ id, location, lat, long }) {
     const newMainWeather = JSON.parse(JSON.stringify(mainWeather));
     // then set mainWeather with the new id
     newMainWeather[0].coordinates.id = newId;
-    // then update places and placesWeatherData
+    // then update places and placesWeather
     setPlaces((prevPlaces) => [...prevPlaces, newPlace]);
-    setPlacesWeatherData((prevPlacesWeatherData) => [
+    setPlacesWeather((prevPlacesWeatherData) => [
       ...prevPlacesWeatherData,
       newMainWeather[0],
     ]);

@@ -2,16 +2,16 @@ import React, { useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { getLocalPrefs, setLocalPrefs } from '@/utils/localStorage';
 
-const WeatherPrefsContext = React.createContext();
+const PrefsWeatherContext = React.createContext();
 const PrefsAPIContext = React.createContext();
 
 // separate out theme context so components don't re-render when theme changes
-const ThemeContext = React.createContext();
+const PrefsThemeContext = React.createContext();
 
-export function useWeatherPrefs() {
-  const context = useContext(WeatherPrefsContext);
+export function usePrefsWeather() {
+  const context = useContext(PrefsWeatherContext);
   if (context === undefined) {
-    throw new Error('usePrefsData was called outside of its Provider');
+    throw new Error('usePrefsWeather was called outside of its Provider');
   }
   return context;
 }
@@ -24,10 +24,10 @@ export function usePrefsAPI() {
   return context;
 }
 
-export function useTheme() {
-  const context = useContext(ThemeContext);
+export function usePrefsTheme() {
+  const context = useContext(PrefsThemeContext);
   if (context === undefined) {
-    throw new Error('useTheme was called outside of its Provider');
+    throw new Error('usePrefsTheme was called outside of its Provider');
   }
   return context;
 }
@@ -40,13 +40,15 @@ export default function PrefsProvider({ children }) {
 
   // apply theme change application wide
   useEffect(() => {
-    console.log('PrefsProvider useEffect (display theme)!', theme);
+    console.log('PrefsProvider useEffect (display theme):', theme);
     document.body.setAttribute('data-theme', theme);
   }, [theme]);
 
   // keep localStorage in sync with prefs state
   useEffect(() => {
-    console.log('PrefsProvider useEffect (setLocalStorage)!');
+    console.log('PrefsProvider useEffect (setLocalStorage): ', [
+      { theme, units, lang },
+    ]);
     setLocalPrefs([{ theme, units, lang }]);
   }, [theme, units, lang]);
 
@@ -59,13 +61,13 @@ export default function PrefsProvider({ children }) {
   }, []);
 
   return (
-    <ThemeContext.Provider value={theme}>
-      <WeatherPrefsContext.Provider value={memoPrefsDataContext}>
+    <PrefsThemeContext.Provider value={theme}>
+      <PrefsWeatherContext.Provider value={memoPrefsDataContext}>
         <PrefsAPIContext.Provider value={memoPrefsAPIContext}>
           {children}
         </PrefsAPIContext.Provider>
-      </WeatherPrefsContext.Provider>
-    </ThemeContext.Provider>
+      </PrefsWeatherContext.Provider>
+    </PrefsThemeContext.Provider>
   );
 }
 

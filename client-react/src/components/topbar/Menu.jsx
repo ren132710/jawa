@@ -4,16 +4,18 @@ import { v4 as uuidv4 } from 'uuid';
 import { MemoizedMenuButton } from '@/components/topbar/MenuButton';
 import MenuBlanket from '@/components/topbar/MenuBlanket';
 import styles from '@/styles/topbar/Menu.module.css';
+import { usePrefsAPI, usePrefsWeather } from '@/contexts/PrefsContext';
+import { useHasError } from '@/contexts/HasErrorContext';
 import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
-import { usePrefsAPI, useWeatherPrefs } from '@/contexts/PrefsContext';
 import getWeather from '@/utils/getWeather';
 
 export default function Menu({ showMenu, delay, onClose }) {
   console.log('Menu rendered!');
   const [applyTransition, setApplyTransition] = useState(false);
+  const { units, lang } = usePrefsWeather();
   const { setTheme, setUnits, setLang } = usePrefsAPI();
+  const { setHasError } = useHasError();
   const { setMainWeather } = useMainWeatherAPI();
-  const { units, lang } = useWeatherPrefs();
 
   // transition menu open and close
   useEffect(() => {
@@ -28,7 +30,6 @@ export default function Menu({ showMenu, delay, onClose }) {
     };
   }, [showMenu, delay]);
 
-  // a useEffect here causes MainWeather to re-render when Menu opens
   // memoize functions passed as props to memoized components
   const handleClick = useCallback(
     (e) => {
@@ -39,13 +40,13 @@ export default function Menu({ showMenu, delay, onClose }) {
       if (['light', 'jawa', 'dark'].includes(setting)) setTheme(setting);
 
       if (['metric', 'imperial'].includes(setting)) {
-        setUnits(setting);
-        handleGetWeather('units', setting);
+        setUnits(setting); // update placesWeather
+        handleGetWeather('units', setting); // update mainWeather
       }
 
       if (['en', 'fr', 'sv'].includes(setting)) {
-        setLang(setting);
-        handleGetWeather('lang', setting);
+        setLang(setting); // update placesWeather
+        handleGetWeather('lang', setting); // update mainWeather
       }
 
       function handleGetWeather(key, value) {
@@ -56,6 +57,7 @@ export default function Menu({ showMenu, delay, onClose }) {
           {
             id: uuidv4(),
             location: document.querySelector('#btnNewPlace')?.dataset.location,
+            // lat: 'bad',
             lat: document.querySelector('#btnNewPlace')?.dataset.lat,
             long: document.querySelector('#btnNewPlace')?.dataset.long,
           },
@@ -70,19 +72,22 @@ export default function Menu({ showMenu, delay, onClose }) {
           options = { places, units, lang: value };
         }
 
+        // reset hasError if previously set to true
+        setHasError(false);
+
         getWeather(options)
           .then((weather) => {
             console.log('Menu (weather): ', weather);
             setMainWeather(weather);
           })
           .catch((err) => {
-            // setHasError(true);
+            setHasError(true);
             console.log('Menu (error): ', err);
           });
       }
     },
 
-    [lang, setLang, setMainWeather, setTheme, setUnits, units]
+    [setHasError, lang, setLang, setMainWeather, setTheme, setUnits, units]
   );
 
   return (

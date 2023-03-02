@@ -26,7 +26,7 @@ export function useMainWeatherAPI() {
 export default function MainWeatherProvider({ children }) {
   console.log('MainWeatherProvider rendered!');
   const [mainWeather, setMainWeather] = useState([]);
-  const { placesWeatherData } = usePlacesWeatherData();
+  const { placesWeather } = usePlacesWeatherData();
 
   const memoDataContext = useMemo(() => {
     return { mainWeather };
@@ -37,8 +37,8 @@ export default function MainWeatherProvider({ children }) {
   }, [setMainWeather]);
 
   // set mainWeather to first default place on startup, or whenever mainWeather is empty
-  if (!placesWeatherData.length) return;
-  if (mainWeather.length === 0) setMainWeather([placesWeatherData[0]]);
+  if (!placesWeather.length) return;
+  if (mainWeather.length === 0) setMainWeather([placesWeather[0]]);
 
   return (
     <MainWeatherDataContext.Provider value={memoDataContext}>

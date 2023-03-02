@@ -1,6 +1,7 @@
 import React, { useState, useContext, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useWeatherPrefs } from '@/contexts/PrefsContext';
+import { usePrefsWeather } from '@/contexts/PrefsContext';
+import { useHasError } from '@/contexts/HasErrorContext';
 import getWeather from '@/utils/getWeather';
 import { getLocalPlaces, setLocalPlaces } from '@/utils/localStorage';
 
@@ -27,10 +28,10 @@ export function usePlacesWeatherAPI() {
 // 3. define the provider and delegate value props to the contexts
 export default function PlacesWeatherProvider({ children }) {
   console.log('PlacesWeatherProvider rendered!');
-  const [hasError, setHasError] = useState(false);
   const [places, setPlaces] = useState(getLocalPlaces());
-  const [placesWeatherData, setPlacesWeatherData] = useState([]);
-  const { units, lang } = useWeatherPrefs();
+  const [placesWeather, setPlacesWeather] = useState([]);
+  const { setHasError } = useHasError();
+  const { units, lang } = usePrefsWeather();
 
   useEffect(() => {
     console.log('PlacesWeatherProvider useEffect (options): ', {
@@ -42,7 +43,7 @@ export default function PlacesWeatherProvider({ children }) {
     getWeather({ places, units, lang })
       .then((weather) => {
         console.log('PlacesWeatherProvider useEffect (weather): ', weather);
-        setPlacesWeatherData(weather);
+        setPlacesWeather(weather);
       })
       .catch((err) => {
         setHasError(true);
@@ -63,14 +64,13 @@ export default function PlacesWeatherProvider({ children }) {
   const memoDataContext = useMemo(() => {
     return {
       places,
-      placesWeatherData,
-      hasError,
+      placesWeather,
     };
-  }, [places, placesWeatherData, hasError]);
+  }, [places, placesWeather]);
 
   const memoApiContext = useMemo(() => {
-    return { setPlaces, setPlacesWeatherData };
-  }, [setPlaces, setPlacesWeatherData]);
+    return { setPlaces, setPlacesWeather };
+  }, [setPlaces, setPlacesWeather]);
 
   return (
     <PlacesWeatherDataContext.Provider value={memoDataContext}>

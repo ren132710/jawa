@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import WeatherIcon from '@/components/WeatherIcon';
 import styles from '@/styles/main/HourlyRow.module.css';
-import { useWeatherPrefs } from '@/contexts/PrefsContext';
+import { usePrefsWeather } from '@/contexts/PrefsContext';
 import { useUtils } from '@/contexts/UtilsContext';
 
 export default function HourlyRow({ timezone, hour }) {
   console.log('HourlyRow rendered!');
-  const { units, lang } = useWeatherPrefs();
+  const { units, lang } = usePrefsWeather();
   const { getUnitOfMeasure, getTranslation, df, getIconUrl } = useUtils();
 
   return (

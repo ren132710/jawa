@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import WeatherIcon from '@/components/WeatherIcon';
 import styles from '@/styles/main/DailyCard.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
-import { useWeatherPrefs } from '@/contexts/PrefsContext';
+import { usePrefsWeather } from '@/contexts/PrefsContext';
 
 export default function DailyCard({ day }) {
   console.log('DailyCard rendered!');
-  const { units, lang } = useWeatherPrefs();
+  const { units, lang } = usePrefsWeather();
   const { getUnitOfMeasure, getTranslation, df, getIconUrl } = useUtils();
 
   return (

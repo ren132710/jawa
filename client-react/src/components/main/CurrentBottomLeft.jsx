@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import common from '@/styles/main/CurrentCommon.module.css';
 import styles from '@/styles/main/CurrentBottomLeft.module.css';
 import { useUtils } from '@/contexts/UtilsContext';
-import { useWeatherPrefs } from '@/contexts/PrefsContext';
+import { usePrefsWeather } from '@/contexts/PrefsContext';
 
 export default function CurrentBottomLeft({
   uvIndex,
@@ -12,7 +12,7 @@ export default function CurrentBottomLeft({
   windDirection,
 }) {
   console.log('CurrentBottomLeft rendered!');
-  const { units, lang } = useWeatherPrefs();
+  const { units, lang } = usePrefsWeather();
   const { getUnitOfMeasure, getTranslation } = useUtils();
 
   return (

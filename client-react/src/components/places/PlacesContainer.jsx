@@ -1,20 +1,20 @@
 import { useCallback } from 'react';
 import PlaceCard from '@/components/places/PlaceCard';
 import styles from '@/styles/places/PlacesContainer.module.css';
-import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
+import { useHasError } from '@/contexts/HasErrorContext';
 import {
   usePlacesWeatherData,
   usePlacesWeatherAPI,
 } from '@/contexts/PlacesWeatherContext';
+import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
 import { ERROR_MESSAGE_WEATHER } from '@/constants/constants';
 
 export default function PlacesContainer() {
   console.log('PlacesContainer rendered!');
-  const { places, placesWeatherData, hasError } = usePlacesWeatherData();
-  const { setPlaces, setPlacesWeatherData } = usePlacesWeatherAPI();
+  const { hasError } = useHasError();
+  const { places, placesWeather } = usePlacesWeatherData();
+  const { setPlaces, setPlacesWeather } = usePlacesWeatherAPI();
   const { setMainWeather } = useMainWeatherAPI();
-
-  console.log('hasError: ', hasError);
 
   // memoize functions passed as props
   const handleViewPlace = useCallback(
@@ -23,14 +23,14 @@ export default function PlacesContainer() {
       if (!(e.type === 'click' || e.key === 'Enter')) return;
 
       // get the weather for the particular place
-      const placeWeather = placesWeatherData.find(
+      const placeWeather = placesWeather.find(
         (place) => place.coordinates.id === e.target.dataset.id
       );
 
       // and pass it to the main weather context
       setMainWeather([placeWeather]);
     },
-    [placesWeatherData, setMainWeather]
+    [placesWeather, setMainWeather]
   );
 
   const handleDeletePlace = useCallback(
@@ -39,32 +39,30 @@ export default function PlacesContainer() {
       e.stopPropagation();
 
       setPlaces(places.filter((place) => place.id !== e.target.dataset.id));
-      setPlacesWeatherData(
-        placesWeatherData.filter(
+      setPlacesWeather(
+        placesWeather.filter(
           (place) => place.coordinates.id !== e.target.dataset.id
         )
       );
     },
-    [places, placesWeatherData, setPlaces, setPlacesWeatherData]
+    [places, placesWeather, setPlaces, setPlacesWeather]
   );
 
   // if getWeather error, return error UI
   if (hasError) {
     return (
-      <div className={styles.placesContainer} data-testid="places-container">
-        <div className="error-container">
-          <div className="error">{ERROR_MESSAGE_WEATHER}</div>
-        </div>
+      <div className="error-container">
+        <div className="error">{ERROR_MESSAGE_WEATHER}</div>
       </div>
     );
   }
 
-  console.log('PlacesContainer (placesWeatherData): ', placesWeatherData);
+  console.log('PlacesContainer (placesWeather): ', placesWeather);
 
   // otherwise return places
   return (
     <div className={styles.placesContainer} data-testid="places-container">
-      {placesWeatherData.map((place) => (
+      {placesWeather.map((place) => (
         <PlaceCard
           key={place.coordinates.id}
           id={place.coordinates.id}

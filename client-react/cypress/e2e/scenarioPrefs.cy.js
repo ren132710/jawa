@@ -64,60 +64,6 @@ describe('#scenarioPrefs', () => {
     });
   });
 
-  it('should allow user to successfully switch to metric units', () => {
-    // given default units are imperial
-    cy.findByTestId('current-temp').contains('F');
-    cy.findByTestId('current-visibility').contains('mi');
-    cy.findByTestId('current-wind').contains('mph');
-
-    // each daily card should have imperial units
-    cy.findAllByTestId('daily-card').each((card) => {
-      cy.wrap(card).within(() => {
-        cy.findByTestId('day-wind').contains('mph');
-      });
-    });
-
-    // each hour row should have imperial units
-    cy.findAllByTestId('hour-row').each((row) => {
-      cy.wrap(row).within(() => {
-        cy.findByTestId('hour-wind').contains('mph');
-      });
-    });
-
-    // when the user opens the prefs menu and clicks the metric button
-    // use.then() to wait for the page to reload
-    cy.findByTestId('hamburger').click();
-    cy.findByTestId('btnMetric')
-      .click()
-      .then(() => {
-        // units should be switched to metric
-        cy.findByTestId('current-temp').contains('C');
-        cy.findByTestId('current-visibility').contains('km');
-        cy.findByTestId('current-wind').contains('kph');
-
-        // each daily card should have metric units
-        cy.findAllByTestId('daily-card').each((card) => {
-          cy.wrap(card).within(() => {
-            cy.findByTestId('day-wind').contains('kph');
-          });
-        });
-
-        // each hour row should have metric units
-        cy.findAllByTestId('hour-row').each((row) => {
-          cy.wrap(row).within(() => {
-            cy.findByTestId('hour-wind').contains('kph');
-          });
-        });
-
-        // OpenWeatherMap does the unit conversion, so the best we can do is ensure a conversion happened
-        cy.findByTestId('current-temp')
-          .invoke('text')
-          .then(parseInt)
-          .should('be.a', 'number')
-          .and('lte', 45);
-      });
-  });
-
   it('should allow user to successfully switch themes', () => {
     // given default theme (jawa) is selected
     cy.get('body').should('have.attr', 'data-theme', 'jawa');
@@ -290,6 +236,67 @@ describe('#scenarioPrefs', () => {
             const actualString = days.sort().toString();
             expect(actualString).to.eq(expectedString);
           });
+      });
+  });
+
+  it('should allow user to successfully switch to metric units', () => {
+    // given default units are imperial
+    cy.findByTestId('current-temp').contains('F');
+    cy.findByTestId('current-visibility').contains('mi');
+    cy.findByTestId('current-wind').contains('mph');
+
+    // each daily card should have imperial units
+    cy.findAllByTestId('daily-card').each((card) => {
+      cy.wrap(card).within(() => {
+        cy.findByTestId('day-wind').contains('mph');
+      });
+    });
+
+    // each hour row should have imperial units
+    cy.findAllByTestId('hour-row').each((row) => {
+      cy.wrap(row).within(() => {
+        cy.findByTestId('hour-wind').contains('mph');
+      });
+    });
+
+    // when the user opens the prefs menu and clicks the metric button
+    // use.then() to wait for the page to reload
+    cy.findByTestId('hamburger').click();
+    cy.findByTestId('btnMetric')
+      .click()
+      .then(() => {
+        // units should be switched to metric
+        cy.findByTestId('current-temp').contains('C');
+        cy.findByTestId('current-visibility').contains('km');
+        cy.findByTestId('current-wind').contains('kph');
+
+        // each daily card should have metric units
+        cy.findAllByTestId('daily-card').each((card) => {
+          cy.wrap(card).within(() => {
+            cy.findByTestId('day-wind').contains('kph');
+          });
+        });
+
+        // each hour row should have metric units
+        cy.findAllByTestId('hour-row').each((row) => {
+          cy.wrap(row).within(() => {
+            cy.findByTestId('hour-wind').contains('kph');
+          });
+        });
+
+        // wait for the metric weather values to render
+        // thought .then() above would work here, but it doesn't
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(1000);
+
+        // OpenWeatherMap does the unit conversion, so the best we can do is ensure a conversion happened
+        cy.findAllByTestId('day-high').each((temp) => {
+          cy.wrap(temp)
+            .invoke('text')
+            .then(parseInt)
+            .should('be.a', 'number')
+            .and('lte', 45);
+        });
       });
   });
 });
