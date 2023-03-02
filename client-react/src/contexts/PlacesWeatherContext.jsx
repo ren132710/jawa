@@ -42,7 +42,10 @@ export default function PlacesWeatherProvider({ children }) {
 
     getWeather({ places, units, lang })
       .then((weather) => {
-        console.log('PlacesWeatherProvider useEffect (weather): ', weather);
+        console.log(
+          'PlacesWeatherProvider useEffect (weather): ',
+          placesWeather
+        );
         setPlacesWeather(weather);
       })
       .catch((err) => {
