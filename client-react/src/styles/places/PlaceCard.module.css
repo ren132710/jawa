@@ -15,7 +15,6 @@
 }
 
 .place-text {
-  /* font-size: 0.75rem; */
   text-transform: capitalize;
   font-size: var(--fs-small);
 }

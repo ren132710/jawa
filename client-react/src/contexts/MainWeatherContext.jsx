@@ -2,11 +2,9 @@ import React, { useContext, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { usePlacesWeatherData } from '@/contexts/PlacesWeatherContext';
 
-// 1. create the contexts
 const MainWeatherDataContext = React.createContext();
 const MainWeatherAPIContext = React.createContext();
 
-// 2. make the contexts available to subscribers via custom hooks
 export function useMainWeatherData() {
   const context = useContext(MainWeatherDataContext);
   if (context === undefined) {
@@ -36,7 +34,7 @@ export default function MainWeatherProvider({ children }) {
     return { setMainWeather };
   }, [setMainWeather]);
 
-  // set mainWeather to first default place on startup, or whenever mainWeather is empty
+  // set mainWeather to first placeWeather on startup, or whenever mainWeather is empty
   if (!placesWeather.length) return;
   if (mainWeather.length === 0) setMainWeather([placesWeather[0]]);
 

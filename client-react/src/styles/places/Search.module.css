@@ -10,7 +10,6 @@
   border: var(--border-thickness-input) solid var(--border-color-input);
   outline: none;
   font-size: 1.2rem;
-  /* font-size: inherit; */
   padding: 0.5em;
   border-radius: var(--border-radius-input);
 }

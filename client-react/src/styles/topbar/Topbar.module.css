@@ -21,6 +21,7 @@ body[data-theme='dark'] .topbar-active {
 
 @media screen and (min-width: 768px) {
   .topbar-container {
+    /* top right/left bottom */
     padding: 0.5rem 1.5rem 0.2rem;
   }
 }

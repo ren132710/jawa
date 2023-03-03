@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { getLocalPrefs, setLocalPrefs } from '@/utils/localStorage';
 
-const PrefsWeatherContext = React.createContext();
 const PrefsAPIContext = React.createContext();
+const PrefsWeatherContext = React.createContext();
 
 // separate out theme context so components don't re-render when theme changes
 const PrefsThemeContext = React.createContext();
@@ -40,7 +40,6 @@ export default function PrefsProvider({ children }) {
 
   // apply theme change application wide
   useEffect(() => {
-    console.log('PrefsProvider useEffect (display theme):', theme);
     document.body.setAttribute('data-theme', theme);
   }, [theme]);
 

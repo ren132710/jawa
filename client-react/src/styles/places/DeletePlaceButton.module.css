@@ -1,6 +1,4 @@
 .place-btn-delete {
-  -web-kit-backface-visibility: hidden;
-  backface-visibility: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,8 +38,3 @@
 body[data-theme='light'] .place-btn-delete:hover {
   box-shadow: 0 0 5px 0 var(--skyblue-85);
 }
-
-/* dark mode */
-/* body[data-theme='dark'] .place-btn-delete {
-  background-color: hsla(0, 0%, 98%, 0.9);
-} */

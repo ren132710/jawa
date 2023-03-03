@@ -55,8 +55,8 @@ export default function PlacesWeatherProvider({ children }) {
         console.log('PlacesWeatherProvider useEffect (error): ', err);
       });
 
-    // to minimize api calls, add/delete places without refreshing weather data
-    // however whenever units or lang change, refresh weather data
+    // add/delete places without refreshing weather data so api calls are minimized
+    // however, refresh weather data whenever units or lang change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [units, lang]);
 

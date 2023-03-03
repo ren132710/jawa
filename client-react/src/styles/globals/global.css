@@ -34,7 +34,7 @@ body {
 }
 
 /*
- * display themes
+ * display modes
  */
 
 /* light mode */
@@ -59,7 +59,7 @@ body[data-theme='dark'] {
   --svg-fill-color: var(--grey-85);
   --color-value: var(--blue-65);
   --background-linear-from: hsla(0, 0%, 0%, 0.8);
-  --background-linear-to: hsla(0, 0%, 0%, 1); /* var(--black); */
+  --background-linear-to: hsla(0, 0%, 0%, 1);
   --border-color-card: var(--grey-80);
   --border-color-input: var(--grey-96);
   --border-thickness-card: 1px;
@@ -86,22 +86,6 @@ body[data-theme='dark'] {
   font-size: 1.1em;
   color: hsl(0, 90%, 50%);
   text-align: center;
-  white-space: pre-wrap;
-  font-style: oblique;
-}
-
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 89px;
-}
-
-.loading {
-  padding: 0.5em 1em;
-  outline: none;
-  font-size: 1.1em;
-  color: white;
   white-space: pre-wrap;
   font-style: oblique;
 }
