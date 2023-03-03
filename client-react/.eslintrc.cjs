@@ -41,7 +41,5 @@ module.exports = {
         },
       },
     ],
-    // 'no-shadowed-variable': 'off',
-    // 'control-has-associated-label': 'off',
   },
 };
