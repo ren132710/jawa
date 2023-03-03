@@ -31,7 +31,7 @@ function setTestDefaults() {
 }
 
 // write a failing test and make it pass, so bugs never reappear
-describe('#Bugs', () => {
+describe('#BugFixes', () => {
   beforeEach(() => {
     // clear local storage and set test defaults
     localStorage.clear();
