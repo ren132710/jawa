@@ -30,7 +30,7 @@ function setTestDefaults() {
   localStorage.setItem('jawa-prefs', JSON.stringify(testPrefs));
 }
 
-// write a failing test and make it pass, so bugs never reappear
+// write a failing test and make it pass, then bugs will never reappear
 describe('#BugFixes', () => {
   beforeEach(() => {
     // clear local storage and set test defaults
