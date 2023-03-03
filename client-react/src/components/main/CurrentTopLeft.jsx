@@ -34,8 +34,8 @@ export default function CurrentTopLeft({
         weatherDescription={description}
         getIconUrl={getIconUrl}
         testId="current-weather-icon"
-        imgWidth="200"
-        imgHeight="200"
+        imgWidth="175"
+        imgHeight="175"
       />
     </div>
   );
