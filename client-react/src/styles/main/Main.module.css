@@ -21,20 +21,6 @@
   grid-area: hourly;
 }
 
-.section-title {
-  font-size: var(--font-size-large);
-  text-align: center;
-  padding-top: 1rem;
-}
-
-.section-subtitle {
-  font-size: 0.7rem;
-  font-style: oblique;
-  text-align: center;
-  color: var(--color-value);
-  padding-bottom: 0.7rem;
-}
-
 @media screen and (min-width: 1022px) {
   .main {
     grid-template-columns: minmax(375px, 1fr) 1.5fr;
