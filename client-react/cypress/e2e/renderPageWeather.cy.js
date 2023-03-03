@@ -51,7 +51,7 @@ describe('#renderPageWeather', () => {
       .within(() => {
         cy.findByTestId('place-weather-icon')
           .invoke('attr', 'src')
-          .should('eq', 'http://openweathermap.org/img/wn/01d.png')
+          .should('eq', 'https://openweathermap.org/img/wn/01d.png')
           .then((src) => {
             cy.request(src).its('status').should('eq', 200);
           });
@@ -85,7 +85,7 @@ describe('#renderPageWeather', () => {
           // .should('have.attr', 'width', '200')
           // .should('have.attr', 'height', '200')
           .invoke('attr', 'src')
-          .should('eq', 'http://openweathermap.org/img/wn/01d@4x.png')
+          .should('eq', 'https://openweathermap.org/img/wn/01d@4x.png')
           .then((src) => {
             cy.request(src).its('status').should('eq', 200);
           });
@@ -106,7 +106,7 @@ describe('#renderPageWeather', () => {
       .within(() => {
         cy.findByTestId('day-weather-icon')
           .invoke('attr', 'src')
-          .should('eq', 'http://openweathermap.org/img/wn/04d.png')
+          .should('eq', 'https://openweathermap.org/img/wn/04d.png')
           .then((src) => {
             cy.request(src).its('status').should('eq', 200);
           });
@@ -137,7 +137,7 @@ describe('#renderPageWeather', () => {
         cy.findByTestId('hour-name').should('have.text', '6PM');
         cy.findByTestId('hour-weather-icon')
           .invoke('attr', 'src')
-          .should('eq', 'http://openweathermap.org/img/wn/01d.png')
+          .should('eq', 'https://openweathermap.org/img/wn/01d.png')
           .then((src) => {
             cy.request(src).its('status').should('eq', 200);
           });
@@ -177,7 +177,7 @@ describe('#renderPageWeather', () => {
           );
         cy.findByTestId('current-weather-icon')
           .invoke('attr', 'src')
-          .should('eq', 'http://openweathermap.org/img/wn/01d@4x.png')
+          .should('eq', 'https://openweathermap.org/img/wn/01d@4x.png')
           .then((src) => {
             cy.request(src).its('status').should('eq', 200);
           });
@@ -257,13 +257,13 @@ describe('#renderPageWeather', () => {
     });
 
     const dailyIcons = [
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/10d.png',
-      'http://openweathermap.org/img/wn/10d.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/10d.png',
-      'http://openweathermap.org/img/wn/01d.png',
-      'http://openweathermap.org/img/wn/01d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/10d.png',
+      'https://openweathermap.org/img/wn/10d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/10d.png',
+      'https://openweathermap.org/img/wn/01d.png',
+      'https://openweathermap.org/img/wn/01d.png',
     ];
 
     const dailyAlts = [
@@ -318,30 +318,30 @@ describe('#renderPageWeather', () => {
       );
     });
     const hourlyIcons = [
-      'http://openweathermap.org/img/wn/01d.png',
-      'http://openweathermap.org/img/wn/03d.png',
-      'http://openweathermap.org/img/wn/04n.png',
-      'http://openweathermap.org/img/wn/04n.png',
-      'http://openweathermap.org/img/wn/04n.png',
-      'http://openweathermap.org/img/wn/04n.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/04n.png',
-      'http://openweathermap.org/img/wn/10n.png',
-      'http://openweathermap.org/img/wn/10n.png',
-      'http://openweathermap.org/img/wn/10n.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/10d.png',
-      'http://openweathermap.org/img/wn/10d.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/04d.png',
-      'http://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/01d.png',
+      'https://openweathermap.org/img/wn/03d.png',
+      'https://openweathermap.org/img/wn/04n.png',
+      'https://openweathermap.org/img/wn/04n.png',
+      'https://openweathermap.org/img/wn/04n.png',
+      'https://openweathermap.org/img/wn/04n.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/04n.png',
+      'https://openweathermap.org/img/wn/10n.png',
+      'https://openweathermap.org/img/wn/10n.png',
+      'https://openweathermap.org/img/wn/10n.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/10d.png',
+      'https://openweathermap.org/img/wn/10d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/04d.png',
+      'https://openweathermap.org/img/wn/04d.png',
     ];
 
     const hourlyAlts = [

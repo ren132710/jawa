@@ -287,7 +287,7 @@ describe('#scenarioPrefs', () => {
         // wait for the metric weather values to render
         // thought .then() above would work here, but it doesn't
         // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(1000);
+        cy.wait(2000);
 
         // OpenWeatherMap does the unit conversion, so the best we can do is ensure a conversion happened
         cy.findAllByTestId('day-high').each((temp) => {
