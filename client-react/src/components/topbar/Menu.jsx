@@ -17,9 +17,8 @@ export default function Menu({ showMenu, delay, onClose }) {
   const { setHasError } = useHasError();
   const { setMainWeather } = useMainWeatherAPI();
 
-  // transition menu open and close
+  // transition menu open/close
   useEffect(() => {
-    console.log('Menu useEffect (showMenu)!');
     if (!showMenu) return;
 
     // pause before applying css transition

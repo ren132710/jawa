@@ -9,7 +9,7 @@ import styles from '@/styles/main/CurrentContainer.module.css';
 export default function CurrentContainer({ coordinates, current }) {
   console.log('Current container rendered!');
 
-  // on initial page load, remove the blur when the app starts building the main section
+  // on initial page load, remove the blur
   useEffect(() => {
     document.body.classList.remove('blur');
   }, []);

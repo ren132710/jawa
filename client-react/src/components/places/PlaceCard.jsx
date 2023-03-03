@@ -41,8 +41,8 @@ export function PlaceCard({
       data-long={long}
       data-testid="place-card"
     >
-      {/* when there is only one place, do not reveal delete button  */}
-      {/* otherwise, reveal delete button when place is hovered or has focus */}
+      {/* unless there is only one place */}
+      {/* reveal delete button when place is hovered or has focus  */}
       {placesLength === 1 ? null : isHovered ? (
         <PlaceDeleteButton onDelete={handleDeletePlace} placeId={id} />
       ) : null}

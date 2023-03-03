@@ -9,7 +9,7 @@ export default function Main() {
   console.log('Main rendered!');
   const { mainWeather } = useMainWeatherData();
 
-  // prevent rendering until there is mainWeather data
+  // prevent rendering until mainWeather exists
   if (!mainWeather.length) return;
 
   const weather = mainWeather[0];

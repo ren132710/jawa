@@ -10,6 +10,7 @@ export default function Hamburger() {
   const [showComponent, setShowComponent] = useState(false);
   const delay = 200;
 
+  // transition menu open/close
   useEffect(() => {
     let timeoutId;
 

@@ -43,6 +43,8 @@ export default function Search({ loader }) {
 
         handleSearchForWeather(place);
       });
+
+      // there doesn't seem to be a way to remove the autocomplete listener
     });
 
     function handleSearchForWeather(place) {

@@ -36,4 +36,4 @@ export const DEFAULT_PREFS = [{ units: 'imperial', theme: 'jawa', lang: 'en' }];
 export const ERROR_MESSAGE_WEATHER = `Oops, something went wrong fetching your weather.
 Please refresh the page and try again.`;
 
-export const ERROR_MESSAGE_AUTOCOMPLETE = `Oops, something went wrong loading the places autocomplete box.`;
+export const ERROR_MESSAGE_AUTOCOMPLETE = `Oops, something went wrong loading the google autocomplete box.`;

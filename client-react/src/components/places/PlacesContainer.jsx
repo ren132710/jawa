@@ -48,7 +48,7 @@ export default function PlacesContainer() {
     [places, placesWeather, setPlaces, setPlacesWeather]
   );
 
-  // if getWeather error, return error UI
+  // if there was a getWeather error, return error UI
   if (hasError) {
     return (
       <div className="error-container">
