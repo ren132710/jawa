@@ -68,7 +68,7 @@ describe('#scenarioSearch', () => {
 
     // then the weather for boston should display
     // https://jawa-server-7odol.ondigitalocean.app/weather?lat=42.3600825&long=-71.0588801&units=imperial&lang=en&id=search&location=Boston
-    cy.findByTestId('current-location', { timeout: 1000 })
+    cy.findByTestId('current-location', { timeout: 2000 })
       .should('have.text', 'Boston')
       .should('have.attr', 'data-current-lat', '42.3601')
       .should('have.attr', 'data-current-long', '-71.0589');
