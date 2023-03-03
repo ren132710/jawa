@@ -39,23 +39,23 @@ if (import.meta.vitest) {
     it('should return a valid OpenWeather icon url given a valid iconKey', () => {
       iconKeys.forEach((key) => {
         expect(getIconUrl(key)).toBe(
-          `http://openweathermap.org/img/wn/${key}.png`
+          `https://openweathermap.org/img/wn/${key}.png`
         );
       });
     });
 
     it('when size is provided, should return a valid OpenWeather icon url per the specified size', () => {
       expect(getIconUrl(iconKeys[0], { size: '' })).toBe(
-        `http://openweathermap.org/img/wn/${iconKeys[0]}.png`
+        `https://openweathermap.org/img/wn/${iconKeys[0]}.png`
       );
       expect(getIconUrl(iconKeys[0], { size: 'small' })).toBe(
-        `http://openweathermap.org/img/wn/${iconKeys[0]}.png`
+        `https://openweathermap.org/img/wn/${iconKeys[0]}.png`
       );
       expect(getIconUrl(iconKeys[1], { size: 'medium' })).toBe(
-        `http://openweathermap.org/img/wn/${iconKeys[1]}@2x.png`
+        `https://openweathermap.org/img/wn/${iconKeys[1]}@2x.png`
       );
       expect(getIconUrl(iconKeys[2], { size: 'large' })).toBe(
-        `http://openweathermap.org/img/wn/${iconKeys[2]}@4x.png`
+        `https://openweathermap.org/img/wn/${iconKeys[2]}@4x.png`
       );
     });
   });
