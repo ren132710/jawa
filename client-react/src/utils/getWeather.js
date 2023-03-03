@@ -4,7 +4,6 @@ const TIMEOUT = import.meta.env.VITE_AXIOS_TIMEOUT;
 // const URL = `https:/httpstat.us/404`;
 const WEATHER_SERVER = import.meta.env.VITE_JAWA_SERVER;
 const URL = `https://${WEATHER_SERVER}/weather`;
-console.log('URL:', URL);
 
 /**
  * getWeather
