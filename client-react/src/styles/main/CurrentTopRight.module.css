@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding-top: 25%;
+  padding-top: 15%;
 }
 
 .current-lat-long {
@@ -55,18 +55,24 @@
 
 @media screen and (min-width: 380px) {
   .current-temp {
-    font-size: 2.7rem;
+    font-size: 2.65rem;
   }
 }
 
 @media screen and (min-width: 391px) {
   .current-temp {
-    font-size: 2.85rem;
+    font-size: 2.75rem;
   }
 }
 
 @media screen and (min-width: 768px) {
   .current-top-right-block {
-    padding-top: 12%;
+    padding-top: 10%;
+  }
+}
+
+@media screen and (min-width: 1022px) {
+  .current-top-right-block {
+    padding-top: 15%;
   }
 }

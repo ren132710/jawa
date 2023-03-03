@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import styles from '@/styles/WeatherIcon.module.css';
 
 export default function WeatherIcon({
   weatherIcon,
@@ -12,7 +13,9 @@ export default function WeatherIcon({
 }) {
   return (
     <img
-      className="weatherIcon"
+      className={
+        weatherIconSize === 'large' ? styles.imgLarge : styles.imgSmall
+      }
       src={getIconUrl(weatherIcon, { size: weatherIconSize })}
       width={imgWidth}
       height={imgHeight}
