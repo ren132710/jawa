@@ -4,6 +4,7 @@ import { usePrefsWeather } from '@/contexts/PrefsContext';
 import { useHasError } from '@/contexts/HasErrorContext';
 import getWeather from '@/utils/getWeather';
 import { getLocalPlaces, setLocalPlaces } from '@/utils/localStorage';
+import NARNIA from '@/constants/narnia';
 
 // 1. create the contexts
 const PlacesWeatherDataContext = React.createContext();
@@ -50,6 +51,7 @@ export default function PlacesWeatherProvider({ children }) {
       })
       .catch((err) => {
         setHasError(true);
+        setPlacesWeather(NARNIA);
         console.log('PlacesWeatherProvider useEffect (error): ', err);
       });
 
