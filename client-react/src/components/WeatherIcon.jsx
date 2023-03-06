@@ -24,7 +24,7 @@ export default function WeatherIcon({
       data-testid={testId}
       // optimize Largest Contentful Paint (LCP) by prioritizing large weather icon
       // eslint-disable-next-line react/no-unknown-property
-      fetchPriority={weatherIconSize === 'large' ? 'high' : null}
+      fetchpriority={weatherIconSize === 'large' ? 'high' : null}
     />
   );
 }
