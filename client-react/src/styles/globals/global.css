@@ -89,7 +89,6 @@ body[data-theme='light'] {
   --border-thickness-card: 1.5px;
   --border-thickness-input: 1.5px;
   --hour-nth-child-background-to: var(--skyblue-90);
-  transition: 100ms linear;
 }
 
 /* dark mode */
@@ -109,7 +108,6 @@ body[data-theme='dark'] {
   --border-thickness-input: 1px;
   --hour-nth-child-background-from: var(--grey-15);
   --hour-nth-child-background-to: var(--black);
-  transition: 100ms linear;
 }
 
 /*
