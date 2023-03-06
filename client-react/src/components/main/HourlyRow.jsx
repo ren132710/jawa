@@ -5,7 +5,6 @@ import { usePrefsWeather } from '@/contexts/PrefsContext';
 import { useUtils } from '@/contexts/UtilsContext';
 
 export default function HourlyRow({ timezone, hour }) {
-  console.log('HourlyRow rendered!');
   const { units, lang } = usePrefsWeather();
   const { getUnitOfMeasure, getTranslation, df, getIconUrl } = useUtils();
 

@@ -28,31 +28,20 @@ export function usePlacesWeatherAPI() {
 }
 // 3. define the provider and delegate value props to the contexts
 export default function PlacesWeatherProvider({ children }) {
-  console.log('PlacesWeatherProvider rendered!');
   const [places, setPlaces] = useState(getLocalPlaces());
   const [placesWeather, setPlacesWeather] = useState([]);
   const { setHasError } = useHasError();
   const { units, lang } = usePrefsWeather();
 
   useEffect(() => {
-    console.log('PlacesWeatherProvider useEffect (options): ', {
-      places,
-      units,
-      lang,
-    });
-
     getWeather({ places, units, lang })
       .then((weather) => {
-        console.log(
-          'PlacesWeatherProvider useEffect (weather): ',
-          placesWeather
-        );
         setPlacesWeather(weather);
       })
       .catch((err) => {
         setHasError(true);
         setPlacesWeather(NARNIA);
-        console.log('PlacesWeatherProvider useEffect (error): ', err);
+        console.log('PlacesWeatherProvider (error): ', err);
       });
 
     // add/delete places without refreshing weather data so api calls are minimized
@@ -62,7 +51,6 @@ export default function PlacesWeatherProvider({ children }) {
 
   // keep localStorage in sync with state
   useEffect(() => {
-    console.log('PlacesWeatherProvider useEffect (setLocalStorage): ', places);
     setLocalPlaces(places);
   }, [places]);
 

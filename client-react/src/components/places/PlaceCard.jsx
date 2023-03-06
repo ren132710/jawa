@@ -19,7 +19,6 @@ export function PlaceCard({
   handleDeletePlace,
   placesLength,
 }) {
-  console.log('PlaceCard rendered!');
   const [isHovered, setIsHovered] = useState(false);
   const { getIconUrl } = useUtils();
 

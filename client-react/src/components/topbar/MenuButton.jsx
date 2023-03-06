@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import styles from '@/styles/topbar/Button.module.css';
 
 export function MenuButton({ title, onClick, ariaLabel, setting, testId }) {
-  console.log('Button rendered!');
-
   return (
     <button
       type="button"

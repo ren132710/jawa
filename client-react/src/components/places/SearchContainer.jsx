@@ -12,8 +12,6 @@ const loader = new Loader({
 const isLoader = !!loader;
 
 export default function SearchContainer() {
-  console.log('SearchContainer is rendered!');
-
   return (
     <div>
       {isLoader ? (

@@ -5,8 +5,6 @@ import Footer from '@/components/Footer';
 import styles from '@/styles/Page.module.css';
 
 export default function Page() {
-  console.log('Page rendered!');
-
   return (
     <div className={styles.pageContainer}>
       <section id="spacer" />

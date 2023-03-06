@@ -7,8 +7,6 @@ import CurrentBottomRight from '@/components/main/CurrentBottomRight';
 import styles from '@/styles/main/CurrentContainer.module.css';
 
 export default function CurrentContainer({ coordinates, current }) {
-  console.log('Current container rendered!');
-
   // on initial page load, remove the blur
   useEffect(() => {
     document.body.classList.remove('blur');

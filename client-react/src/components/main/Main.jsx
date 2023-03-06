@@ -6,14 +6,11 @@ import styles from '@/styles/main/Main.module.css';
 import { useMainWeatherData } from '@/contexts/MainWeatherContext';
 
 export default function Main() {
-  console.log('Main rendered!');
   const { mainWeather } = useMainWeatherData();
 
   // prevent rendering until mainWeather exists
   if (!mainWeather.length) return;
-
   const weather = mainWeather[0];
-  console.log('Main weather: ', weather);
 
   return (
     <main className={styles.main}>

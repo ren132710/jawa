@@ -32,7 +32,6 @@ export default function SectionHeading({
   timezone,
   subtitleTestId,
 }) {
-  console.log(`SectionHeading ${section} rendered!`);
   const { lang } = usePrefsWeather();
   const { getTranslation, df } = useUtils();
 

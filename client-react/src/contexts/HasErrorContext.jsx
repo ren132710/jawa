@@ -12,7 +12,6 @@ export function useHasError() {
 }
 
 export default function HasErrorProvider({ children }) {
-  console.log('HasErrorProvider rendered!');
   const [hasError, setHasError] = useState(false);
 
   const memoValue = useMemo(() => {

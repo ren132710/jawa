@@ -5,7 +5,6 @@ import styles from '@/styles/topbar/Hamburger.module.css';
 const Menu = lazy(() => import('@/components/topbar/Menu'));
 
 export default function Hamburger() {
-  console.log('Hamburger rendered!');
   const [showMenu, setShowMenu] = useState(false);
   const [showComponent, setShowComponent] = useState(false);
   const delay = 200;

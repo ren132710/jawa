@@ -3,7 +3,6 @@ import DailyCard from '@/components/main/DailyCard';
 import styles from '@/styles/main/DailyContainer.module.css';
 
 export default function DailyContainer({ daily }) {
-  console.log('Daily container rendered!');
   if (!daily.length) return;
 
   return (

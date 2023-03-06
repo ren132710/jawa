@@ -5,7 +5,6 @@ import { useUtils } from '@/contexts/UtilsContext';
 import { usePrefsWeather } from '@/contexts/PrefsContext';
 
 export default function DailyCard({ day }) {
-  console.log('DailyCard rendered!');
   const { units, lang } = usePrefsWeather();
   const { getUnitOfMeasure, getTranslation, df, getIconUrl } = useUtils();
 

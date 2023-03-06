@@ -7,7 +7,6 @@ import { usePlacesWeatherAPI } from '@/contexts/PlacesWeatherContext';
 import { useMainWeatherData } from '@/contexts/MainWeatherContext';
 
 export default function NewPlaceButton({ id, location, lat, long }) {
-  console.log('NewPlace rendered!');
   const { lang } = usePrefsWeather();
   const { setPlaces, setPlacesWeather } = usePlacesWeatherAPI();
   const { mainWeather } = useMainWeatherData();

@@ -7,8 +7,6 @@ import PlacesWeatherProvider from '@/contexts/PlacesWeatherContext';
 import MainWeatherProvider from '@/contexts/MainWeatherContext';
 
 export default function App() {
-  console.log('App rendered!');
-
   return (
     <UtilsProvider>
       <PrefsProvider>

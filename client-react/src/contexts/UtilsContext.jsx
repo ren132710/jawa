@@ -16,8 +16,6 @@ export function useUtils() {
 }
 
 export default function UtilsProvider({ children }) {
-  console.log('UtilsProvider rendered!');
-
   const memoValue = useMemo(() => {
     return { getUnitOfMeasure, getTranslation, df, getIconUrl };
   }, []);

@@ -1,8 +1,6 @@
 import styles from '@/styles/topbar/Logo.module.css';
 
 export default function Logo() {
-  console.log('Logo rendered!');
-
   return (
     <div className={styles.jawaContainer}>
       <div className={styles.jawa}>jawa</div>

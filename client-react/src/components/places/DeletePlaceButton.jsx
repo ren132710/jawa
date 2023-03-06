@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import styles from '@/styles/places/DeletePlaceButton.module.css';
 
 export default function DeletePlaceButton({ onDelete, placeId }) {
-  console.log('PlaceDeleteButton rendered!');
-
   // iOS needs the onPointerDown event to see the delete button
   return (
     <div

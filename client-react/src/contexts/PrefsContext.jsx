@@ -33,7 +33,6 @@ export function usePrefsTheme() {
 }
 
 export default function PrefsProvider({ children }) {
-  console.log('PrefsProvider rendered!');
   const [theme, setTheme] = useState(getLocalPrefs()[0].theme);
   const [units, setUnits] = useState(getLocalPrefs()[0].units);
   const [lang, setLang] = useState(getLocalPrefs()[0].lang);
@@ -45,9 +44,6 @@ export default function PrefsProvider({ children }) {
 
   // keep localStorage in sync with prefs state
   useEffect(() => {
-    console.log('PrefsProvider useEffect (setLocalStorage): ', [
-      { theme, units, lang },
-    ]);
     setLocalPrefs([{ theme, units, lang }]);
   }, [theme, units, lang]);
 

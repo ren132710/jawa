@@ -3,7 +3,6 @@ import HourlyRow from '@/components/main/HourlyRow';
 import styles from '@/styles/main/HourlyContainer.module.css';
 
 export default function HourlyContainer({ coordinates, hourly }) {
-  console.log('Hourly container rendered!');
   if (!hourly.length) return;
 
   // starting with the next hour, only show every other hour

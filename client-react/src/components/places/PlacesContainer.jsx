@@ -10,7 +10,6 @@ import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
 import { ERROR_MESSAGE_WEATHER } from '@/constants/constants';
 
 export default function PlacesContainer() {
-  console.log('PlacesContainer rendered!');
   const { hasError } = useHasError();
   const { places, placesWeather } = usePlacesWeatherData();
   const { setPlaces, setPlacesWeather } = usePlacesWeatherAPI();
@@ -56,8 +55,6 @@ export default function PlacesContainer() {
       </div>
     );
   }
-
-  console.log('PlacesContainer (placesWeather): ', placesWeather);
 
   // otherwise return places
   return (

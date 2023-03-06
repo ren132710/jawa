@@ -16,7 +16,6 @@ const mapsOptions = {
 };
 
 export default function Search({ loader }) {
-  console.log('Search is rendered!');
   const autoCompleteRef = useRef(null);
   const inputRef = useRef(null);
   const { units, lang } = usePrefsWeather();
@@ -25,7 +24,6 @@ export default function Search({ loader }) {
   const { getTranslation } = useUtils();
 
   useEffect(() => {
-    console.log('Search useEffect (google autocomplete)!');
     if (!inputRef.current) return;
 
     loader.load().then((google) => {
@@ -37,7 +35,6 @@ export default function Search({ loader }) {
 
       autoCompleteRef.current.addListener('place_changed', async () => {
         const place = autoCompleteRef.current.getPlace();
-        console.log('place: ', place);
         if (!place) return;
         if (!place.geometry) return;
 
@@ -64,7 +61,6 @@ export default function Search({ loader }) {
 
       getWeather({ places, units, lang })
         .then((weather) => {
-          console.log('Search (weather): ', weather);
           setMainWeather(weather);
         })
         .catch((err) => {

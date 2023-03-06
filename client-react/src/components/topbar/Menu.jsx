@@ -10,7 +10,6 @@ import { useMainWeatherAPI } from '@/contexts/MainWeatherContext';
 import getWeather from '@/utils/getWeather';
 
 export default function Menu({ showMenu, delay, onClose }) {
-  console.log('Menu rendered!');
   const [applyTransition, setApplyTransition] = useState(false);
   const { units, lang } = usePrefsWeather();
   const { setTheme, setUnits, setLang } = usePrefsAPI();
@@ -76,7 +75,6 @@ export default function Menu({ showMenu, delay, onClose }) {
 
         getWeather(options)
           .then((weather) => {
-            console.log('Menu (weather): ', weather);
             setMainWeather(weather);
           })
           .catch((err) => {

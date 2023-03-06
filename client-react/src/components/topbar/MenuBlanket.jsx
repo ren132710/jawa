@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function MenuBlanket({ onClose }) {
-  console.log('MenuBlanket rendered!');
   const styles = {
     menuBlanket: {
       position: 'fixed',

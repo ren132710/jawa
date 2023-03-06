@@ -10,7 +10,6 @@ export default function CurrentBottomRight({
   sunset,
   timezone,
 }) {
-  console.log('CurrentBottomRight rendered!');
   const { lang } = usePrefsWeather();
   const { getTranslation, df } = useUtils();
 

@@ -22,7 +22,6 @@ export function useMainWeatherAPI() {
 }
 
 export default function MainWeatherProvider({ children }) {
-  console.log('MainWeatherProvider rendered!');
   const [mainWeather, setMainWeather] = useState([]);
   const { placesWeather } = usePlacesWeatherData();
 

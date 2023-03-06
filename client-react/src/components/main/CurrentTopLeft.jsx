@@ -12,7 +12,6 @@ export default function CurrentTopLeft({
   icon,
   description,
 }) {
-  console.log('CurrentTopLeft rendered!');
   const { getIconUrl } = useUtils();
 
   return (
